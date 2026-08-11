@@ -1,0 +1,380 @@
+/* ========================================
+   ELOCase - Cases
+======================================== */
+
+
+/* ========================================
+   箱子頁面
+======================================== */
+
+.cases-page {
+    padding: 56px 0 90px;
+}
+
+
+/* ---------- 頁首 ---------- */
+
+.cases-header {
+    margin-bottom: 30px;
+}
+
+.cases-header h1 {
+    margin-bottom: 8px;
+
+    color: var(--color-text);
+
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.03em;
+}
+
+.cases-header p {
+    color: var(--color-text-muted);
+
+    font-size: 0.82rem;
+}
+
+
+/* ========================================
+   箱子 Grid
+======================================== */
+
+.case-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* ========================================
+   箱子卡片
+======================================== */
+
+.case-card {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition-normal),
+        transform var(--transition-normal),
+        background var(--transition-normal);
+}
+
+
+.case-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--color-border-light);
+
+    background:
+        var(--color-surface-light);
+}
+
+
+/* ========================================
+   箱子圖片
+======================================== */
+
+.case-image {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124, 92, 255, 0.18),
+            transparent 65%
+        ),
+        #0d1015;
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+
+    color:
+        rgba(255, 255, 255, 0.18);
+
+    font-size: 1.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+}
+
+
+.case-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform var(--transition-normal);
+}
+
+
+.case-card:hover
+.case-image img {
+    transform:
+        scale(1.04);
+}
+
+
+/* ---------- Featured ---------- */
+
+.case-image-featured {
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(224, 91, 104, 0.2),
+            transparent 65%
+        ),
+        #0d1015;
+}
+
+
+/* ========================================
+   箱子資訊
+======================================== */
+
+.case-info {
+    padding: 16px;
+}
+
+
+.case-info h3 {
+    margin-bottom: 12px;
+
+    overflow: hidden;
+
+    color:
+        var(--color-text);
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.case-bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+
+.case-price {
+    color:
+        var(--color-text-secondary);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.case-action {
+    color:
+        var(--color-primary-hover);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    transition:
+        color var(--transition-fast);
+}
+
+
+.case-card:hover
+.case-action {
+    color:
+        var(--color-primary);
+}
+
+
+/* ========================================
+   空狀態 / 載入
+======================================== */
+
+.case-loading {
+    grid-column: 1 / -1;
+
+    min-height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.82rem;
+}
+
+
+.case-empty {
+    grid-column: 1 / -1;
+
+    min-height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.82rem;
+}
+
+
+/* ========================================
+   平板
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .cases-page {
+        padding-top: 46px;
+    }
+
+
+    .case-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 600px) {
+
+    .cases-page {
+        padding:
+            38px 0 60px;
+    }
+
+
+    .cases-header {
+        margin-bottom: 22px;
+    }
+
+
+    .cases-header h1 {
+        font-size: 1.45rem;
+    }
+
+
+    .case-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+
+    .case-info {
+        padding: 12px;
+    }
+
+
+    .case-info h3 {
+        margin-bottom: 9px;
+
+        font-size: 0.78rem;
+    }
+
+
+    .case-price,
+    .case-action {
+        font-size: 0.68rem;
+    }
+
+}
+
+
+/* ========================================
+   超小螢幕
+======================================== */
+
+@media (max-width: 380px) {
+
+    .case-grid {
+        gap: 8px;
+    }
+
+
+    .case-info {
+        padding: 10px;
+    }
+
+
+    .case-info h3 {
+        font-size: 0.74rem;
+    }
+
+}
