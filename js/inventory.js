@@ -161,16 +161,6 @@ async function loadInventory() {
 
                     </div>
 
-
-                    <div class="inventory-quantity">
-
-                        數量：
-                        ${Number(
-                            item.quantity || 1
-                        ).toLocaleString()}
-
-                    </div>
-
                 </div>
 
             `;
