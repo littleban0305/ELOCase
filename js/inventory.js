@@ -120,37 +120,76 @@ async function loadInventory() {
 
             card.innerHTML = `
             
-                <div class="inventory-image ${rarity}">
+                <div class="inventory-image">
             
                     ${image}
             
                 </div>
             
             
-                <div class="inventory-actions">
+                <div class="inventory-hover">
             
-                    <button
-                        type="button"
-                        class="inventory-action"
-                        data-action="upgrade"
-                        data-inventory-id="${escapeHtml(
-                            item.inventoryId
-                        )}"
-                    >
-                        升級
-                    </button>
+                    <div class="inventory-detail">
+            
+                        <div class="inventory-detail-name">
+                            ${escapeHtml(
+                                item.name ||
+                                "未命名物品"
+                            )}
+                        </div>
             
             
-                    <button
-                        type="button"
-                        class="inventory-action"
-                        data-action="market"
-                        data-inventory-id="${escapeHtml(
-                            item.inventoryId
-                        )}"
-                    >
-                        市場
-                    </button>
+                        <div class="inventory-detail-game">
+                            ${escapeHtml(
+                                item.game ||
+                                "CS2"
+                            )}
+                        </div>
+            
+            
+                        <div class="inventory-detail-rarity ${rarity}">
+                            ${escapeHtml(
+                                item.rarity ||
+                                "普通"
+                            )}
+                        </div>
+            
+            
+                        <div class="inventory-detail-value">
+                            $${Number(
+                                item.value || 0
+                            ).toLocaleString()}
+                        </div>
+            
+                    </div>
+            
+            
+                    <div class="inventory-actions">
+            
+                        <button
+                            type="button"
+                            class="inventory-action"
+                            data-action="upgrade"
+                            data-inventory-id="${escapeHtml(
+                                item.inventoryId
+                            )}"
+                        >
+                            升級
+                        </button>
+            
+            
+                        <button
+                            type="button"
+                            class="inventory-action"
+                            data-action="market"
+                            data-inventory-id="${escapeHtml(
+                                item.inventoryId
+                            )}"
+                        >
+                            市場
+                        </button>
+            
+                    </div>
             
                 </div>
             
@@ -158,33 +197,27 @@ async function loadInventory() {
                 <div class="inventory-info">
             
                     <div class="inventory-name">
-            
                         ${escapeHtml(
                             item.name ||
                             "未命名物品"
                         )}
-            
                     </div>
             
             
                     <div class="inventory-meta">
             
                         <span class="inventory-rarity">
-            
                             ${escapeHtml(
                                 item.rarity ||
                                 "普通"
                             )}
-            
                         </span>
             
             
                         <span class="inventory-price">
-            
                             $${Number(
                                 item.value || 0
                             ).toLocaleString()}
-            
                         </span>
             
                     </div>
