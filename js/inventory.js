@@ -60,12 +60,7 @@ async function loadInventory() {
 
 
         count.textContent =
-            list.reduce(
-                (total, item) =>
-                    total +
-                    Number(item.quantity || 1),
-                0
-            ).toLocaleString();
+            list.length.toLocaleString();
 
 
         if (list.length === 0) {
