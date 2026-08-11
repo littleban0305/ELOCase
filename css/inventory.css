@@ -371,7 +371,6 @@
 /* ---------- 詳情 ---------- */
 
 .inventory-detail {
-
     display: flex;
 
     flex-direction: column;
@@ -380,21 +379,31 @@
 
     text-align: center;
 
-    gap: 5px;
+    gap: 4px;
 }
 
 
-.inventory-detail-name {
+.inventory-detail-label {
+    margin-top: 5px;
 
+    color: var(--color-text-muted);
+
+    font-size: 0.62rem;
+
+    font-weight: 600;
+}
+
+
+.inventory-detail-source {
     max-width: 100%;
+
+    overflow: hidden;
 
     color: var(--color-text);
 
-    font-size: 0.85rem;
+    font-size: 0.78rem;
 
     font-weight: 700;
-
-    overflow: hidden;
 
     text-overflow: ellipsis;
 
@@ -402,33 +411,13 @@
 }
 
 
-.inventory-detail-game {
-
-    color: var(--color-text-muted);
-
-    font-size: 0.68rem;
-}
-
-
-.inventory-detail-rarity {
+.inventory-detail-date {
+    color: var(--color-text);
 
     font-size: 0.72rem;
 
-    font-weight: 700;
+    font-weight: 600;
 }
-
-
-.inventory-detail-value {
-
-    margin-top: 3px;
-
-    color: var(--color-text);
-
-    font-size: 0.8rem;
-
-    font-weight: 700;
-}
-
 
 /* ---------- 按鈕 ---------- */
 
