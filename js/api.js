@@ -52,3 +52,14 @@ async function getInventory(userId) {
         }
     );
 }
+
+async function getCaseItems(caseId) {
+
+    return await sendApiRequest(
+        "getCaseItems",
+        {
+            caseId
+        }
+    );
+
+}
