@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>個人資料｜ELOCase</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <div class="navbar-container">
+
+        <a href="index.html" class="brand">
+            ELOCase
+        </a>
+
+        <nav class="nav-links">
+
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                首頁
+            </a>
+
+            <a
+                href="cases.html"
+                class="nav-link"
+            >
+                開箱
+            </a>
+
+            <a
+                href="inventory.html"
+                class="nav-link"
+            >
+                我的物品
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-link active"
+            >
+                個人資料
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="section-container">
+
+        <div class="section-header">
+
+            <span class="section-label">
+                玩家
+            </span>
+
+            <h1>
+                個人資料
+            </h1>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-content">
+
+                <h3 id="profile-name">
+                    載入中...
+                </h3>
+
+                <p id="profile-username">
+                    -
+                </p>
+
+                <p id="profile-balance">
+                    ELOCoin：-
+                </p>
+
+                <p id="profile-level">
+                    等級：-
+                </p>
+
+                <button
+                    id="logout-button"
+                    class="button button-secondary"
+                    type="button"
+                >
+                    登出
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+
+async function initializeProfile() {
+
+    const user = await requireLogin();
+
+    if (!user) {
+        return;
+    }
+
+    document.querySelector(
+        "#profile-name"
+    ).textContent =
+        user.displayName;
+
+    document.querySelector(
+        "#profile-username"
+    ).textContent =
+        `玩家名稱：${user.username}`;
+
+    document.querySelector(
+        "#profile-balance"
+    ).textContent =
+        `ELOCoin：${Number(user.eloCoin).toLocaleString()}`;
+
+    document.querySelector(
+        "#profile-level"
+    ).textContent =
+        `等級：${user.level}`;
+
+    document.querySelector(
+        "#logout-button"
+    ).addEventListener(
+        "click",
+        logout
+    );
+}
+
+initializeProfile();
+
+</script>
+
+</body>
+</html>
