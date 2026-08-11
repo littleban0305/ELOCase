@@ -119,54 +119,130 @@ async function loadInventory() {
 
 
             card.innerHTML = `
-
+            
                 <div class="inventory-image ${rarity}">
-
+            
                     ${image}
-
+            
                 </div>
-
-
+            
+            
+                <div class="inventory-actions">
+            
+                    <button
+                        type="button"
+                        class="inventory-action"
+                        data-action="upgrade"
+                        data-inventory-id="${escapeHtml(
+                            item.inventoryId
+                        )}"
+                    >
+                        升級
+                    </button>
+            
+            
+                    <button
+                        type="button"
+                        class="inventory-action"
+                        data-action="market"
+                        data-inventory-id="${escapeHtml(
+                            item.inventoryId
+                        )}"
+                    >
+                        市場
+                    </button>
+            
+                </div>
+            
+            
                 <div class="inventory-info">
-
+            
                     <div class="inventory-name">
-
+            
                         ${escapeHtml(
                             item.name ||
                             "未命名物品"
                         )}
-
+            
                     </div>
-
-
+            
+            
                     <div class="inventory-meta">
-
+            
                         <span class="inventory-rarity">
-
+            
                             ${escapeHtml(
                                 item.rarity ||
                                 "普通"
                             )}
-
+            
                         </span>
-
-
+            
+            
                         <span class="inventory-price">
-
+            
                             $${Number(
                                 item.value || 0
                             ).toLocaleString()}
-
+            
                         </span>
-
+            
                     </div>
-
+            
                 </div>
-
+            
             `;
 
 
             grid.appendChild(card);
+
+            const actionButtons =
+                card.querySelectorAll(
+                    ".inventory-action"
+                );
+            
+            
+            actionButtons.forEach(button => {
+            
+                button.addEventListener(
+                    "click",
+                    event => {
+            
+                        event.stopPropagation();
+            
+            
+                        const action =
+                            button.dataset.action;
+            
+            
+                        const inventoryId =
+                            button.dataset.inventoryId;
+            
+            
+                        if (action === "upgrade") {
+            
+                            console.log(
+                                "升級物品：",
+                                inventoryId
+                            );
+            
+                            return;
+                        }
+            
+            
+                        if (action === "market") {
+            
+                            console.log(
+                                "市場物品：",
+                                inventoryId
+                            );
+            
+                        }
+            
+                    }
+                );
+            
+            });
 
         });
 
