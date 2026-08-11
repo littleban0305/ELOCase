@@ -17,31 +17,75 @@
 }
 
 
-.live-header {
+/* ---------- 幸運玩家整體 ---------- */
 
-    height: 48px;
+.lucky-showcase {
+
+    width: 100%;
 
     display: flex;
 
-    align-items: center;
-
-    justify-content: space-between;
+    align-items: stretch;
 }
 
 
-.live-title {
+/* ---------- 左側固定區 ---------- */
+
+.lucky-intro {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 190px;
+    min-width: 190px;
+
+    min-height: 230px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 92, 255, 0.12),
+            rgba(124, 92, 255, 0.03)
+        ),
+        var(--color-surface);
+
+    border-right: 1px solid var(--color-border);
+
+    box-shadow:
+        10px 0 25px rgba(0, 0, 0, 0.12);
+}
+
+
+.lucky-intro-title {
 
     display: flex;
 
     align-items: center;
+
+    justify-content: center;
 
     gap: 9px;
 
     color: var(--color-text);
 
-    font-size: 0.8rem;
+    font-size: 0.82rem;
 
     font-weight: 700;
+
+    white-space: nowrap;
 }
 
 
@@ -49,6 +93,8 @@
 
     width: 7px;
     height: 7px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -59,21 +105,61 @@
 }
 
 
-.live-label {
+.lucky-arrow {
 
-    color: var(--color-text-muted);
+    width: 76px;
+    height: 42px;
 
-    font-size: 0.72rem;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-medium);
+
+    background: rgba(255, 255, 255, 0.02);
+
+    color: var(--color-primary-hover);
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast);
 }
 
 
+.lucky-intro:hover .lucky-arrow {
+
+    border-color: var(--color-border-light);
+
+    background: rgba(124, 92, 255, 0.08);
+
+    transform: translateX(3px);
+}
+
+
+/* ---------- 滑動區 ---------- */
+
 .lucky-track-wrapper {
 
-    width: 100%;
+    position: relative;
+
+    flex: 1;
+
+    min-width: 0;
 
     overflow: hidden;
 
     border-top: 1px solid var(--color-border);
+
+    border-bottom: 1px solid var(--color-border);
 }
 
 
@@ -81,11 +167,25 @@
 
     width: max-content;
 
+    min-height: 230px;
+
     display: flex;
+
+    align-items: center;
 
     padding: 10px 0;
 
-    animation: luckyScroll 24s linear infinite;
+    /*
+     * 三組內容完全相同。
+     * 從第三組的位置往右移回第一組，
+     * 可以形成左 → 右的無縫循環。
+     */
+
+    animation:
+        luckyScroll
+        12s
+        linear
+        infinite;
 
     will-change: transform;
 }
@@ -95,6 +195,8 @@
 
     display: flex;
 
+    align-items: stretch;
+
     gap: 10px;
 
     flex-shrink: 0;
@@ -103,12 +205,14 @@
 }
 
 
+/* ---------- 幸運玩家卡片 ---------- */
+
 .lucky-item {
 
     width: 150px;
     min-width: 150px;
 
-    height: 190px;
+    height: 210px;
 
     flex-shrink: 0;
 
@@ -122,7 +226,7 @@
 
     gap: 5px;
 
-    padding: 14px;
+    padding: 12px;
 
     background: var(--color-surface);
 
@@ -148,6 +252,8 @@
 }
 
 
+/* ---------- 玩家 ---------- */
+
 .lucky-player {
 
     color: var(--color-text);
@@ -155,6 +261,14 @@
     font-size: 0.8rem;
 
     font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    max-width: 100%;
+
+    text-overflow: ellipsis;
 }
 
 
@@ -162,9 +276,76 @@
 
     color: var(--color-text-muted);
 
-    font-size: 0.7rem;
+    font-size: 0.68rem;
 }
 
+
+/* ---------- 物品圖片 ---------- */
+
+.lucky-image {
+
+    position: relative;
+
+    width: 118px;
+    height: 82px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    margin: 3px 0;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 8px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 0.05),
+            transparent 70%
+        );
+}
+
+
+.lucky-image img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.lucky-image span {
+
+    position: absolute;
+
+    z-index: 1;
+
+    color: rgba(255, 255, 255, 0.18);
+
+    font-size: 0.85rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* ---------- 物品名稱 ---------- */
 
 .item-rarity {
 
@@ -184,32 +365,61 @@
 }
 
 
+/* ---------- 物品資訊 ---------- */
+
 .lucky-value {
 
     color: var(--color-text-muted);
 
-    font-size: 0.68rem;
+    font-size: 0.66rem;
+
+    white-space: nowrap;
 }
 
 
 /* ---------- 幸運玩家動畫 ---------- */
 
+/*
+ * 三組完全相同：
+ *
+ * [第一組][第二組][第三組]
+ *
+ * 從第三組的位置移動到第一組的位置，
+ * 下一輪重新開始時視覺上會完全接上。
+ */
+
 @keyframes luckyScroll {
 
     from {
-        transform: translateX(0);
+
+        transform:
+            translateX(
+                calc(-33.333333% - 3.33px)
+            );
+
     }
 
     to {
-        transform: translateX(
-            calc(-33.333333% - 3.33px)
-        );
+
+        transform:
+            translateX(0);
+
     }
 
 }
 
 
-/* ---------- 稀有度 ---------- */
+/* ---------- 滑鼠移入暫停 ---------- */
+
+.lucky-track-wrapper:hover .lucky-track {
+
+    animation-play-state: paused;
+}
+
+
+/* ========================================
+   稀有度
+   ======================================== */
 
 .rarity-blue {
 
@@ -246,6 +456,7 @@
 .cases-section {
 
     padding: 64px 0 40px;
+
 }
 
 
@@ -257,6 +468,7 @@
         repeat(4, 1fr);
 
     gap: 16px;
+
 }
 
 
@@ -273,6 +485,7 @@
     transition:
         border-color var(--transition-normal),
         transform var(--transition-normal);
+
 }
 
 
@@ -281,6 +494,7 @@
     border-color: var(--color-border-light);
 
     transform: translateY(-3px);
+
 }
 
 
@@ -315,6 +529,7 @@
     letter-spacing: 0.12em;
 
     overflow: hidden;
+
 }
 
 
@@ -327,12 +542,14 @@
             transparent 65%
         ),
         #0d1015;
+
 }
 
 
 .case-info {
 
     padding: 18px;
+
 }
 
 
@@ -341,6 +558,7 @@
     margin-bottom: 16px;
 
     font-size: 0.95rem;
+
 }
 
 
@@ -351,6 +569,7 @@
     align-items: center;
 
     justify-content: space-between;
+
 }
 
 
@@ -361,6 +580,7 @@
     font-size: 0.8rem;
 
     font-weight: 600;
+
 }
 
 
@@ -371,6 +591,7 @@
     font-size: 0.78rem;
 
     font-weight: 600;
+
 }
 
 
@@ -381,6 +602,7 @@
 .items-section {
 
     padding: 40px 0 70px;
+
 }
 
 
@@ -392,6 +614,7 @@
         repeat(4, 1fr);
 
     gap: 16px;
+
 }
 
 
@@ -408,6 +631,7 @@
     transition:
         border-color var(--transition-normal),
         transform var(--transition-normal);
+
 }
 
 
@@ -416,6 +640,7 @@
     border-color: var(--color-border-light);
 
     transform: translateY(-2px);
+
 }
 
 
@@ -441,12 +666,14 @@
     font-size: 1.2rem;
 
     font-weight: 800;
+
 }
 
 
 .item-card-info {
 
     padding: 16px;
+
 }
 
 
@@ -455,6 +682,7 @@
     margin-bottom: 8px;
 
     font-size: 0.85rem;
+
 }
 
 
@@ -463,6 +691,7 @@
     color: var(--color-text-muted);
 
     font-size: 0.75rem;
+
 }
 
 
@@ -473,6 +702,7 @@
 .activity-section {
 
     padding: 0 0 90px;
+
 }
 
 
@@ -485,6 +715,7 @@
     border-radius: var(--radius-large);
 
     background: var(--color-surface);
+
 }
 
 
@@ -512,12 +743,14 @@
     color: var(--color-text-muted);
 
     font-size: 0.78rem;
+
 }
 
 
 .activity-item:last-child {
 
     border-bottom: none;
+
 }
 
 
@@ -526,6 +759,7 @@
     color: var(--color-text);
 
     font-weight: 700;
+
 }
 
 
@@ -534,6 +768,7 @@
     color: var(--color-primary-hover);
 
     font-weight: 600;
+
 }
 
 
@@ -542,6 +777,7 @@
     text-align: right;
 
     color: var(--color-text-muted);
+
 }
 
 
@@ -554,6 +790,7 @@
     border-top: 1px solid var(--color-border);
 
     background: var(--color-surface);
+
 }
 
 
@@ -570,6 +807,7 @@
     color: var(--color-text-muted);
 
     font-size: 0.8rem;
+
 }
 
 
@@ -578,12 +816,14 @@
     color: var(--color-text);
 
     font-weight: 700;
+
 }
 
 
 .footer-container span {
 
     margin-left: auto;
+
 }
 
 
@@ -612,6 +852,7 @@
     color: var(--color-text-muted);
 
     font-size: 0.85rem;
+
 }
 
 
@@ -626,6 +867,7 @@
 
         grid-template-columns:
             repeat(2, 1fr);
+
     }
 
 
@@ -635,18 +877,39 @@
             100px
             auto
             1fr;
+
     }
 
 
     .activity-item strong {
 
         display: none;
+
     }
 
 
     .activity-time {
 
         display: none;
+
+    }
+
+
+    .lucky-intro {
+
+        width: 165px;
+
+        min-width: 165px;
+
+    }
+
+
+    .lucky-item {
+
+        width: 140px;
+
+        min-width: 140px;
+
     }
 
 }
@@ -658,9 +921,98 @@
 
 @media (max-width: 600px) {
 
+    .lucky-intro {
+
+        width: 120px;
+
+        min-width: 120px;
+
+        min-height: 200px;
+
+        padding: 12px;
+
+    }
+
+
+    .lucky-intro-title {
+
+        font-size: 0.7rem;
+
+    }
+
+
+    .lucky-arrow {
+
+        width: 58px;
+
+        height: 36px;
+
+        font-size: 1.1rem;
+
+    }
+
+
+    .lucky-track {
+
+        min-height: 200px;
+
+    }
+
+
+    .lucky-item {
+
+        width: 130px;
+
+        min-width: 130px;
+
+        height: 180px;
+
+        padding: 10px;
+
+    }
+
+
+    .lucky-image {
+
+        width: 102px;
+
+        height: 68px;
+
+    }
+
+
+    .lucky-player {
+
+        font-size: 0.72rem;
+
+    }
+
+
+    .lucky-text {
+
+        font-size: 0.62rem;
+
+    }
+
+
+    .item-rarity {
+
+        font-size: 0.65rem;
+
+    }
+
+
+    .lucky-value {
+
+        font-size: 0.6rem;
+
+    }
+
+
     .cases-section {
 
         padding-top: 42px;
+
     }
 
 
@@ -671,18 +1023,21 @@
             1fr 1fr;
 
         gap: 10px;
+
     }
 
 
     .item-placeholder {
 
         height: 120px;
+
     }
 
 
     .case-info {
 
         padding: 12px;
+
     }
 
 
@@ -691,6 +1046,7 @@
         font-size: 0.8rem;
 
         margin-bottom: 10px;
+
     }
 
 
@@ -698,6 +1054,7 @@
     .case-action {
 
         font-size: 0.7rem;
+
     }
 
 
@@ -710,22 +1067,14 @@
         gap: 7px;
 
         padding: 14px 16px;
+
     }
 
 
     .activity-player {
 
         width: 100%;
-    }
 
-
-    .lucky-item {
-
-        width: 135px;
-
-        min-width: 135px;
-
-        height: 175px;
     }
 
 }
