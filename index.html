@@ -1,8 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>ELOCase</title>
 
@@ -11,232 +17,665 @@
     <link rel="stylesheet" href="css/home.css">
 </head>
 
+
 <body>
 
-    <!-- 導覽列 -->
-    <header class="navbar">
-        <div class="navbar-container">
+<header class="navbar">
 
-            <a href="index.html" class="brand">
-                ELOCase
+    <div class="navbar-container">
+
+        <a href="index.html" class="brand">
+            ELOCase
+        </a>
+
+        <nav class="nav-links">
+
+            <a
+                href="index.html"
+                class="nav-link active"
+            >
+                首頁
             </a>
 
-            <nav class="nav-links">
-                <a href="index.html" class="nav-link active">首頁</a>
-                <a href="cases.html" class="nav-link">開箱</a>
-                <a href="inventory.html" class="nav-link">我的物品</a>
-                <a href="profile.html" class="nav-link">個人資料</a>
-            </nav>
+            <a
+                href="cases.html"
+                class="nav-link"
+            >
+                開箱
+            </a>
 
-            <div class="navbar-actions">
-                <div class="balance">
-                    <span class="balance-label">ELOCoin</span>
-                    <span class="balance-value">0</span>
+            <a
+                href="inventory.html"
+                class="nav-link"
+            >
+                我的物品
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-link"
+            >
+                個人資料
+            </a>
+
+        </nav>
+
+
+        <div class="navbar-actions">
+
+            <div class="balance">
+
+                <span class="balance-label">
+                    ELOCoin
+                </span>
+
+                <span class="balance-value">
+                    0
+                </span>
+
+            </div>
+
+
+            <a
+                href="login.html"
+                class="button button-primary"
+            >
+                登入
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- 最近幸運玩家 -->
+
+    <section class="lucky-section">
+
+        <div class="section-container">
+
+            <div class="live-header">
+
+                <div class="live-title">
+
+                    <span class="live-indicator"></span>
+
+                    <span>
+                        最近幸運玩家
+                    </span>
+
                 </div>
 
-                <a href="login.html" class="button button-primary">
-                    登入
-                </a>
+                <span class="live-label">
+                    即時動態
+                </span>
+
             </div>
 
         </div>
-    </header>
 
 
-    <!-- 主要內容 -->
-    <main>
+        <div class="lucky-track-wrapper">
 
-        <!-- 首頁主視覺 -->
-        <section class="hero">
+            <div class="lucky-track">
 
-            <div class="hero-container">
+                <div class="lucky-item">
 
-                <div class="hero-content">
+                    <span class="lucky-player">
+                        ELO666
+                    </span>
 
-                    <span class="hero-label">
-                        CS2 虛擬物品平台
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-red">
+                        AWP | 赤紅新星
+                    </span>
+
+                    <span class="lucky-value">
+                        3,500 ELOCoin
+                    </span>
+
+                </div>
+
+
+                <div class="lucky-item">
+
+                    <span class="lucky-player">
+                        Player_021
+                    </span>
+
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-pink">
+                        AK-47 | 火蛇
+                    </span>
+
+                    <span class="lucky-value">
+                        2,800 ELOCoin
+                    </span>
+
+                </div>
+
+
+                <div class="lucky-item">
+
+                    <span class="lucky-player">
+                        ELO_BRO
+                    </span>
+
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-purple">
+                        M4A1-S | 暗夜
+                    </span>
+
+                    <span class="lucky-value">
+                        1,650 ELOCoin
+                    </span>
+
+                </div>
+
+
+                <div class="lucky-item">
+
+                    <span class="lucky-player">
+                        Player_114
+                    </span>
+
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-blue">
+                        USP-S | 靜謐
+                    </span>
+
+                    <span class="lucky-value">
+                        850 ELOCoin
+                    </span>
+
+                </div>
+
+
+                <!-- 複製一份，讓滑動可以無縫循環 -->
+
+                <div class="lucky-item">
+
+                    <span class="lucky-player">
+                        ELO666
+                    </span>
+
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-red">
+                        AWP | 赤紅新星
+                    </span>
+
+                    <span class="lucky-value">
+                        3,500 ELOCoin
+                    </span>
+
+                </div>
+
+
+                <div class="lucky-item">
+
+                    <span class="lucky-player">
+                        Player_021
+                    </span>
+
+                    <span class="lucky-text">
+                        開出了
+                    </span>
+
+                    <span class="item-rarity rarity-pink">
+                        AK-47 | 火蛇
+                    </span>
+
+                    <span class="lucky-value">
+                        2,800 ELOCoin
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 箱子 -->
+
+    <section class="cases-section">
+
+        <div class="section-container">
+
+            <div class="section-header section-header-row">
+
+                <div>
+
+                    <span class="section-label">
+                        開箱
                     </span>
 
                     <h1>
-                        探索你的下一件收藏
+                        熱門箱子
                     </h1>
 
                     <p>
-                        開啟箱子，收集 CS2 武器，
-                        建立屬於自己的物品收藏。
+                        選擇箱子，查看其中包含的物品。
                     </p>
 
-                    <div class="hero-actions">
-
-                        <a href="cases.html" class="button button-primary button-large">
-                            查看箱子
-                        </a>
-
-                        <a href="inventory.html" class="button button-secondary button-large">
-                            查看物品
-                        </a>
-
-                    </div>
-
                 </div>
+
+
+                <a
+                    href="cases.html"
+                    class="text-link"
+                >
+                    查看全部
+                </a>
 
             </div>
 
-        </section>
+
+            <div class="case-grid">
 
 
-        <!-- 功能區 -->
-        <section class="features">
+                <a
+                    href="cases.html"
+                    class="case-card"
+                >
 
-            <div class="section-container">
+                    <div class="case-image">
+                        <span>CS2</span>
+                    </div>
 
-                <div class="section-header">
-                    <span class="section-label">平台功能</span>
+                    <div class="case-info">
 
-                    <h2>
-                        ELOCase
-                    </h2>
+                        <h3>
+                            新手箱
+                        </h3>
 
-                    <p>
-                        從開箱開始，逐步建立你的物品收藏。
-                    </p>
-                </div>
+                        <div class="case-bottom">
 
+                            <span class="case-price">
+                                5 ELOCoin
+                            </span>
 
-                <div class="feature-grid">
-
-                    <a href="cases.html" class="feature-card">
-
-                        <div class="feature-icon">
-                            開
-                        </div>
-
-                        <div class="feature-content">
-
-                            <h3>開箱</h3>
-
-                            <p>
-                                開啟不同箱子，獲得隨機 CS2 物品。
-                            </p>
-
-                        </div>
-
-                    </a>
-
-
-                    <div class="feature-card feature-disabled">
-
-                        <div class="feature-icon">
-                            升
-                        </div>
-
-                        <div class="feature-content">
-
-                            <h3>升級</h3>
-
-                            <p>
-                                升級功能即將推出。
-                            </p>
+                            <span class="case-action">
+                                查看
+                            </span>
 
                         </div>
 
                     </div>
 
+                </a>
 
-                    <div class="feature-card feature-disabled">
 
-                        <div class="feature-icon">
-                            交
-                        </div>
+                <a
+                    href="cases.html"
+                    class="case-card"
+                >
 
-                        <div class="feature-content">
+                    <div class="case-image case-image-featured">
+                        <span>CS2</span>
+                    </div>
 
-                            <h3>交易</h3>
+                    <div class="case-info">
 
-                            <p>
-                                與其他玩家交換物品。
-                            </p>
+                        <h3>
+                            精英武器箱
+                        </h3>
+
+                        <div class="case-bottom">
+
+                            <span class="case-price">
+                                15 ELOCoin
+                            </span>
+
+                            <span class="case-action">
+                                查看
+                            </span>
 
                         </div>
 
                     </div>
 
-                </div>
+                </a>
+
+
+                <a
+                    href="cases.html"
+                    class="case-card"
+                >
+
+                    <div class="case-image">
+                        <span>CS2</span>
+                    </div>
+
+                    <div class="case-info">
+
+                        <h3>
+                            高級收藏箱
+                        </h3>
+
+                        <div class="case-bottom">
+
+                            <span class="case-price">
+                                30 ELOCoin
+                            </span>
+
+                            <span class="case-action">
+                                查看
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="cases.html"
+                    class="case-card"
+                >
+
+                    <div class="case-image">
+                        <span>CS2</span>
+                    </div>
+
+                    <div class="case-info">
+
+                        <h3>
+                            稀有武器箱
+                        </h3>
+
+                        <div class="case-bottom">
+
+                            <span class="case-price">
+                                50 ELOCoin
+                            </span>
+
+                            <span class="case-action">
+                                查看
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
 
             </div>
-
-        </section>
-
-
-        <!-- 最近物品 -->
-        <section class="recent-items">
-
-            <div class="section-container">
-
-                <div class="section-header section-header-row">
-
-                    <div>
-                        <span class="section-label">收藏</span>
-
-                        <h2>
-                            最近物品
-                        </h2>
-                    </div>
-
-                    <a href="inventory.html" class="text-link">
-                        查看全部
-                    </a>
-
-                </div>
-
-
-                <div class="empty-state">
-
-                    <div class="empty-state-icon">
-                        —
-                    </div>
-
-                    <h3>
-                        尚未有物品
-                    </h3>
-
-                    <p>
-                        開啟第一個箱子後，你的物品會顯示在這裡。
-                    </p>
-
-                    <a href="cases.html" class="button button-secondary">
-                        前往開箱
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- 頁尾 -->
-    <footer class="footer">
-
-        <div class="footer-container">
-
-            <div class="footer-brand">
-                ELOCase
-            </div>
-
-            <p>
-                CS2 虛擬物品平台
-            </p>
-
-            <span>
-                © 2026 ELOCase
-            </span>
 
         </div>
 
-    </footer>
+    </section>
+
+
+    <!-- 熱門物品 -->
+
+    <section class="items-section">
+
+        <div class="section-container">
+
+            <div class="section-header section-header-row">
+
+                <div>
+
+                    <span class="section-label">
+                        物品
+                    </span>
+
+                    <h2>
+                        熱門物品
+                    </h2>
+
+                </div>
+
+                <a
+                    href="inventory.html"
+                    class="text-link"
+                >
+                    查看全部
+                </a>
+
+            </div>
+
+
+            <div class="item-grid">
+
+
+                <div class="item-card">
+
+                    <div class="item-placeholder rarity-red">
+                        AWP
+                    </div>
+
+                    <div class="item-card-info">
+
+                        <h3>
+                            AWP | 赤紅新星
+                        </h3>
+
+                        <span class="item-price">
+                            3,500 ELOCoin
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="item-card">
+
+                    <div class="item-placeholder rarity-pink">
+                        AK-47
+                    </div>
+
+                    <div class="item-card-info">
+
+                        <h3>
+                            AK-47 | 火蛇
+                        </h3>
+
+                        <span class="item-price">
+                            2,800 ELOCoin
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="item-card">
+
+                    <div class="item-placeholder rarity-purple">
+                        M4A1-S
+                    </div>
+
+                    <div class="item-card-info">
+
+                        <h3>
+                            M4A1-S | 暗夜
+                        </h3>
+
+                        <span class="item-price">
+                            1,650 ELOCoin
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="item-card">
+
+                    <div class="item-placeholder rarity-blue">
+                        USP-S
+                    </div>
+
+                    <div class="item-card-info">
+
+                        <h3>
+                            USP-S | 靜謐
+                        </h3>
+
+                        <span class="item-price">
+                            850 ELOCoin
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 最近活動 -->
+
+    <section class="activity-section">
+
+        <div class="section-container">
+
+            <div class="section-header">
+
+                <span class="section-label">
+                    活動
+                </span>
+
+                <h2>
+                    最近開箱
+                </h2>
+
+            </div>
+
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <span class="activity-player">
+                        ELO666
+                    </span>
+
+                    <span>
+                        開啟了
+                    </span>
+
+                    <strong>
+                        精英武器箱
+                    </strong>
+
+                    <span class="activity-result">
+                        AWP | 赤紅新星
+                    </span>
+
+                    <span class="activity-time">
+                        剛剛
+                    </span>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                    <span class="activity-player">
+                        Player_021
+                    </span>
+
+                    <span>
+                        開啟了
+                    </span>
+
+                    <strong>
+                        高級收藏箱
+                    </strong>
+
+                    <span class="activity-result">
+                        AK-47 | 火蛇
+                    </span>
+
+                    <span class="activity-time">
+                        2 分鐘前
+                    </span>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                    <span class="activity-player">
+                        ELO_BRO
+                    </span>
+
+                    <span>
+                        開啟了
+                    </span>
+
+                    <strong>
+                        新手箱
+                    </strong>
+
+                    <span class="activity-result">
+                        M4A1-S | 暗夜
+                    </span>
+
+                    <span class="activity-time">
+                        5 分鐘前
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+            ELOCase
+        </div>
+
+        <p>
+            CS2 虛擬物品平台
+        </p>
+
+        <span>
+            © 2026 ELOCase
+        </span>
+
+    </div>
+
+</footer>
+
 
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
@@ -245,14 +684,19 @@
 <script src="js/ui.js"></script>
 
 <script>
-    async function initializeHomePage() {
-        const user = await verifySession();
 
-        updateLoginUI(user);
-    }
+async function initializeHomePage() {
 
-    initializeHomePage();
+    const user = await verifySession();
+
+    updateLoginUI(user);
+
+}
+
+initializeHomePage();
+
 </script>
 
 </body>
 </html>
+```
