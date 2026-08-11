@@ -85,7 +85,7 @@
 
     padding: 10px 0;
 
-    animation: luckyScroll 16s linear infinite;
+    animation: luckyScroll 24s linear infinite;
 
     will-change: transform;
 }
@@ -98,6 +98,8 @@
     gap: 10px;
 
     flex-shrink: 0;
+
+    margin-right: 10px;
 }
 
 
@@ -194,16 +196,14 @@
 
 @keyframes luckyScroll {
 
-    0% {
-
+    from {
         transform: translateX(0);
-
     }
 
-    100% {
-
-        transform: translateX(-50%);
-
+    to {
+        transform: translateX(
+            calc(-33.333333% - 3.33px)
+        );
     }
 
 }
