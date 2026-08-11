@@ -1,79 +1,362 @@
-<main id="case-page">
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
-    <section class="case-detail">
+<head>
 
-        <div
-            id="case-image"
-            class="case-detail-image"
-        >
-            ELOCase
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ELOCase - 箱子</title>
+
+    <link
+        rel="stylesheet"
+        href="css/variables.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/cases.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================
+         導覽列
+    ======================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+
+            <!-- 品牌 -->
+
+            <a
+                href="index.html"
+                class="brand"
+            >
+                ELOCase
+            </a>
+
+
+            <!-- 導覽 -->
+
+            <nav class="nav-links">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    首頁
+                </a>
+
+
+                <a
+                    href="cases.html"
+                    class="nav-link active"
+                >
+                    箱子
+                </a>
+
+
+                <a
+                    href="inventory.html"
+                    class="nav-link"
+                >
+                    我的物品
+                </a>
+
+            </nav>
+
+
+            <!-- 右側 -->
+
+            <div class="navbar-actions">
+
+
+                <!-- ELOCoin -->
+
+                <div class="balance">
+
+                    <span class="balance-label">
+                        ELOCoin
+                    </span>
+
+                    <span
+                        class="balance-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- 登入 -->
+
+                <a
+                    href="login.html"
+                    class="button button-primary"
+                >
+                    登入
+                </a>
+
+            </div>
+
         </div>
 
+    </header>
 
-        <div class="case-detail-info">
+
+
+    <!-- ========================================
+         主要內容
+    ======================================== -->
+
+    <main id="case-page">
+
+
+        <!-- ====================================
+             箱子資訊
+        ==================================== -->
+
+        <section class="case-detail">
+
+
+            <!-- 箱子圖片 -->
 
             <div
-                id="case-game"
-                class="case-detail-game"
-            ></div>
+                id="case-image"
+                class="case-detail-image"
+            >
 
-
-            <h1 id="case-name">
-                載入中...
-            </h1>
-
-
-            <p
-                id="case-description"
-                class="case-detail-description"
-            ></p>
-
-
-            <div class="case-detail-bottom">
-
-                <span
-                    id="case-price"
-                    class="case-detail-price"
-                >
-                    $0
+                <span>
+                    ELOCase
                 </span>
 
+            </div>
 
-                <button
-                    type="button"
-                    class="button button-primary"
-                    id="open-case-button"
+
+            <!-- 箱子資訊 -->
+
+            <div class="case-detail-info">
+
+
+                <div
+                    id="case-game"
+                    class="case-detail-game"
                 >
-                    開啟箱子
-                </button>
+                    載入中...
+                </div>
+
+
+                <h1 id="case-name">
+                    載入中...
+                </h1>
+
+
+                <p
+                    id="case-description"
+                    class="case-detail-description"
+                >
+                    載入中...
+                </p>
+
+
+                <div class="case-detail-bottom">
+
+
+                    <span
+                        id="case-price"
+                        class="case-detail-price"
+                    >
+                        $0
+                    </span>
+
+
+                    <button
+                        type="button"
+                        id="open-case-button"
+                        class="button button-primary button-large"
+                    >
+                        開啟箱子
+                    </button>
+
+                </div>
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <section class="case-contents">
 
-        <div class="section-header">
+        <!-- ====================================
+             箱子內容物
+        ==================================== -->
 
-            <h2>箱子內容物</h2>
-
-        </div>
+        <section class="case-contents">
 
 
-        <div
-            id="case-items"
-            class="case-items-grid"
-        >
+            <div class="section-header">
 
-            <div class="case-items-loading">
-                載入中...
+                <div class="section-header-row">
+
+                    <div>
+
+                        <h2>
+                            箱子內容物
+                        </h2>
+
+                    </div>
+
+                </div>
+
             </div>
 
+
+            <div
+                id="case-items"
+                class="case-items-grid"
+            >
+
+                <div class="case-items-loading">
+                    載入中...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ========================================
+         Footer
+    ======================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <span class="footer-brand">
+                ELOCase
+            </span>
+
+            <span>
+                ELOCoin
+            </span>
+
         </div>
 
-    </section>
+    </footer>
 
-</main>
+
+
+    <!-- ========================================
+         JavaScript
+    ======================================== -->
+
+    <script src="js/config.js"></script>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/case.js"></script>
+
+
+    <script>
+
+        /*
+         * ====================================
+         * 導覽列登入狀態
+         * ====================================
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            async () => {
+
+                try {
+
+                    const user =
+                        await verifySession();
+
+
+                    if (!user) {
+                        return;
+                    }
+
+
+                    const balance =
+                        document.querySelector(
+                            ".balance-value"
+                        );
+
+
+                    const loginButton =
+                        document.querySelector(
+                            ".navbar-actions .button"
+                        );
+
+
+                    if (balance) {
+
+                        balance.textContent =
+                            Number(
+                                user.eloCoin || 0
+                            ).toLocaleString();
+
+                    }
+
+
+                    if (loginButton) {
+
+                        loginButton.textContent =
+                            user.displayName ||
+                            user.username ||
+                            "玩家";
+
+
+                        loginButton.href =
+                            "profile.html";
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "玩家資料載入失敗：",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
