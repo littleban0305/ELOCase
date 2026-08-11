@@ -3,7 +3,9 @@
    ======================================== */
 
 
-/* ---------- 最近幸運玩家 ---------- */
+/* ========================================
+   最近幸運玩家
+   ======================================== */
 
 .lucky-section {
 
@@ -67,9 +69,9 @@
 
 .lucky-track-wrapper {
 
-    overflow: hidden;
-
     width: 100%;
+
+    overflow: hidden;
 
     border-top: 1px solid var(--color-border);
 }
@@ -85,7 +87,13 @@
 
     padding: 10px 0;
 
-    animation: luckyScroll 16s linear infinite;
+    animation:
+        luckyScroll
+        16s
+        linear
+        infinite;
+
+    will-change: transform;
 }
 
 
@@ -95,6 +103,8 @@
     min-width: 150px;
 
     height: 190px;
+
+    flex-shrink: 0;
 
     display: flex;
 
@@ -113,8 +123,6 @@
     border: 1px solid var(--color-border);
 
     border-radius: var(--radius-medium);
-
-    white-space: normal;
 
     text-align: center;
 
@@ -178,14 +186,20 @@
 }
 
 
+/* ---------- 幸運玩家動畫 ---------- */
+
 @keyframes luckyScroll {
 
-    from {
+    0% {
+
         transform: translateX(0);
+
     }
 
-    to {
+    100% {
+
         transform: translateX(-50%);
+
     }
 
 }
@@ -194,23 +208,36 @@
 /* ---------- 稀有度 ---------- */
 
 .rarity-blue {
+
     color: #5b9cff;
+
 }
+
 
 .rarity-purple {
+
     color: #a66cff;
+
 }
+
 
 .rarity-pink {
+
     color: #d968d8;
+
 }
+
 
 .rarity-red {
+
     color: #e05b68;
+
 }
 
 
-/* ---------- 箱子區 ---------- */
+/* ========================================
+   箱子區
+   ======================================== */
 
 .cases-section {
 
@@ -255,11 +282,14 @@
 
 .case-image {
 
-    height: 190px;
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     background:
@@ -279,6 +309,8 @@
     font-weight: 800;
 
     letter-spacing: 0.12em;
+
+    overflow: hidden;
 }
 
 
@@ -338,7 +370,9 @@
 }
 
 
-/* ---------- 物品 ---------- */
+/* ========================================
+   熱門物品
+   ======================================== */
 
 .items-section {
 
@@ -388,6 +422,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     background:
@@ -427,7 +462,9 @@
 }
 
 
-/* ---------- 最近活動 ---------- */
+/* ========================================
+   最近活動
+   ======================================== */
 
 .activity-section {
 
@@ -475,6 +512,7 @@
 
 
 .activity-item:last-child {
+
     border-bottom: none;
 }
 
@@ -503,7 +541,9 @@
 }
 
 
-/* ---------- Footer ---------- */
+/* ========================================
+   Footer
+   ======================================== */
 
 .footer {
 
@@ -543,7 +583,37 @@
 }
 
 
-/* ---------- 平板 ---------- */
+/* ========================================
+   載入狀態
+   ======================================== */
+
+.case-loading {
+
+    grid-column: 1 / -1;
+
+    min-height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    color: var(--color-text-muted);
+
+    font-size: 0.85rem;
+}
+
+
+/* ========================================
+   平板
+   ======================================== */
 
 @media (max-width: 1000px) {
 
@@ -561,23 +631,26 @@
             100px
             auto
             1fr;
-
     }
 
 
     .activity-item strong {
+
         display: none;
     }
 
 
     .activity-time {
+
         display: none;
     }
 
 }
 
 
-/* ---------- 手機 ---------- */
+/* ========================================
+   手機
+   ======================================== */
 
 @media (max-width: 600px) {
 
@@ -590,15 +663,10 @@
     .case-grid,
     .item-grid {
 
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+            1fr 1fr;
 
         gap: 10px;
-    }
-
-
-    .case-image {
-
-        height: 140px;
     }
 
 
@@ -650,32 +718,10 @@
     .lucky-item {
 
         width: 135px;
+
         min-width: 135px;
 
         height: 175px;
-
     }
 
-}
-
-.case-loading {
-
-    grid-column: 1 / -1;
-
-    min-height: 180px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: var(--color-surface);
-
-    border: 1px solid var(--color-border);
-
-    border-radius: var(--radius-large);
-
-    color: var(--color-text-muted);
-
-    font-size: 0.85rem;
 }
