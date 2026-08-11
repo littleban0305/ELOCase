@@ -378,3 +378,48 @@
     }
 
 }
+
+/* ========================================
+   Footer
+   ======================================== */
+
+.footer {
+
+    border-top: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+}
+
+
+.footer-container {
+
+    min-height: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.8rem;
+
+}
+
+
+.footer-brand {
+
+    color: var(--color-text);
+
+    font-weight: 700;
+
+}
+
+
+.footer-container span {
+
+    margin-left: auto;
+
+}
