@@ -130,37 +130,29 @@ async function loadInventory() {
                 <div class="inventory-hover">
             
                     <div class="inventory-detail">
-            
-                        <div class="inventory-detail-name">
+                    
+                        <div class="inventory-detail-label">
+                            獲得方式
+                        </div>
+                    
+                        <div class="inventory-detail-source">
                             ${escapeHtml(
-                                item.name ||
-                                "未命名物品"
+                                item.sourceName ||
+                                "未知來源"
                             )}
                         </div>
-            
-            
-                        <div class="inventory-detail-game">
-                            ${escapeHtml(
-                                item.game ||
-                                "CS2"
+                    
+                    
+                        <div class="inventory-detail-label">
+                            取得時間
+                        </div>
+                    
+                        <div class="inventory-detail-date">
+                            ${formatInventoryDate(
+                                item.obtainedAt
                             )}
                         </div>
-            
-            
-                        <div class="inventory-detail-rarity ${rarity}">
-                            ${escapeHtml(
-                                item.rarity ||
-                                "普通"
-                            )}
-                        </div>
-            
-            
-                        <div class="inventory-detail-value">
-                            $${Number(
-                                item.value || 0
-                            ).toLocaleString()}
-                        </div>
-            
+                    
                     </div>
             
             
@@ -382,6 +374,36 @@ function escapeHtml(value) {
 
 }
 
+function formatInventoryDate(value) {
+
+    if (!value) {
+        return "未知時間";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (Number.isNaN(
+        date.getTime()
+    )) {
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleDateString(
+        "zh-TW",
+        {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        }
+    );
+
+}
 
 /* ========================================
    啟動
