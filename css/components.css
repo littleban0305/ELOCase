@@ -3,7 +3,9 @@
    ======================================== */
 
 
-/* ---------- 按鈕 ---------- */
+/* ========================================
+   按鈕
+   ======================================== */
 
 .button {
 
@@ -27,11 +29,14 @@
         background var(--transition-fast),
         border-color var(--transition-fast),
         transform var(--transition-fast);
+
 }
 
 
 .button:hover {
+
     transform: translateY(-1px);
+
 }
 
 
@@ -40,11 +45,14 @@
     background: var(--color-primary);
 
     color: #ffffff;
+
 }
 
 
 .button-primary:hover {
+
     background: var(--color-primary-hover);
+
 }
 
 
@@ -55,6 +63,7 @@
     border: 1px solid var(--color-border);
 
     color: var(--color-text);
+
 }
 
 
@@ -63,6 +72,7 @@
     background: #1c2129;
 
     border-color: var(--color-border-light);
+
 }
 
 
@@ -73,10 +83,13 @@
     padding: 0 24px;
 
     font-size: 0.95rem;
+
 }
 
 
-/* ---------- 導覽列 ---------- */
+/* ========================================
+   導覽列
+   ======================================== */
 
 .navbar {
 
@@ -93,6 +106,7 @@
     border-bottom: 1px solid var(--color-border);
 
     backdrop-filter: blur(16px);
+
 }
 
 
@@ -107,6 +121,7 @@
     justify-content: space-between;
 
     gap: 30px;
+
 }
 
 
@@ -117,6 +132,7 @@
     font-weight: 800;
 
     letter-spacing: -0.03em;
+
 }
 
 
@@ -129,6 +145,7 @@
     gap: 6px;
 
     margin-right: auto;
+
 }
 
 
@@ -145,6 +162,7 @@
     transition:
         color var(--transition-fast),
         background var(--transition-fast);
+
 }
 
 
@@ -154,56 +172,176 @@
     color: var(--color-text);
 
     background: var(--color-surface);
+
 }
 
+
+/* ========================================
+   Navbar 右側
+   ======================================== */
 
 .navbar-actions {
 
-    display: flex;
+    display: flex !important;
 
-    align-items: center;
+    flex-direction: row !important;
 
-    gap: 14px;
+    align-items: center !important;
+
+    justify-content: flex-end !important;
+
+    gap: 10px !important;
+
 }
 
 
-/* ---------- 餘額 ---------- */
+/* ========================================
+   ELOCoin 餘額
+   ======================================== */
 
 .balance {
 
-    display: flex;
+    min-width: 125px !important;
 
-    flex-direction: column;
+    height: 38px !important;
 
-    align-items: flex-end;
+    display: grid !important;
 
-    line-height: 1.2;
+    grid-template-columns: auto auto !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    column-gap: 8px !important;
+
+    padding: 0 14px !important;
+
+    margin: 0 !important;
+
+    box-sizing: border-box !important;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 10px;
+
+    white-space: nowrap;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+
+}
+
+
+.balance:hover {
+
+    background: rgba(255, 255, 255, 0.055);
+
+    border-color: var(--color-border-light);
+
 }
 
 
 .balance-label {
 
+    display: block !important;
+
+    width: auto !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
     color: var(--color-text-muted);
 
-    font-size: 0.7rem;
+    font-size: 0.68rem;
+
+    font-weight: 600;
+
+    line-height: 1 !important;
+
+    white-space: nowrap;
+
 }
 
 
 .balance-value {
 
+    display: block !important;
+
+    width: auto !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
     color: var(--color-text);
 
-    font-size: 0.9rem;
+    font-size: 0.82rem;
 
     font-weight: 700;
+
+    line-height: 1 !important;
+
+    font-variant-numeric: tabular-nums;
+
+    white-space: nowrap;
+
 }
 
 
-/* ---------- Section ---------- */
+/* ========================================
+   登入
+   ======================================== */
+
+.navbar-actions .button-primary {
+
+    min-height: 38px !important;
+
+    height: 38px !important;
+
+    display: inline-flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    padding: 0 16px !important;
+
+    margin: 0 !important;
+
+    border-radius: 10px;
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ========================================
+   Section
+   ======================================== */
 
 .section-header {
 
     margin-bottom: 32px;
+
 }
 
 
@@ -216,6 +354,7 @@
     justify-content: space-between;
 
     gap: 20px;
+
 }
 
 
@@ -232,11 +371,14 @@
     font-weight: 700;
 
     letter-spacing: 0.08em;
+
 }
 
 
 .section-header h2 {
+
     margin-bottom: 8px;
+
 }
 
 
@@ -246,16 +388,22 @@
 
     font-size: 0.85rem;
 
-    transition: color var(--transition-fast);
+    transition:
+        color var(--transition-fast);
+
 }
 
 
 .text-link:hover {
+
     color: var(--color-text);
+
 }
 
 
-/* ---------- 功能卡片 ---------- */
+/* ========================================
+   功能卡片
+   ======================================== */
 
 .feature-grid {
 
@@ -265,6 +413,7 @@
         repeat(3, 1fr);
 
     gap: 16px;
+
 }
 
 
@@ -285,6 +434,7 @@
     transition:
         border-color var(--transition-normal),
         transform var(--transition-normal);
+
 }
 
 
@@ -293,6 +443,7 @@
     border-color: var(--color-border-light);
 
     transform: translateY(-2px);
+
 }
 
 
@@ -315,21 +466,28 @@
     color: var(--color-primary);
 
     font-weight: 700;
+
 }
 
 
 .feature-content h3 {
+
     margin-bottom: 6px;
+
 }
 
 
 .feature-content p {
+
     font-size: 0.85rem;
+
 }
 
 
 .feature-disabled {
+
     opacity: 0.55;
+
 }
 
 
@@ -338,10 +496,13 @@
     transform: none;
 
     border-color: var(--color-border);
+
 }
 
 
-/* ---------- 空狀態 ---------- */
+/* ========================================
+   空狀態
+   ======================================== */
 
 .empty-state {
 
@@ -360,6 +521,7 @@
     border: 1px solid var(--color-border);
 
     border-radius: var(--radius-large);
+
 }
 
 
@@ -382,11 +544,14 @@
     color: var(--color-text-muted);
 
     font-size: 1.3rem;
+
 }
 
 
 .empty-state h3 {
+
     margin-bottom: 8px;
+
 }
 
 
@@ -397,23 +562,58 @@
     margin-bottom: 24px;
 
     font-size: 0.85rem;
+
 }
 
 
-/* ---------- 手機版 ---------- */
+/* ========================================
+   手機版
+   ======================================== */
 
 @media (max-width: 800px) {
 
     .nav-links {
+
         display: none;
+
     }
+
 
     .feature-grid {
+
         grid-template-columns: 1fr;
+
     }
 
+
     .balance {
-        display: none;
+
+        display: none !important;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .navbar-actions {
+
+        gap: 7px !important;
+
+    }
+
+
+    .navbar-actions .button-primary {
+
+        min-height: 34px !important;
+
+        height: 34px !important;
+
+        padding: 0 11px !important;
+
+        font-size: 0.7rem;
+
     }
 
 }
@@ -424,168 +624,32 @@
     .section-container,
     .navbar-container,
     .footer-container {
+
         width: min(
             calc(100% - 24px),
             var(--content-width)
         );
+
     }
+
 
     .navbar {
+
         height: 62px;
+
     }
+
 
     .hero-actions {
+
         flex-direction: column;
+
     }
+
 
     .button-large {
+
         width: 100%;
-    }
-
-}
-
-/* ========================================
-   ELOCase - Navbar 右側
-   ======================================== */
-
-.navbar-actions {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-}
-
-
-/* ---------- ELOCoin 餘額 ---------- */
-
-.balance {
-
-    min-height: 38px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 0 13px;
-
-    background: rgba(255, 255, 255, 0.035);
-
-    border: 1px solid var(--color-border);
-
-    border-radius: 10px;
-
-    transition:
-        border-color var(--transition-fast),
-        background var(--transition-fast);
-}
-
-
-.balance:hover {
-
-    background: rgba(255, 255, 255, 0.055);
-
-    border-color: var(--color-border-light);
-
-}
-
-
-.balance-label {
-
-    color: var(--color-text-muted);
-
-    font-size: 0.68rem;
-
-    font-weight: 600;
-
-}
-
-
-.balance-value {
-
-    color: var(--color-text);
-
-    font-size: 0.82rem;
-
-    font-weight: 700;
-
-    font-variant-numeric: tabular-nums;
-
-}
-
-
-/* ---------- 登入 ---------- */
-
-.navbar-actions .button-primary {
-
-    min-height: 38px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 0 16px;
-
-    border-radius: 10px;
-
-    font-size: 0.76rem;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-
-}
-
-
-/* ---------- 手機 ---------- */
-
-@media (max-width: 700px) {
-
-    .navbar-actions {
-
-        gap: 7px;
-
-    }
-
-
-    .balance {
-
-        min-height: 34px;
-
-        gap: 5px;
-
-        padding: 0 9px;
-
-    }
-
-
-    .balance-label {
-
-        font-size: 0.62rem;
-
-    }
-
-
-    .balance-value {
-
-        font-size: 0.75rem;
-
-    }
-
-
-    .navbar-actions .button-primary {
-
-        min-height: 34px;
-
-        padding: 0 11px;
-
-        font-size: 0.7rem;
 
     }
 
