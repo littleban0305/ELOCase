@@ -83,17 +83,21 @@
 
     display: flex;
 
-    gap: 10px;
-
     padding: 10px 0;
 
-    animation:
-        luckyScroll
-        16s
-        linear
-        infinite;
+    animation: luckyScroll 16s linear infinite;
 
     will-change: transform;
+}
+
+
+.lucky-group {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-shrink: 0;
 }
 
 
