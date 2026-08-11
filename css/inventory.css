@@ -293,3 +293,176 @@
     }
 
 }
+
+/* ========================================
+   物品卡片互動層
+   ======================================== */
+
+.inventory-card {
+    position: relative;
+}
+
+
+/* ---------- 圖片區 ---------- */
+
+.inventory-image {
+    transition:
+        filter var(--transition-normal),
+        opacity var(--transition-normal);
+}
+
+
+/* ---------- 滑鼠操作層 ---------- */
+
+.inventory-actions {
+    position: absolute;
+
+    inset: 0 0 auto 0;
+
+    height: calc(
+        100% - 78px
+    );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 16px;
+
+    background:
+        rgba(9, 11, 15, 0.62);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity var(--transition-fast),
+        backdrop-filter var(--transition-fast);
+}
+
+
+/* ---------- 滑入 ---------- */
+
+.inventory-card:hover
+.inventory-actions {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    backdrop-filter: blur(5px);
+}
+
+
+.inventory-card:hover
+.inventory-image {
+
+    filter: blur(4px);
+
+    opacity: 0.5;
+}
+
+
+/* ---------- 操作按鈕 ---------- */
+
+.inventory-action {
+
+    min-width: 72px;
+
+    height: 34px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 12px;
+
+    border: 1px solid
+        var(--color-border-light);
+
+    border-radius: 8px;
+
+    background:
+        rgba(20, 24, 31, 0.92);
+
+    color: var(--color-text);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.inventory-action:hover {
+
+    background:
+        var(--color-surface-light);
+
+    border-color:
+        var(--color-primary);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ---------- 手機 ---------- */
+
+@media (max-width: 800px) {
+
+    .inventory-actions {
+
+        height: calc(
+            100% - 72px
+        );
+
+    }
+
+}
+
+
+@media (hover: none) {
+
+    .inventory-actions {
+
+        opacity: 1;
+
+        pointer-events: auto;
+
+        background:
+            linear-gradient(
+                to top,
+                rgba(9, 11, 15, 0.75),
+                transparent
+            );
+
+        align-items: flex-end;
+
+        padding-bottom: 10px;
+
+    }
+
+    .inventory-card
+    .inventory-image {
+
+        filter: none;
+
+        opacity: 1;
+
+    }
+
+}
