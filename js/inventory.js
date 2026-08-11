@@ -32,7 +32,8 @@ async function loadInventory() {
 
         items =
             await getInventory(
-                user.playerId || user.userId
+                user.userId
+            );
             );
 
         if (!Array.isArray(items)) {
