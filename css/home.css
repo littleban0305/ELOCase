@@ -3,7 +3,80 @@
    ======================================== */
 
 
+/* ---------- 最近幸運玩家 ---------- */
+
+.lucky-section {
+
+    overflow: hidden;
+
+    border-bottom: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+}
+
+
+.live-header {
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.live-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--color-text);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+}
+
+
+.live-indicator {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--color-success);
+
+    box-shadow:
+        0 0 0 4px rgba(53, 199, 138, 0.1);
+}
+
+
+.live-label {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.72rem;
+}
+
+
+.lucky-track-wrapper {
+
+    overflow: hidden;
+
+    width: 100%;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
 .lucky-track {
+
     width: max-content;
 
     display: flex;
@@ -104,16 +177,15 @@
     font-size: 0.68rem;
 }
 
-@media (max-width: 600px) {
 
-    .lucky-item {
+@keyframes luckyScroll {
 
-        width: 135px;
+    from {
+        transform: translateX(0);
+    }
 
-        min-width: 135px;
-
-        height: 175px;
-
+    to {
+        transform: translateX(-50%);
     }
 
 }
@@ -125,16 +197,13 @@
     color: #5b9cff;
 }
 
-
 .rarity-purple {
     color: #a66cff;
 }
 
-
 .rarity-pink {
     color: #d968d8;
 }
-
 
 .rarity-red {
     color: #e05b68;
@@ -580,7 +649,11 @@
 
     .lucky-item {
 
-        padding: 0 20px;
+        width: 135px;
+        min-width: 135px;
+
+        height: 175px;
+
     }
 
 }
