@@ -43,13 +43,12 @@ async function getCase(caseId) {
     );
 }
 
-async function getInventory(playerId) {
+async function getInventory(userId) {
 
     return await sendApiRequest(
         "getInventory",
         {
-            playerId
+            userId
         }
     );
-
 }
