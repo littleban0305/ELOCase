@@ -44,35 +44,35 @@
             <!-- 導覽 -->
 
             <nav class="nav-links">
-    
+
                 <a
                     href="index.html"
-                    class="nav-link active"
+                    class="nav-link"
                 >
                     首頁
                 </a>
-    
+
                 <a
                     href="cases.html"
-                    class="nav-link"
+                    class="nav-link active"
                 >
                     開箱
                 </a>
-    
+
                 <a
                     href="inventory.html"
                     class="nav-link"
                 >
                     我的物品
                 </a>
-    
+
                 <a
                     href="profile.html"
                     class="nav-link"
                 >
                     個人資料
                 </a>
-    
+
             </nav>
 
 
@@ -81,18 +81,14 @@
             <div class="navbar-actions">
 
 
-                <!-- ELOCoin -->
+                <!-- 餘額 -->
 
                 <div class="balance">
-
-                    <span class="balance-label">
-                        ELOCoin
-                    </span>
 
                     <span
                         class="balance-value"
                     >
-                        0
+                        $0
                     </span>
 
                 </div>
@@ -250,10 +246,6 @@
                 ELOCase
             </span>
 
-            <span>
-                ELOCoin
-            </span>
-
         </div>
 
     </footer>
@@ -311,9 +303,9 @@
                     if (balance) {
 
                         balance.textContent =
-                            Number(
+                            `$${Number(
                                 user.eloCoin || 0
-                            ).toLocaleString();
+                            ).toLocaleString()}`;
 
                     }
 
