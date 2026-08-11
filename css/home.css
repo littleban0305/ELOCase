@@ -3,37 +3,65 @@
    ======================================== */
 
 
-/* ---------- 最近幸運玩家 ---------- */
+.lucky-track {
+    width: max-content;
 
-.lucky-section {
+    display: flex;
 
-    overflow: hidden;
+    gap: 10px;
 
-    border-bottom: 1px solid var(--color-border);
+    padding: 10px 0;
+
+    animation: luckyScroll 16s linear infinite;
+}
+
+
+.lucky-item {
+
+    width: 150px;
+    min-width: 150px;
+
+    height: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 14px;
 
     background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-medium);
+
+    white-space: normal;
+
+    text-align: center;
+
+    font-size: 0.75rem;
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
 }
 
 
-.live-header {
+.lucky-item:hover {
 
-    height: 48px;
+    border-color: var(--color-border-light);
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
+    transform: translateY(-2px);
 }
 
 
-.live-title {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 9px;
+.lucky-player {
 
     color: var(--color-text);
 
@@ -43,84 +71,29 @@
 }
 
 
-.live-indicator {
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--color-success);
-
-    box-shadow:
-        0 0 0 4px rgba(53, 199, 138, 0.1);
-}
-
-
-.live-label {
-
-    color: var(--color-text-muted);
-
-    font-size: 0.72rem;
-}
-
-
-.lucky-track-wrapper {
-
-    overflow: hidden;
-
-    width: 100%;
-
-    border-top: 1px solid var(--color-border);
-}
-
-
-.lucky-track {
-   
-    width: max-content;
-
-    display: flex;
-
-    animation: luckyScroll 16s linear infinite;
-}
-
-.lucky-item {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    height: 52px;
-
-    padding: 0 28px;
-
-    border-right: 1px solid var(--color-border);
-
-    white-space: nowrap;
-
-    font-size: 0.78rem;
-}
-
-
-.lucky-player {
-
-    color: var(--color-text);
-
-    font-weight: 700;
-}
-
-
 .lucky-text {
 
     color: var(--color-text-muted);
+
+    font-size: 0.7rem;
 }
 
 
 .item-rarity {
 
+    width: 100%;
+
+    overflow: hidden;
+
+    color: var(--color-text);
+
+    font-size: 0.72rem;
+
     font-weight: 700;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
 
@@ -128,18 +101,19 @@
 
     color: var(--color-text-muted);
 
-    font-size: 0.72rem;
+    font-size: 0.68rem;
 }
 
+@media (max-width: 600px) {
 
-@keyframes luckyScroll {
+    .lucky-item {
 
-    from {
-        transform: translateX(0);
-    }
+        width: 135px;
 
-    to {
-        transform: translateX(-50%);
+        min-width: 135px;
+
+        height: 175px;
+
     }
 
 }
