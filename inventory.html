@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的物品｜ELOCase</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/inventory.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="navbar-container">
+
+        <a href="index.html" class="brand">
+            ELOCase
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html" class="nav-link">
+                首頁
+            </a>
+
+            <a href="cases.html" class="nav-link">
+                開箱
+            </a>
+
+            <a href="inventory.html" class="nav-link active">
+                我的物品
+            </a>
+
+            <a href="profile.html" class="nav-link">
+                個人資料
+            </a>
+
+        </nav>
+
+        <div class="navbar-actions">
+
+            <div class="balance">
+
+                <span class="balance-label">$</span>
+
+                <span
+                    class="balance-value"
+                    id="navbar-balance"
+                >
+                    50
+                </span>
+
+            </div>
+
+            <a
+                href="login.html"
+                class="button button-primary"
+                id="navbar-account"
+            >
+                登入
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="section-container inventory-page">
+
+        <div class="section-header">
+
+            <span class="section-label">
+                收藏
+            </span>
+
+            <h1>
+                我的物品
+            </h1>
+
+            <p class="inventory-description">
+                查看你目前擁有的所有物品。
+            </p>
+
+        </div>
+
+
+        <div class="inventory-toolbar">
+
+            <div class="inventory-count">
+                共 <strong id="inventory-count">0</strong> 件物品
+            </div>
+
+            <label class="inventory-search">
+
+                <span>搜尋物品</span>
+
+                <input
+                    id="inventory-search"
+                    type="search"
+                    placeholder="輸入武器或造型名稱"
+                    autocomplete="off"
+                >
+
+            </label>
+
+        </div>
+
+
+        <div
+            id="inventory-grid"
+            class="inventory-grid"
+        >
+
+            <div class="inventory-loading">
+                正在載入物品...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/inventory.js"></script>
+
+</body>
+
+</html>
