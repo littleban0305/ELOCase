@@ -76,14 +76,13 @@
 
 
 .lucky-track {
-
+   
     width: max-content;
 
     display: flex;
 
-    animation: luckyScroll 35s linear infinite;
+    animation: luckyScroll 16s linear infinite;
 }
-
 
 .lucky-item {
 
