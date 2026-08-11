@@ -10,11 +10,22 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>ELOCase - 開箱</title>
+    <title>開箱｜ELOCase</title>
 
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/cases.css">
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/cases.css"
+    >
 
 </head>
 
@@ -79,7 +90,9 @@
             </nav>
 
 
-            <!-- 右側 -->
+            <!-- ====================================
+                 右側
+            ==================================== -->
 
             <div class="navbar-actions">
 
@@ -95,61 +108,64 @@
                     <span
                         class="balance-value"
                     >
-                        50
+                        0
                     </span>
 
                 </div>
 
 
-                <!-- 登入 -->
+                <!-- 玩家選單 -->
 
                 <div class="player-menu">
-                
+
+
                     <button
                         type="button"
                         class="player-menu-button"
                         id="player-menu-button"
                     >
-                
+
                         <span class="player-avatar">
                             ◉
                         </span>
-                
+
+
                         <span
                             class="player-menu-name"
                             id="navbar-player-name"
                         >
                             登入
                         </span>
-                
+
+
                         <span class="player-menu-arrow">
                             ▾
                         </span>
-                
+
                     </button>
-                
-                
+
+
                     <div
                         class="player-menu-dropdown"
                         id="player-menu-dropdown"
                     >
-                
+
                         <a
                             href="profile.html"
                             class="player-menu-item"
                         >
                             個人資料
                         </a>
-                
-                
+
+
                         <a
                             href="inventory.html"
                             class="player-menu-item"
                         >
                             我的物品
                         </a>
-                
-                
+
+
                         <button
                             type="button"
                             class="player-menu-item player-menu-logout"
@@ -157,9 +173,9 @@
                         >
                             登出
                         </button>
-                
+
                     </div>
-                
+
                 </div>
 
             </div>
@@ -181,13 +197,16 @@
             <div class="section-container">
 
 
-                <!-- 頁面標題 -->
+                <!-- ====================================
+                     頁面標題
+                ==================================== -->
 
                 <div class="cases-header">
 
                     <span class="section-label">
                         開箱
                     </span>
+
 
                     <h1>
                         箱子
@@ -196,7 +215,9 @@
                 </div>
 
 
-                <!-- 箱子列表 -->
+                <!-- ====================================
+                     箱子列表
+                ==================================== -->
 
                 <div
                     id="case-grid"
@@ -261,66 +282,78 @@
 
     <script>
 
-        /*
-         * ====================================
-         * 載入箱子
-         * ====================================
-         */
+        /* ========================================
+           初始化
+        ======================================== */
 
-        async function initializeCasesPage() {
+        document.addEventListener(
+            "DOMContentLoaded",
+            async () => {
 
-            const caseGrid =
-                document.querySelector(
-                    "#case-grid"
-                );
+                try {
+
+                    /*
+                     * ------------------------------
+                     * 載入玩家資料
+                     * ------------------------------
+                     */
+
+                    const user =
+                        await verifySession();
 
 
-            if (!caseGrid) {
-                return;
+                    updateLoginUI(
+                        user
+                    );
+
+
+                    /*
+                     * ------------------------------
+                     * 載入箱子
+                     * ------------------------------
+                     */
+
+                    const cases =
+                        await getCases();
+
+
+                    renderCases(
+                        cases
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "開箱頁載入失敗：",
+                        error
+                    );
+
+
+                    const container =
+                        document.querySelector(
+                            "#case-grid"
+                        );
+
+
+                    if (container) {
+
+                        container.innerHTML = `
+
+                            <div class="case-loading">
+
+                                箱子資料載入失敗
+
+                            </div>
+
+                        `;
+
+                    }
+
+                }
+
             }
-
-
-            try {
-
-                const cases =
-                    await getCases();
-
-
-                renderCases(
-                    cases
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "箱子資料載入失敗：",
-                    error
-                );
-
-
-                caseGrid.innerHTML = `
-
-                    <div class="case-loading">
-
-                        箱子資料載入失敗。
-
-                    </div>
-
-                `;
-
-            }
-
-        }
-
-
-        /*
-         * ====================================
-         * 初始化
-         * ====================================
-         */
-
-        initializeCasesPage();
+        );
 
     </script>
 
