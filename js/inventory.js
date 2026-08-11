@@ -34,7 +34,6 @@ async function loadInventory() {
             await getInventory(
                 user.userId
             );
-            );
 
         if (!Array.isArray(items)) {
             items = [];
