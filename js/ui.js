@@ -45,10 +45,9 @@ function createCaseCard(caseData) {
             <div class="case-bottom">
 
                 <span class="case-price">
-                    ${Number(
+                    $${Number(
                         caseData.price
                     ).toLocaleString()}
-                    ELOCoin
                 </span>
 
                 <span class="case-action">
