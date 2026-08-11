@@ -131,11 +131,11 @@ async function loadInventory() {
             
                     <div class="inventory-detail">
                     
-                        <div class="inventory-detail-label">
-                            獲得方式
-                        </div>
-                    
                         <div class="inventory-detail-source">
+                            <span class="inventory-detail-label">
+                                取得方式：
+                            </span>
+                        
                             ${escapeHtml(
                                 item.sourceName ||
                                 "未知來源"
@@ -143,11 +143,11 @@ async function loadInventory() {
                         </div>
                     
                     
-                        <div class="inventory-detail-label">
-                            取得時間
-                        </div>
-                    
                         <div class="inventory-detail-date">
+                            <span class="inventory-detail-label">
+                                取得時間：
+                            </span>
+                        
                             ${formatInventoryDate(
                                 item.obtainedAt
                             )}
