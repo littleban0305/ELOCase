@@ -295,15 +295,16 @@
 }
 
 /* ========================================
-   物品卡片互動層
+   物品卡片 Hover 詳細資訊
    ======================================== */
 
 .inventory-card {
     position: relative;
+    overflow: hidden;
 }
 
 
-/* ---------- 圖片區 ---------- */
+/* ---------- 圖片 ---------- */
 
 .inventory-image {
     transition:
@@ -312,16 +313,126 @@
 }
 
 
-/* ---------- 滑鼠操作層 ---------- */
+/* ---------- Hover 詳情 ---------- */
 
-.inventory-actions {
+.inventory-hover {
     position: absolute;
 
-    inset: 0 0 auto 0;
+    inset: 0 0 70px 0;
 
-    height: calc(
-        100% - 78px
-    );
+    z-index: 5;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    background:
+        rgba(9, 11, 15, 0.68);
+
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity var(--transition-fast);
+}
+
+
+/* ---------- 滑入 ---------- */
+
+.inventory-card:hover
+.inventory-hover {
+
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+.inventory-card:hover
+.inventory-image {
+
+    filter: blur(5px);
+
+    opacity: 0.45;
+}
+
+
+/* ---------- 詳情 ---------- */
+
+.inventory-detail {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    gap: 5px;
+}
+
+
+.inventory-detail-name {
+
+    max-width: 100%;
+
+    color: var(--color-text);
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.inventory-detail-game {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.68rem;
+}
+
+
+.inventory-detail-rarity {
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+}
+
+
+.inventory-detail-value {
+
+    margin-top: 3px;
+
+    color: var(--color-text);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+}
+
+
+/* ---------- 按鈕 ---------- */
+
+.inventory-actions {
 
     display: flex;
 
@@ -330,57 +441,14 @@
     justify-content: center;
 
     gap: 8px;
-
-    padding: 16px;
-
-    background:
-        rgba(9, 11, 15, 0.62);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition:
-        opacity var(--transition-fast),
-        backdrop-filter var(--transition-fast);
 }
 
-
-/* ---------- 滑入 ---------- */
-
-.inventory-card:hover
-.inventory-actions {
-
-    opacity: 1;
-
-    pointer-events: auto;
-
-    backdrop-filter: blur(5px);
-}
-
-
-.inventory-card:hover
-.inventory-image {
-
-    filter: blur(4px);
-
-    opacity: 0.5;
-}
-
-
-/* ---------- 操作按鈕 ---------- */
 
 .inventory-action {
 
-    min-width: 72px;
+    min-width: 68px;
 
-    height: 34px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
+    height: 32px;
 
     padding: 0 12px;
 
@@ -390,11 +458,11 @@
     border-radius: 8px;
 
     background:
-        rgba(20, 24, 31, 0.92);
+        rgba(20, 24, 31, 0.94);
 
     color: var(--color-text);
 
-    font-size: 0.72rem;
+    font-size: 0.7rem;
 
     font-weight: 700;
 
@@ -422,22 +490,9 @@
 
 /* ---------- 手機 ---------- */
 
-@media (max-width: 800px) {
-
-    .inventory-actions {
-
-        height: calc(
-            100% - 72px
-        );
-
-    }
-
-}
-
-
 @media (hover: none) {
 
-    .inventory-actions {
+    .inventory-hover {
 
         opacity: 1;
 
@@ -446,13 +501,13 @@
         background:
             linear-gradient(
                 to top,
-                rgba(9, 11, 15, 0.75),
-                transparent
+                rgba(9, 11, 15, 0.82),
+                rgba(9, 11, 15, 0.15)
             );
 
-        align-items: flex-end;
+        justify-content: flex-end;
 
-        padding-bottom: 10px;
+        padding-bottom: 12px;
 
     }
 
