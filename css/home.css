@@ -3,95 +3,461 @@
    ======================================== */
 
 
-/* ---------- Hero ---------- */
+/* ---------- 最近幸運玩家 ---------- */
 
-.hero {
+.lucky-section {
 
-    min-height: 600px;
+    overflow: hidden;
+
+    border-bottom: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+}
+
+
+.live-header {
+
+    height: 48px;
 
     display: flex;
 
     align-items: center;
 
+    justify-content: space-between;
+}
+
+
+.live-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--color-text);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+}
+
+
+.live-indicator {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--color-success);
+
+    box-shadow:
+        0 0 0 4px rgba(53, 199, 138, 0.1);
+}
+
+
+.live-label {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.72rem;
+}
+
+
+.lucky-track-wrapper {
+
+    overflow: hidden;
+
+    width: 100%;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+.lucky-track {
+
+    width: max-content;
+
+    display: flex;
+
+    animation: luckyScroll 35s linear infinite;
+}
+
+
+.lucky-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    height: 52px;
+
+    padding: 0 28px;
+
+    border-right: 1px solid var(--color-border);
+
+    white-space: nowrap;
+
+    font-size: 0.78rem;
+}
+
+
+.lucky-player {
+
+    color: var(--color-text);
+
+    font-weight: 700;
+}
+
+
+.lucky-text {
+
+    color: var(--color-text-muted);
+}
+
+
+.item-rarity {
+
+    font-weight: 700;
+}
+
+
+.lucky-value {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.72rem;
+}
+
+
+@keyframes luckyScroll {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+
+}
+
+
+/* ---------- 稀有度 ---------- */
+
+.rarity-blue {
+    color: #5b9cff;
+}
+
+
+.rarity-purple {
+    color: #a66cff;
+}
+
+
+.rarity-pink {
+    color: #d968d8;
+}
+
+
+.rarity-red {
+    color: #e05b68;
+}
+
+
+/* ---------- 箱子區 ---------- */
+
+.cases-section {
+
+    padding: 64px 0 40px;
+}
+
+
+.case-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+}
+
+
+.case-card {
+
+    overflow: hidden;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    transition:
+        border-color var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+
+.case-card:hover {
+
+    border-color: var(--color-border-light);
+
+    transform: translateY(-3px);
+}
+
+
+.case-image {
+
+    height: 190px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124, 92, 255, 0.18),
+            transparent 65%
+        ),
+        #0d1015;
+
     border-bottom: 1px solid var(--color-border);
+
+    color: rgba(255, 255, 255, 0.16);
+
+    font-size: 2rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
 }
 
 
-.hero-container {
+.case-image-featured {
 
-    width: min(
-        calc(100% - 40px),
-        var(--content-width)
-    );
-
-    margin: 0 auto;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(224, 91, 104, 0.18),
+            transparent 65%
+        ),
+        #0d1015;
 }
 
 
-.hero-content {
-    max-width: 760px;
+.case-info {
+
+    padding: 18px;
 }
 
 
-.hero-label {
+.case-info h3 {
 
-    display: inline-block;
+    margin-bottom: 16px;
 
-    margin-bottom: 18px;
+    font-size: 0.95rem;
+}
 
-    padding: 6px 10px;
 
-    border: 1px solid rgba(124, 92, 255, 0.25);
+.case-bottom {
 
-    border-radius: 999px;
+    display: flex;
 
-    background: rgba(124, 92, 255, 0.08);
+    align-items: center;
 
-    color: var(--color-primary-hover);
+    justify-content: space-between;
+}
 
-    font-size: 0.75rem;
+
+.case-price {
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.8rem;
 
     font-weight: 600;
 }
 
 
-.hero h1 {
+.case-action {
 
-    margin-bottom: 22px;
+    color: var(--color-primary-hover);
 
-    letter-spacing: -0.04em;
+    font-size: 0.78rem;
+
+    font-weight: 600;
 }
 
 
-.hero p {
+/* ---------- 物品 ---------- */
 
-    max-width: 600px;
+.items-section {
 
-    margin-bottom: 32px;
-
-    font-size: 1.05rem;
+    padding: 40px 0 70px;
 }
 
 
-.hero-actions {
+.item-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+}
+
+
+.item-card {
+
+    overflow: hidden;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    transition:
+        border-color var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+
+.item-card:hover {
+
+    border-color: var(--color-border-light);
+
+    transform: translateY(-2px);
+}
+
+
+.item-placeholder {
+
+    height: 160px;
 
     display: flex;
 
-    gap: 12px;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+
+    font-size: 1.2rem;
+
+    font-weight: 800;
 }
 
 
-/* ---------- Features ---------- */
+.item-card-info {
 
-.features {
-
-    padding: 100px 0;
+    padding: 16px;
 }
 
 
-.recent-items {
+.item-card-info h3 {
 
-    padding: 0 0 100px;
+    margin-bottom: 8px;
+
+    font-size: 0.85rem;
+}
+
+
+.item-price {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.75rem;
+}
+
+
+/* ---------- 最近活動 ---------- */
+
+.activity-section {
+
+    padding: 0 0 90px;
+}
+
+
+.activity-list {
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    background: var(--color-surface);
+}
+
+
+.activity-item {
+
+    min-height: 60px;
+
+    display: grid;
+
+    grid-template-columns:
+        120px
+        auto
+        minmax(140px, 1fr)
+        minmax(160px, 1.5fr)
+        80px;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text-muted);
+
+    font-size: 0.78rem;
+}
+
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+
+.activity-player {
+
+    color: var(--color-text);
+
+    font-weight: 700;
+}
+
+
+.activity-result {
+
+    color: var(--color-primary-hover);
+
+    font-weight: 600;
+}
+
+
+.activity-time {
+
+    text-align: right;
+
+    color: var(--color-text-muted);
 }
 
 
@@ -132,48 +498,116 @@
 .footer-container span {
 
     margin-left: auto;
-
-    color: var(--color-text-muted);
 }
 
 
-/* ---------- 手機版 ---------- */
+/* ---------- 平板 ---------- */
+
+@media (max-width: 1000px) {
+
+    .case-grid,
+    .item-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .activity-item {
+
+        grid-template-columns:
+            100px
+            auto
+            1fr;
+
+    }
+
+
+    .activity-item strong {
+        display: none;
+    }
+
+
+    .activity-time {
+        display: none;
+    }
+
+}
+
+
+/* ---------- 手機 ---------- */
 
 @media (max-width: 600px) {
 
-    .hero {
-        min-height: 520px;
+    .cases-section {
+
+        padding-top: 42px;
     }
 
-    .hero-container {
-        width: min(
-            calc(100% - 24px),
-            var(--content-width)
-        );
+
+    .case-grid,
+    .item-grid {
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
     }
 
-    .hero p {
-        font-size: 0.95rem;
+
+    .case-image {
+
+        height: 140px;
     }
 
-    .features {
-        padding: 70px 0;
+
+    .item-placeholder {
+
+        height: 120px;
     }
 
-    .recent-items {
-        padding-bottom: 70px;
+
+    .case-info {
+
+        padding: 12px;
     }
 
-    .footer-container {
+
+    .case-info h3 {
+
+        font-size: 0.8rem;
+
+        margin-bottom: 10px;
+    }
+
+
+    .case-price,
+    .case-action {
+
+        font-size: 0.7rem;
+    }
+
+
+    .activity-item {
+
+        display: flex;
+
         flex-wrap: wrap;
 
-        padding: 20px 0;
+        gap: 7px;
+
+        padding: 14px 16px;
     }
 
-    .footer-container span {
-        width: 100%;
 
-        margin-left: 0;
+    .activity-player {
+
+        width: 100%;
+    }
+
+
+    .lucky-item {
+
+        padding: 0 20px;
     }
 
 }
