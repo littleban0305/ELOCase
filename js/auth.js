@@ -135,8 +135,25 @@ async function requireLogin() {
 
 
 function updateLoginUI(user) {
-    const loginButton =
-        document.querySelector(".navbar-actions .button");
+    const playerMenu =
+        document.querySelector(
+            ".player-menu"
+        );
+    
+    const playerMenuButton =
+        document.querySelector(
+            "#player-menu-button"
+        );
+    
+    const playerMenuName =
+        document.querySelector(
+            "#navbar-player-name"
+        );
+    
+    const logoutButton =
+        document.querySelector(
+            "#navbar-logout-button"
+        );
 
     const balance =
         document.querySelector(".balance-value");
