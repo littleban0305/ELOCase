@@ -1,0 +1,643 @@
+/* ========================================
+   ELOCase - Case Detail
+======================================== */
+
+
+/* ========================================
+   頁面版型
+======================================== */
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+main {
+
+    flex: 1;
+
+}
+
+
+.case-page {
+
+    padding:
+        40px 0 90px;
+
+}
+
+
+/* ========================================
+   返回
+======================================== */
+
+.case-back {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.78rem;
+
+    font-weight: 600;
+
+    transition:
+        color var(--transition-fast);
+
+}
+
+
+.case-back:hover {
+
+    color:
+        var(--color-text);
+
+}
+
+
+/* ========================================
+   箱子資訊
+======================================== */
+
+.case-detail {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.2fr)
+        minmax(320px, 0.8fr);
+
+    overflow: hidden;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+}
+
+
+/* ========================================
+   箱子圖片
+======================================== */
+
+.case-detail-image {
+
+    min-height: 380px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124, 92, 255, 0.2),
+            transparent 65%
+        ),
+        #0d1015;
+
+    border-right:
+        1px solid
+        var(--color-border);
+
+    color:
+        rgba(255, 255, 255, 0.18);
+
+    font-size: 2rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        0.1em;
+
+}
+
+
+.case-detail-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+/* ========================================
+   箱子資訊區
+======================================== */
+
+.case-detail-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 42px;
+
+}
+
+
+.case-detail-game {
+
+    margin-bottom: 10px;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.08em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.case-detail-info h1 {
+
+    margin-bottom: 14px;
+
+    color:
+        var(--color-text);
+
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        -0.03em;
+
+}
+
+
+.case-detail-description {
+
+    max-width: 480px;
+
+    margin-bottom: 30px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.84rem;
+
+    line-height: 1.7;
+
+}
+
+
+.case-detail-bottom {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+
+.case-detail-price {
+
+    color:
+        var(--color-text);
+
+    font-size: 1.25rem;
+
+    font-weight: 800;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* ========================================
+   箱子內容物
+======================================== */
+
+.case-contents {
+
+    margin-top: 64px;
+
+}
+
+
+.case-contents .section-header {
+
+    margin-bottom: 22px;
+
+}
+
+
+.case-items-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+}
+
+
+/* ========================================
+   物品卡片
+======================================== */
+
+.case-item-card {
+
+    overflow: hidden;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+    transition:
+        border-color var(--transition-normal),
+        transform var(--transition-normal);
+
+}
+
+
+.case-item-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--color-border-light);
+
+}
+
+
+/* ========================================
+   物品圖片
+======================================== */
+
+.case-item-image {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0)
+        );
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.case-item-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    padding: 16px;
+
+}
+
+
+.case-item-placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.15);
+
+    font-size: 1rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* ========================================
+   物品資訊
+======================================== */
+
+.case-item-info {
+
+    padding: 14px;
+
+}
+
+
+.case-item-rarity {
+
+    margin-bottom: 6px;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+}
+
+
+.case-item-info h3 {
+
+    margin-bottom: 8px;
+
+    overflow: hidden;
+
+    color:
+        var(--color-text);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.case-item-value {
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* ========================================
+   稀有度
+======================================== */
+
+.rarity-blue {
+
+    color:
+        #5b9cff;
+
+}
+
+
+.rarity-purple {
+
+    color:
+        #a66cff;
+
+}
+
+
+.rarity-pink {
+
+    color:
+        #d968d8;
+
+}
+
+
+.rarity-red {
+
+    color:
+        #e05b68;
+
+}
+
+
+/* ========================================
+   載入狀態
+======================================== */
+
+.case-items-loading {
+
+    grid-column:
+        1 / -1;
+
+    min-height: 160px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.82rem;
+
+}
+
+
+/* ========================================
+   平板
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .case-detail {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .case-detail-image {
+
+        min-height: 320px;
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid
+            var(--color-border);
+
+    }
+
+
+    .case-items-grid {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 650px) {
+
+    .case-page {
+
+        padding:
+            28px 0 60px;
+
+    }
+
+
+    .case-detail-info {
+
+        padding: 24px;
+
+    }
+
+
+    .case-detail-info h1 {
+
+        font-size: 1.45rem;
+
+    }
+
+
+    .case-detail-image {
+
+        min-height: 240px;
+
+    }
+
+
+    .case-detail-bottom {
+
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .case-detail-bottom
+    .button {
+
+        width: 100%;
+
+    }
+
+
+    .case-items-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+
+    }
+
+
+    .case-item-info {
+
+        padding: 11px;
+
+    }
+
+
+    .case-item-info h3 {
+
+        font-size: 0.74rem;
+
+    }
+
+}
+
+
+/* ========================================
+   超小螢幕
+======================================== */
+
+@media (max-width: 380px) {
+
+    .case-items-grid {
+
+        gap: 8px;
+
+    }
+
+
+    .case-detail-info {
+
+        padding: 20px;
+
+    }
+
+}
