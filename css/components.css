@@ -443,3 +443,150 @@
     }
 
 }
+
+/* ========================================
+   ELOCase - Navbar 右側
+   ======================================== */
+
+.navbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+/* ---------- ELOCoin 餘額 ---------- */
+
+.balance {
+
+    min-height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 13px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 10px;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.balance:hover {
+
+    background: rgba(255, 255, 255, 0.055);
+
+    border-color: var(--color-border-light);
+
+}
+
+
+.balance-label {
+
+    color: var(--color-text-muted);
+
+    font-size: 0.68rem;
+
+    font-weight: 600;
+
+}
+
+
+.balance-value {
+
+    color: var(--color-text);
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    font-variant-numeric: tabular-nums;
+
+}
+
+
+/* ---------- 登入 ---------- */
+
+.navbar-actions .button-primary {
+
+    min-height: 38px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 16px;
+
+    border-radius: 10px;
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* ---------- 手機 ---------- */
+
+@media (max-width: 700px) {
+
+    .navbar-actions {
+
+        gap: 7px;
+
+    }
+
+
+    .balance {
+
+        min-height: 34px;
+
+        gap: 5px;
+
+        padding: 0 9px;
+
+    }
+
+
+    .balance-label {
+
+        font-size: 0.62rem;
+
+    }
+
+
+    .balance-value {
+
+        font-size: 0.75rem;
+
+    }
+
+
+    .navbar-actions .button-primary {
+
+        min-height: 34px;
+
+        padding: 0 11px;
+
+        font-size: 0.7rem;
+
+    }
+
+}
