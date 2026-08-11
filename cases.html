@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>ELOCase - 箱子</title>
+    <title>ELOCase - 開箱</title>
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/components.css">
@@ -52,6 +52,7 @@
                     首頁
                 </a>
 
+
                 <a
                     href="cases.html"
                     class="nav-link active"
@@ -59,12 +60,14 @@
                     開箱
                 </a>
 
+
                 <a
                     href="inventory.html"
                     class="nav-link"
                 >
                     我的物品
                 </a>
+
 
                 <a
                     href="profile.html"
@@ -85,10 +88,14 @@
 
                 <div class="balance">
 
+                    <span class="balance-label">
+                        $
+                    </span>
+
                     <span
                         class="balance-value"
                     >
-                        $0
+                        50
                     </span>
 
                 </div>
@@ -115,120 +122,45 @@
          主要內容
     ======================================== -->
 
-    <main id="case-page">
+    <main>
+
+        <section class="cases-page">
+
+            <div class="section-container">
 
 
-        <!-- ====================================
-             箱子資訊
-        ==================================== -->
+                <!-- 頁面標題 -->
 
-        <section class="case-detail">
+                <div class="cases-header">
 
-
-            <!-- 箱子圖片 -->
-
-            <div
-                id="case-image"
-                class="case-detail-image"
-            >
-
-                <span>
-                    ELOCase
-                </span>
-
-            </div>
-
-
-            <!-- 箱子資訊 -->
-
-            <div class="case-detail-info">
-
-
-                <div
-                    id="case-game"
-                    class="case-detail-game"
-                >
-                    載入中...
-                </div>
-
-
-                <h1 id="case-name">
-                    載入中...
-                </h1>
-
-
-                <p
-                    id="case-description"
-                    class="case-detail-description"
-                >
-                    載入中...
-                </p>
-
-
-                <div class="case-detail-bottom">
-
-
-                    <span
-                        id="case-price"
-                        class="case-detail-price"
-                    >
-                        $0
+                    <span class="section-label">
+                        開箱
                     </span>
 
-
-                    <button
-                        type="button"
-                        id="open-case-button"
-                        class="button button-primary button-large"
-                    >
-                        開啟箱子
-                    </button>
+                    <h1>
+                        箱子
+                    </h1>
 
                 </div>
 
-            </div>
 
-        </section>
+                <!-- 箱子列表 -->
 
+                <div
+                    id="case-grid"
+                    class="case-grid"
+                >
 
-
-        <!-- ====================================
-             箱子內容物
-        ==================================== -->
-
-        <section class="case-contents">
-
-
-            <div class="section-header">
-
-                <div class="section-header-row">
-
-                    <div>
-
-                        <h2>
-                            箱子內容物
-                        </h2>
-
+                    <div class="case-loading">
+                        載入箱子中...
                     </div>
 
                 </div>
 
-            </div>
-
-
-            <div
-                id="case-items"
-                class="case-items-grid"
-            >
-
-                <div class="case-items-loading">
-                    載入中...
-                </div>
 
             </div>
 
         </section>
-
 
     </main>
 
@@ -242,8 +174,16 @@
 
         <div class="footer-container">
 
-            <span class="footer-brand">
+            <div class="footer-brand">
                 ELOCase
+            </div>
+
+            <p>
+                CS2 虛擬物品平台
+            </p>
+
+            <span>
+                © 2026 ELOCase
             </span>
 
         </div>
@@ -262,78 +202,73 @@
 
     <script src="js/auth.js"></script>
 
-    <script src="js/case.js"></script>
+    <script src="js/player.js"></script>
+
+    <script src="js/ui.js"></script>
 
 
     <script>
 
         /*
          * ====================================
-         * 導覽列登入狀態
+         * 載入箱子
          * ====================================
          */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            async () => {
+        async function initializeCasesPage() {
 
-                try {
-
-                    const user =
-                        await verifySession();
+            const caseGrid =
+                document.querySelector(
+                    "#case-grid"
+                );
 
 
-                    if (!user) {
-                        return;
-                    }
+            if (!caseGrid) {
+                return;
+            }
 
 
-                    const balance =
-                        document.querySelector(
-                            ".balance-value"
-                        );
+            try {
+
+                const cases =
+                    await getCases();
 
 
-                    const loginButton =
-                        document.querySelector(
-                            ".navbar-actions .button"
-                        );
+                renderCases(
+                    cases
+                );
 
 
-                    if (balance) {
+            } catch (error) {
 
-                        balance.textContent =
-                            `$${Number(
-                                user.eloCoin || 0
-                            ).toLocaleString()}`;
-
-                    }
+                console.error(
+                    "箱子資料載入失敗：",
+                    error
+                );
 
 
-                    if (loginButton) {
+                caseGrid.innerHTML = `
 
-                        loginButton.textContent =
-                            user.displayName ||
-                            user.username ||
-                            "玩家";
+                    <div class="case-loading">
 
+                        箱子資料載入失敗。
 
-                        loginButton.href =
-                            "profile.html";
+                    </div>
 
-                    }
-
-                } catch (error) {
-
-                    console.error(
-                        "玩家資料載入失敗：",
-                        error
-                    );
-
-                }
+                `;
 
             }
-        );
+
+        }
+
+
+        /*
+         * ====================================
+         * 初始化
+         * ====================================
+         */
+
+        initializeCasesPage();
 
     </script>
 
