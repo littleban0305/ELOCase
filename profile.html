@@ -20,150 +20,332 @@
 
 <body>
 
-<header class="navbar">
 
-    <div class="navbar-container">
+    <!-- ========================================
+         導覽列
+    ======================================== -->
 
-        <a href="index.html" class="brand">
-            ELOCase
-        </a>
+    <header class="navbar">
 
-        <nav class="nav-links">
+        <div class="navbar-container">
+
+
+            <!-- 品牌 -->
 
             <a
                 href="index.html"
-                class="nav-link"
+                class="brand"
             >
-                首頁
+                ELOCase
             </a>
 
-            <a
-                href="cases.html"
-                class="nav-link"
-            >
-                開箱
-            </a>
 
-            <a
-                href="inventory.html"
-                class="nav-link"
-            >
-                我的物品
-            </a>
+            <!-- 導覽 -->
 
-            <a
-                href="profile.html"
-                class="nav-link active"
-            >
-                個人資料
-            </a>
+            <nav class="nav-links">
 
-        </nav>
-
-    </div>
-
-</header>
-
-
-<main>
-
-    <section class="section-container">
-
-        <div class="section-header">
-
-            <span class="section-label">
-                玩家
-            </span>
-
-            <h1>
-                個人資料
-            </h1>
-
-        </div>
-
-
-        <div class="feature-card">
-
-            <div class="feature-content">
-
-                <h3 id="profile-name">
-                    載入中...
-                </h3>
-
-                <p id="profile-username">
-                    -
-                </p>
-
-                <p id="profile-balance">
-                    ELOCoin：-
-                </p>
-
-                <p id="profile-level">
-                    等級：-
-                </p>
-
-                <button
-                    id="logout-button"
-                    class="button button-secondary"
-                    type="button"
+                <a
+                    href="index.html"
+                    class="nav-link"
                 >
-                    登出
-                </button>
+                    首頁
+                </a>
+
+
+                <a
+                    href="cases.html"
+                    class="nav-link"
+                >
+                    開箱
+                </a>
+
+
+                <a
+                    href="inventory.html"
+                    class="nav-link"
+                >
+                    我的物品
+                </a>
+
+
+                <a
+                    href="profile.html"
+                    class="nav-link active"
+                >
+                    個人資料
+                </a>
+
+            </nav>
+
+
+            <!-- 右側 -->
+
+            <div class="navbar-actions">
+
+
+                <!-- 餘額 -->
+
+                <div class="balance">
+
+                    <span class="balance-label">
+                        $
+                    </span>
+
+                    <span
+                        class="balance-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- 玩家 -->
+
+                <a
+                    href="profile.html"
+                    class="button button-primary"
+                >
+                    個人資料
+                </a>
 
             </div>
 
         </div>
 
-    </section>
-
-</main>
+    </header>
 
 
-<script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/auth.js"></script>
 
-<script>
+    <!-- ========================================
+         個人資料
+    ======================================== -->
 
-async function initializeProfile() {
+    <main>
 
-    const user = await requireLogin();
+        <section class="section-container">
 
-    if (!user) {
-        return;
-    }
 
-    document.querySelector(
-        "#profile-name"
-    ).textContent =
-        user.displayName;
+            <div class="section-header">
 
-    document.querySelector(
-        "#profile-username"
-    ).textContent =
-        `玩家名稱：${user.username}`;
+                <span class="section-label">
+                    玩家
+                </span>
 
-    document.querySelector(
-        "#profile-balance"
-    ).textContent =
-        `ELOCoin：${Number(user.eloCoin).toLocaleString()}`;
+                <h1>
+                    個人資料
+                </h1>
 
-    document.querySelector(
-        "#profile-level"
-    ).textContent =
-        `等級：${user.level}`;
+            </div>
 
-    document.querySelector(
-        "#logout-button"
-    ).addEventListener(
-        "click",
-        logout
-    );
-}
 
-initializeProfile();
+            <div class="feature-card">
 
-</script>
+                <div class="feature-content">
+
+
+                    <!-- 玩家名稱 -->
+
+                    <h3 id="profile-name">
+                        載入中...
+                    </h3>
+
+
+                    <!-- 帳號 -->
+
+                    <p id="profile-username">
+                        玩家名稱：-
+                    </p>
+
+
+                    <!-- 餘額 -->
+
+                    <p id="profile-balance">
+                        餘額：$0
+                    </p>
+
+
+                    <!-- 等級 -->
+
+                    <p id="profile-level">
+                        等級：-
+                    </p>
+
+
+                    <!-- 登出 -->
+
+                    <button
+                        id="logout-button"
+                        class="button button-secondary"
+                        type="button"
+                    >
+                        登出
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ========================================
+         JavaScript
+    ======================================== -->
+
+    <script src="js/config.js"></script>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/player.js"></script>
+
+    <script src="js/ui.js"></script>
+
+
+    <script>
+
+        async function initializeProfile() {
+
+            const user =
+                await requireLogin();
+
+
+            if (!user) {
+
+                return;
+
+            }
+
+
+            /*
+             * 玩家名稱
+             */
+
+            const profileName =
+                document.querySelector(
+                    "#profile-name"
+                );
+
+
+            if (profileName) {
+
+                profileName.textContent =
+                    user.displayName ||
+                    user.username ||
+                    "玩家";
+
+            }
+
+
+            /*
+             * 玩家帳號
+             */
+
+            const profileUsername =
+                document.querySelector(
+                    "#profile-username"
+                );
+
+
+            if (profileUsername) {
+
+                profileUsername.textContent =
+                    `玩家名稱：${user.username}`;
+
+            }
+
+
+            /*
+             * 餘額
+             */
+
+            const profileBalance =
+                document.querySelector(
+                    "#profile-balance"
+                );
+
+
+            if (profileBalance) {
+
+                profileBalance.textContent =
+                    `餘額：$${Number(
+                        user.eloCoin || 0
+                    ).toLocaleString()}`;
+
+            }
+
+
+            /*
+             * 等級
+             */
+
+            const profileLevel =
+                document.querySelector(
+                    "#profile-level"
+                );
+
+
+            if (profileLevel) {
+
+                profileLevel.textContent =
+                    `等級：${user.level ?? 0}`;
+
+            }
+
+
+            /*
+             * Navbar 餘額
+             */
+
+            const balance =
+                document.querySelector(
+                    ".balance-value"
+                );
+
+
+            if (balance) {
+
+                balance.textContent =
+                    Number(
+                        user.eloCoin || 0
+                    ).toLocaleString();
+
+            }
+
+
+            /*
+             * 登出
+             */
+
+            const logoutButton =
+                document.querySelector(
+                    "#logout-button"
+                );
+
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    logout
+                );
+
+            }
+
+        }
+
+
+        initializeProfile();
+
+    </script>
+
 
 </body>
+
 </html>
