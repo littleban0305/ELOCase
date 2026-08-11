@@ -1,14 +1,11 @@
 async function login(username, password) {
-
     const response = await fetch(
         CONFIG.API_URL,
         {
             method: "POST",
-
             headers: {
                 "Content-Type": "text/plain;charset=utf-8"
             },
-
             body: JSON.stringify({
                 action: "login",
                 username: username,
@@ -34,7 +31,6 @@ async function login(username, password) {
 
 
 function saveSession(sessionData) {
-
     localStorage.setItem(
         "elocaseSessionToken",
         sessionData.sessionToken
@@ -48,7 +44,6 @@ function saveSession(sessionData) {
 
 
 function getSessionToken() {
-
     return localStorage.getItem(
         "elocaseSessionToken"
     );
@@ -56,7 +51,6 @@ function getSessionToken() {
 
 
 function getSavedUser() {
-
     const data = localStorage.getItem(
         "elocaseUser"
     );
@@ -73,8 +67,12 @@ function getSavedUser() {
 }
 
 
-function logout() {
+function isLoggedIn() {
+    return Boolean(getSessionToken());
+}
 
+
+function logout() {
     localStorage.removeItem(
         "elocaseSessionToken"
     );
@@ -84,6 +82,82 @@ function logout() {
     );
 
     window.location.href = "login.html";
+}
+
+
+async function verifySession() {
+    const sessionToken = getSessionToken();
+
+    if (!sessionToken) {
+        return null;
+    }
+
+    try {
+        const user = await sendApiRequest(
+            "getPlayerBySession",
+            {
+                sessionToken: sessionToken
+            }
+        );
+
+        localStorage.setItem(
+            "elocaseUser",
+            JSON.stringify(user)
+        );
+
+        return user;
+
+    } catch (error) {
+
+        localStorage.removeItem(
+            "elocaseSessionToken"
+        );
+
+        localStorage.removeItem(
+            "elocaseUser"
+        );
+
+        return null;
+    }
+}
+
+
+async function requireLogin() {
+    const user = await verifySession();
+
+    if (!user) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    return user;
+}
+
+
+function updateLoginUI(user) {
+    const loginButton =
+        document.querySelector(".navbar-actions .button");
+
+    const balance =
+        document.querySelector(".balance-value");
+
+    if (!user) {
+        return;
+    }
+
+    if (balance) {
+        balance.textContent =
+            Number(user.eloCoin).toLocaleString();
+    }
+
+    if (loginButton) {
+
+        loginButton.textContent =
+            user.displayName;
+
+        loginButton.href =
+            "profile.html";
+    }
 }
 
 
@@ -106,7 +180,7 @@ if (loginForm) {
             const password =
                 document.querySelector(
                     "#password"
-                )?.value || "";
+                ).value;
 
             const message =
                 document.querySelector(
