@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>箱子｜ELOCase</title>
+
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/case.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================
+         導覽列
+    ======================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+
+            <!-- 品牌 -->
+
+            <a
+                href="index.html"
+                class="brand"
+            >
+                ELOCase
+            </a>
+
+
+            <!-- 導覽 -->
+
+            <nav class="nav-links">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    首頁
+                </a>
+
+
+                <a
+                    href="cases.html"
+                    class="nav-link active"
+                >
+                    開箱
+                </a>
+
+
+                <a
+                    href="inventory.html"
+                    class="nav-link"
+                >
+                    我的物品
+                </a>
+
+
+                <a
+                    href="profile.html"
+                    class="nav-link"
+                >
+                    個人資料
+                </a>
+
+            </nav>
+
+
+            <!-- ====================================
+                 右側
+            ==================================== -->
+
+            <div class="navbar-actions">
+
+
+                <!-- 餘額 -->
+
+                <div class="balance">
+
+                    <span class="balance-label">
+                        $
+                    </span>
+
+                    <span
+                        class="balance-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- 玩家選單 -->
+
+                <div class="player-menu">
+
+
+                    <button
+                        type="button"
+                        class="player-menu-button"
+                        id="player-menu-button"
+                    >
+
+                        <span class="player-avatar">
+                            ◉
+                        </span>
+
+
+                        <span
+                            class="player-menu-name"
+                            id="navbar-player-name"
+                        >
+                            登入
+                        </span>
+
+
+                        <span class="player-menu-arrow">
+                            ▾
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="player-menu-dropdown"
+                        id="player-menu-dropdown"
+                    >
+
+                        <a
+                            href="profile.html"
+                            class="player-menu-item"
+                        >
+                            個人資料
+                        </a>
+
+
+                        <a
+                            href="inventory.html"
+                            class="player-menu-item"
+                        >
+                            我的物品
+                        </a>
+
+
+                        <button
+                            type="button"
+                            class="player-menu-item player-menu-logout"
+                            id="navbar-logout-button"
+                        >
+                            登出
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ========================================
+         主要內容
+    ======================================== -->
+
+    <main id="case-page">
+
+
+        <!-- ====================================
+             返回
+        ==================================== -->
+
+        <section class="case-page">
+
+            <div class="section-container">
+
+
+                <a
+                    href="cases.html"
+                    class="case-back"
+                >
+                    ← 返回箱子
+                </a>
+
+
+                <!-- ====================================
+                     箱子資訊
+                ==================================== -->
+
+                <section class="case-detail">
+
+
+                    <!-- 箱子圖片 -->
+
+                    <div
+                        id="case-image"
+                        class="case-detail-image"
+                    >
+
+                        <span>
+                            ELOCase
+                        </span>
+
+                    </div>
+
+
+                    <!-- 箱子資訊 -->
+
+                    <div class="case-detail-info">
+
+
+                        <div
+                            id="case-game"
+                            class="case-detail-game"
+                        >
+                            載入中...
+                        </div>
+
+
+                        <h1 id="case-name">
+                            載入中...
+                        </h1>
+
+
+                        <p
+                            id="case-description"
+                            class="case-detail-description"
+                        >
+                            載入中...
+                        </p>
+
+
+                        <div class="case-detail-bottom">
+
+
+                            <span
+                                id="case-price"
+                                class="case-detail-price"
+                            >
+                                $0
+                            </span>
+
+
+                            <button
+                                type="button"
+                                id="open-case-button"
+                                class="button button-primary button-large"
+                            >
+                                開啟箱子
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ====================================
+                     箱子內容物
+                ==================================== -->
+
+                <section class="case-contents">
+
+
+                    <div class="section-header">
+
+                        <span class="section-label">
+                            CONTENTS
+                        </span>
+
+
+                        <h2>
+                            箱子內容物
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        id="case-items"
+                        class="case-items-grid"
+                    >
+
+                        <div class="case-items-loading">
+                            載入中...
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ========================================
+         Footer
+    ======================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <span class="footer-brand">
+                ELOCase
+            </span>
+
+
+            <span>
+                © 2026 ELOCase
+            </span>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ========================================
+         JavaScript
+    ======================================== -->
+
+    <script src="js/config.js"></script>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/player.js"></script>
+
+    <script src="js/ui.js"></script>
+
+    <script src="js/case.js"></script>
+
+
+    <script>
+
+        /* ========================================
+           初始化玩家 Navbar
+        ======================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            async () => {
+
+                try {
+
+                    const user =
+                        await verifySession();
+
+
+                    updateLoginUI(
+                        user
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "玩家資料載入失敗：",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
