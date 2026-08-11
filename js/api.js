@@ -1,4 +1,5 @@
 async function sendApiRequest(action, parameters = {}) {
+
     const query = new URLSearchParams({
         action,
         ...parameters
@@ -15,8 +16,29 @@ async function sendApiRequest(action, parameters = {}) {
     const result = await response.json();
 
     if (!result.success) {
-        throw new Error(result.error || "發生未知錯誤");
+        throw new Error(
+            result.error || "發生未知錯誤"
+        );
     }
 
     return result.data;
+}
+
+
+async function getCases() {
+
+    return await sendApiRequest(
+        "getCases"
+    );
+}
+
+
+async function getCase(caseId) {
+
+    return await sendApiRequest(
+        "getCase",
+        {
+            caseId
+        }
+    );
 }
