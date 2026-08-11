@@ -384,8 +384,6 @@
 
 
 .inventory-detail-label {
-    margin-top: 5px;
-
     color: var(--color-text-muted);
 
     font-size: 0.62rem;
