@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>登入｜ELOCase</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="navbar-container">
+
+        <a href="index.html" class="brand">
+            ELOCase
+        </a>
+
+        <a href="index.html" class="button button-secondary">
+            返回首頁
+        </a>
+
+    </div>
+</header>
+
+
+<main>
+
+    <section class="login-page">
+
+        <div class="login-card">
+
+            <div class="login-header">
+
+                <span class="section-label">
+                    玩家登入
+                </span>
+
+                <h1>
+                    登入 ELOCase
+                </h1>
+
+                <p>
+                    輸入你的玩家名稱以繼續。
+                </p>
+
+            </div>
+
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label for="username">
+                        玩家名稱
+                    </label>
+
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        placeholder="輸入玩家名稱"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="button button-primary button-large"
+                >
+                    登入
+                </button>
+
+            </form>
+
+
+            <div
+                id="login-message"
+                class="login-message"
+            ></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+
+</body>
+</html>
