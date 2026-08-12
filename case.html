@@ -12,6 +12,7 @@
 
     <title>箱子｜ELOCase</title>
 
+
     <link
         rel="stylesheet"
         href="css/global.css"
@@ -150,6 +151,7 @@
                         id="player-menu-dropdown"
                     >
 
+
                         <a
                             href="profile.html"
                             class="player-menu-item"
@@ -176,6 +178,7 @@
                         >
                             登出
                         </button>
+
 
                     </div>
 
@@ -221,65 +224,99 @@
                 <section class="case-hero">
 
 
-                    <!-- =================================
-                         開箱預覽
-                    ================================= -->
-
                     <div class="case-preview">
 
 
-                        <!-- 箱子資訊 -->
+                        <!-- =================================
+                             箱子圖片 + 資訊
+                        ================================= -->
 
-                        <div class="case-hero-info">
+                        <div class="case-hero-top">
 
+
+                            <!-- 箱子圖片 -->
 
                             <div
-                                id="case-game"
-                                class="case-detail-game"
+                                id="case-image"
+                                class="case-hero-image"
                             >
-                                載入中...
+
+                                <span>
+                                    ELOCase
+                                </span>
+
                             </div>
 
 
-                            <h1 id="case-name">
-                                載入中...
-                            </h1>
+
+                            <!-- 箱子資訊 -->
+
+                            <div class="case-hero-info">
 
 
-                            <div
-                                id="case-price"
-                                class="case-detail-price"
-                            >
-                                $0
+                                <!-- 遊戲 -->
+
+                                <div
+                                    id="case-game"
+                                    class="case-detail-game"
+                                >
+                                    載入中...
+                                </div>
+
+
+                                <!-- 名稱 -->
+
+                                <h1 id="case-name">
+                                    載入中...
+                                </h1>
+
+
+                                <!-- 價格 -->
+
+                                <div
+                                    id="case-price"
+                                    class="case-detail-price"
+                                >
+                                    $0
+                                </div>
+
+
+                                <!-- 開箱按鈕 -->
+
+                                <button
+                                    type="button"
+                                    id="open-case-button"
+                                    class="
+                                        button
+                                        button-primary
+                                        button-large
+                                    "
+                                >
+                                    開啟箱子
+                                </button>
+
+
                             </div>
 
                         </div>
 
-
-                        <!-- 箱子圖片 -->
-
-                        <div
-                            id="case-image"
-                            class="case-hero-image"
-                        >
-
-                            <span>
-                                ELOCase
-                            </span>
-
-                        </div>
 
 
                         <!-- =================================
-                             預覽軌道
+                             開箱預覽
                         ================================= -->
 
                         <div class="case-preview-wrapper">
+
+
+                            <!-- 中央指示線 -->
 
                             <div
                                 class="case-preview-pointer"
                             ></div>
 
+
+                            <!-- 物品軌道 -->
 
                             <div
                                 id="case-preview-track"
@@ -290,11 +327,13 @@
 
                             </div>
 
+
                         </div>
 
 
+
                         <!-- =================================
-                             開箱控制
+                             開箱狀態
                         ================================= -->
 
                         <div class="case-hero-actions">
@@ -306,18 +345,6 @@
                             >
                             </div>
 
-
-                            <button
-                                type="button"
-                                id="open-case-button"
-                                class="
-                                    button
-                                    button-primary
-                                    button-large
-                                "
-                            >
-                                開啟箱子
-                            </button>
 
                         </div>
 
@@ -347,6 +374,7 @@
                             箱子內容物
                         </h2>
 
+
                     </div>
 
 
@@ -355,11 +383,14 @@
                         class="case-items-grid"
                     >
 
+
                         <div class="case-items-loading">
                             載入中...
                         </div>
 
+
                     </div>
+
 
                 </section>
 
@@ -379,21 +410,27 @@
 
     <footer class="footer">
 
+
         <div class="footer-container">
+
 
             <div class="footer-brand">
                 ELOCase
             </div>
 
+
             <p>
                 CS2 虛擬物品平台
             </p>
+
 
             <span>
                 © 2026 ELOCase
             </span>
 
+
         </div>
+
 
     </footer>
 
@@ -414,6 +451,7 @@
     <script src="js/ui.js"></script>
 
     <script src="js/case.js"></script>
+
 
 
     <script>
