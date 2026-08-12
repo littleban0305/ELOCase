@@ -136,6 +136,18 @@ async function sendApiRequest(
 
 }
 
+/* ========================================
+   取得所有箱子
+======================================== */
+
+async function getCases() {
+
+    return await sendApiRequest(
+        "getCases"
+    );
+
+}
+
 
 async function getCase(caseId) {
 
