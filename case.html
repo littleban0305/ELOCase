@@ -168,7 +168,10 @@
 
                         <button
                             type="button"
-                            class="player-menu-item player-menu-logout"
+                            class="
+                                player-menu-item
+                                player-menu-logout
+                            "
                             id="navbar-logout-button"
                         >
                             登出
@@ -193,14 +196,14 @@
     <main id="case-page">
 
 
-        <!-- ====================================
-             返回
-        ==================================== -->
-
         <section class="case-page">
 
             <div class="section-container">
 
+
+                <!-- ====================================
+                     返回
+                ==================================== -->
 
                 <a
                     href="cases.html"
@@ -210,111 +213,120 @@
                 </a>
 
 
+
                 <!-- ====================================
-                     箱子資訊
+                     開箱 Hero
                 ==================================== -->
 
-                <section class="case-detail">
-                
-                    <!-- 箱子圖片 -->
-                
-                    <div
-                        id="case-image"
-                        class="case-detail-image"
-                    >
-                
-                        <span>
-                            ELOCase
-                        </span>
-                
-                    </div>
-                
-                
-                    <!-- 箱子資訊 -->
-                
-                    <div class="case-detail-info">
-                
-                        <div
-                            id="case-game"
-                            class="case-detail-game"
-                        >
-                            載入中...
-                        </div>
-                
-                
-                        <h1 id="case-name">
-                            載入中...
-                        </h1>
-                
-                
-                        <div class="case-detail-bottom">
-                
-                            <span
+                <section class="case-hero">
+
+
+                    <!-- =================================
+                         開箱預覽
+                    ================================= -->
+
+                    <div class="case-preview">
+
+
+                        <!-- 箱子資訊 -->
+
+                        <div class="case-hero-info">
+
+
+                            <div
+                                id="case-game"
+                                class="case-detail-game"
+                            >
+                                載入中...
+                            </div>
+
+
+                            <h1 id="case-name">
+                                載入中...
+                            </h1>
+
+
+                            <div
                                 id="case-price"
                                 class="case-detail-price"
                             >
                                 $0
+                            </div>
+
+                        </div>
+
+
+                        <!-- 箱子圖片 -->
+
+                        <div
+                            id="case-image"
+                            class="case-hero-image"
+                        >
+
+                            <span>
+                                ELOCase
                             </span>
-                
-                
+
+                        </div>
+
+
+                        <!-- =================================
+                             預覽軌道
+                        ================================= -->
+
+                        <div class="case-preview-wrapper">
+
+                            <div
+                                class="case-preview-pointer"
+                            ></div>
+
+
+                            <div
+                                id="case-preview-track"
+                                class="case-preview-track"
+                            >
+
+                                <!-- JS 自動產生 -->
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================
+                             開箱控制
+                        ================================= -->
+
+                        <div class="case-hero-actions">
+
+
+                            <div
+                                id="case-preview-status"
+                                class="case-preview-status"
+                            >
+                            </div>
+
+
                             <button
                                 type="button"
                                 id="open-case-button"
-                                class="button button-primary button-large"
+                                class="
+                                    button
+                                    button-primary
+                                    button-large
+                                "
                             >
                                 開啟箱子
                             </button>
-                
+
                         </div>
-                
+
+
                     </div>
-                
+
                 </section>
 
-                <!-- ====================================
-                     開箱預覽
-                ==================================== -->
-                
-                <section class="case-preview">
-                
-                    <div class="section-header">
-                
-                        <span class="section-label">
-                            開箱預覽
-                        </span>
-                
-                        <h2>
-                            試試你的運氣
-                        </h2>
-                
-                    </div>
-                
-                
-                    <div class="case-preview-wrapper">
-                
-                        <div class="case-preview-pointer"></div>
-                
-                
-                        <div
-                            id="case-preview-track"
-                            class="case-preview-track"
-                        >
-                
-                            <!-- JS 會自動產生預覽物品 -->
-                
-                        </div>
-                
-                    </div>
-                
-                
-                    <div
-                        id="case-preview-status"
-                        class="case-preview-status"
-                    >
-                        開啟箱子後，物品會在這裡滾動
-                    </div>
-                
-                </section>
+
 
                 <!-- ====================================
                      箱子內容物
@@ -324,6 +336,7 @@
 
 
                     <div class="section-header">
+
 
                         <span class="section-label">
                             內容物
@@ -365,23 +378,23 @@
     ======================================== -->
 
     <footer class="footer">
-    
+
         <div class="footer-container">
-    
+
             <div class="footer-brand">
                 ELOCase
             </div>
-    
+
             <p>
                 CS2 虛擬物品平台
             </p>
-    
+
             <span>
                 © 2026 ELOCase
             </span>
-    
+
         </div>
-    
+
     </footer>
 
 
