@@ -10,7 +10,7 @@ async function sendApiRequest(
 
     /*
      * ====================================
-     * 整個 API 請求開始
+     * Loading 開始
      * ====================================
      */
 
@@ -34,19 +34,40 @@ async function sendApiRequest(
 
             try {
 
+                /*
+                 * ====================================
+                 * 每一次重試都重新建立 URL
+                 * ====================================
+                 */
+
                 const query =
                     new URLSearchParams({
 
                         action,
-
                         ...parameters
 
                     });
 
 
+                const requestUrl =
+                    `${CONFIG.API_URL}?${query.toString()}`;
+
+
+                console.log(
+                    `API 請求 ${attempt}/${maxAttempts}:`,
+                    action
+                );
+
+
+                /*
+                 * ====================================
+                 * 發送 GET
+                 * ====================================
+                 */
+
                 const response =
                     await fetch(
-                        `${CONFIG.API_URL}?${query.toString()}`,
+                        requestUrl,
                         {
 
                             method:
@@ -62,6 +83,12 @@ async function sendApiRequest(
                     );
 
 
+                /*
+                 * ====================================
+                 * HTTP 錯誤
+                 * ====================================
+                 */
+
                 if (!response.ok) {
 
                     throw new Error(
@@ -71,9 +98,21 @@ async function sendApiRequest(
                 }
 
 
+                /*
+                 * ====================================
+                 * 解析 JSON
+                 * ====================================
+                 */
+
                 const result =
                     await response.json();
 
+
+                /*
+                 * ====================================
+                 * API 自己回報錯誤
+                 * ====================================
+                 */
 
                 if (!result.success) {
 
@@ -85,6 +124,12 @@ async function sendApiRequest(
                 }
 
 
+                /*
+                 * ====================================
+                 * 成功
+                 * ====================================
+                 */
+
                 return result.data;
 
 
@@ -93,6 +138,17 @@ async function sendApiRequest(
                 lastError =
                     error;
 
+
+                console.warn(
+                    `API 第 ${attempt} 次請求失敗：`,
+                    error.message
+                );
+
+
+                /*
+                 * 最後一次
+                 * 不再重試
+                 */
 
                 if (
                     attempt >= maxAttempts
@@ -103,11 +159,20 @@ async function sendApiRequest(
                 }
 
 
+                /*
+                 * ====================================
+                 * 重試等待
+                 *
+                 * 第一次：500ms
+                 * 第二次：1000ms
+                 * ====================================
+                 */
+
                 await new Promise(
                     resolve =>
                         setTimeout(
                             resolve,
-                            300 * attempt
+                            500 * attempt
                         )
                 );
 
@@ -119,7 +184,7 @@ async function sendApiRequest(
 
         /*
          * ====================================
-         * 整個 API 流程結束
+         * Loading 結束
          * ====================================
          */
 
