@@ -63,3 +63,72 @@ async function getCaseItems(caseId) {
     );
 
 }
+
+async function openCase(caseId) {
+
+    const sessionToken =
+        getSessionToken();
+
+    if (!sessionToken) {
+
+        throw new Error(
+            "請先登入"
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body: JSON.stringify({
+
+                    action:
+                        "openCase",
+
+                    sessionToken:
+                        sessionToken,
+
+                    caseId:
+                        caseId
+
+                })
+
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "開箱服務無法使用"
+        );
+
+    }
+
+
+    const result =
+        await response.json();
+
+
+    if (!result.success) {
+
+        throw new Error(
+            result.error ||
+            "開箱失敗"
+        );
+
+    }
+
+
+    return result.data;
+
+}
