@@ -922,9 +922,8 @@ function startCaseWaitingAnimation() {
              */
 
             const resetDistance =
-                trackWidth * 0.25;
-
-
+                trackWidth * 0.75;
+            
             caseWaitingX +=
                 resetDistance;
 
