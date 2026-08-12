@@ -232,26 +232,39 @@ function createCaseItemCard(item) {
      */
 
     const imageContent =
-        item.image
-            ? `
-                <img
-                    src="${escapeHtml(
-                        item.image
-                    )}"
-                    alt="${escapeHtml(
-                        item.name ||
-                        "物品"
-                    )}"
-                >
-            `
-            : `
-                <span class="case-item-placeholder">
-                    ${escapeHtml(
-                        item.game ||
-                        "ITEM"
-                    )}
-                </span>
-            `;
+       item.image
+           ? `
+               <img
+                   src="${escapeHtml(
+                       item.image
+                   )}"
+                   alt=""
+                   class="case-item-real-image"
+                   onerror="
+                       this.style.display='none';
+                       this.parentElement.classList.add('image-error');
+                   "
+               >
+   
+               <div class="case-item-blur">
+                   <span>
+                       ${escapeHtml(
+                           item.name ||
+                           "未知物品"
+                       )}
+                   </span>
+               </div>
+           `
+           : `
+               <div class="case-item-blur">
+                   <span>
+                       ${escapeHtml(
+                           item.name ||
+                           "未知物品"
+                       )}
+                   </span>
+               </div>
+           `;
 
 
     card.innerHTML = `
