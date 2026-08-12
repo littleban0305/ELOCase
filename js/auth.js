@@ -151,6 +151,10 @@ async function login(username, password) {
    儲存 Session
 ======================================== */
 
+/* ========================================
+   儲存 Session
+======================================== */
+
 function saveSession(sessionData) {
 
     localStorage.setItem(
@@ -163,6 +167,18 @@ function saveSession(sessionData) {
         "elocaseUser",
         JSON.stringify(
             sessionData.user
+        )
+    );
+
+
+    /*
+     * 記錄玩家資料最後驗證時間
+     */
+
+    localStorage.setItem(
+        "elocaseUserVerifiedAt",
+        String(
+            Date.now()
         )
     );
 
@@ -215,6 +231,34 @@ function getSavedUser() {
 
 }
 
+/* ========================================
+   檢查玩家資料是否需要重新驗證
+======================================== */
+
+function shouldVerifyUser() {
+
+    const verifiedAt =
+        Number(
+            localStorage.getItem(
+                "elocaseUserVerifiedAt"
+            ) || 0
+        );
+
+
+    /*
+     * 10 分鐘
+     */
+
+    const verifyInterval =
+        10 * 60 * 1000;
+
+
+    return (
+        Date.now() - verifiedAt
+        >= verifyInterval
+    );
+
+}
 
 /* ========================================
    登入狀態
@@ -268,21 +312,65 @@ async function verifySession() {
     }
 
 
+    /*
+     * ====================================
+     * 先讀取前端快取
+     * ====================================
+     */
+
+    const savedUser =
+        getSavedUser();
+
+
+    /*
+     * 如果有快取，而且還沒過期
+     * 直接使用
+     */
+
+    if (
+        savedUser &&
+        !shouldVerifyUser()
+    ) {
+
+        return savedUser;
+
+    }
+
+
+    /*
+     * ====================================
+     * 需要重新驗證
+     * ====================================
+     */
+
     try {
 
         const user =
             await sendApiRequest(
                 "getPlayerBySession",
                 {
-                    sessionToken:
-                        sessionToken
+                    sessionToken
                 }
             );
 
 
+        /*
+         * 更新玩家資料
+         */
+
         localStorage.setItem(
             "elocaseUser",
-            JSON.stringify(user)
+            JSON.stringify(
+                user
+            )
+        );
+
+
+        localStorage.setItem(
+            "elocaseUserVerifiedAt",
+            String(
+                Date.now()
+            )
         );
 
 
@@ -291,6 +379,10 @@ async function verifySession() {
 
     } catch (error) {
 
+        /*
+         * Session 真的失效
+         */
+
         localStorage.removeItem(
             "elocaseSessionToken"
         );
@@ -298,6 +390,11 @@ async function verifySession() {
 
         localStorage.removeItem(
             "elocaseUser"
+        );
+
+
+        localStorage.removeItem(
+            "elocaseUserVerifiedAt"
         );
 
 
