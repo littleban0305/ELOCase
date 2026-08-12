@@ -565,6 +565,7 @@ function renderCasePreview(items) {
 
 /* ========================================
    開箱等待動畫
+   API 回來前持續滾動
 ======================================== */
 
 function startCaseWaitingAnimation() {
@@ -579,9 +580,21 @@ function startCaseWaitingAnimation() {
             "#case-preview-status"
         );
 
+
     if (!track) {
         return;
     }
+
+
+    /*
+     * ====================================
+     * 開箱狀態
+     * ====================================
+     */
+
+    document.body.classList.add(
+        "case-opening"
+    );
 
 
     /*
@@ -596,7 +609,7 @@ function startCaseWaitingAnimation() {
 
 
     /*
-     * 建立一批預覽物品
+     * 取得內容物
      */
 
     const sourceItems =
@@ -612,11 +625,20 @@ function startCaseWaitingAnimation() {
     }
 
 
+    /*
+     * 清空預覽
+     */
+
     track.innerHTML = "";
 
 
     /*
-     * 建立大量隨機物品
+     * ====================================
+     * 建立大量等待物品
+     *
+     * 數量故意很多
+     * API 就算 20 秒也不會滾完
+     * ====================================
      */
 
     const waitingItems = [];
@@ -624,7 +646,7 @@ function startCaseWaitingAnimation() {
 
     for (
         let i = 0;
-        i < 40;
+        i < 120;
         i++
     ) {
 
@@ -645,7 +667,9 @@ function startCaseWaitingAnimation() {
 
 
     /*
+     * ====================================
      * 建立卡片
+     * ====================================
      */
 
     waitingItems.forEach(
@@ -726,7 +750,9 @@ function startCaseWaitingAnimation() {
 
 
     /*
+     * ====================================
      * 狀態文字
+     * ====================================
      */
 
     if (status) {
@@ -738,17 +764,21 @@ function startCaseWaitingAnimation() {
 
 
     /*
+     * ====================================
      * 強制重新計算
+     * ====================================
      */
 
     track.offsetHeight;
 
 
     /*
-     * 等待滾動動畫
+     * ====================================
+     * 持續滾動
      *
-     * 這裡不是最終開箱動畫
-     * 只是讓畫面不要停住
+     * 速度刻意放慢
+     * 不會快速跑完
+     * ====================================
      */
 
     const waitingDistance =
@@ -760,7 +790,7 @@ function startCaseWaitingAnimation() {
 
 
     track.style.transition =
-        "transform 12000ms linear";
+        "transform 30000ms linear";
 
 
     track.style.transform =
@@ -768,19 +798,25 @@ function startCaseWaitingAnimation() {
 
 }
 
-function playCasePreviewAnimation(result) {
+
+/* ========================================
+   正式開箱動畫
+   API 回來後接管
+======================================== */
+
+function playCasePreviewAnimation(
+    result
+) {
 
     const track =
         document.querySelector(
             "#case-preview-track"
         );
 
-
     const status =
         document.querySelector(
             "#case-preview-status"
         );
-
 
     const pointer =
         document.querySelector(
@@ -801,16 +837,22 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 清空原本預覽
+     * 清除等待動畫
      * ====================================
      */
+
+    track.style.transition =
+        "none";
+
+    track.style.transform =
+        "translateX(0px)";
 
     track.innerHTML = "";
 
 
     /*
      * ====================================
-     * 建立動畫物品
+     * 建立正式動畫物品
      * ====================================
      */
 
@@ -822,7 +864,7 @@ function playCasePreviewAnimation(result) {
 
 
     /*
-     * 前面放 24 個隨機物品
+     * 前面 24 個隨機物品
      */
 
     for (
@@ -866,7 +908,7 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 後面再放 6 個
+     * 後面 6 個物品
      * ====================================
      */
 
@@ -900,7 +942,7 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 建立卡片
+     * 建立正式動畫卡片
      * ====================================
      */
 
@@ -983,7 +1025,7 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 取得中獎物品
+     * 找到中獎物品
      * ====================================
      */
 
@@ -1019,21 +1061,16 @@ function playCasePreviewAnimation(result) {
     track.style.transition =
         "none";
 
-
     track.style.transform =
         "translateX(0px)";
 
-
-    /*
-     * 強制瀏覽器重新計算
-     */
 
     track.offsetHeight;
 
 
     /*
      * ====================================
-     * 計算目標位置
+     * 計算中獎位置
      * ====================================
      */
 
@@ -1074,7 +1111,7 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 顯示開箱狀態
+     * 狀態
      * ====================================
      */
 
@@ -1088,7 +1125,9 @@ function playCasePreviewAnimation(result) {
 
     /*
      * ====================================
-     * 開始動畫
+     * 正式減速動畫
+     *
+     * 4.2 秒
      * ====================================
      */
 
@@ -1169,7 +1208,9 @@ function initializeOpenCaseButton() {
 
 
     if (!button) {
+
         return;
+
     }
 
 
@@ -1178,7 +1219,9 @@ function initializeOpenCaseButton() {
         async () => {
 
             /*
+             * ====================================
              * 防止連點
+             * ====================================
              */
 
             if (
@@ -1206,7 +1249,9 @@ function initializeOpenCaseButton() {
 
 
             /*
+             * ====================================
              * 確認登入
+             * ====================================
              */
 
             const sessionToken =
@@ -1224,108 +1269,150 @@ function initializeOpenCaseButton() {
 
 
             try {
-            
+
+                /*
+                 * ====================================
+                 * 鎖定按鈕
+                 * ====================================
+                 */
+
                 button.disabled =
                     true;
-            
-            
+
+
                 button.textContent =
                     "開箱中...";
-            
-            
+
+
                 /*
                  * ====================================
-                 * 立刻開始動畫
+                 * 立刻開始等待動畫
                  * ====================================
                  */
-            
+
                 startCaseWaitingAnimation();
-            
-            
+
+
                 /*
                  * ====================================
-                 * 同時呼叫後端
+                 * API 在背景處理
+                 *
+                 * 可以 1 秒
+                 * 可以 10 秒
+                 * 可以 20 秒
+                 *
+                 * 動畫都不會停
                  * ====================================
                  */
-            
+
                 const result =
                     await openCase(
                         caseId
                     );
-            
-            
+
+
                 /*
                  * ====================================
                  * 更新餘額
                  * ====================================
                  */
-            
+
                 updateBalance(
                     result.remainingEloCoin
                 );
-            
-            
+
+
                 /*
                  * ====================================
                  * 更新 LocalStorage
                  * ====================================
                  */
-            
+
                 const savedUser =
                     getSavedUser();
-            
-            
+
+
                 if (savedUser) {
-            
+
                     savedUser.eloCoin =
                         result.remainingEloCoin;
-            
-            
+
+
                     localStorage.setItem(
                         "elocaseUser",
                         JSON.stringify(
                             savedUser
                         )
                     );
-            
+
                 }
-            
-            
+
+
                 /*
                  * ====================================
-                 * API 完成
-                 * 開始真正開箱動畫
+                 * API 成功
+                 *
+                 * 等待動畫 → 正式減速動畫
                  * ====================================
                  */
-            
+
                 playCasePreviewAnimation(
                     result
                 );
-            
-            
+
+
             } catch (error) {
-            
+
                 console.error(
                     "開箱失敗：",
                     error
                 );
-            
-            
+
+
+                /*
+                 * API 失敗
+                 */
+
+                const track =
+                    document.querySelector(
+                        "#case-preview-track"
+                    );
+
+
+                if (track) {
+
+                    track.style.transition =
+                        "none";
+
+                }
+
+
                 alert(
                     error.message ||
                     "開箱失敗"
                 );
-            
-            
+
+
             } finally {
-            
+
+                /*
+                 * ====================================
+                 * 結束開箱狀態
+                 * ====================================
+                 */
+
+                document.body.classList.remove(
+                    "case-opening"
+                );
+
+
                 button.disabled =
                     false;
-            
-            
+
+
                 button.textContent =
                     "開啟箱子";
-            
+
             }
 
         }
