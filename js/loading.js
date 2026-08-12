@@ -52,100 +52,136 @@
     }
 
 
-    /* ========================================
-       開始載入
-    ======================================== */
-
-    function startLoading() {
-
-        createLoadingBar();
-
-
-        requestCount++;
-
-
-        /*
-         * 如果已經有 API 正在載入
-         * 就不要重新開始動畫
-         */
-
-        if (requestCount > 1) {
-
-            return;
-
-        }
-
-
-        clearInterval(
-            progressTimer
-        );
-
-
-        clearTimeout(
-            finishTimer
-        );
-
-
-        loadingBar.classList.remove(
-            "loading-complete"
-        );
-
-
-        loadingBar.classList.add(
-            "loading-active"
-        );
-
-
-        loadingBar.style.opacity =
-            "1";
-
-
-        loadingBar.style.width =
-            "0%";
-
-
-        /*
-         * 假進度
-         *
-         * 最多跑到 70%
-         * 等真正 API 完成後才跑到 100%
-         */
-
-        let progress = 0;
-
-
-        progressTimer =
-            setInterval(
-                () => {
-
-                    if (
-                        progress >= 70
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const remaining =
-                        70 - progress;
-
-
-                    progress +=
-                        Math.max(
-                            0.5,
-                            remaining * 0.08
-                        );
-
-
-                    loadingBar.style.width =
-                        `${progress}%`;
-
-                },
-                80
-            );
-
-    }
+   /* ========================================
+      開始載入
+   ======================================== */
+   
+   function startLoading() {
+   
+       createLoadingBar();
+   
+   
+       requestCount++;
+   
+   
+       /*
+        * 如果已經有 API 正在載入
+        * 不重新開始進度
+        */
+   
+       if (requestCount > 1) {
+   
+           return;
+   
+       }
+   
+   
+       clearInterval(
+           progressTimer
+       );
+   
+   
+       clearTimeout(
+           finishTimer
+       );
+   
+   
+       loadingBar.classList.remove(
+           "loading-complete"
+       );
+   
+   
+       loadingBar.classList.add(
+           "loading-active"
+       );
+   
+   
+       loadingBar.style.opacity =
+           "1";
+   
+   
+       loadingBar.style.width =
+           "0%";
+   
+   
+       /*
+        * ====================================
+        * 假進度
+        * ====================================
+        *
+        * 前面正常跑
+        * 70% 之後超級慢
+        */
+   
+       let progress = 0;
+   
+   
+       progressTimer =
+           setInterval(
+               () => {
+   
+                   /*
+                    * 0% ~ 70%
+                    *
+                    * 正常速度
+                    */
+   
+                   if (
+                       progress < 70
+                   ) {
+   
+                       const remaining =
+                           70 - progress;
+   
+   
+                       progress +=
+                           Math.max(
+                               0.5,
+                               remaining * 0.08
+                           );
+   
+                   }
+   
+   
+                   /*
+                    * 70% ~ 90%
+                    *
+                    * 超級慢速前進
+                    */
+   
+                   else if (
+                       progress < 90
+                   ) {
+   
+                       progress +=
+                           0.015;
+   
+                   }
+   
+   
+                   /*
+                    * 不要自己跑到 100%
+                    *
+                    * 100% 一定等 API 完成
+                    */
+   
+                   else {
+   
+                       progress =
+                           90;
+   
+                   }
+   
+   
+                   loadingBar.style.width =
+                       `${progress}%`;
+   
+   
+               },
+               100
+           );
+   
+   }
 
 
     /* ========================================
