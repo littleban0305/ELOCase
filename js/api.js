@@ -246,7 +246,7 @@ async function getCaseItems(caseId) {
 }
 
 /* ========================================
-   開箱
+   開箱 API
 ======================================== */
 
 async function openCase(caseId) {
@@ -270,193 +270,132 @@ async function openCase(caseId) {
     }
 
 
-    const maxAttempts = 3;
-
-    let lastError = null;
-
-
     /*
      * ====================================
-     * 整個開箱流程開始 Loading
+     * 開箱時不要顯示全域 Loading Bar
      * ====================================
      */
 
-    if (
-        !window.ELOCaseOpening &&
-        window.ELOLoading &&
-        typeof window.ELOLoading.start === "function"
-    ) {
-    
-        window.ELOLoading.start();
-    
-    }
+    const requestData = {
+
+        action:
+            "openCase",
+
+        sessionToken:
+            sessionToken,
+
+        caseId:
+            caseId
+
+    };
 
 
     try {
 
         /*
          * ====================================
-         * Retry
+         * POST 開箱
          * ====================================
          */
 
-        for (
-            let attempt = 1;
-            attempt <= maxAttempts;
-            attempt++
-        ) {
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
 
-            try {
+                    method:
+                        "POST",
 
-                const response =
-                    await fetch(
-                        CONFIG.API_URL,
-                        {
+                    headers: {
 
-                            method:
-                                "POST",
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
 
-                            redirect:
-                                "follow",
+                    },
 
-                            cache:
-                                "no-store",
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
 
-                            headers: {
+                    /*
+                     * 讓 Google Apps Script
+                     * 自己處理 redirect
+                     */
 
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
+                    redirect:
+                        "follow",
 
-                            },
+                    /*
+                     * 不使用舊快取
+                     */
 
-                            body:
-                                JSON.stringify({
-
-                                    action:
-                                        "openCase",
-
-                                    sessionToken:
-                                        sessionToken,
-
-                                    caseId:
-                                        caseId
-
-                                })
-
-                        }
-                    );
-
-
-                /*
-                 * ====================================
-                 * HTTP 錯誤
-                 * ====================================
-                 */
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `開箱服務無法使用（${response.status}）`
-                    );
+                    cache:
+                        "no-store"
 
                 }
+            );
 
-
-                /*
-                 * ====================================
-                 * 解析 API
-                 * ====================================
-                 */
-
-                const result =
-                    await response.json();
-
-
-                /*
-                 * ====================================
-                 * API 業務錯誤
-                 *
-                 * 例如：
-                 * ELOCoin 不足
-                 * 箱子不存在
-                 * Session 無效
-                 * ====================================
-                 */
-
-                if (!result.success) {
-
-                    throw new Error(
-                        result.error ||
-                        "開箱失敗"
-                    );
-
-                }
-
-
-                /*
-                 * ====================================
-                 * 開箱成功
-                 * ====================================
-                 */
-
-                return result.data;
-
-
-            } catch (error) {
-
-                lastError =
-                    error;
-
-
-                /*
-                 * 還有重試機會
-                 */
-
-                if (
-                    attempt < maxAttempts
-                ) {
-
-                    await new Promise(
-                        resolve =>
-                            setTimeout(
-                                resolve,
-                                300 * attempt
-                            )
-                    );
-
-
-                    continue;
-
-                }
-
-
-                /*
-                 * 三次都失敗
-                 */
-
-                throw lastError;
-
-            }
-
-        }
-
-    } finally {
 
         /*
          * ====================================
-         * 整個開箱流程結束 Loading
+         * HTTP 錯誤
          * ====================================
          */
 
-        if (
-            !window.ELOCaseOpening &&
-            window.ELOLoading &&
-            typeof window.ELOLoading.finish === "function"
-        ) {
-        
-            window.ELOLoading.finish();
-        
+        if (!response.ok) {
+
+            throw new Error(
+                `開箱服務無法使用（${response.status}）`
+            );
+
         }
+
+
+        /*
+         * ====================================
+         * 解析結果
+         * ====================================
+         */
+
+        const result =
+            await response.json();
+
+
+        /*
+         * ====================================
+         * API 回報錯誤
+         * ====================================
+         */
+
+        if (!result.success) {
+
+            throw new Error(
+                result.error ||
+                "開箱失敗"
+            );
+
+        }
+
+
+        /*
+         * ====================================
+         * 成功
+         * ====================================
+         */
+
+        return result.data;
+
+
+    } catch (error) {
+
+        console.error(
+            "openCase API 錯誤：",
+            error
+        );
+
+
+        throw error;
 
     }
 
