@@ -1263,3 +1263,389 @@ main {
     }
 
 }
+
+/* ========================================
+   Case Hero - 最終排版
+======================================== */
+
+.case-preview {
+
+    position: relative;
+
+    min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    padding: 30px 34px 26px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #11151d,
+            #0b0e13
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+}
+
+
+/* ========================================
+   箱子資訊區
+======================================== */
+
+.case-hero-info {
+
+    position: absolute;
+
+    z-index: 15;
+
+    top: 42px;
+
+    left: 50%;
+
+    width: auto;
+
+    min-width: 240px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    text-align: left;
+
+}
+
+
+/* ========================================
+   遊戲標籤
+======================================== */
+
+.case-detail-game {
+
+    margin-bottom: 7px;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* ========================================
+   箱子名稱
+======================================== */
+
+.case-hero-info h1 {
+
+    margin: 0;
+
+    color:
+        var(--color-text);
+
+    font-size: 1.65rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        -0.03em;
+
+}
+
+
+/* ========================================
+   價格
+======================================== */
+
+.case-hero-info .case-detail-price {
+
+    margin-top: 8px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* ========================================
+   箱子圖片
+======================================== */
+
+.case-hero-image {
+
+    position: relative;
+
+    z-index: 4;
+
+    width: 300px;
+
+    height: 190px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin:
+        12px auto 4px;
+
+    overflow: hidden;
+
+    color:
+        rgba(255, 255, 255, 0.12);
+
+    font-size: 1.3rem;
+
+    font-weight: 800;
+
+}
+
+
+.case-hero-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+/* ========================================
+   預覽
+======================================== */
+
+.case-preview-wrapper {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    height: 180px;
+
+    margin-top: 12px;
+
+    overflow: hidden;
+
+    background:
+        rgba(7, 9, 13, 0.92);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+}
+
+
+/* ========================================
+   開箱控制
+======================================== */
+
+.case-hero-actions {
+
+    position: relative;
+
+    z-index: 25;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 18px;
+
+    margin-top: 16px;
+
+}
+
+
+.case-preview-status {
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.74rem;
+
+}
+
+
+#open-case-button {
+
+    min-width: 140px;
+
+}
+
+
+/* ========================================
+   平板
+======================================== */
+
+@media (max-width: 900px) {
+
+    .case-preview {
+
+        padding:
+            26px 24px 24px;
+
+    }
+
+
+    .case-hero-info {
+
+        left:
+            calc(50% + 150px);
+
+    }
+
+
+    .case-hero-image {
+
+        width: 250px;
+
+        height: 165px;
+
+        margin-left:
+            50px;
+
+    }
+
+
+    .case-preview-wrapper {
+
+        height: 175px;
+
+    }
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 650px) {
+
+    .case-preview {
+
+        padding:
+            24px 14px 20px;
+
+    }
+
+
+    .case-hero-info {
+
+        position: relative;
+
+        top: auto;
+
+        left: auto;
+
+        width: 100%;
+
+        min-width: 0;
+
+        margin-bottom: 4px;
+
+        align-items: center;
+
+        text-align: center;
+
+    }
+
+
+    .case-hero-info h1 {
+
+        font-size:
+            1.35rem;
+
+    }
+
+
+    .case-hero-image {
+
+        width: 190px;
+
+        height: 130px;
+
+        margin:
+            4px auto 8px;
+
+    }
+
+
+    .case-preview-wrapper {
+
+        height: 155px;
+
+        margin-top: 8px;
+
+    }
+
+
+    .case-hero-actions {
+
+        flex-direction:
+            column;
+
+        gap:
+            10px;
+
+        margin-top:
+            14px;
+
+    }
+
+
+    .case-preview-status {
+
+        order:
+            2;
+
+        text-align:
+            center;
+
+    }
+
+
+    #open-case-button {
+
+        width: 100%;
+
+    }
+
+}
