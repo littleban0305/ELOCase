@@ -217,12 +217,13 @@ async function openCase(caseId) {
      */
 
     if (
+        !window.ELOCaseOpening &&
         window.ELOLoading &&
         typeof window.ELOLoading.start === "function"
     ) {
-
+    
         window.ELOLoading.start();
-
+    
     }
 
 
@@ -383,12 +384,13 @@ async function openCase(caseId) {
          */
 
         if (
+            !window.ELOCaseOpening &&
             window.ELOLoading &&
             typeof window.ELOLoading.finish === "function"
         ) {
-
+        
             window.ELOLoading.finish();
-
+        
         }
 
     }
