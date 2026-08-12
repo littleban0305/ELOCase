@@ -4,795 +4,928 @@
 
 
 /* ========================================
-   頁面版型
+   取得網址中的 caseId
 ======================================== */
 
-body {
+function getCaseIdFromUrl() {
 
-    min-height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-}
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
 
-main {
-
-    flex: 1;
-
-}
-
-
-.case-page {
-
-    padding:
-        40px 0 90px;
+    return params.get(
+        "caseId"
+    );
 
 }
 
 
 /* ========================================
-   返回
+   稀有度 CSS
 ======================================== */
 
-.case-back {
+function getRarityClass(rarity) {
 
-    display: inline-flex;
-
-    align-items: center;
-
-    margin-bottom: 22px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.78rem;
-
-    font-weight: 600;
-
-    transition:
-        color var(--transition-fast);
-
-}
+    const value =
+        String(
+            rarity || ""
+        )
+        .trim()
+        .toLowerCase();
 
 
-.case-back:hover {
+    switch (value) {
 
-    color:
-        var(--color-text);
+        case "blue":
+        case "藍色":
+        case "consumer":
+        case "消費級":
+
+            return "rarity-blue";
+
+
+        case "purple":
+        case "紫色":
+        case "industrial":
+        case "工業級":
+
+            return "rarity-purple";
+
+
+        case "pink":
+        case "粉色":
+        case "mil-spec":
+        case "受限":
+
+            return "rarity-pink";
+
+
+        case "red":
+        case "紅色":
+        case "classified":
+        case "保密":
+
+            return "rarity-red";
+
+
+        default:
+
+            return "";
+
+    }
 
 }
 
 
 /* ========================================
-   箱子資訊
+   更新玩家餘額
 ======================================== */
 
-.case-detail {
+function updateBalance(eloCoin) {
 
-    display: grid;
+    const balanceElement =
+        document.querySelector(
+            ".balance-value"
+        );
 
-    grid-template-columns:
-        minmax(0, 1.2fr)
-        minmax(320px, 0.8fr);
 
-    overflow: hidden;
+    if (!balanceElement) {
+        return;
+    }
 
-    background:
-        var(--color-surface);
 
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
+    balanceElement.textContent =
+        Number(
+            eloCoin || 0
+        ).toLocaleString();
 
 }
 
 
 /* ========================================
-   箱子圖片
+   更新箱子圖片
 ======================================== */
 
-.case-detail-image {
+function renderCaseImage(caseData) {
 
-    min-height: 380px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(124, 92, 255, 0.2),
-            transparent 65%
-        ),
-        #0d1015;
-
-    border-right:
-        1px solid
-        var(--color-border);
-
-    color:
-        rgba(255, 255, 255, 0.18);
-
-    font-size: 2rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.1em;
-
-}
+    const imageElement =
+        document.querySelector(
+            "#case-image"
+        );
 
 
-.case-detail-image img {
+    if (!imageElement) {
+        return;
+    }
 
-    width: 100%;
 
-    height: 100%;
+    if (caseData.imageUrl) {
 
-    object-fit: cover;
+        imageElement.innerHTML = `
 
-    display: block;
+            <img
+                src="${escapeHtml(
+                    caseData.imageUrl
+                )}"
+                alt=""
+                onerror="
+                    this.style.display='none';
+                    this.parentElement.classList.add('image-error');
+                "
+            >
+
+        `;
+
+        return;
+
+    }
+
+
+    imageElement.innerHTML = `
+
+        <span>
+            ${escapeHtml(
+                caseData.game ||
+                "ELOCase"
+            )}
+        </span>
+
+    `;
 
 }
 
 
 /* ========================================
-   箱子資訊區
+   更新箱子資訊
 ======================================== */
 
-.case-detail-info {
+function renderCaseInfo(caseData) {
 
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    padding: 42px;
-
-}
+    const gameElement =
+        document.querySelector(
+            "#case-game"
+        );
 
 
-.case-detail-game {
-
-    margin-bottom: 10px;
-
-    color:
-        var(--color-primary);
-
-    font-size: 0.72rem;
-
-    font-weight: 700;
-
-    letter-spacing:
-        0.08em;
-
-    text-transform:
-        uppercase;
-
-}
+    const nameElement =
+        document.querySelector(
+            "#case-name"
+        );
 
 
-.case-detail-info h1 {
-
-    margin-bottom: 14px;
-
-    color:
-        var(--color-text);
-
-    font-size: 1.8rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        -0.03em;
-
-}
+    const priceElement =
+        document.querySelector(
+            "#case-price"
+        );
 
 
-.case-detail-bottom {
+    if (gameElement) {
 
-    display: flex;
+        gameElement.textContent =
+            caseData.game ||
+            "CS2";
 
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-}
+    }
 
 
-.case-detail-price {
+    if (nameElement) {
 
-    color:
-        var(--color-text);
+        nameElement.textContent =
+            caseData.name ||
+            "未命名箱子";
 
-    font-size: 1.25rem;
+    }
 
-    font-weight: 800;
 
-    font-variant-numeric:
-        tabular-nums;
+    if (priceElement) {
+
+        priceElement.textContent =
+            `$${Number(
+                caseData.price || 0
+            ).toLocaleString()}`;
+
+    }
+
+
+    document.title =
+        `${caseData.name || "箱子"}｜ELOCase`;
 
 }
 
 
 /* ========================================
-   箱子內容物
+   建立物品卡片
 ======================================== */
 
-.case-contents {
+function createCaseItemCard(item) {
 
-    margin-top: 64px;
-
-}
-
-
-.case-contents .section-header {
-
-    margin-bottom: 22px;
-
-}
+    const card =
+        document.createElement(
+            "div"
+        );
 
 
-.case-items-grid {
+    card.className =
+        "case-item-card";
 
-    display: grid;
 
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+    const rarityClass =
+        getRarityClass(
+            item.rarity
+        );
 
-    gap: 14px;
+
+    const imageContent =
+        item.image
+            ? `
+
+                <img
+                    src="${escapeHtml(
+                        item.image
+                    )}"
+                    alt=""
+                    class="case-item-real-image"
+                    onerror="
+                        this.style.display='none';
+                    "
+                >
+
+                <div class="case-item-blur">
+
+                    <span>
+                        ${escapeHtml(
+                            item.name ||
+                            "未知物品"
+                        )}
+                    </span>
+
+                </div>
+
+            `
+            : `
+
+                <div class="case-item-blur">
+
+                    <span>
+                        ${escapeHtml(
+                            item.name ||
+                            "未知物品"
+                        )}
+                    </span>
+
+                </div>
+
+            `;
+
+
+    card.innerHTML = `
+
+        <div class="case-item-image">
+
+            ${imageContent}
+
+        </div>
+
+
+        <div class="case-item-info">
+
+            <div
+                class="
+                    case-item-rarity
+                    ${rarityClass}
+                "
+            >
+
+                ${escapeHtml(
+                    item.rarity ||
+                    "未知"
+                )}
+
+            </div>
+
+
+            <h3>
+
+                ${escapeHtml(
+                    item.name ||
+                    "未命名物品"
+                )}
+
+            </h3>
+
+
+            <div class="case-item-value">
+
+                $${Number(
+                    item.value || 0
+                ).toLocaleString()}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /*
+     * 圖片載入失敗
+     */
+
+    const image =
+        card.querySelector(
+            ".case-item-real-image"
+        );
+
+
+    if (image) {
+
+        image.addEventListener(
+            "error",
+            () => {
+
+                image.style.display =
+                    "none";
+
+            }
+        );
+
+    }
+
+
+    return card;
 
 }
 
 
 /* ========================================
-   物品卡片
+   顯示箱子內容物
 ======================================== */
 
-.case-item-card {
+function renderCaseItems(items) {
 
-    overflow: hidden;
-
-    background:
-        var(--color-surface);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-medium);
-
-    transition:
-        border-color var(--transition-normal),
-        transform var(--transition-normal);
-
-}
+    const container =
+        document.querySelector(
+            "#case-items"
+        );
 
 
-.case-item-card:hover {
-
-    transform:
-        translateY(-3px);
-
-    border-color:
-        var(--color-border-light);
-
-}
+    if (!container) {
+        return;
+    }
 
 
-/* ========================================
-   物品圖片
-======================================== */
+    container.innerHTML = "";
 
-.case-item-image {
 
-    position: relative;
+    if (
+        !items ||
+        items.length === 0
+    ) {
 
-    width: 100%;
+        container.innerHTML = `
 
-    aspect-ratio: 1 / 1;
+            <div class="case-items-loading">
 
-    display: flex;
+                這個箱子目前沒有內容物。
 
-    align-items: center;
+            </div>
 
-    justify-content: center;
+        `;
 
-    overflow: hidden;
+        return;
 
-    background:
-        #0d1015;
+    }
 
-    border-bottom:
-        1px solid
-        var(--color-border);
+
+    items.forEach(
+        item => {
+
+            const card =
+                createCaseItemCard(
+                    item
+                );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
 /* ========================================
-   正常物品圖片
+   顯示開箱結果
 ======================================== */
 
-.case-item-real-image {
+function showOpenCaseResult(result) {
 
-    position: relative;
+    let resultElement =
+        document.querySelector(
+            "#open-case-result"
+        );
 
-    z-index: 2;
 
-    width: 100%;
+    /*
+     * 第一次建立
+     */
 
-    height: 100%;
+    if (!resultElement) {
 
-    object-fit: contain;
+        resultElement =
+            document.createElement(
+                "div"
+            );
 
-    display: block;
 
-    padding: 16px;
+        resultElement.id =
+            "open-case-result";
+
+
+        resultElement.className =
+            "open-case-result";
+
+
+        document.body.appendChild(
+            resultElement
+        );
+
+    }
+
+
+    const item =
+        result.item;
+
+
+    resultElement.innerHTML = `
+
+        <div class="open-case-result-box">
+
+            <div class="open-case-result-label">
+
+                開箱結果
+
+            </div>
+
+
+            <div class="open-case-result-image">
+
+                ${
+                    item.image
+                        ? `
+                            <img
+                                src="${escapeHtml(
+                                    item.image
+                                )}"
+                                alt=""
+                                onerror="
+                                    this.style.display='none';
+                                "
+                            >
+                        `
+                        : `
+                            <div
+                                class="
+                                    open-case-result-blur
+                                "
+                            ></div>
+                        `
+                }
+
+            </div>
+
+
+            <div
+                class="
+                    open-case-result-rarity
+                    ${getRarityClass(
+                        item.rarity
+                    )}
+                "
+            >
+
+                ${escapeHtml(
+                    item.rarity ||
+                    "未知"
+                )}
+
+            </div>
+
+
+            <h2>
+
+                ${escapeHtml(
+                    item.name ||
+                    "未知物品"
+                )}
+
+            </h2>
+
+
+            <div class="open-case-result-value">
+
+                $${Number(
+                    item.value || 0
+                ).toLocaleString()}
+
+            </div>
+
+
+            <div class="open-case-result-balance">
+
+                剩餘 $${Number(
+                    result.remainingEloCoin || 0
+                ).toLocaleString()}
+
+            </div>
+
+
+            <button
+                type="button"
+                id="close-open-case-result"
+                class="button button-primary"
+            >
+                確定
+            </button>
+
+        </div>
+
+    `;
+
+
+    resultElement.classList.add(
+        "show"
+    );
+
+
+    const closeButton =
+        document.querySelector(
+            "#close-open-case-result"
+        );
+
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            () => {
+
+                resultElement.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+    }
 
 }
 
 
 /* ========================================
-   圖片失效 / 沒有圖片
+   初始化開箱按鈕
 ======================================== */
 
-.case-item-blur {
+function initializeOpenCaseButton() {
 
-    position: absolute;
+    const button =
+        document.querySelector(
+            "#open-case-button"
+        );
 
-    inset: 0;
 
-    z-index: 1;
+    if (!button) {
+        return;
+    }
 
-    display: flex;
 
-    align-items: center;
+    button.addEventListener(
+        "click",
+        async () => {
 
-    justify-content: center;
+            /*
+             * 防止連點
+             */
 
-    overflow: hidden;
+            if (
+                button.disabled
+            ) {
 
-    background:
-        radial-gradient(
-            circle at 30% 30%,
-            rgba(124, 92, 255, 0.45),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 70% 65%,
-            rgba(255, 80, 160, 0.25),
-            transparent 40%
-        ),
-        linear-gradient(
-            135deg,
-            #151923,
-            #0b0e14
+                return;
+
+            }
+
+
+            const caseId =
+                getCaseIdFromUrl();
+
+
+            if (!caseId) {
+
+                alert(
+                    "缺少箱子 ID"
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * 確認登入
+             */
+
+            const sessionToken =
+                getSessionToken();
+
+
+            if (!sessionToken) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                button.disabled =
+                    true;
+
+
+                button.textContent =
+                    "開箱中...";
+
+
+                /*
+                 * 呼叫後端
+                 */
+
+                const result =
+                    await openCase(
+                        caseId
+                    );
+
+
+                /*
+                 * 更新餘額
+                 */
+
+                updateBalance(
+                    result.remainingEloCoin
+                );
+
+
+                /*
+                 * 更新 LocalStorage 玩家資料
+                 */
+
+                const savedUser =
+                    getSavedUser();
+
+
+                if (savedUser) {
+
+                    savedUser.eloCoin =
+                        result.remainingEloCoin;
+
+
+                    localStorage.setItem(
+                        "elocaseUser",
+                        JSON.stringify(
+                            savedUser
+                        )
+                    );
+
+                }
+
+
+                /*
+                 * 顯示結果
+                 */
+
+                showOpenCaseResult(
+                    result
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "開箱失敗：",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "開箱失敗"
+                );
+
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "開啟箱子";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ========================================
+   載入箱子
+======================================== */
+
+async function initializeCasePage() {
+
+    const caseId =
+        getCaseIdFromUrl();
+
+
+    const caseName =
+        document.querySelector(
+            "#case-name"
+        );
+
+
+    const caseItems =
+        document.querySelector(
+            "#case-items"
+        );
+
+
+    if (!caseId) {
+
+        if (caseName) {
+
+            caseName.textContent =
+                "找不到箱子";
+
+        }
+
+
+        if (caseItems) {
+
+            caseItems.innerHTML = `
+
+                <div class="case-items-loading">
+
+                    缺少箱子 ID。
+
+                </div>
+
+            `;
+
+        }
+
+
+        return;
+
+    }
+
+
+    try {
+
+        /*
+         * 取得箱子
+         */
+
+        const caseData =
+            await getCase(
+                caseId
+            );
+
+
+        if (!caseData) {
+
+            throw new Error(
+                "找不到這個箱子"
+            );
+
+        }
+
+
+        renderCaseImage(
+            caseData
+        );
+
+
+        renderCaseInfo(
+            caseData
+        );
+
+
+        /*
+         * 取得內容物
+         */
+
+        const items =
+            await getCaseItems(
+                caseId
+            );
+
+
+        renderCaseItems(
+            items
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "箱子資料載入失敗：",
+            error
+        );
+
+
+        if (caseName) {
+
+            caseName.textContent =
+                "箱子載入失敗";
+
+        }
+
+
+        if (caseItems) {
+
+            caseItems.innerHTML = `
+
+                <div class="case-items-loading">
+
+                    ${escapeHtml(
+                        error.message ||
+                        "無法載入箱子資料"
+                    )}
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* ========================================
+   HTML 防護
+======================================== */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
         );
 
 }
 
 
 /* ========================================
-   模糊光影
+   初始化
 ======================================== */
 
-.case-item-blur::before {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    content: "";
+        initializeCasePage();
 
-    position: absolute;
-
-    width: 75%;
-
-    height: 75%;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(124, 92, 255, 0.5),
-            rgba(255, 255, 255, 0.08)
-        );
-
-    filter:
-        blur(35px);
-
-    opacity:
-        0.75;
-
-}
-
-
-/* ========================================
-   模糊物品名稱
-======================================== */
-
-.case-item-blur span {
-
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 80%;
-
-    color:
-        rgba(255, 255, 255, 0.28);
-
-    font-size: 0.9rem;
-
-    font-weight: 800;
-
-    text-align: center;
-
-    filter:
-        blur(4px);
-
-    user-select:
-        none;
-
-}
-
-
-/*
- * 有正常圖片時，
- * 圖片會蓋住這個模糊層
- *
- * 圖片載入失敗後，
- * JS 會將圖片隱藏，
- * 模糊層就會自動露出
- */
-
-
-/* ========================================
-   舊 Placeholder
-======================================== */
-
-.case-item-placeholder {
-
-    color:
-        rgba(255, 255, 255, 0.15);
-
-    font-size: 1rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.08em;
-
-}
-
-
-/* ========================================
-   物品資訊
-======================================== */
-
-.case-item-info {
-
-    padding: 14px;
-
-}
-
-
-.case-item-rarity {
-
-    margin-bottom: 6px;
-
-    font-size: 0.68rem;
-
-    font-weight: 700;
-
-}
-
-
-.case-item-info h3 {
-
-    margin-bottom: 8px;
-
-    overflow: hidden;
-
-    color:
-        var(--color-text);
-
-    font-size: 0.8rem;
-
-    font-weight: 700;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-}
-
-
-.case-item-value {
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.72rem;
-
-    font-weight: 600;
-
-    font-variant-numeric:
-        tabular-nums;
-
-}
-
-
-/* ========================================
-   稀有度
-======================================== */
-
-.rarity-blue {
-
-    color:
-        #5b9cff;
-
-}
-
-
-.rarity-purple {
-
-    color:
-        #a66cff;
-
-}
-
-
-.rarity-pink {
-
-    color:
-        #d968d8;
-
-}
-
-
-.rarity-red {
-
-    color:
-        #e05b68;
-
-}
-
-
-/* ========================================
-   載入狀態
-======================================== */
-
-.case-items-loading {
-
-    grid-column:
-        1 / -1;
-
-    min-height: 160px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        var(--color-surface);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.82rem;
-
-}
-
-
-/* ========================================
-   Footer
-======================================== */
-
-.footer {
-
-    border-top:
-        1px solid
-        var(--color-border);
-
-    background:
-        var(--color-surface);
-
-}
-
-
-.footer-container {
-
-    min-height: 100px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.8rem;
-
-}
-
-
-.footer-brand {
-
-    color:
-        var(--color-text);
-
-    font-weight: 700;
-
-}
-
-
-.footer-container span {
-
-    margin-left: auto;
-
-}
-
-
-/* ========================================
-   平板
-======================================== */
-
-@media (max-width: 1000px) {
-
-    .case-detail {
-
-        grid-template-columns:
-            1fr;
+        initializeOpenCaseButton();
 
     }
-
-
-    .case-detail-image {
-
-        min-height: 320px;
-
-        border-right:
-            none;
-
-        border-bottom:
-            1px solid
-            var(--color-border);
-
-    }
-
-
-    .case-items-grid {
-
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-
-    }
-
-}
-
-
-/* ========================================
-   手機
-======================================== */
-
-@media (max-width: 650px) {
-
-    .case-page {
-
-        padding:
-            28px 0 60px;
-
-    }
-
-
-    .case-detail-info {
-
-        padding: 24px;
-
-    }
-
-
-    .case-detail-info h1 {
-
-        font-size: 1.45rem;
-
-    }
-
-
-    .case-detail-image {
-
-        min-height: 240px;
-
-    }
-
-
-    .case-detail-bottom {
-
-        align-items:
-            stretch;
-
-        flex-direction:
-            column;
-
-    }
-
-
-    .case-detail-bottom
-    .button {
-
-        width: 100%;
-
-    }
-
-
-    .case-items-grid {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 10px;
-
-    }
-
-
-    .case-item-info {
-
-        padding: 11px;
-
-    }
-
-
-    .case-item-info h3 {
-
-        font-size: 0.74rem;
-
-    }
-
-}
-
-
-/* ========================================
-   超小螢幕
-======================================== */
-
-@media (max-width: 380px) {
-
-    .case-items-grid {
-
-        gap: 8px;
-
-    }
-
-
-    .case-detail-info {
-
-        padding: 20px;
-
-    }
-
-}
+);
