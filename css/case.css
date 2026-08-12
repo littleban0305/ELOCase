@@ -28,7 +28,7 @@ main {
 .case-page {
 
     padding:
-        40px 0 90px;
+        30px 0 80px;
 
 }
 
@@ -43,7 +43,7 @@ main {
 
     align-items: center;
 
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 
     color:
         var(--color-text-muted);
@@ -67,21 +67,44 @@ main {
 
 
 /* ========================================
-   箱子資訊
+   開箱 Hero
 ======================================== */
 
-.case-detail {
+.case-hero {
 
-    display: grid;
+    width: 100%;
 
-    grid-template-columns:
-        minmax(0, 1.2fr)
-        minmax(320px, 0.8fr);
+}
+
+
+.case-preview {
+
+    position: relative;
+
+    min-height: 560px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 
     overflow: hidden;
 
+    padding:
+        34px 32px 28px;
+
     background:
-        var(--color-surface);
+        radial-gradient(
+            circle at 50% 28%,
+            rgba(124, 92, 255, 0.16),
+            transparent 38%
+        ),
+        linear-gradient(
+            180deg,
+            #11151d,
+            #0b0e13
+        );
 
     border:
         1px solid
@@ -94,126 +117,53 @@ main {
 
 
 /* ========================================
-   箱子圖片
+   Hero 上方資訊
 ======================================== */
 
-.case-detail-image {
+.case-hero-info {
 
-    min-height: 380px;
+    position: relative;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(124, 92, 255, 0.2),
-            transparent 65%
-        ),
-        #0d1015;
-
-    border-right:
-        1px solid
-        var(--color-border);
-
-    color:
-        rgba(255, 255, 255, 0.18);
-
-    font-size: 2rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.1em;
-
-}
-
-
-.case-detail-image img {
+    z-index: 15;
 
     width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-
-}
-
-
-/* ========================================
-   箱子圖片失效
-======================================== */
-
-.case-detail-image.image-error {
-
-    background:
-        radial-gradient(
-            circle at 30% 30%,
-            rgba(124, 92, 255, 0.4),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 70% 65%,
-            rgba(255, 80, 160, 0.2),
-            transparent 40%
-        ),
-        #0d1015;
-
-}
-
-
-/* ========================================
-   箱子資訊區
-======================================== */
-
-.case-detail-info {
 
     display: flex;
 
     flex-direction: column;
 
-    justify-content: center;
+    align-items: center;
 
-    padding: 42px;
+    text-align: center;
 
 }
 
 
 .case-detail-game {
 
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 
     color:
         var(--color-primary);
 
-    font-size: 0.72rem;
+    font-size: 0.7rem;
 
     font-weight: 700;
 
     letter-spacing:
         0.08em;
 
-    text-transform:
-        uppercase;
-
 }
 
 
-.case-detail-info h1 {
+.case-hero-info h1 {
 
-    margin-bottom: 14px;
+    margin: 0;
 
     color:
         var(--color-text);
 
-    font-size: 1.8rem;
+    font-size: 1.7rem;
 
     font-weight: 800;
 
@@ -223,29 +173,14 @@ main {
 }
 
 
-/* ========================================
-   箱子資訊底部
-======================================== */
+.case-hero-info .case-detail-price {
 
-.case-detail-bottom {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-}
-
-
-.case-detail-price {
+    margin-top: 8px;
 
     color:
         var(--color-text);
 
-    font-size: 1.25rem;
+    font-size: 1rem;
 
     font-weight: 800;
 
@@ -256,12 +191,502 @@ main {
 
 
 /* ========================================
+   箱子圖片
+======================================== */
+
+.case-hero-image {
+
+    position: relative;
+
+    z-index: 4;
+
+    width: min(
+        230px,
+        42vw
+    );
+
+    height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 10px;
+
+    overflow: hidden;
+
+    color:
+        rgba(255, 255, 255, 0.12);
+
+    font-size: 1.4rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+.case-hero-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+/*
+ * 沒有圖片時
+ */
+
+.case-hero-image:not(:has(img)) {
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124, 92, 255, 0.12),
+            transparent 65%
+        );
+
+}
+
+
+/* ========================================
+   預覽區
+======================================== */
+
+.case-preview-wrapper {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    height: 190px;
+
+    margin-top: -4px;
+
+    overflow: hidden;
+
+    background:
+        rgba(7, 9, 13, 0.92);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+    box-shadow:
+        inset 0 0 50px
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* ========================================
+   左右遮罩
+======================================== */
+
+.case-preview-wrapper::before {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 20;
+
+    top: 0;
+
+    left: 0;
+
+    width: 150px;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            #090c12,
+            rgba(9, 12, 18, 0)
+        );
+
+}
+
+
+.case-preview-wrapper::after {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 20;
+
+    top: 0;
+
+    right: 0;
+
+    width: 150px;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            270deg,
+            #090c12,
+            rgba(9, 12, 18, 0)
+        );
+
+}
+
+
+/* ========================================
+   中央指示線
+======================================== */
+
+.case-preview-pointer {
+
+    position: absolute;
+
+    z-index: 30;
+
+    top: 0;
+
+    left: 50%;
+
+    width: 2px;
+
+    height: 100%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 16px
+        rgba(124, 92, 255, 0.9);
+
+    pointer-events: none;
+
+}
+
+
+.case-preview-pointer::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-left:
+        7px solid transparent;
+
+    border-right:
+        7px solid transparent;
+
+    border-top:
+        10px solid
+        var(--color-primary);
+
+}
+
+
+.case-preview-pointer::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-left:
+        7px solid transparent;
+
+    border-right:
+        7px solid transparent;
+
+    border-bottom:
+        10px solid
+        var(--color-primary);
+
+}
+
+
+/* ========================================
+   預覽軌道
+======================================== */
+
+.case-preview-track {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        18px;
+
+    will-change:
+        transform;
+
+}
+
+
+/* ========================================
+   預覽物品
+======================================== */
+
+.case-preview-item {
+
+    flex:
+        0 0 155px;
+
+    height: 155px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 10px;
+
+    background:
+        rgba(19, 23, 31, 0.92);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+
+}
+
+
+.case-preview-item-image {
+
+    width: 115px;
+
+    height: 115px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius:
+        8px;
+
+}
+
+
+.case-preview-item-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+.case-preview-item-name {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.67rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* ========================================
+   圖片載入失敗模糊
+======================================== */
+
+.case-item-blur {
+
+    width: 65%;
+
+    height: 65%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 92, 255, 0.55),
+            rgba(255, 80, 160, 0.25)
+        );
+
+    filter:
+        blur(22px);
+
+}
+
+
+.case-item-blur span {
+
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 0.6rem;
+
+}
+
+
+/* ========================================
+   中獎物品
+======================================== */
+
+.case-preview-item.winning-item {
+
+    transform:
+        scale(1.08);
+
+    border-color:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 30px
+        rgba(124, 92, 255, 0.5);
+
+}
+
+
+/* ========================================
+   開箱控制區
+======================================== */
+
+.case-hero-actions {
+
+    position: relative;
+
+    z-index: 25;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    margin-top: 20px;
+
+}
+
+
+/* ========================================
+   狀態
+======================================== */
+
+.case-preview-status {
+
+    min-width: 0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.74rem;
+
+    font-weight: 600;
+
+    text-align: right;
+
+}
+
+
+/* ========================================
+   開箱按鈕
+======================================== */
+
+#open-case-button {
+
+    min-width: 150px;
+
+}
+
+
+/* ========================================
    箱子內容物
 ======================================== */
 
 .case-contents {
 
-    margin-top: 64px;
+    margin-top: 55px;
 
 }
 
@@ -331,7 +756,8 @@ main {
 
     width: 100%;
 
-    aspect-ratio: 1 / 1;
+    aspect-ratio:
+        1 / 1;
 
     display: flex;
 
@@ -342,7 +768,11 @@ main {
     overflow: hidden;
 
     background:
-        #0d1015;
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0)
+        );
 
     border-bottom:
         1px solid
@@ -351,15 +781,7 @@ main {
 }
 
 
-/* ========================================
-   正常物品圖片
-======================================== */
-
-.case-item-real-image {
-
-    position: relative;
-
-    z-index: 2;
+.case-item-image img {
 
     width: 100%;
 
@@ -370,127 +792,6 @@ main {
     display: block;
 
     padding: 16px;
-
-}
-
-
-/* ========================================
-   圖片失效 / 沒有圖片
-======================================== */
-
-.case-item-blur {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 1;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 30% 30%,
-            rgba(124, 92, 255, 0.45),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 70% 65%,
-            rgba(255, 80, 160, 0.25),
-            transparent 40%
-        ),
-        linear-gradient(
-            135deg,
-            #151923,
-            #0b0e14
-        );
-
-}
-
-
-/* ========================================
-   模糊光影
-======================================== */
-
-.case-item-blur::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 75%;
-
-    height: 75%;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(124, 92, 255, 0.5),
-            rgba(255, 255, 255, 0.08)
-        );
-
-    filter:
-        blur(35px);
-
-    opacity:
-        0.75;
-
-}
-
-
-/* ========================================
-   模糊物品名稱
-======================================== */
-
-.case-item-blur span {
-
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 80%;
-
-    color:
-        rgba(255, 255, 255, 0.28);
-
-    font-size: 0.9rem;
-
-    font-weight: 800;
-
-    text-align: center;
-
-    filter:
-        blur(4px);
-
-    user-select:
-        none;
-
-}
-
-
-/* ========================================
-   舊 Placeholder
-======================================== */
-
-.case-item-placeholder {
-
-    color:
-        rgba(255, 255, 255, 0.15);
-
-    font-size: 1rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.08em;
 
 }
 
@@ -597,7 +898,8 @@ main {
     grid-column:
         1 / -1;
 
-    min-height: 160px;
+    min-height:
+        160px;
 
     display: flex;
 
@@ -624,208 +926,6 @@ main {
 
 
 /* ========================================
-   開箱結果
-======================================== */
-
-.open-case-result {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 9999;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0, 0, 0, 0.72);
-
-    backdrop-filter:
-        blur(8px);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
-
-}
-
-
-.open-case-result.show {
-
-    opacity: 1;
-
-    visibility: visible;
-
-}
-
-
-.open-case-result-box {
-
-    width: min(
-        420px,
-        100%
-    );
-
-    padding: 32px;
-
-    text-align: center;
-
-    background:
-        var(--color-surface);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
-
-    box-shadow:
-        0 24px 80px
-        rgba(0, 0, 0, 0.45);
-
-}
-
-
-.open-case-result-label {
-
-    margin-bottom: 20px;
-
-    color:
-        var(--color-primary);
-
-    font-size: 0.72rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.08em;
-
-}
-
-
-.open-case-result-image {
-
-    position: relative;
-
-    width: 220px;
-
-    height: 220px;
-
-    margin:
-        0 auto 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background:
-        #0d1015;
-
-    border-radius:
-        var(--radius-medium);
-
-}
-
-
-.open-case-result-image img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: contain;
-
-    padding: 20px;
-
-}
-
-
-.open-case-result-blur {
-
-    width: 70%;
-
-    height: 70%;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(124, 92, 255, 0.65),
-            rgba(255, 80, 160, 0.35)
-        );
-
-    filter:
-        blur(35px);
-
-}
-
-
-.open-case-result-rarity {
-
-    margin-bottom: 8px;
-
-    font-size: 0.75rem;
-
-    font-weight: 800;
-
-}
-
-
-.open-case-result-box h2 {
-
-    margin-bottom: 10px;
-
-    color:
-        var(--color-text);
-
-    font-size: 1.15rem;
-
-}
-
-
-.open-case-result-value {
-
-    margin-bottom: 8px;
-
-    color:
-        var(--color-text);
-
-    font-size: 1rem;
-
-    font-weight: 800;
-
-}
-
-
-.open-case-result-balance {
-
-    margin-bottom: 24px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.75rem;
-
-}
-
-
-/* ========================================
    Footer
 ======================================== */
 
@@ -843,7 +943,8 @@ main {
 
 .footer-container {
 
-    min-height: 100px;
+    min-height:
+        100px;
 
     display: flex;
 
@@ -880,26 +981,31 @@ main {
    平板
 ======================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
 
-    .case-detail {
+    .case-preview {
 
-        grid-template-columns:
-            1fr;
+        min-height:
+            520px;
+
+        padding:
+            28px 22px 24px;
 
     }
 
 
-    .case-detail-image {
+    .case-hero-image {
 
-        min-height: 320px;
+        width: 210px;
 
-        border-right:
-            none;
+        height: 155px;
 
-        border-bottom:
-            1px solid
-            var(--color-border);
+    }
+
+
+    .case-preview-wrapper {
+
+        height: 180px;
 
     }
 
@@ -923,47 +1029,149 @@ main {
     .case-page {
 
         padding:
-            28px 0 60px;
+            24px 0 55px;
 
     }
 
 
-    .case-detail-info {
+    .case-preview {
 
-        padding: 24px;
+        min-height:
+            455px;
 
-    }
+        padding:
+            24px 12px 20px;
 
-
-    .case-detail-info h1 {
-
-        font-size: 1.45rem;
-
-    }
-
-
-    .case-detail-image {
-
-        min-height: 240px;
+        border-radius:
+            var(--radius-medium);
 
     }
 
 
-    .case-detail-bottom {
+    .case-hero-info h1 {
 
-        align-items:
-            stretch;
+        font-size:
+            1.35rem;
+
+    }
+
+
+    .case-hero-image {
+
+        width: 170px;
+
+        height: 125px;
+
+        margin-top:
+            6px;
+
+    }
+
+
+    .case-preview-wrapper {
+
+        height:
+            155px;
+
+        margin-top:
+            -2px;
+
+    }
+
+
+    .case-preview-wrapper::before,
+    .case-preview-wrapper::after {
+
+        width:
+            75px;
+
+    }
+
+
+    .case-preview-track {
+
+        gap:
+            9px;
+
+        padding:
+            12px;
+
+    }
+
+
+    .case-preview-item {
+
+        flex-basis:
+            125px;
+
+        height:
+            130px;
+
+        padding:
+            8px;
+
+    }
+
+
+    .case-preview-item-image {
+
+        width:
+            92px;
+
+        height:
+            92px;
+
+    }
+
+
+    .case-preview-item-name {
+
+        font-size:
+            0.6rem;
+
+    }
+
+
+    .case-hero-actions {
 
         flex-direction:
             column;
 
+        gap:
+            10px;
+
+        margin-top:
+            15px;
+
     }
 
 
-    .case-detail-bottom
-    .button {
+    .case-preview-status {
 
-        width: 100%;
+        order:
+            2;
+
+        text-align:
+            center;
+
+    }
+
+
+    #open-case-button {
+
+        width:
+            100%;
+
+        min-width:
+            0;
+
+    }
+
+
+    .case-contents {
+
+        margin-top:
+            40px;
 
     }
 
@@ -973,37 +1181,24 @@ main {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
-        gap: 10px;
+        gap:
+            10px;
 
     }
 
 
     .case-item-info {
 
-        padding: 11px;
+        padding:
+            11px;
 
     }
 
 
     .case-item-info h3 {
 
-        font-size: 0.74rem;
-
-    }
-
-
-    .open-case-result-box {
-
-        padding: 24px;
-
-    }
-
-
-    .open-case-result-image {
-
-        width: 180px;
-
-        height: 180px;
+        font-size:
+            0.74rem;
 
     }
 
@@ -1016,1071 +1211,54 @@ main {
 
 @media (max-width: 380px) {
 
-    .case-items-grid {
-
-        gap: 8px;
-
-    }
-
-
-    .case-detail-info {
-
-        padding: 20px;
-
-    }
-
-
-    .open-case-result-image {
-
-        width: 160px;
-
-        height: 160px;
-
-    }
-
-}
-
-/* ========================================
-   開箱動畫
-======================================== */
-
-.open-case-animation {
-
-    width: min(
-        1000px,
-        100%
-    );
-
-    text-align: center;
-
-}
-
-
-.open-case-animation-title {
-
-    margin-bottom: 24px;
-
-    color:
-        var(--color-text);
-
-    font-size: 1.1rem;
-
-    font-weight: 800;
-
-}
-
-
-/* ========================================
-   滾動區域
-======================================== */
-
-.open-case-track-wrapper {
-
-    position: relative;
-
-    width: 100%;
-
-    height: 250px;
-
-    overflow: hidden;
-
-    background:
-        #090c12;
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
-
-}
-
-
-/* ========================================
-   左右漸層遮罩
-======================================== */
-
-.open-case-track-wrapper::before {
-
-    content: "";
-
-    position: absolute;
-
-    z-index: 5;
-
-    top: 0;
-
-    left: 0;
-
-    width: 120px;
-
-    height: 100%;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            90deg,
-            #090c12,
-            transparent
-        );
-
-}
-
-
-.open-case-track-wrapper::after {
-
-    content: "";
-
-    position: absolute;
-
-    z-index: 5;
-
-    top: 0;
-
-    right: 0;
-
-    width: 120px;
-
-    height: 100%;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            270deg,
-            #090c12,
-            transparent
-        );
-
-}
-
-
-/* ========================================
-   中央指示線
-======================================== */
-
-.open-case-pointer {
-
-    position: absolute;
-
-    z-index: 10;
-
-    top: 0;
-
-    left: 50%;
-
-    width: 2px;
-
-    height: 100%;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        var(--color-primary);
-
-    box-shadow:
-        0 0 16px
-        rgba(124, 92, 255, 0.9);
-
-}
-
-
-.open-case-pointer::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    border-left:
-        7px solid transparent;
-
-    border-right:
-        7px solid transparent;
-
-    border-top:
-        10px solid
-        var(--color-primary);
-
-}
-
-
-.open-case-pointer::after {
-
-    content: "";
-
-    position: absolute;
-
-    bottom: 0;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    border-left:
-        7px solid transparent;
-
-    border-right:
-        7px solid transparent;
-
-    border-bottom:
-        10px solid
-        var(--color-primary);
-
-}
-
-
-/* ========================================
-   滾動軌道
-======================================== */
-
-.open-case-track {
-
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding:
-        20px;
-
-    will-change:
-        transform;
-
-}
-
-
-/* ========================================
-   開箱物品
-======================================== */
-
-.open-case-item {
-
-    flex:
-        0 0 190px;
-
-    height: 205px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 14px;
-
-    background:
-        var(--color-surface);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-medium);
-
-    transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
-
-}
-
-
-.open-case-item-image {
-
-    width: 145px;
-
-    height: 145px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background:
-        #0d1015;
-
-    border-radius:
-        var(--radius-medium);
-
-}
-
-
-.open-case-item-image img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: contain;
-
-    padding: 10px;
-
-}
-
-
-.open-case-item-blur {
-
-    width: 65%;
-
-    height: 65%;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(124, 92, 255, 0.55),
-            rgba(255, 80, 160, 0.3)
-        );
-
-    filter:
-        blur(25px);
-
-}
-
-
-/* ========================================
-   物品名稱
-======================================== */
-
-.open-case-item-name {
-
-    width: 100%;
-
-    overflow: hidden;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.72rem;
-
-    font-weight: 700;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-}
-
-
-/* ========================================
-   中獎物品
-======================================== */
-
-.open-case-item.winning-item {
-
-    transform:
-        scale(1.06);
-
-    border-color:
-        var(--color-primary);
-
-    box-shadow:
-        0 0 30px
-        rgba(124, 92, 255, 0.45);
-
-}
-
-
-.open-case-animation-status {
-
-    margin-top: 20px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.78rem;
-
-    font-weight: 600;
-
-}
-
-
-/* ========================================
-   手機
-======================================== */
-
-@media (max-width: 650px) {
-
-    .open-case-track-wrapper {
-
-        height: 210px;
-
-    }
-
-
-    .open-case-item {
-
-        flex-basis: 155px;
-
-        height: 175px;
-
-        padding: 10px;
-
-    }
-
-
-    .open-case-item-image {
-
-        width: 120px;
-
-        height: 120px;
-
-    }
-
-
-    .open-case-track-wrapper::before,
-    .open-case-track-wrapper::after {
-
-        width: 70px;
-
-    }
-
-}
-
-/* ========================================
-   箱子圖片縮小
-======================================== */
-
-.case-detail-image {
-
-    min-height: 280px;
-
-}
-
-
-.case-detail-image img {
-
-    width: 78%;
-
-    height: 78%;
-
-    object-fit: contain;
-
-    margin: auto;
-
-}
-
-
-/* ========================================
-   開箱預覽
-======================================== */
-
-.case-preview {
-
-    margin-top: 48px;
-
-}
-
-
-.case-preview .section-header {
-
-    margin-bottom: 18px;
-
-}
-
-
-.case-preview-wrapper {
-
-    position: relative;
-
-    width: 100%;
-
-    height: 220px;
-
-    overflow: hidden;
-
-    background:
-        #090c12;
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
-
-}
-
-
-/* ========================================
-   左右遮罩
-======================================== */
-
-.case-preview-wrapper::before {
-
-    content: "";
-
-    position: absolute;
-
-    z-index: 5;
-
-    inset:
-        0 auto 0 0;
-
-    width: 130px;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            90deg,
-            #090c12,
-            transparent
-        );
-
-}
-
-
-.case-preview-wrapper::after {
-
-    content: "";
-
-    position: absolute;
-
-    z-index: 5;
-
-    inset:
-        0 0 0 auto;
-
-    width: 130px;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            270deg,
-            #090c12,
-            transparent
-        );
-
-}
-
-
-/* ========================================
-   中央指示線
-======================================== */
-
-.case-preview-pointer {
-
-    position: absolute;
-
-    z-index: 10;
-
-    top: 0;
-
-    left: 50%;
-
-    width: 2px;
-
-    height: 100%;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        var(--color-primary);
-
-    box-shadow:
-        0 0 18px
-        rgba(124, 92, 255, 0.9);
-
-}
-
-
-.case-preview-pointer::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    border-left:
-        7px solid transparent;
-
-    border-right:
-        7px solid transparent;
-
-    border-top:
-        10px solid
-        var(--color-primary);
-
-}
-
-
-.case-preview-pointer::after {
-
-    content: "";
-
-    position: absolute;
-
-    bottom: 0;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    border-left:
-        7px solid transparent;
-
-    border-right:
-        7px solid transparent;
-
-    border-bottom:
-        10px solid
-        var(--color-primary);
-
-}
-
-
-/* ========================================
-   預覽軌道
-======================================== */
-
-.case-preview-track {
-
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding:
-        20px;
-
-    will-change:
-        transform;
-
-}
-
-
-/* ========================================
-   預覽物品
-======================================== */
-
-.case-preview-item {
-
-    flex:
-        0 0 170px;
-
-    height: 180px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 12px;
-
-    background:
-        var(--color-surface);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-medium);
-
-}
-
-
-.case-preview-item-image {
-
-    width: 125px;
-
-    height: 125px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-}
-
-
-.case-preview-item-image img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: contain;
-
-}
-
-
-.case-preview-item-name {
-
-    width: 100%;
-
-    overflow: hidden;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.7rem;
-
-    font-weight: 700;
-
-    text-align: center;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-}
-
-
-.case-preview-status {
-
-    margin-top: 14px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.75rem;
-
-    text-align: center;
-
-}
-
-
-/* ========================================
-   手機
-======================================== */
-
-@media (max-width: 650px) {
-
-    .case-detail-image {
-
-        min-height: 220px;
-
-    }
-
-
-    .case-detail-image img {
-
-        width: 65%;
-
-        height: 65%;
-
-    }
-
-
-    .case-preview-wrapper {
-
-        height: 190px;
-
-    }
-
-
-    .case-preview-item {
-
-        flex-basis: 145px;
-
-        height: 155px;
-
-    }
-
-
-    .case-preview-item-image {
-
-        width: 105px;
-
-        height: 105px;
-
-    }
-
-}
-
-/* ========================================
-   Case Detail - 緊湊版
-======================================== */
-
-.case-detail {
-
-    grid-template-columns:
-        minmax(260px, 0.65fr)
-        minmax(320px, 1fr);
-
-}
-
-
-/* ========================================
-   箱子圖片縮小
-======================================== */
-
-.case-detail-image {
-
-    min-height: 230px;
-
-    max-height: 230px;
-
-}
-
-
-.case-detail-image img {
-
-    width: 55%;
-
-    height: 55%;
-
-    object-fit: contain;
-
-}
-
-
-/* ========================================
-   箱子資訊
-======================================== */
-
-.case-detail-info {
-
-    padding: 28px 36px;
-
-}
-
-
-.case-detail-game {
-
-    margin-bottom: 6px;
-
-}
-
-
-.case-detail-info h1 {
-
-    margin-bottom: 12px;
-
-    font-size: 1.5rem;
-
-}
-
-
-.case-detail-bottom {
-
-    margin-top: 8px;
-
-}
-
-
-/* ========================================
-   開箱預覽提前
-======================================== */
-
-.case-preview {
-
-    margin-top: 28px;
-
-}
-
-
-.case-preview .section-header {
-
-    margin-bottom: 12px;
-
-}
-
-
-.case-preview .section-header h2 {
-
-    font-size: 1rem;
-
-}
-
-
-.case-preview-wrapper {
-
-    height: 175px;
-
-}
-
-
-.case-preview-item {
-
-    flex-basis: 140px;
-
-    height: 145px;
-
-    padding: 9px;
-
-}
-
-
-.case-preview-item-image {
-
-    width: 100px;
-
-    height: 100px;
-
-}
-
-
-.case-preview-item-name {
-
-    font-size: 0.65rem;
-
-}
-
-
-/* ========================================
-   手機
-======================================== */
-
-@media (max-width: 1000px) {
-
-    .case-detail {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .case-detail-image {
-
-        min-height: 190px;
-
-        max-height: 190px;
-
-        border-right:
-            none;
-
-        border-bottom:
-            1px solid
-            var(--color-border);
-
-    }
-
-
-    .case-detail-image img {
-
-        width: 42%;
-
-        height: 42%;
-
-    }
-
-
-    .case-detail-info {
-
-        padding: 24px;
-
-    }
-
-}
-
-
-@media (max-width: 650px) {
-
-    .case-detail-image {
-
-        min-height: 150px;
-
-        max-height: 150px;
-
-    }
-
-
-    .case-detail-image img {
-
-        width: 38%;
-
-        height: 38%;
-
-    }
-
-
-    .case-detail-info {
-
-        padding: 20px;
-
-    }
-
-
-    .case-detail-info h1 {
-
-        font-size: 1.3rem;
-
-    }
-
-
     .case-preview {
 
-        margin-top: 24px;
+        padding-left:
+            8px;
+
+        padding-right:
+            8px;
+
+    }
+
+
+    .case-hero-image {
+
+        width:
+            145px;
+
+        height:
+            110px;
 
     }
 
 
     .case-preview-wrapper {
 
-        height: 155px;
+        height:
+            145px;
 
     }
 
 
     .case-preview-item {
 
-        flex-basis: 120px;
+        flex-basis:
+            112px;
 
-        height: 130px;
+        height:
+            122px;
 
     }
 
 
     .case-preview-item-image {
 
-        width: 85px;
+        width:
+            84px;
 
-        height: 85px;
+        height:
+            84px;
 
     }
 
