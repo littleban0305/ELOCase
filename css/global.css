@@ -169,3 +169,57 @@ p {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-muted);
 }
+
+/* ========================================
+   ELOCase - Global Loading Bar
+======================================== */
+
+#elo-loading-bar {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    z-index: 99999;
+
+    width: 0;
+
+    height: 2px;
+
+    pointer-events: none;
+
+    opacity: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--color-primary),
+            #9d7cff,
+            var(--color-primary)
+        );
+
+    box-shadow:
+        0 0 8px
+        rgba(124, 92, 255, 0.85);
+
+    transition:
+        width 0.2s ease,
+        opacity 0.18s ease;
+
+}
+
+
+#elo-loading-bar.loading-active {
+
+    opacity: 1;
+
+}
+
+
+#elo-loading-bar.loading-complete {
+
+    opacity: 1;
+
+}
