@@ -180,6 +180,10 @@ async function getCaseItems(caseId) {
 
 }
 
+/* ========================================
+   開箱
+======================================== */
+
 async function openCase(caseId) {
 
     /*
@@ -201,9 +205,14 @@ async function openCase(caseId) {
     }
 
 
+    const maxAttempts = 3;
+
+    let lastError = null;
+
+
     /*
      * ====================================
-     * 開始 Loading
+     * 整個開箱流程開始 Loading
      * ====================================
      */
 
@@ -219,70 +228,157 @@ async function openCase(caseId) {
 
     try {
 
-        const response =
-            await fetch(
-                CONFIG.API_URL,
-                {
+        /*
+         * ====================================
+         * Retry
+         * ====================================
+         */
 
-                    method:
-                        "POST",
+        for (
+            let attempt = 1;
+            attempt <= maxAttempts;
+            attempt++
+        ) {
 
-                    headers: {
+            try {
 
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
+                const response =
+                    await fetch(
+                        CONFIG.API_URL,
+                        {
 
-                    },
+                            method:
+                                "POST",
 
-                    body:
-                        JSON.stringify({
+                            redirect:
+                                "follow",
 
-                            action:
-                                "openCase",
+                            cache:
+                                "no-store",
 
-                            sessionToken:
-                                sessionToken,
+                            headers: {
 
-                            caseId:
-                                caseId
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
 
-                        })
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    action:
+                                        "openCase",
+
+                                    sessionToken:
+                                        sessionToken,
+
+                                    caseId:
+                                        caseId
+
+                                })
+
+                        }
+                    );
+
+
+                /*
+                 * ====================================
+                 * HTTP 錯誤
+                 * ====================================
+                 */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `開箱服務無法使用（${response.status}）`
+                    );
 
                 }
-            );
 
 
-        if (!response.ok) {
+                /*
+                 * ====================================
+                 * 解析 API
+                 * ====================================
+                 */
 
-            throw new Error(
-                "開箱服務無法使用"
-            );
+                const result =
+                    await response.json();
+
+
+                /*
+                 * ====================================
+                 * API 業務錯誤
+                 *
+                 * 例如：
+                 * ELOCoin 不足
+                 * 箱子不存在
+                 * Session 無效
+                 * ====================================
+                 */
+
+                if (!result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "開箱失敗"
+                    );
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 開箱成功
+                 * ====================================
+                 */
+
+                return result.data;
+
+
+            } catch (error) {
+
+                lastError =
+                    error;
+
+
+                /*
+                 * 還有重試機會
+                 */
+
+                if (
+                    attempt < maxAttempts
+                ) {
+
+                    await new Promise(
+                        resolve =>
+                            setTimeout(
+                                resolve,
+                                300 * attempt
+                            )
+                    );
+
+
+                    continue;
+
+                }
+
+
+                /*
+                 * 三次都失敗
+                 */
+
+                throw lastError;
+
+            }
 
         }
-
-
-        const result =
-            await response.json();
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.error ||
-                "開箱失敗"
-            );
-
-        }
-
-
-        return result.data;
-
 
     } finally {
 
         /*
          * ====================================
-         * 開箱 API 結束
+         * 整個開箱流程結束 Loading
          * ====================================
          */
 
