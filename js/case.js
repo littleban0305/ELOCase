@@ -563,6 +563,210 @@ function renderCasePreview(items) {
 
 }
 
+/* ========================================
+   開箱等待動畫
+======================================== */
+
+function startCaseWaitingAnimation() {
+
+    const track =
+        document.querySelector(
+            "#case-preview-track"
+        );
+
+    const status =
+        document.querySelector(
+            "#case-preview-status"
+        );
+
+    if (!track) {
+        return;
+    }
+
+
+    /*
+     * 清除舊動畫
+     */
+
+    track.style.transition =
+        "none";
+
+    track.style.transform =
+        "translateX(0px)";
+
+
+    /*
+     * 建立一批預覽物品
+     */
+
+    const sourceItems =
+        window.currentCaseItems || [];
+
+
+    if (
+        sourceItems.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    track.innerHTML = "";
+
+
+    /*
+     * 建立大量隨機物品
+     */
+
+    const waitingItems = [];
+
+
+    for (
+        let i = 0;
+        i < 40;
+        i++
+    ) {
+
+        const item =
+            sourceItems[
+                Math.floor(
+                    Math.random() *
+                    sourceItems.length
+                )
+            ];
+
+
+        waitingItems.push(
+            item
+        );
+
+    }
+
+
+    /*
+     * 建立卡片
+     */
+
+    waitingItems.forEach(
+        item => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "case-preview-item";
+
+
+            element.innerHTML = `
+
+                <div
+                    class="case-preview-item-image"
+                >
+
+                    ${
+                        item.image
+                            ? `
+
+                                <img
+                                    src="${escapeHtml(
+                                        item.image
+                                    )}"
+                                    alt=""
+                                    onerror="
+                                        this.style.display='none';
+                                    "
+                                >
+
+                            `
+                            : `
+
+                                <div
+                                    class="case-item-blur"
+                                >
+
+                                    <span>
+                                        ${escapeHtml(
+                                            item.name ||
+                                            "未知物品"
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            `
+                    }
+
+                </div>
+
+
+                <div
+                    class="case-preview-item-name"
+                >
+
+                    ${escapeHtml(
+                        item.name ||
+                        "未知物品"
+                    )}
+
+                </div>
+
+            `;
+
+
+            track.appendChild(
+                element
+            );
+
+        }
+    );
+
+
+    /*
+     * 狀態文字
+     */
+
+    if (status) {
+
+        status.textContent =
+            "正在開啟箱子...";
+
+    }
+
+
+    /*
+     * 強制重新計算
+     */
+
+    track.offsetHeight;
+
+
+    /*
+     * 等待滾動動畫
+     *
+     * 這裡不是最終開箱動畫
+     * 只是讓畫面不要停住
+     */
+
+    const waitingDistance =
+        Math.max(
+            600,
+            track.scrollWidth -
+            window.innerWidth
+        );
+
+
+    track.style.transition =
+        "transform 12000ms linear";
+
+
+    track.style.transform =
+        `translateX(-${waitingDistance}px)`;
+
+}
 
 function playCasePreviewAnimation(result) {
 
@@ -1020,90 +1224,108 @@ function initializeOpenCaseButton() {
 
 
             try {
-
+            
                 button.disabled =
                     true;
-
-
+            
+            
                 button.textContent =
                     "開箱中...";
-
-
+            
+            
                 /*
-                 * 呼叫後端
+                 * ====================================
+                 * 立刻開始動畫
+                 * ====================================
                  */
-
+            
+                startCaseWaitingAnimation();
+            
+            
+                /*
+                 * ====================================
+                 * 同時呼叫後端
+                 * ====================================
+                 */
+            
                 const result =
                     await openCase(
                         caseId
                     );
-
-
+            
+            
                 /*
+                 * ====================================
                  * 更新餘額
+                 * ====================================
                  */
-
+            
                 updateBalance(
                     result.remainingEloCoin
                 );
-
-
+            
+            
                 /*
-                 * 更新 LocalStorage 玩家資料
+                 * ====================================
+                 * 更新 LocalStorage
+                 * ====================================
                  */
-
+            
                 const savedUser =
                     getSavedUser();
-
-
+            
+            
                 if (savedUser) {
-
+            
                     savedUser.eloCoin =
                         result.remainingEloCoin;
-
-
+            
+            
                     localStorage.setItem(
                         "elocaseUser",
                         JSON.stringify(
                             savedUser
                         )
                     );
-
+            
                 }
-
-
+            
+            
                 /*
-                 * 顯示結果
+                 * ====================================
+                 * API 完成
+                 * 開始真正開箱動畫
+                 * ====================================
                  */
-
-               playCasePreviewAnimation(
-                  result
-               );
-
-
+            
+                playCasePreviewAnimation(
+                    result
+                );
+            
+            
             } catch (error) {
-
+            
                 console.error(
                     "開箱失敗：",
                     error
                 );
-
-
+            
+            
                 alert(
                     error.message ||
                     "開箱失敗"
                 );
-
-
+            
+            
             } finally {
-
+            
                 button.disabled =
                     false;
-
-
+            
+            
                 button.textContent =
                     "開啟箱子";
-
+            
             }
 
         }
