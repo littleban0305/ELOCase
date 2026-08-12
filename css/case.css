@@ -81,23 +81,19 @@ main {
 
     position: relative;
 
-    min-height: 560px;
-
     display: flex;
 
     flex-direction: column;
 
-    align-items: center;
-
     overflow: hidden;
 
     padding:
-        34px 32px 28px;
+        28px 32px 24px;
 
     background:
         radial-gradient(
-            circle at 50% 28%,
-            rgba(124, 92, 255, 0.16),
+            circle at 50% 15%,
+            rgba(124, 92, 255, 0.08),
             transparent 38%
         ),
         linear-gradient(
@@ -117,95 +113,12 @@ main {
 
 
 /* ========================================
-   Hero 上方資訊
+   箱子資訊 + 圖片
 ======================================== */
 
-.case-hero-info {
-
-    position: relative;
-
-    z-index: 15;
+.case-hero-top {
 
     width: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    text-align: center;
-
-}
-
-
-.case-detail-game {
-
-    margin-bottom: 6px;
-
-    color:
-        var(--color-primary);
-
-    font-size: 0.7rem;
-
-    font-weight: 700;
-
-    letter-spacing:
-        0.08em;
-
-}
-
-
-.case-hero-info h1 {
-
-    margin: 0;
-
-    color:
-        var(--color-text);
-
-    font-size: 1.7rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        -0.03em;
-
-}
-
-
-.case-hero-info .case-detail-price {
-
-    margin-top: 8px;
-
-    color:
-        var(--color-text);
-
-    font-size: 1rem;
-
-    font-weight: 800;
-
-    font-variant-numeric:
-        tabular-nums;
-
-}
-
-
-/* ========================================
-   箱子圖片
-======================================== */
-
-.case-hero-image {
-
-    position: relative;
-
-    z-index: 4;
-
-    width: min(
-        230px,
-        42vw
-    );
-
-    height: 180px;
 
     display: flex;
 
@@ -213,14 +126,38 @@ main {
 
     justify-content: center;
 
-    margin-top: 10px;
+    gap: 70px;
+
+    min-height: 220px;
+
+}
+
+
+/*
+ * 箱子圖片
+ */
+
+.case-hero-image {
+
+    flex:
+        0 0 270px;
+
+    width: 270px;
+
+    height: 190px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     overflow: hidden;
 
     color:
         rgba(255, 255, 255, 0.12);
 
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 
     font-weight: 800;
 
@@ -244,17 +181,100 @@ main {
 
 
 /*
- * 沒有圖片時
+ * 無圖片時的 fallback
  */
 
 .case-hero-image:not(:has(img)) {
 
     background:
         radial-gradient(
-            circle,
+            circle at center,
             rgba(124, 92, 255, 0.12),
             transparent 65%
         );
+
+}
+
+
+/*
+ * 箱子資訊
+ */
+
+.case-hero-info {
+
+    flex:
+        0 1 300px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    text-align: left;
+
+}
+
+
+/* ========================================
+   遊戲標籤
+======================================== */
+
+.case-detail-game {
+
+    margin-bottom: 7px;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* ========================================
+   箱子名稱
+======================================== */
+
+.case-hero-info h1 {
+
+    margin: 0;
+
+    color:
+        var(--color-text);
+
+    font-size: 1.75rem;
+
+    font-weight: 800;
+
+    letter-spacing:
+        -0.03em;
+
+}
+
+
+/* ========================================
+   價格
+======================================== */
+
+.case-hero-info .case-detail-price {
+
+    margin-top: 9px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    font-variant-numeric:
+        tabular-nums;
 
 }
 
@@ -267,18 +287,16 @@ main {
 
     position: relative;
 
-    z-index: 10;
-
     width: 100%;
 
-    height: 190px;
+    height: 175px;
 
-    margin-top: -4px;
+    margin-top: 4px;
 
     overflow: hidden;
 
     background:
-        rgba(7, 9, 13, 0.92);
+        rgba(7, 9, 13, 0.94);
 
     border:
         1px solid
@@ -295,7 +313,7 @@ main {
 
 
 /* ========================================
-   左右遮罩
+   預覽左右淡出
 ======================================== */
 
 .case-preview-wrapper::before {
@@ -310,7 +328,7 @@ main {
 
     left: 0;
 
-    width: 150px;
+    width: 130px;
 
     height: 100%;
 
@@ -338,7 +356,7 @@ main {
 
     right: 0;
 
-    width: 150px;
+    width: 130px;
 
     height: 100%;
 
@@ -460,7 +478,7 @@ main {
     gap: 12px;
 
     padding:
-        18px;
+        10px 18px;
 
     will-change:
         transform;
@@ -475,9 +493,9 @@ main {
 .case-preview-item {
 
     flex:
-        0 0 155px;
+        0 0 150px;
 
-    height: 155px;
+    height: 150px;
 
     display: flex;
 
@@ -509,9 +527,9 @@ main {
 
 .case-preview-item-image {
 
-    width: 115px;
+    width: 112px;
 
-    height: 115px;
+    height: 112px;
 
     display: flex;
 
@@ -563,7 +581,7 @@ main {
 
 
 /* ========================================
-   圖片載入失敗模糊
+   圖片載入失敗
 ======================================== */
 
 .case-item-blur {
@@ -585,12 +603,12 @@ main {
     background:
         linear-gradient(
             135deg,
-            rgba(124, 92, 255, 0.55),
-            rgba(255, 80, 160, 0.25)
+            rgba(124, 92, 255, 0.45),
+            rgba(255, 80, 160, 0.2)
         );
 
     filter:
-        blur(22px);
+        blur(20px);
 
 }
 
@@ -598,7 +616,7 @@ main {
 .case-item-blur span {
 
     color:
-        rgba(255, 255, 255, 0.3);
+        rgba(255, 255, 255, 0.25);
 
     font-size: 0.6rem;
 
@@ -625,14 +643,10 @@ main {
 
 
 /* ========================================
-   開箱控制區
+   開箱控制
 ======================================== */
 
 .case-hero-actions {
-
-    position: relative;
-
-    z-index: 25;
 
     width: 100%;
 
@@ -640,18 +654,14 @@ main {
 
     align-items: center;
 
-    justify-content: center;
+    justify-content: flex-end;
 
-    gap: 20px;
+    gap: 18px;
 
-    margin-top: 20px;
+    margin-top: 16px;
 
 }
 
-
-/* ========================================
-   狀態
-======================================== */
 
 .case-preview-status {
 
@@ -664,8 +674,6 @@ main {
 
     font-weight: 600;
 
-    text-align: right;
-
 }
 
 
@@ -675,7 +683,7 @@ main {
 
 #open-case-button {
 
-    min-width: 150px;
+    min-width: 145px;
 
 }
 
@@ -983,29 +991,52 @@ main {
 
 @media (max-width: 900px) {
 
-    .case-preview {
+    .case-hero-top {
 
-        min-height:
-            520px;
-
-        padding:
-            28px 22px 24px;
+        gap: 35px;
 
     }
 
 
     .case-hero-image {
 
-        width: 210px;
+        flex-basis: 230px;
 
-        height: 155px;
+        width: 230px;
+
+        height: 170px;
+
+    }
+
+
+    .case-hero-info {
+
+        flex-basis: 260px;
 
     }
 
 
     .case-preview-wrapper {
 
-        height: 180px;
+        height: 170px;
+
+    }
+
+
+    .case-preview-item {
+
+        flex-basis: 145px;
+
+        height: 145px;
+
+    }
+
+
+    .case-preview-item-image {
+
+        width: 106px;
+
+        height: 106px;
 
     }
 
@@ -1036,14 +1067,45 @@ main {
 
     .case-preview {
 
-        min-height:
-            455px;
-
         padding:
-            24px 12px 20px;
+            22px 12px 20px;
 
-        border-radius:
-            var(--radius-medium);
+    }
+
+
+    .case-hero-top {
+
+        min-height: 0;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+
+    .case-hero-image {
+
+        order: 1;
+
+        flex-basis: auto;
+
+        width: 190px;
+
+        height: 135px;
+
+    }
+
+
+    .case-hero-info {
+
+        order: 2;
+
+        width: 100%;
+
+        align-items: center;
+
+        text-align: center;
 
     }
 
@@ -1056,14 +1118,16 @@ main {
     }
 
 
-    .case-hero-image {
+    .case-detail-game {
 
-        width: 170px;
+        margin-bottom: 5px;
 
-        height: 125px;
+    }
 
-        margin-top:
-            6px;
+
+    .case-hero-info .case-detail-price {
+
+        margin-top: 6px;
 
     }
 
@@ -1074,7 +1138,7 @@ main {
             155px;
 
         margin-top:
-            -2px;
+            16px;
 
     }
 
@@ -1083,7 +1147,7 @@ main {
     .case-preview-wrapper::after {
 
         width:
-            75px;
+            70px;
 
     }
 
@@ -1094,7 +1158,7 @@ main {
             9px;
 
         padding:
-            12px;
+            8px 12px;
 
     }
 
@@ -1105,7 +1169,7 @@ main {
             125px;
 
         height:
-            130px;
+            135px;
 
         padding:
             8px;
@@ -1116,10 +1180,10 @@ main {
     .case-preview-item-image {
 
         width:
-            92px;
+            95px;
 
         height:
-            92px;
+            95px;
 
     }
 
@@ -1141,7 +1205,7 @@ main {
             10px;
 
         margin-top:
-            15px;
+            14px;
 
     }
 
@@ -1161,9 +1225,6 @@ main {
 
         width:
             100%;
-
-        min-width:
-            0;
 
     }
 
@@ -1225,10 +1286,10 @@ main {
     .case-hero-image {
 
         width:
-            145px;
+            160px;
 
         height:
-            110px;
+            115px;
 
     }
 
@@ -1259,392 +1320,6 @@ main {
 
         height:
             84px;
-
-    }
-
-}
-
-/* ========================================
-   Case Hero - 最終排版
-======================================== */
-
-.case-preview {
-
-    position: relative;
-
-    min-height: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    overflow: hidden;
-
-    padding: 30px 34px 26px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #11151d,
-            #0b0e13
-        );
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-large);
-
-}
-
-
-/* ========================================
-   箱子資訊區
-======================================== */
-
-.case-hero-info {
-
-    position: absolute;
-
-    z-index: 15;
-
-    top: 42px;
-
-    left: 50%;
-
-    width: auto;
-
-    min-width: 240px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    text-align: left;
-
-}
-
-
-/* ========================================
-   遊戲標籤
-======================================== */
-
-.case-detail-game {
-
-    margin-bottom: 7px;
-
-    color:
-        var(--color-primary);
-
-    font-size: 0.68rem;
-
-    font-weight: 700;
-
-    letter-spacing:
-        0.08em;
-
-}
-
-
-/* ========================================
-   箱子名稱
-======================================== */
-
-.case-hero-info h1 {
-
-    margin: 0;
-
-    color:
-        var(--color-text);
-
-    font-size: 1.65rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        -0.03em;
-
-}
-
-
-/* ========================================
-   價格
-======================================== */
-
-.case-hero-info .case-detail-price {
-
-    margin-top: 8px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.9rem;
-
-    font-weight: 600;
-
-    font-variant-numeric:
-        tabular-nums;
-
-}
-
-
-/* ========================================
-   箱子圖片
-======================================== */
-
-.case-hero-image {
-
-    position: relative;
-
-    z-index: 4;
-
-    width: 300px;
-
-    height: 190px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    margin:
-        12px auto 4px;
-
-    overflow: hidden;
-
-    color:
-        rgba(255, 255, 255, 0.12);
-
-    font-size: 1.3rem;
-
-    font-weight: 800;
-
-}
-
-
-.case-hero-image img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: contain;
-
-    display: block;
-
-}
-
-
-/* ========================================
-   預覽
-======================================== */
-
-.case-preview-wrapper {
-
-    position: relative;
-
-    z-index: 10;
-
-    width: 100%;
-
-    height: 180px;
-
-    margin-top: 12px;
-
-    overflow: hidden;
-
-    background:
-        rgba(7, 9, 13, 0.92);
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        var(--radius-medium);
-
-}
-
-
-/* ========================================
-   開箱控制
-======================================== */
-
-.case-hero-actions {
-
-    position: relative;
-
-    z-index: 25;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-end;
-
-    gap: 18px;
-
-    margin-top: 16px;
-
-}
-
-
-.case-preview-status {
-
-    color:
-        var(--color-text-muted);
-
-    font-size: 0.74rem;
-
-}
-
-
-#open-case-button {
-
-    min-width: 140px;
-
-}
-
-
-/* ========================================
-   平板
-======================================== */
-
-@media (max-width: 900px) {
-
-    .case-preview {
-
-        padding:
-            26px 24px 24px;
-
-    }
-
-
-    .case-hero-info {
-
-        left:
-            calc(50% + 150px);
-
-    }
-
-
-    .case-hero-image {
-
-        width: 250px;
-
-        height: 165px;
-
-        margin-left:
-            50px;
-
-    }
-
-
-    .case-preview-wrapper {
-
-        height: 175px;
-
-    }
-
-}
-
-
-/* ========================================
-   手機
-======================================== */
-
-@media (max-width: 650px) {
-
-    .case-preview {
-
-        padding:
-            24px 14px 20px;
-
-    }
-
-
-    .case-hero-info {
-
-        position: relative;
-
-        top: auto;
-
-        left: auto;
-
-        width: 100%;
-
-        min-width: 0;
-
-        margin-bottom: 4px;
-
-        align-items: center;
-
-        text-align: center;
-
-    }
-
-
-    .case-hero-info h1 {
-
-        font-size:
-            1.35rem;
-
-    }
-
-
-    .case-hero-image {
-
-        width: 190px;
-
-        height: 130px;
-
-        margin:
-            4px auto 8px;
-
-    }
-
-
-    .case-preview-wrapper {
-
-        height: 155px;
-
-        margin-top: 8px;
-
-    }
-
-
-    .case-hero-actions {
-
-        flex-direction:
-            column;
-
-        gap:
-            10px;
-
-        margin-top:
-            14px;
-
-    }
-
-
-    .case-preview-status {
-
-        order:
-            2;
-
-        text-align:
-            center;
-
-    }
-
-
-    #open-case-button {
-
-        width: 100%;
 
     }
 
