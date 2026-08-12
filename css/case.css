@@ -1840,3 +1840,248 @@ main {
     }
 
 }
+
+/* ========================================
+   Case Detail - 緊湊版
+======================================== */
+
+.case-detail {
+
+    grid-template-columns:
+        minmax(260px, 0.65fr)
+        minmax(320px, 1fr);
+
+}
+
+
+/* ========================================
+   箱子圖片縮小
+======================================== */
+
+.case-detail-image {
+
+    min-height: 230px;
+
+    max-height: 230px;
+
+}
+
+
+.case-detail-image img {
+
+    width: 55%;
+
+    height: 55%;
+
+    object-fit: contain;
+
+}
+
+
+/* ========================================
+   箱子資訊
+======================================== */
+
+.case-detail-info {
+
+    padding: 28px 36px;
+
+}
+
+
+.case-detail-game {
+
+    margin-bottom: 6px;
+
+}
+
+
+.case-detail-info h1 {
+
+    margin-bottom: 12px;
+
+    font-size: 1.5rem;
+
+}
+
+
+.case-detail-bottom {
+
+    margin-top: 8px;
+
+}
+
+
+/* ========================================
+   開箱預覽提前
+======================================== */
+
+.case-preview {
+
+    margin-top: 28px;
+
+}
+
+
+.case-preview .section-header {
+
+    margin-bottom: 12px;
+
+}
+
+
+.case-preview .section-header h2 {
+
+    font-size: 1rem;
+
+}
+
+
+.case-preview-wrapper {
+
+    height: 175px;
+
+}
+
+
+.case-preview-item {
+
+    flex-basis: 140px;
+
+    height: 145px;
+
+    padding: 9px;
+
+}
+
+
+.case-preview-item-image {
+
+    width: 100px;
+
+    height: 100px;
+
+}
+
+
+.case-preview-item-name {
+
+    font-size: 0.65rem;
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .case-detail {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .case-detail-image {
+
+        min-height: 190px;
+
+        max-height: 190px;
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid
+            var(--color-border);
+
+    }
+
+
+    .case-detail-image img {
+
+        width: 42%;
+
+        height: 42%;
+
+    }
+
+
+    .case-detail-info {
+
+        padding: 24px;
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .case-detail-image {
+
+        min-height: 150px;
+
+        max-height: 150px;
+
+    }
+
+
+    .case-detail-image img {
+
+        width: 38%;
+
+        height: 38%;
+
+    }
+
+
+    .case-detail-info {
+
+        padding: 20px;
+
+    }
+
+
+    .case-detail-info h1 {
+
+        font-size: 1.3rem;
+
+    }
+
+
+    .case-preview {
+
+        margin-top: 24px;
+
+    }
+
+
+    .case-preview-wrapper {
+
+        height: 155px;
+
+    }
+
+
+    .case-preview-item {
+
+        flex-basis: 120px;
+
+        height: 130px;
+
+    }
+
+
+    .case-preview-item-image {
+
+        width: 85px;
+
+        height: 85px;
+
+    }
+
+}
