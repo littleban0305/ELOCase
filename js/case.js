@@ -563,9 +563,20 @@ function renderCasePreview(items) {
 
 }
 
+let caseWaitingAnimationFrame = null;
+
+let caseWaitingX = 0;
+
+let caseWaitingStartTime = 0;
+
+let caseWaitingLastTime = 0;
+
+let caseWaitingActive = false;
+
 /* ========================================
    開箱等待動畫
-   快 → 快 → 慢 → 更慢
+   連續速度：
+   快 → 快 → 慢 → 持續慢速
 ======================================== */
 
 function startCaseWaitingAnimation() {
@@ -588,9 +599,38 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 開箱狀態
+     * 停止上一個等待動畫
      * ====================================
      */
+
+    if (
+        caseWaitingAnimationFrame
+    ) {
+
+        cancelAnimationFrame(
+            caseWaitingAnimationFrame
+        );
+
+    }
+
+
+    /*
+     * ====================================
+     * 初始化
+     * ====================================
+     */
+
+    caseWaitingX = 0;
+
+    caseWaitingStartTime =
+        performance.now();
+
+    caseWaitingLastTime =
+        caseWaitingStartTime;
+
+    caseWaitingActive =
+        true;
+
 
     document.body.classList.add(
         "case-opening"
@@ -598,7 +638,7 @@ function startCaseWaitingAnimation() {
 
 
     /*
-     * 清除舊動畫
+     * 清除 CSS transition
      */
 
     track.style.transition =
@@ -609,7 +649,9 @@ function startCaseWaitingAnimation() {
 
 
     /*
+     * ====================================
      * 取得內容物
+     * ====================================
      */
 
     const sourceItems =
@@ -624,10 +666,6 @@ function startCaseWaitingAnimation() {
 
     }
 
-
-    /*
-     * 清空預覽
-     */
 
     track.innerHTML = "";
 
@@ -665,7 +703,7 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 建立物品卡片
+     * 建立卡片
      * ====================================
      */
 
@@ -760,153 +798,185 @@ function startCaseWaitingAnimation() {
     }
 
 
-    /*
-     * ====================================
-     * 強制重新計算
-     * ====================================
-     */
-
     track.offsetHeight;
 
 
     /*
      * ====================================
-     * 速度控制
+     * 連續速度動畫
      *
-     * 第一段：高速
-     * 第二段：高速
-     * 第三段：中速
-     * 第四段：慢速
+     * 不使用 CSS transition
+     *
+     * 速度會自然下降
      * ====================================
      */
 
-    const totalDistance =
-        Math.max(
-            1200,
-            track.scrollWidth -
-            window.innerWidth
+    function animateWaiting(
+        currentTime
+    ) {
+
+        if (
+            !caseWaitingActive
+        ) {
+
+            return;
+
+        }
+
+
+        const deltaTime =
+            currentTime -
+            caseWaitingLastTime;
+
+
+        caseWaitingLastTime =
+            currentTime;
+
+
+        const elapsed =
+            currentTime -
+            caseWaitingStartTime;
+
+
+        /*
+         * ====================================
+         * 速度
+         *
+         * 單位：
+         * px / 秒
+         * ====================================
+         */
+
+        let speed;
+
+
+        if (
+            elapsed < 2200
+        ) {
+
+            /*
+             * 第一階段：
+             * 超快
+             */
+
+            speed =
+                1050;
+
+        } else if (
+            elapsed < 4200
+        ) {
+
+            /*
+             * 第二階段：
+             * 還是快
+             */
+
+            speed =
+                850;
+
+        } else if (
+            elapsed < 6500
+        ) {
+
+            /*
+             * 第三階段：
+             * 開始慢
+             */
+
+            speed =
+                560;
+
+        } else {
+
+            /*
+             * 最後：
+             * 持續慢速
+             *
+             * API 沒回來就一直跑
+             */
+
+            speed =
+                180;
+
+        }
+
+
+        /*
+         * ====================================
+         * 移動
+         * ====================================
+         */
+
+        caseWaitingX -=
+            speed *
+            deltaTime /
+            1000;
+
+
+        /*
+         * ====================================
+         * 無限循環
+         *
+         * 避免跑到最右邊停住
+         * ====================================
+         */
+
+        const trackWidth =
+            track.scrollWidth;
+
+        const viewportWidth =
+            track.parentElement
+                ? track.parentElement
+                    .offsetWidth
+                : window.innerWidth;
+
+
+        /*
+         * 已經接近尾端
+         *
+         * 把軌道瞬間往前補一段
+         * 使用者看不到跳動
+         */
+
+        if (
+            Math.abs(caseWaitingX) >
+            trackWidth -
+            viewportWidth -
+            1200
+        ) {
+
+            const resetDistance =
+                trackWidth * 0.45;
+
+
+            caseWaitingX +=
+                resetDistance;
+
+        }
+
+
+        track.style.transform =
+            `translateX(${caseWaitingX}px)`;
+
+
+        caseWaitingAnimationFrame =
+            requestAnimationFrame(
+                animateWaiting
+            );
+
+    }
+
+
+    /*
+     * ====================================
+     * 開始
+     * ====================================
+     */
+
+    caseWaitingAnimationFrame =
+        requestAnimationFrame(
+            animateWaiting
         );
-
-
-    /*
-     * 第一段
-     * 高速
-     */
-
-    const distance1 =
-        totalDistance * 0.30;
-
-
-    /*
-     * 第二段
-     * 仍然很快
-     */
-
-    const distance2 =
-        totalDistance * 0.25;
-
-
-    /*
-     * 第三段
-     * 開始變慢
-     */
-
-    const distance3 =
-        totalDistance * 0.20;
-
-
-    /*
-     * 第四段
-     * 慢慢爬
-     */
-
-    const distance4 =
-        totalDistance * 0.25;
-
-
-    /*
-     * ====================================
-     * 第一段：快
-     * ====================================
-     */
-
-    track.style.transition =
-        "transform 1600ms linear";
-
-    track.style.transform =
-        `translateX(-${distance1}px)`;
-
-
-    /*
-     * ====================================
-     * 第二段：快
-     * ====================================
-     */
-
-    setTimeout(
-        () => {
-
-            track.style.transition =
-                "transform 1400ms linear";
-
-            track.style.transform =
-                `translateX(-${
-                    distance1 +
-                    distance2
-                }px)`;
-
-        },
-        1600
-    );
-
-
-    /*
-     * ====================================
-     * 第三段：開始變慢
-     * ====================================
-     */
-
-    setTimeout(
-        () => {
-
-            track.style.transition =
-                "transform 2200ms ease-out";
-
-            track.style.transform =
-                `translateX(-${
-                    distance1 +
-                    distance2 +
-                    distance3
-                }px)`;
-
-        },
-        3000
-    );
-
-
-    /*
-     * ====================================
-     * 第四段：很慢
-     * ====================================
-     */
-
-    setTimeout(
-        () => {
-
-            track.style.transition =
-                "transform 5000ms ease-out";
-
-            track.style.transform =
-                `translateX(-${
-                    distance1 +
-                    distance2 +
-                    distance3 +
-                    distance4
-                }px)`;
-
-        },
-        5200
-    );
 
 }
 
@@ -938,6 +1008,29 @@ function playCasePreviewAnimation(
     if (!track) {
         return;
     }
+
+   /*
+    * ====================================
+    * 停止等待動畫
+    * ====================================
+    */
+   
+   caseWaitingActive = false;
+   
+   
+   if (
+       caseWaitingAnimationFrame
+   ) {
+   
+       cancelAnimationFrame(
+           caseWaitingAnimationFrame
+       );
+   
+   
+       caseWaitingAnimationFrame =
+           null;
+   
+   }
 
 
     const winningItem =
