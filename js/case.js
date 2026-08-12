@@ -870,7 +870,7 @@ function startCaseWaitingAnimation() {
           */
          
          const speed =
-             3000;
+            20000;
 
 
         /*
