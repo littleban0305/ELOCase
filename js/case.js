@@ -365,6 +365,9 @@ function createCaseItemCard(item) {
 
 function renderCaseItems(items) {
 
+    window.currentCaseItems =
+        items || [];
+
     const container =
         document.querySelector(
             "#case-items"
@@ -430,10 +433,6 @@ function showOpenCaseResult(result) {
         );
 
 
-    /*
-     * 第一次建立
-     */
-
     if (!resultElement) {
 
         resultElement =
@@ -441,14 +440,11 @@ function showOpenCaseResult(result) {
                 "div"
             );
 
-
         resultElement.id =
             "open-case-result";
 
-
         resultElement.className =
             "open-case-result";
-
 
         document.body.appendChild(
             resultElement
@@ -461,22 +457,430 @@ function showOpenCaseResult(result) {
         result.item;
 
 
+    /*
+     * ====================================
+     * 建立假的滾動物品
+     * ====================================
+     */
+
+    const animationItems = [];
+
+
+    /*
+     * 先塞一些隨機物品
+     */
+
+    const sourceItems =
+        window.currentCaseItems || [];
+
+
+    for (
+        let i = 0;
+        i < 24;
+        i++
+    ) {
+
+        if (
+            sourceItems.length > 0
+        ) {
+
+            const randomItem =
+                sourceItems[
+                    Math.floor(
+                        Math.random() *
+                        sourceItems.length
+                    )
+                ];
+
+            animationItems.push(
+                randomItem
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 真正中獎物品
+     * 放在最後
+     * ====================================
+     */
+
+    animationItems.push(
+        item
+    );
+
+
+    /*
+     * ====================================
+     * 再補幾個物品
+     * ====================================
+     */
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        if (
+            sourceItems.length > 0
+        ) {
+
+            const randomItem =
+                sourceItems[
+                    Math.floor(
+                        Math.random() *
+                        sourceItems.length
+                    )
+                ];
+
+            animationItems.push(
+                randomItem
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 建立滾動軌道
+     * ====================================
+     */
+
     resultElement.innerHTML = `
 
-        <div class="open-case-result-box">
+        <div class="open-case-animation">
 
-            <div class="open-case-result-label">
 
-                開箱結果
+            <div class="open-case-animation-title">
+
+                開箱中
 
             </div>
 
 
-            <div class="open-case-result-image">
+            <div class="open-case-track-wrapper">
+
+
+                <div class="open-case-pointer"></div>
+
+
+                <div
+                    class="open-case-track"
+                    id="open-case-track"
+                >
+
+                    ${animationItems
+                        .map(
+                            animationItem => {
+
+                                const rarityClass =
+                                    getRarityClass(
+                                        animationItem.rarity
+                                    );
+
+
+                                return `
+
+                                    <div
+                                        class="
+                                            open-case-item
+                                            ${rarityClass}
+                                        "
+                                    >
+
+                                        <div
+                                            class="
+                                                open-case-item-image
+                                            "
+                                        >
+
+                                            ${
+                                                animationItem.image
+                                                    ? `
+
+                                                        <img
+                                                            src="${escapeHtml(
+                                                                animationItem.image
+                                                            )}"
+                                                            alt=""
+                                                            onerror="
+                                                                this.style.display='none';
+                                                            "
+                                                        >
+
+                                                    `
+                                                    : `
+
+                                                        <div
+                                                            class="
+                                                                open-case-item-blur
+                                                            "
+                                                        ></div>
+
+                                                    `
+                                            }
+
+                                        </div>
+
+
+                                        <div
+                                            class="
+                                                open-case-item-name
+                                            "
+                                        >
+
+                                            ${escapeHtml(
+                                                animationItem.name ||
+                                                "未知物品"
+                                            )}
+
+                                        </div>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        )
+                        .join("")}
+
+                </div>
+
+            </div>
+
+
+            <div class="open-case-animation-status">
+
+                正在開啟箱子...
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    resultElement.classList.add(
+        "show"
+    );
+
+
+    const track =
+        document.querySelector(
+            "#open-case-track"
+        );
+
+
+    if (!track) {
+        return;
+    }
+
+
+    /*
+     * ====================================
+     * 找到真正獎品的位置
+     * ====================================
+     */
+
+    const itemElements =
+        track.querySelectorAll(
+            ".open-case-item"
+        );
+
+
+    const winningIndex =
+        animationItems.length -
+        7;
+
+
+    const winningElement =
+        itemElements[
+            winningIndex
+        ];
+
+
+    if (!winningElement) {
+        return;
+    }
+
+
+    /*
+     * ====================================
+     * 計算要滾動多少
+     * ====================================
+     */
+
+    const wrapper =
+        document.querySelector(
+            ".open-case-track-wrapper"
+        );
+
+
+    const wrapperWidth =
+        wrapper.offsetWidth;
+
+
+    const itemWidth =
+        winningElement.offsetWidth;
+
+
+    const itemLeft =
+        winningElement.offsetLeft;
+
+
+    const itemCenter =
+        itemLeft +
+        itemWidth / 2;
+
+
+    const targetPosition =
+        itemCenter -
+        wrapperWidth / 2;
+
+
+    /*
+     * ====================================
+     * 初始位置
+     * ====================================
+     */
+
+    track.style.transform =
+        "translateX(0px)";
+
+
+    /*
+     * 強制瀏覽器重新計算
+     */
+
+    track.offsetHeight;
+
+
+    /*
+     * ====================================
+     * 開始動畫
+     * ====================================
+     */
+
+    const animationDuration =
+        4200;
+
+
+    track.style.transition =
+        `
+            transform
+            ${animationDuration}ms
+            cubic-bezier(
+                0.08,
+                0.72,
+                0.18,
+                1
+            )
+        `;
+
+
+    track.style.transform =
+        `translateX(-${targetPosition}px)`;
+
+
+    /*
+     * ====================================
+     * 動畫結束
+     * ====================================
+     */
+
+    setTimeout(
+        () => {
+
+            const status =
+                document.querySelector(
+                    ".open-case-animation-status"
+                );
+
+
+            if (status) {
+
+                status.textContent =
+                    "你獲得了";
+
+            }
+
+
+            winningElement.classList.add(
+                "winning-item"
+            );
+
+
+            /*
+             * 等一下再顯示結果
+             */
+
+            setTimeout(
+                () => {
+
+                    showFinalOpenCaseResult(
+                        result
+                    );
+
+                },
+                900
+            );
+
+
+        },
+        animationDuration
+    );
+
+}
+
+function showFinalOpenCaseResult(result) {
+
+    const resultElement =
+        document.querySelector(
+            "#open-case-result"
+        );
+
+
+    if (!resultElement) {
+        return;
+    }
+
+
+    const item =
+        result.item;
+
+
+    resultElement.innerHTML = `
+
+        <div class="open-case-result-box">
+
+
+            <div class="open-case-result-label">
+
+                你獲得了
+
+            </div>
+
+
+            <div
+                class="
+                    open-case-result-image
+                    ${getRarityClass(
+                        item.rarity
+                    )}
+                "
+            >
 
                 ${
                     item.image
                         ? `
+
                             <img
                                 src="${escapeHtml(
                                     item.image
@@ -486,13 +890,16 @@ function showOpenCaseResult(result) {
                                     this.style.display='none';
                                 "
                             >
+
                         `
                         : `
+
                             <div
                                 class="
                                     open-case-result-blur
                                 "
                             ></div>
+
                         `
                 }
 
@@ -552,14 +959,10 @@ function showOpenCaseResult(result) {
                 確定
             </button>
 
+
         </div>
 
     `;
-
-
-    resultElement.classList.add(
-        "show"
-    );
 
 
     const closeButton =
@@ -576,6 +979,21 @@ function showOpenCaseResult(result) {
 
                 resultElement.classList.remove(
                     "show"
+                );
+
+
+                /*
+                 * 清除動畫內容
+                 */
+
+                setTimeout(
+                    () => {
+
+                        resultElement.innerHTML =
+                            "";
+
+                    },
+                    250
                 );
 
             }
