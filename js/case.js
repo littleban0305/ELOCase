@@ -997,29 +997,36 @@ function playCasePreviewAnimation(
         return;
     }
 
-   /*
-    * ====================================
-    * 停止等待動畫
-    * ====================================
-    */
-   
-   caseWaitingActive = false;
-   
-   
-   if (
-       caseWaitingAnimationFrame
-   ) {
-   
-       cancelAnimationFrame(
-           caseWaitingAnimationFrame
-       );
-   
-   
-       caseWaitingAnimationFrame =
-           null;
-   
-   }
 
+    /*
+     * ====================================
+     * 停止等待動畫
+     * ====================================
+     */
+
+    caseWaitingActive =
+        false;
+
+
+    if (
+        caseWaitingAnimationFrame
+    ) {
+
+        cancelAnimationFrame(
+            caseWaitingAnimationFrame
+        );
+
+        caseWaitingAnimationFrame =
+            null;
+
+    }
+
+
+    /*
+     * ====================================
+     * 中獎物品
+     * ====================================
+     */
 
     const winningItem =
         result.item;
@@ -1036,11 +1043,8 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 取得目前等待動畫的位置
+     * 取得目前視覺位置
      * ====================================
-     *
-     * 這裡非常重要：
-     * 不再回到 0
      */
 
     const currentTransform =
@@ -1062,7 +1066,6 @@ function playCasePreviewAnimation(
                 currentTransform
             );
 
-
         currentX =
             matrix.m41;
 
@@ -1071,7 +1074,7 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 取消等待動畫
+     * 固定目前位置
      * ====================================
      */
 
@@ -1079,26 +1082,13 @@ function playCasePreviewAnimation(
         "none";
 
 
-    /*
-     * 把目前視覺位置固定住
-     *
-     * 避免切換 transition 時跳動
-     */
-
     track.style.transform =
         `translateX(${currentX}px)`;
 
 
     /*
      * ====================================
-     * 建立正式動畫物品
-     * ====================================
-     *
-     * 注意：
-     * 不再直接把整條軌道清掉。
-     *
-     * 我們保留等待動畫的畫面，
-     * 在後面接上正式物品。
+     * 取得箱子內容物
      * ====================================
      */
 
@@ -1119,16 +1109,21 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 建立真正的中獎區
+     * 建立正式動畫物品
+     *
+     * 前面：
+     * 24 個隨機物品
+     *
+     * 中間：
+     * 真正中獎物品
+     *
+     * 後面：
+     * 6 個隨機物品
      * ====================================
      */
 
     const animationItems = [];
 
-
-    /*
-     * 前面放 24 個隨機物品
-     */
 
     for (
         let i = 0;
@@ -1144,7 +1139,6 @@ function playCasePreviewAnimation(
                 )
             ];
 
-
         animationItems.push(
             randomItem
         );
@@ -1152,18 +1146,10 @@ function playCasePreviewAnimation(
     }
 
 
-    /*
-     * 真正中獎物品
-     */
-
     animationItems.push(
         winningItem
     );
 
-
-    /*
-     * 後面再放 6 個
-     */
 
     for (
         let i = 0;
@@ -1178,7 +1164,6 @@ function playCasePreviewAnimation(
                     sourceItems.length
                 )
             ];
-
 
         animationItems.push(
             randomItem
@@ -1254,7 +1239,7 @@ function playCasePreviewAnimation(
 
                     ${escapeHtml(
                         item.name ||
-                        "未知物品"
+                        "未命名物品"
                     )}
 
                 </div>
@@ -1282,18 +1267,6 @@ function playCasePreviewAnimation(
         );
 
 
-    /*
-     * 等待動畫原本有很多物品
-     *
-     * 所以正式動畫放在最後面。
-     *
-     * 找最後 31 個：
-     *
-     * [24 隨機]
-     * [1 中獎]
-     * [6 隨機]
-     */
-
     const winningIndex =
         itemElements.length - 7;
 
@@ -1315,7 +1288,7 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 計算畫面中央位置
+     * 計算目標位置
      * ====================================
      */
 
@@ -1351,10 +1324,6 @@ function playCasePreviewAnimation(
         itemWidth / 2;
 
 
-    /*
-     * 目標位置
-     */
-
     const targetX =
         (
             wrapperWidth / 2
@@ -1364,50 +1333,80 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 目前位置
+     * 起點
      * ====================================
      */
 
     const startX =
         currentX;
 
-   console.log(
-       "動畫開始 X：",
-       startX
-   );
-   
-   console.log(
-       "動畫目標 X：",
-       targetX
-   );
-   
-   console.log(
-       "動畫距離：",
-       distance
-   );
-   
-   console.log(
-       "動畫時間：",
-       animationDuration
-   );
-   
-   console.log(
-       "平均速度：",
-       Math.abs(distance) /
-       (animationDuration / 1000),
-       "px/s"
-   );
-
 
     /*
      * ====================================
-     * 計算剩餘距離
+     * 剩餘距離
+     *
+     * ⚠️ 一定要先宣告 distance
+     * 再使用它
      * ====================================
      */
 
     const distance =
         targetX -
         startX;
+
+
+    /*
+     * ====================================
+     * 正式動畫時間
+     * ====================================
+     */
+
+    const animationDuration =
+        5200;
+
+
+    /*
+     * ====================================
+     * Debug：動畫基本資料
+     * ====================================
+     */
+
+    console.log(
+        "🔥 正式動畫開始 X：",
+        Math.round(startX)
+    );
+
+
+    console.log(
+        "🔥 正式動畫目標 X：",
+        Math.round(targetX)
+    );
+
+
+    console.log(
+        "🔥 正式動畫距離：",
+        Math.round(
+            Math.abs(distance)
+        ),
+        "px"
+    );
+
+
+    console.log(
+        "🔥 正式動畫時間：",
+        animationDuration,
+        "ms"
+    );
+
+
+    console.log(
+        "🔥 正式動畫平均速度：",
+        Math.round(
+            Math.abs(distance) /
+            (animationDuration / 1000)
+        ),
+        "px/s"
+    );
 
 
     /*
@@ -1426,93 +1425,131 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 正式減速
+     * 最高速度監測
      *
-     * 從「目前位置」
-     * 接到中獎物品
-     *
-     * 不重新開始
+     * 只用來 Debug
+     * 不會影響動畫
      * ====================================
      */
 
-    const animationDuration =
-        5200;
+    let lastX =
+        startX;
 
-   const animationStartTime =
-       performance.now();
+    let lastTime =
+        performance.now();
 
-   let lastX = startX;
-   let lastTime = performance.now();
-   let maxSpeed = 0;
-   
-   function measureSpeed(now) {
-   
-       const transform =
-           window.getComputedStyle(
-               track
-           ).transform;
-   
-       if (transform !== "none") {
-   
-           const matrix =
-               new DOMMatrix(
-                   transform
-               );
-   
-           const currentX =
-               matrix.m41;
-   
-           const deltaTime =
-               now -
-               lastTime;
-   
-           if (deltaTime > 0) {
-   
-               const currentSpeed =
-                   Math.abs(
-                       currentX -
-                       lastX
-                   ) /
-                   (deltaTime / 1000);
-   
-               maxSpeed =
-                   Math.max(
-                       maxSpeed,
-                       currentSpeed
-                   );
-   
-           }
-   
-           lastX =
-               currentX;
-   
-           lastTime =
-               now;
-   
-       }
-   
-       if (
-           performance.now() -
-           animationStartTime <
-           animationDuration
-       ) {
-   
-           requestAnimationFrame(
-               measureSpeed
-           );
-   
-       } else {
-   
-           console.log(
-               "🔥 正式動畫最高速度：",
-               Math.round(maxSpeed),
-               "px/s"
-           );
-   
-       }
-   
-   }
+    let maxSpeed =
+        0;
 
+    let speedMonitorFrame =
+        null;
+
+
+    function measureSpeed(
+        now
+    ) {
+
+        const transform =
+            window.getComputedStyle(
+                track
+            ).transform;
+
+
+        if (
+            transform &&
+            transform !== "none"
+        ) {
+
+            const matrix =
+                new DOMMatrix(
+                    transform
+                );
+
+
+            const currentX =
+                matrix.m41;
+
+
+            const deltaTime =
+                now -
+                lastTime;
+
+
+            if (
+                deltaTime > 0
+            ) {
+
+                const currentSpeed =
+                    Math.abs(
+                        currentX -
+                        lastX
+                    ) /
+                    (
+                        deltaTime /
+                        1000
+                    );
+
+
+                maxSpeed =
+                    Math.max(
+                        maxSpeed,
+                        currentSpeed
+                    );
+
+            }
+
+
+            lastX =
+                currentX;
+
+
+            lastTime =
+                now;
+
+        }
+
+
+        if (
+            now -
+            animationStartTime <
+            animationDuration
+        ) {
+
+            speedMonitorFrame =
+                requestAnimationFrame(
+                    measureSpeed
+                );
+
+        } else {
+
+            console.log(
+                "🔥🔥 正式動畫最高速度：",
+                Math.round(
+                    maxSpeed
+                ),
+                "px/s"
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 動畫開始時間
+     * ====================================
+     */
+
+    const animationStartTime =
+        performance.now();
+
+
+    /*
+     * ====================================
+     * 啟動正式動畫
+     * ====================================
+     */
 
     requestAnimationFrame(
         () => {
@@ -1533,9 +1570,15 @@ function playCasePreviewAnimation(
             track.style.transform =
                 `translateX(${targetX}px)`;
 
-           requestAnimationFrame(
-                measureSpeed
-            );
+
+            /*
+             * 開始測速
+             */
+
+            speedMonitorFrame =
+                requestAnimationFrame(
+                    measureSpeed
+                );
 
         }
     );
@@ -1549,6 +1592,28 @@ function playCasePreviewAnimation(
 
     setTimeout(
         () => {
+
+            /*
+             * 停止測速
+             */
+
+            if (
+                speedMonitorFrame
+            ) {
+
+                cancelAnimationFrame(
+                    speedMonitorFrame
+                );
+
+                speedMonitorFrame =
+                    null;
+
+            }
+
+
+            /*
+             * 中獎效果
+             */
 
             winningElement.classList.add(
                 "winning-item"
