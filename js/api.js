@@ -300,9 +300,12 @@ async function openCase(caseId) {
          * ====================================
          */
 
+        const requestUrl =
+            `${CONFIG.API_URL}?_=${Date.now()}`;
+        
         const response =
             await fetch(
-                CONFIG.API_URL,
+                requestUrl,
                 {
 
                     method:
