@@ -565,7 +565,7 @@ function renderCasePreview(items) {
 
 /* ========================================
    開箱等待動畫
-   API 回來前持續滾動
+   快 → 快 → 慢 → 更慢
 ======================================== */
 
 function startCaseWaitingAnimation() {
@@ -634,10 +634,7 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 建立大量等待物品
-     *
-     * 數量故意很多
-     * API 就算 20 秒也不會滾完
+     * 建立大量物品
      * ====================================
      */
 
@@ -646,7 +643,7 @@ function startCaseWaitingAnimation() {
 
     for (
         let i = 0;
-        i < 120;
+        i < 160;
         i++
     ) {
 
@@ -668,7 +665,7 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 建立卡片
+     * 建立物品卡片
      * ====================================
      */
 
@@ -751,7 +748,7 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 狀態文字
+     * 狀態
      * ====================================
      */
 
@@ -774,34 +771,148 @@ function startCaseWaitingAnimation() {
 
     /*
      * ====================================
-     * 持續滾動
+     * 速度控制
      *
-     * 速度刻意放慢
-     * 不會快速跑完
+     * 第一段：高速
+     * 第二段：高速
+     * 第三段：中速
+     * 第四段：慢速
      * ====================================
      */
 
-    const waitingDistance =
+    const totalDistance =
         Math.max(
-            600,
+            1200,
             track.scrollWidth -
             window.innerWidth
         );
 
 
-    track.style.transition =
-        "transform 30000ms linear";
+    /*
+     * 第一段
+     * 高速
+     */
 
+    const distance1 =
+        totalDistance * 0.30;
+
+
+    /*
+     * 第二段
+     * 仍然很快
+     */
+
+    const distance2 =
+        totalDistance * 0.25;
+
+
+    /*
+     * 第三段
+     * 開始變慢
+     */
+
+    const distance3 =
+        totalDistance * 0.20;
+
+
+    /*
+     * 第四段
+     * 慢慢爬
+     */
+
+    const distance4 =
+        totalDistance * 0.25;
+
+
+    /*
+     * ====================================
+     * 第一段：快
+     * ====================================
+     */
+
+    track.style.transition =
+        "transform 1600ms linear";
 
     track.style.transform =
-        `translateX(-${waitingDistance}px)`;
+        `translateX(-${distance1}px)`;
+
+
+    /*
+     * ====================================
+     * 第二段：快
+     * ====================================
+     */
+
+    setTimeout(
+        () => {
+
+            track.style.transition =
+                "transform 1400ms linear";
+
+            track.style.transform =
+                `translateX(-${
+                    distance1 +
+                    distance2
+                }px)`;
+
+        },
+        1600
+    );
+
+
+    /*
+     * ====================================
+     * 第三段：開始變慢
+     * ====================================
+     */
+
+    setTimeout(
+        () => {
+
+            track.style.transition =
+                "transform 2200ms ease-out";
+
+            track.style.transform =
+                `translateX(-${
+                    distance1 +
+                    distance2 +
+                    distance3
+                }px)`;
+
+        },
+        3000
+    );
+
+
+    /*
+     * ====================================
+     * 第四段：很慢
+     * ====================================
+     */
+
+    setTimeout(
+        () => {
+
+            track.style.transition =
+                "transform 5000ms ease-out";
+
+            track.style.transform =
+                `translateX(-${
+                    distance1 +
+                    distance2 +
+                    distance3 +
+                    distance4
+                }px)`;
+
+        },
+        5200
+    );
 
 }
 
-
 /* ========================================
    正式開箱動畫
-   API 回來後接管
+   API 回來後接管目前位置
 ======================================== */
 
 function playCasePreviewAnimation(
@@ -825,9 +936,7 @@ function playCasePreviewAnimation(
 
 
     if (!track) {
-
         return;
-
     }
 
 
@@ -835,24 +944,80 @@ function playCasePreviewAnimation(
         result.item;
 
 
+    if (!winningItem) {
+
+        throw new Error(
+            "開箱結果缺少物品資料"
+        );
+
+    }
+
+
     /*
      * ====================================
-     * 清除等待動畫
+     * 取得目前等待動畫的位置
+     * ====================================
+     *
+     * 這裡非常重要：
+     * 不再回到 0
+     */
+
+    const currentTransform =
+        window.getComputedStyle(
+            track
+        ).transform;
+
+
+    let currentX = 0;
+
+
+    if (
+        currentTransform &&
+        currentTransform !== "none"
+    ) {
+
+        const matrix =
+            new DOMMatrix(
+                currentTransform
+            );
+
+
+        currentX =
+            matrix.m41;
+
+    }
+
+
+    /*
+     * ====================================
+     * 取消等待動畫
      * ====================================
      */
 
     track.style.transition =
         "none";
 
-    track.style.transform =
-        "translateX(0px)";
 
-    track.innerHTML = "";
+    /*
+     * 把目前視覺位置固定住
+     *
+     * 避免切換 transition 時跳動
+     */
+
+    track.style.transform =
+        `translateX(${currentX}px)`;
 
 
     /*
      * ====================================
      * 建立正式動畫物品
+     * ====================================
+     *
+     * 注意：
+     * 不再直接把整條軌道清掉。
+     *
+     * 我們保留等待動畫的畫面，
+     * 在後面接上正式物品。
      * ====================================
      */
 
@@ -860,11 +1025,28 @@ function playCasePreviewAnimation(
         window.currentCaseItems || [];
 
 
+    if (
+        sourceItems.length === 0
+    ) {
+
+        throw new Error(
+            "箱子沒有內容物"
+        );
+
+    }
+
+
+    /*
+     * ====================================
+     * 建立真正的中獎區
+     * ====================================
+     */
+
     const animationItems = [];
 
 
     /*
-     * 前面 24 個隨機物品
+     * 前面放 24 個隨機物品
      */
 
     for (
@@ -873,32 +1055,24 @@ function playCasePreviewAnimation(
         i++
     ) {
 
-        if (
-            sourceItems.length > 0
-        ) {
-
-            const randomItem =
-                sourceItems[
-                    Math.floor(
-                        Math.random() *
-                        sourceItems.length
-                    )
-                ];
+        const randomItem =
+            sourceItems[
+                Math.floor(
+                    Math.random() *
+                    sourceItems.length
+                )
+            ];
 
 
-            animationItems.push(
-                randomItem
-            );
-
-        }
+        animationItems.push(
+            randomItem
+        );
 
     }
 
 
     /*
-     * ====================================
      * 真正中獎物品
-     * ====================================
      */
 
     animationItems.push(
@@ -907,9 +1081,7 @@ function playCasePreviewAnimation(
 
 
     /*
-     * ====================================
-     * 後面 6 個物品
-     * ====================================
+     * 後面再放 6 個
      */
 
     for (
@@ -918,24 +1090,18 @@ function playCasePreviewAnimation(
         i++
     ) {
 
-        if (
-            sourceItems.length > 0
-        ) {
-
-            const randomItem =
-                sourceItems[
-                    Math.floor(
-                        Math.random() *
-                        sourceItems.length
-                    )
-                ];
+        const randomItem =
+            sourceItems[
+                Math.floor(
+                    Math.random() *
+                    sourceItems.length
+                )
+            ];
 
 
-            animationItems.push(
-                randomItem
-            );
-
-        }
+        animationItems.push(
+            randomItem
+        );
 
     }
 
@@ -1035,8 +1201,20 @@ function playCasePreviewAnimation(
         );
 
 
+    /*
+     * 等待動畫原本有很多物品
+     *
+     * 所以正式動畫放在最後面。
+     *
+     * 找最後 31 個：
+     *
+     * [24 隨機]
+     * [1 中獎]
+     * [6 隨機]
+     */
+
     const winningIndex =
-        24;
+        itemElements.length - 7;
 
 
     const winningElement =
@@ -1047,30 +1225,16 @@ function playCasePreviewAnimation(
 
     if (!winningElement) {
 
-        return;
+        throw new Error(
+            "無法定位中獎物品"
+        );
 
     }
 
 
     /*
      * ====================================
-     * 重置位置
-     * ====================================
-     */
-
-    track.style.transition =
-        "none";
-
-    track.style.transform =
-        "translateX(0px)";
-
-
-    track.offsetHeight;
-
-
-    /*
-     * ====================================
-     * 計算中獎位置
+     * 計算畫面中央位置
      * ====================================
      */
 
@@ -1082,7 +1246,9 @@ function playCasePreviewAnimation(
 
     if (!wrapper) {
 
-        return;
+        throw new Error(
+            "找不到開箱預覽區"
+        );
 
     }
 
@@ -1104,14 +1270,41 @@ function playCasePreviewAnimation(
         itemWidth / 2;
 
 
-    const targetPosition =
-        itemCenter -
-        wrapperWidth / 2;
+    /*
+     * 目標位置
+     */
+
+    const targetX =
+        (
+            wrapperWidth / 2
+        ) -
+        itemCenter;
 
 
     /*
      * ====================================
-     * 狀態
+     * 目前位置
+     * ====================================
+     */
+
+    const startX =
+        currentX;
+
+
+    /*
+     * ====================================
+     * 計算剩餘距離
+     * ====================================
+     */
+
+    const distance =
+        targetX -
+        startX;
+
+
+    /*
+     * ====================================
+     * 狀態文字
      * ====================================
      */
 
@@ -1125,14 +1318,17 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 正式減速動畫
+     * 正式減速
      *
-     * 4.2 秒
+     * 從「目前位置」
+     * 接到中獎物品
+     *
+     * 不重新開始
      * ====================================
      */
 
     const animationDuration =
-        4200;
+        5200;
 
 
     requestAnimationFrame(
@@ -1152,7 +1348,7 @@ function playCasePreviewAnimation(
 
 
             track.style.transform =
-                `translateX(-${targetPosition}px)`;
+                `translateX(${targetX}px)`;
 
         }
     );
@@ -1160,7 +1356,7 @@ function playCasePreviewAnimation(
 
     /*
      * ====================================
-     * 動畫結束
+     * 動畫完成
      * ====================================
      */
 
