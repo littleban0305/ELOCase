@@ -8,6 +8,10 @@
 
     let progressTimer = null;
 
+    let requestCount = 0;
+
+    let finishTimer = null;
+
 
     /* ========================================
        建立 Loading Bar
@@ -15,21 +19,31 @@
 
     function createLoadingBar() {
 
-        if (document.querySelector("#elo-loading-bar")) {
+        if (
+            document.querySelector(
+                "#elo-loading-bar"
+            )
+        ) {
+
             loadingBar =
                 document.querySelector(
                     "#elo-loading-bar"
                 );
 
             return;
+
         }
 
 
         loadingBar =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         loadingBar.id =
             "elo-loading-bar";
+
 
         document.body.prepend(
             loadingBar
@@ -47,8 +61,28 @@
         createLoadingBar();
 
 
+        requestCount++;
+
+
+        /*
+         * 如果已經有 API 正在載入
+         * 就不要重新開始動畫
+         */
+
+        if (requestCount > 1) {
+
+            return;
+
+        }
+
+
         clearInterval(
             progressTimer
+        );
+
+
+        clearTimeout(
+            finishTimer
         );
 
 
@@ -56,9 +90,14 @@
             "loading-complete"
         );
 
+
         loadingBar.classList.add(
             "loading-active"
         );
+
+
+        loadingBar.style.opacity =
+            "1";
 
 
         loadingBar.style.width =
@@ -66,8 +105,10 @@
 
 
         /*
-         * 假進度：
-         * 快速前進到約 70%
+         * 假進度
+         *
+         * 最多跑到 70%
+         * 等真正 API 完成後才跑到 100%
          */
 
         let progress = 0;
@@ -77,8 +118,12 @@
             setInterval(
                 () => {
 
-                    if (progress >= 70) {
+                    if (
+                        progress >= 70
+                    ) {
+
                         return;
+
                     }
 
 
@@ -109,6 +154,39 @@
 
     function finishLoading() {
 
+        /*
+         * 防止計數器變成負數
+         */
+
+        if (
+            requestCount <= 0
+        ) {
+
+            requestCount = 0;
+
+            return;
+
+        }
+
+
+        requestCount--;
+
+
+        /*
+         * 還有 API 正在執行
+         *
+         * 不要讓 Loading Bar 消失
+         */
+
+        if (
+            requestCount > 0
+        ) {
+
+            return;
+
+        }
+
+
         createLoadingBar();
 
 
@@ -116,6 +194,10 @@
             progressTimer
         );
 
+
+        /*
+         * 最後一個 API 完成
+         */
 
         loadingBar.classList.remove(
             "loading-active"
@@ -131,33 +213,50 @@
             "100%";
 
 
-        setTimeout(
-            () => {
-
-                loadingBar.style.opacity =
-                    "0";
+        loadingBar.style.opacity =
+            "1";
 
 
-                setTimeout(
-                    () => {
+        /*
+         * 稍微停留一下
+         */
 
-                        loadingBar.classList.remove(
-                            "loading-complete"
-                        );
+        finishTimer =
+            setTimeout(
+                () => {
 
-                        loadingBar.style.width =
-                            "0%";
+                    loadingBar.style.opacity =
+                        "0";
 
-                        loadingBar.style.opacity =
-                            "";
 
-                    },
-                    180
-                );
+                    /*
+                     * 完全消失後重置
+                     */
 
-            },
-            180
-        );
+                    setTimeout(
+                        () => {
+
+                            loadingBar.classList.remove(
+                                "loading-complete"
+                            );
+
+
+                            loadingBar.style.width =
+                                "0%";
+
+
+                            loadingBar.style.opacity =
+                                "";
+
+
+                        },
+                        180
+                    );
+
+
+                },
+                180
+            );
 
     }
 
@@ -176,25 +275,5 @@
 
     };
 
-
-    /* ========================================
-       頁面初始載入
-    ======================================== */
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                finishLoading();
-
-            }
-        );
-
-    }
 
 })();
