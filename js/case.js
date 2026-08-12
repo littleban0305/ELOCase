@@ -368,6 +368,12 @@ function renderCaseItems(items) {
     window.currentCaseItems =
         items || [];
 
+
+    renderCasePreview(
+        window.currentCaseItems
+    );
+
+
     const container =
         document.querySelector(
             "#case-items"
@@ -420,59 +426,200 @@ function renderCaseItems(items) {
 
 }
 
+function renderCasePreview(items) {
 
-/* ========================================
-   顯示開箱結果
-======================================== */
-
-function showOpenCaseResult(result) {
-
-    let resultElement =
+    const track =
         document.querySelector(
-            "#open-case-result"
+            "#case-preview-track"
         );
 
 
-    if (!resultElement) {
+    if (!track) {
+        return;
+    }
 
-        resultElement =
-            document.createElement(
-                "div"
-            );
 
-        resultElement.id =
-            "open-case-result";
+    track.innerHTML = "";
 
-        resultElement.className =
-            "open-case-result";
 
-        document.body.appendChild(
-            resultElement
+    if (
+        !items ||
+        items.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * 建立預覽物品
+     */
+
+    const previewItems = [];
+
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
+
+        const item =
+            items[
+                Math.floor(
+                    Math.random() *
+                    items.length
+                )
+            ];
+
+
+        previewItems.push(
+            item
         );
 
     }
 
 
-    const item =
+    /*
+     * 建立畫面上的卡片
+     */
+
+    previewItems.forEach(
+        item => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "case-preview-item";
+
+
+            element.innerHTML = `
+
+                <div
+                    class="case-preview-item-image"
+                >
+
+                    ${
+                        item.image
+                            ? `
+
+                                <img
+                                    src="${escapeHtml(
+                                        item.image
+                                    )}"
+                                    alt=""
+                                    onerror="
+                                        this.style.display='none';
+                                    "
+                                >
+
+                            `
+                            : `
+
+                                <div
+                                    class="case-item-blur"
+                                >
+
+                                    <span>
+                                        ${escapeHtml(
+                                            item.name ||
+                                            "未知物品"
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            `
+                    }
+
+                </div>
+
+
+                <div
+                    class="case-preview-item-name"
+                >
+
+                    ${escapeHtml(
+                        item.name ||
+                        "未知物品"
+                    )}
+
+                </div>
+
+            `;
+
+
+            track.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+function playCasePreviewAnimation(result) {
+
+    const track =
+        document.querySelector(
+            "#case-preview-track"
+        );
+
+
+    const status =
+        document.querySelector(
+            "#case-preview-status"
+        );
+
+
+    const pointer =
+        document.querySelector(
+            ".case-preview-pointer"
+        );
+
+
+    if (!track) {
+
+        return;
+
+    }
+
+
+    const winningItem =
         result.item;
 
 
     /*
      * ====================================
-     * 建立假的滾動物品
+     * 清空原本預覽
      * ====================================
      */
 
-    const animationItems = [];
+    track.innerHTML = "";
 
 
     /*
-     * 先塞一些隨機物品
+     * ====================================
+     * 建立動畫物品
+     * ====================================
      */
 
     const sourceItems =
         window.currentCaseItems || [];
 
+
+    const animationItems = [];
+
+
+    /*
+     * 前面放 24 個隨機物品
+     */
 
     for (
         let i = 0;
@@ -492,6 +639,7 @@ function showOpenCaseResult(result) {
                     )
                 ];
 
+
             animationItems.push(
                 randomItem
             );
@@ -504,18 +652,17 @@ function showOpenCaseResult(result) {
     /*
      * ====================================
      * 真正中獎物品
-     * 放在最後
      * ====================================
      */
 
     animationItems.push(
-        item
+        winningItem
     );
 
 
     /*
      * ====================================
-     * 再補幾個物品
+     * 後面再放 6 個
      * ====================================
      */
 
@@ -537,6 +684,7 @@ function showOpenCaseResult(result) {
                     )
                 ];
 
+
             animationItems.push(
                 randomItem
             );
@@ -548,156 +696,101 @@ function showOpenCaseResult(result) {
 
     /*
      * ====================================
-     * 建立滾動軌道
+     * 建立卡片
      * ====================================
      */
 
-    resultElement.innerHTML = `
+    animationItems.forEach(
+        item => {
 
-        <div class="open-case-animation">
-
-
-            <div class="open-case-animation-title">
-
-                開箱中
-
-            </div>
+            const element =
+                document.createElement(
+                    "div"
+                );
 
 
-            <div class="open-case-track-wrapper">
+            element.className =
+                "case-preview-item";
 
 
-                <div class="open-case-pointer"></div>
-
+            element.innerHTML = `
 
                 <div
-                    class="open-case-track"
-                    id="open-case-track"
+                    class="case-preview-item-image"
                 >
 
-                    ${animationItems
-                        .map(
-                            animationItem => {
+                    ${
+                        item.image
+                            ? `
 
-                                const rarityClass =
-                                    getRarityClass(
-                                        animationItem.rarity
-                                    );
+                                <img
+                                    src="${escapeHtml(
+                                        item.image
+                                    )}"
+                                    alt=""
+                                    onerror="
+                                        this.style.display='none';
+                                    "
+                                >
 
+                            `
+                            : `
 
-                                return `
+                                <div
+                                    class="case-item-blur"
+                                >
 
-                                    <div
-                                        class="
-                                            open-case-item
-                                            ${rarityClass}
-                                        "
-                                    >
+                                    <span>
+                                        ${escapeHtml(
+                                            item.name ||
+                                            "未知物品"
+                                        )}
+                                    </span>
 
-                                        <div
-                                            class="
-                                                open-case-item-image
-                                            "
-                                        >
+                                </div>
 
-                                            ${
-                                                animationItem.image
-                                                    ? `
-
-                                                        <img
-                                                            src="${escapeHtml(
-                                                                animationItem.image
-                                                            )}"
-                                                            alt=""
-                                                            onerror="
-                                                                this.style.display='none';
-                                                            "
-                                                        >
-
-                                                    `
-                                                    : `
-
-                                                        <div
-                                                            class="
-                                                                open-case-item-blur
-                                                            "
-                                                        ></div>
-
-                                                    `
-                                            }
-
-                                        </div>
-
-
-                                        <div
-                                            class="
-                                                open-case-item-name
-                                            "
-                                        >
-
-                                            ${escapeHtml(
-                                                animationItem.name ||
-                                                "未知物品"
-                                            )}
-
-                                        </div>
-
-                                    </div>
-
-                                `;
-
-                            }
-                        )
-                        .join("")}
+                            `
+                    }
 
                 </div>
 
-            </div>
+
+                <div
+                    class="case-preview-item-name"
+                >
+
+                    ${escapeHtml(
+                        item.name ||
+                        "未知物品"
+                    )}
+
+                </div>
+
+            `;
 
 
-            <div class="open-case-animation-status">
+            track.appendChild(
+                element
+            );
 
-                正在開啟箱子...
-
-            </div>
-
-
-        </div>
-
-    `;
-
-
-    resultElement.classList.add(
-        "show"
+        }
     );
-
-
-    const track =
-        document.querySelector(
-            "#open-case-track"
-        );
-
-
-    if (!track) {
-        return;
-    }
 
 
     /*
      * ====================================
-     * 找到真正獎品的位置
+     * 取得中獎物品
      * ====================================
      */
 
     const itemElements =
         track.querySelectorAll(
-            ".open-case-item"
+            ".case-preview-item"
         );
 
 
     const winningIndex =
-        animationItems.length -
-        7;
+        24;
 
 
     const winningElement =
@@ -707,20 +800,50 @@ function showOpenCaseResult(result) {
 
 
     if (!winningElement) {
+
         return;
+
     }
 
 
     /*
      * ====================================
-     * 計算要滾動多少
+     * 重置位置
+     * ====================================
+     */
+
+    track.style.transition =
+        "none";
+
+
+    track.style.transform =
+        "translateX(0px)";
+
+
+    /*
+     * 強制瀏覽器重新計算
+     */
+
+    track.offsetHeight;
+
+
+    /*
+     * ====================================
+     * 計算目標位置
      * ====================================
      */
 
     const wrapper =
         document.querySelector(
-            ".open-case-track-wrapper"
+            ".case-preview-wrapper"
         );
+
+
+    if (!wrapper) {
+
+        return;
+
+    }
 
 
     const wrapperWidth =
@@ -747,19 +870,16 @@ function showOpenCaseResult(result) {
 
     /*
      * ====================================
-     * 初始位置
+     * 顯示開箱狀態
      * ====================================
      */
 
-    track.style.transform =
-        "translateX(0px)";
+    if (status) {
 
+        status.textContent =
+            "正在開啟箱子...";
 
-    /*
-     * 強制瀏覽器重新計算
-     */
-
-    track.offsetHeight;
+    }
 
 
     /*
@@ -772,21 +892,27 @@ function showOpenCaseResult(result) {
         4200;
 
 
-    track.style.transition =
-        `
-            transform
-            ${animationDuration}ms
-            cubic-bezier(
-                0.08,
-                0.72,
-                0.18,
-                1
-            )
-        `;
+    requestAnimationFrame(
+        () => {
+
+            track.style.transition =
+                `
+                    transform
+                    ${animationDuration}ms
+                    cubic-bezier(
+                        0.08,
+                        0.72,
+                        0.18,
+                        1
+                    )
+                `;
 
 
-    track.style.transform =
-        `translateX(-${targetPosition}px)`;
+            track.style.transform =
+                `translateX(-${targetPosition}px)`;
+
+        }
+    );
 
 
     /*
@@ -798,208 +924,30 @@ function showOpenCaseResult(result) {
     setTimeout(
         () => {
 
-            const status =
-                document.querySelector(
-                    ".open-case-animation-status"
-                );
-
-
-            if (status) {
-
-                status.textContent =
-                    "你獲得了";
-
-            }
-
-
             winningElement.classList.add(
                 "winning-item"
             );
 
 
-            /*
-             * 等一下再顯示結果
-             */
+            if (status) {
 
-            setTimeout(
-                () => {
+                status.textContent =
+                    `你獲得了 ${winningItem.name}`;
 
-                    showFinalOpenCaseResult(
-                        result
-                    );
+            }
 
-                },
-                900
-            );
 
+            if (pointer) {
+
+                pointer.classList.add(
+                    "winning"
+                );
+
+            }
 
         },
         animationDuration
     );
-
-}
-
-function showFinalOpenCaseResult(result) {
-
-    const resultElement =
-        document.querySelector(
-            "#open-case-result"
-        );
-
-
-    if (!resultElement) {
-        return;
-    }
-
-
-    const item =
-        result.item;
-
-
-    resultElement.innerHTML = `
-
-        <div class="open-case-result-box">
-
-
-            <div class="open-case-result-label">
-
-                你獲得了
-
-            </div>
-
-
-            <div
-                class="
-                    open-case-result-image
-                    ${getRarityClass(
-                        item.rarity
-                    )}
-                "
-            >
-
-                ${
-                    item.image
-                        ? `
-
-                            <img
-                                src="${escapeHtml(
-                                    item.image
-                                )}"
-                                alt=""
-                                onerror="
-                                    this.style.display='none';
-                                "
-                            >
-
-                        `
-                        : `
-
-                            <div
-                                class="
-                                    open-case-result-blur
-                                "
-                            ></div>
-
-                        `
-                }
-
-            </div>
-
-
-            <div
-                class="
-                    open-case-result-rarity
-                    ${getRarityClass(
-                        item.rarity
-                    )}
-                "
-            >
-
-                ${escapeHtml(
-                    item.rarity ||
-                    "未知"
-                )}
-
-            </div>
-
-
-            <h2>
-
-                ${escapeHtml(
-                    item.name ||
-                    "未知物品"
-                )}
-
-            </h2>
-
-
-            <div class="open-case-result-value">
-
-                $${Number(
-                    item.value || 0
-                ).toLocaleString()}
-
-            </div>
-
-
-            <div class="open-case-result-balance">
-
-                剩餘 $${Number(
-                    result.remainingEloCoin || 0
-                ).toLocaleString()}
-
-            </div>
-
-
-            <button
-                type="button"
-                id="close-open-case-result"
-                class="button button-primary"
-            >
-                確定
-            </button>
-
-
-        </div>
-
-    `;
-
-
-    const closeButton =
-        document.querySelector(
-            "#close-open-case-result"
-        );
-
-
-    if (closeButton) {
-
-        closeButton.addEventListener(
-            "click",
-            () => {
-
-                resultElement.classList.remove(
-                    "show"
-                );
-
-
-                /*
-                 * 清除動畫內容
-                 */
-
-                setTimeout(
-                    () => {
-
-                        resultElement.innerHTML =
-                            "";
-
-                    },
-                    250
-                );
-
-            }
-        );
-
-    }
 
 }
 
@@ -1128,9 +1076,9 @@ function initializeOpenCaseButton() {
                  * 顯示結果
                  */
 
-                showOpenCaseResult(
-                    result
-                );
+               playCasePreviewAnimation(
+                  result
+               );
 
 
             } catch (error) {
