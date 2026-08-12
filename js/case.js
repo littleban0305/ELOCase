@@ -1371,6 +1371,33 @@ function playCasePreviewAnimation(
     const startX =
         currentX;
 
+   console.log(
+       "動畫開始 X：",
+       startX
+   );
+   
+   console.log(
+       "動畫目標 X：",
+       targetX
+   );
+   
+   console.log(
+       "動畫距離：",
+       distance
+   );
+   
+   console.log(
+       "動畫時間：",
+       animationDuration
+   );
+   
+   console.log(
+       "平均速度：",
+       Math.abs(distance) /
+       (animationDuration / 1000),
+       "px/s"
+   );
+
 
     /*
      * ====================================
@@ -1411,6 +1438,81 @@ function playCasePreviewAnimation(
     const animationDuration =
         5200;
 
+   const animationStartTime =
+       performance.now();
+
+   let lastX = startX;
+   let lastTime = performance.now();
+   let maxSpeed = 0;
+   
+   function measureSpeed(now) {
+   
+       const transform =
+           window.getComputedStyle(
+               track
+           ).transform;
+   
+       if (transform !== "none") {
+   
+           const matrix =
+               new DOMMatrix(
+                   transform
+               );
+   
+           const currentX =
+               matrix.m41;
+   
+           const deltaTime =
+               now -
+               lastTime;
+   
+           if (deltaTime > 0) {
+   
+               const currentSpeed =
+                   Math.abs(
+                       currentX -
+                       lastX
+                   ) /
+                   (deltaTime / 1000);
+   
+               maxSpeed =
+                   Math.max(
+                       maxSpeed,
+                       currentSpeed
+                   );
+   
+           }
+   
+           lastX =
+               currentX;
+   
+           lastTime =
+               now;
+   
+       }
+   
+       if (
+           performance.now() -
+           animationStartTime <
+           animationDuration
+       ) {
+   
+           requestAnimationFrame(
+               measureSpeed
+           );
+   
+       } else {
+   
+           console.log(
+               "🔥 正式動畫最高速度：",
+               Math.round(maxSpeed),
+               "px/s"
+           );
+   
+       }
+   
+   }
+
 
     requestAnimationFrame(
         () => {
@@ -1430,6 +1532,10 @@ function playCasePreviewAnimation(
 
             track.style.transform =
                 `translateX(${targetX}px)`;
+
+           requestAnimationFrame(
+                measureSpeed
+            );
 
         }
     );
