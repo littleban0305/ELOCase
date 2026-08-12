@@ -1289,7 +1289,8 @@ function initializeOpenCaseButton() {
                  * 立刻開始等待動畫
                  * ====================================
                  */
-
+                window.ELOCaseOpening = true;
+               
                 startCaseWaitingAnimation();
 
 
@@ -1401,6 +1402,8 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
+                window.ELOCaseOpening = false;
+               
                 document.body.classList.remove(
                     "case-opening"
                 );
