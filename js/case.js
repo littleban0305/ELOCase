@@ -575,8 +575,8 @@ let caseWaitingActive = false;
 
 /* ========================================
    開箱等待動畫
-   連續速度：
-   快 → 快 → 慢 → 持續慢速
+   快 → 快 → 慢 → 超慢
+   API 回來前持續運作
 ======================================== */
 
 function startCaseWaitingAnimation() {
@@ -586,6 +586,7 @@ function startCaseWaitingAnimation() {
             "#case-preview-track"
         );
 
+
     const status =
         document.querySelector(
             "#case-preview-status"
@@ -593,7 +594,9 @@ function startCaseWaitingAnimation() {
 
 
     if (!track) {
+
         return;
+
     }
 
 
@@ -622,11 +625,14 @@ function startCaseWaitingAnimation() {
 
     caseWaitingX = 0;
 
+
     caseWaitingStartTime =
         performance.now();
 
+
     caseWaitingLastTime =
         caseWaitingStartTime;
+
 
     caseWaitingActive =
         true;
@@ -638,11 +644,14 @@ function startCaseWaitingAnimation() {
 
 
     /*
-     * 清除 CSS transition
+     * ====================================
+     * 清除 CSS 動畫
+     * ====================================
      */
 
     track.style.transition =
         "none";
+
 
     track.style.transform =
         "translateX(0px)";
@@ -667,14 +676,16 @@ function startCaseWaitingAnimation() {
     }
 
 
-    track.innerHTML = "";
-
-
     /*
      * ====================================
-     * 建立大量物品
+     * 建立等待用物品
+     *
+     * 160 個
      * ====================================
      */
+
+    track.innerHTML = "";
+
 
     const waitingItems = [];
 
@@ -798,16 +809,28 @@ function startCaseWaitingAnimation() {
     }
 
 
+    /*
+     * 強制瀏覽器完成排版
+     */
+
     track.offsetHeight;
 
 
     /*
      * ====================================
-     * 連續速度動畫
+     * 等待動畫
      *
-     * 不使用 CSS transition
+     * 核心：
      *
-     * 速度會自然下降
+     * 快
+     * ↓
+     * 快
+     * ↓
+     * 慢
+     * ↓
+     * 超慢
+     *
+     * 不會突然重新加速
      * ====================================
      */
 
@@ -842,7 +865,6 @@ function startCaseWaitingAnimation() {
          * ====================================
          * 速度
          *
-         * 單位：
          * px / 秒
          * ====================================
          */
@@ -850,53 +872,67 @@ function startCaseWaitingAnimation() {
         let speed;
 
 
+        /*
+         * 0 ～ 1.8 秒
+         *
+         * 🚀 超快
+         */
+
         if (
-            elapsed < 2200
+            elapsed < 1800
         ) {
 
-            /*
-             * 第一階段：
-             * 超快
-             */
-
             speed =
-                1050;
+                1250;
 
-        } else if (
-            elapsed < 4200
+        }
+
+
+        /*
+         * 1.8 ～ 3.8 秒
+         *
+         * 🚀 快
+         */
+
+        else if (
+            elapsed < 3800
         ) {
 
-            /*
-             * 第二階段：
-             * 還是快
-             */
-
             speed =
-                850;
+                1000;
 
-        } else if (
+        }
+
+
+        /*
+         * 3.8 ～ 6.5 秒
+         *
+         * 🐢 開始明顯減速
+         */
+
+        else if (
             elapsed < 6500
         ) {
 
-            /*
-             * 第三階段：
-             * 開始慢
-             */
+            speed =
+                600;
+
+        }
+
+
+        /*
+         * 6.5 秒之後
+         *
+         * 🐌 超慢
+         *
+         * API 不管多久
+         * 都保持這個速度
+         */
+
+        else {
 
             speed =
-                560;
-
-        } else {
-
-            /*
-             * 最後：
-             * 持續慢速
-             *
-             * API 沒回來就一直跑
-             */
-
-            speed =
-                180;
+                160;
 
         }
 
@@ -917,36 +953,40 @@ function startCaseWaitingAnimation() {
          * ====================================
          * 無限循環
          *
-         * 避免跑到最右邊停住
+         * 使用「完整卡片區段」
+         * 來避免突然跳動
          * ====================================
          */
 
         const trackWidth =
             track.scrollWidth;
 
+
         const viewportWidth =
             track.parentElement
-                ? track.parentElement
-                    .offsetWidth
+                ? track.parentElement.offsetWidth
                 : window.innerWidth;
 
 
-        /*
-         * 已經接近尾端
-         *
-         * 把軌道瞬間往前補一段
-         * 使用者看不到跳動
-         */
+        const resetPoint =
+            trackWidth -
+            viewportWidth -
+            1500;
+
 
         if (
             Math.abs(caseWaitingX) >
-            trackWidth -
-            viewportWidth -
-            1200
+            resetPoint
         ) {
 
+            /*
+             * 不再一次跳 45%
+             *
+             * 改成只補一小段
+             */
+
             const resetDistance =
-                trackWidth * 0.45;
+                trackWidth * 0.25;
 
 
             caseWaitingX +=
@@ -955,9 +995,21 @@ function startCaseWaitingAnimation() {
         }
 
 
+        /*
+         * ====================================
+         * 套用位置
+         * ====================================
+         */
+
         track.style.transform =
             `translateX(${caseWaitingX}px)`;
 
+
+        /*
+         * ====================================
+         * 下一幀
+         * ====================================
+         */
 
         caseWaitingAnimationFrame =
             requestAnimationFrame(
