@@ -1,84 +1,146 @@
-async function sendApiRequest(action, parameters = {}) {
+async function sendApiRequest(
+    action,
+    parameters = {}
+) {
 
-    /*
-     * ====================================
-     * 開始 Loading
-     * ====================================
-     */
+    const maxAttempts = 3;
 
-    if (
-        window.ELOLoading &&
-        typeof window.ELOLoading.start === "function"
+    let lastError = null;
+
+
+    for (
+        let attempt = 1;
+        attempt <= maxAttempts;
+        attempt++
     ) {
 
-        window.ELOLoading.start();
-
-    }
-
-
-    try {
-
-        const query =
-            new URLSearchParams({
-
-                action,
-
-                ...parameters
-
-            });
-
-
-        const response = await fetch(
-            `${CONFIG.API_URL}?${query.toString()}`,
-            {
-                method: "GET",
-                redirect: "follow",
-                cache: "no-store"
-            }
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "API 請求失敗"
-            );
-
-        }
-
-
-        const result =
-            await response.json();
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.error ||
-                "發生未知錯誤"
-            );
-
-        }
-
-
-        return result.data;
-
-
-    } finally {
-
         /*
-         * ====================================
-         * API 成功或失敗
-         * 都結束 Loading
-         * ====================================
+         * Loading
          */
 
         if (
             window.ELOLoading &&
-            typeof window.ELOLoading.finish === "function"
+            typeof window.ELOLoading.start === "function"
         ) {
 
-            window.ELOLoading.finish();
+            window.ELOLoading.start();
+
+        }
+
+
+        try {
+
+            const query =
+                new URLSearchParams({
+
+                    action,
+
+                    ...parameters
+
+                });
+
+
+            const response =
+                await fetch(
+                    `${CONFIG.API_URL}?${query.toString()}`,
+                    {
+
+                        method:
+                            "GET",
+
+                        redirect:
+                            "follow",
+
+                        cache:
+                            "no-store"
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `API 請求失敗（${response.status}）`
+                );
+
+            }
+
+
+            const result =
+                await response.json();
+
+
+            if (!result.success) {
+
+                throw new Error(
+                    result.error ||
+                    "發生未知錯誤"
+                );
+
+            }
+
+
+            return result.data;
+
+
+        } catch (error) {
+
+            lastError =
+                error;
+
+
+            /*
+             * 如果還有重試機會
+             */
+
+            if (
+                attempt < maxAttempts
+            ) {
+
+                /*
+                 * 300ms
+                 * 600ms
+                 */
+
+                await new Promise(
+                    resolve =>
+                        setTimeout(
+                            resolve,
+                            300 * attempt
+                        )
+                );
+
+
+                continue;
+
+            }
+
+
+            /*
+             * 三次都失敗
+             */
+
+            throw lastError;
+
+
+        } finally {
+
+            /*
+             * 每一次 API 嘗試都結束 Loading
+             *
+             * Loading 本身有 requestCount
+             * 所以不會因為第一次失敗就消失
+             */
+
+            if (
+                window.ELOLoading &&
+                typeof window.ELOLoading.finish === "function"
+            ) {
+
+                window.ELOLoading.finish();
+
+            }
 
         }
 
