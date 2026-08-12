@@ -9,68 +9,140 @@
 
 async function login(username, password) {
 
-    const response =
-        await fetch(
-            CONFIG.API_URL,
-            {
-                method:
-                    "POST",
+    const maxAttempts = 3;
 
-                redirect:
-                    "follow",
+    let lastError = null;
 
-                cache:
-                    "no-store",
 
-                headers: {
+    for (
+        let attempt = 1;
+        attempt <= maxAttempts;
+        attempt++
+    ) {
 
-                    "Content-Type":
-                        "text/plain;charset=utf-8"
+        try {
 
-                },
+            const response =
+                await fetch(
+                    CONFIG.API_URL,
+                    {
+                        method:
+                            "POST",
 
-                body:
-                    JSON.stringify({
+                        redirect:
+                            "follow",
 
-                        action:
-                            "login",
+                        cache:
+                            "no-store",
 
-                        username:
-                            username,
+                        headers: {
 
-                        password:
-                            password
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
 
-                    })
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                action:
+                                    "login",
+
+                                username:
+                                    username,
+
+                                password:
+                                    password
+
+                            })
+
+                    }
+                );
+
+
+            /*
+             * HTTP 錯誤
+             */
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `登入服務暫時無法使用（${response.status}）`
+                );
 
             }
-        );
 
 
-    if (!response.ok) {
+            /*
+             * 解析 API 回應
+             */
 
-        throw new Error(
-            "登入服務無法使用"
-        );
+            const result =
+                await response.json();
+
+
+            /*
+             * API 正常回應
+             *
+             * 即使帳密錯誤，
+             * 也會在這裡正常回傳錯誤訊息
+             */
+
+            if (!result.success) {
+
+                throw new Error(
+                    result.error ||
+                    "登入失敗"
+                );
+
+            }
+
+
+            /*
+             * 登入成功
+             */
+
+            return result.data;
+
+
+        } catch (error) {
+
+            lastError =
+                error;
+
+
+            /*
+             * 如果已經是最後一次
+             * 直接丟出錯誤
+             */
+
+            if (
+                attempt >= maxAttempts
+            ) {
+
+                throw lastError;
+
+            }
+
+
+            /*
+             * Google Apps Script
+             * 偶發 redirect / 404
+             *
+             * 等一下再重試
+             */
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        400 * attempt
+                    )
+            );
+
+        }
 
     }
-
-
-    const result =
-        await response.json();
-
-
-    if (!result.success) {
-
-        throw new Error(
-            result.error ||
-            "登入失敗"
-        );
-
-    }
-
-
-    return result.data;
 
 }
 
