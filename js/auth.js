@@ -9,23 +9,42 @@
 
 async function login(username, password) {
 
-    const response = await fetch(
-        CONFIG.API_URL,
-        {
-            method: "POST",
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+                method:
+                    "POST",
 
-            headers: {
-                "Content-Type":
-                    "text/plain;charset=utf-8"
-            },
+                redirect:
+                    "follow",
 
-            body: JSON.stringify({
-                action: "login",
-                username: username,
-                password: password
-            })
-        }
-    );
+                cache:
+                    "no-store",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        action:
+                            "login",
+
+                        username:
+                            username,
+
+                        password:
+                            password
+
+                    })
+
+            }
+        );
 
 
     if (!response.ok) {
