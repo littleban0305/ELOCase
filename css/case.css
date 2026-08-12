@@ -28,7 +28,7 @@ main {
 .case-page {
 
     padding:
-        30px 0 80px;
+        28px 0 70px;
 
 }
 
@@ -67,7 +67,7 @@ main {
 
 
 /* ========================================
-   開箱 Hero
+   Hero
 ======================================== */
 
 .case-hero {
@@ -81,20 +81,16 @@ main {
 
     position: relative;
 
-    display: flex;
-
-    flex-direction: column;
-
     overflow: hidden;
 
     padding:
-        28px 32px 24px;
+        24px 28px 22px;
 
     background:
         radial-gradient(
-            circle at 50% 15%,
-            rgba(124, 92, 255, 0.08),
-            transparent 38%
+            circle at 35% 20%,
+            rgba(124, 92, 255, 0.09),
+            transparent 32%
         ),
         linear-gradient(
             180deg,
@@ -113,12 +109,14 @@ main {
 
 
 /* ========================================
-   箱子資訊 + 圖片
+   箱子圖片 + 資訊
 ======================================== */
 
 .case-hero-top {
 
     width: 100%;
+
+    min-height: 205px;
 
     display: flex;
 
@@ -126,25 +124,23 @@ main {
 
     justify-content: center;
 
-    gap: 70px;
-
-    min-height: 220px;
+    gap: 55px;
 
 }
 
 
-/*
- * 箱子圖片
- */
+/* ========================================
+   箱子圖片
+======================================== */
 
 .case-hero-image {
 
     flex:
-        0 0 270px;
+        0 0 250px;
 
-    width: 270px;
+    width: 250px;
 
-    height: 190px;
+    height: 170px;
 
     display: flex;
 
@@ -154,18 +150,27 @@ main {
 
     overflow: hidden;
 
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124, 92, 255, 0.13),
+            transparent 68%
+        );
+
+    border-radius:
+        var(--radius-medium);
+
     color:
-        rgba(255, 255, 255, 0.12);
-
-    font-size: 1.2rem;
-
-    font-weight: 800;
-
-    letter-spacing:
-        0.08em;
+        transparent;
 
 }
 
+
+/*
+ * 真正箱子圖片
+ */
 
 .case-hero-image img {
 
@@ -177,33 +182,65 @@ main {
 
     display: block;
 
+    position: relative;
+
+    z-index: 2;
+
 }
 
 
 /*
- * 無圖片時的 fallback
+ * 沒有圖片時不要顯示 ELOCase / TEST
  */
 
-.case-hero-image:not(:has(img)) {
+.case-hero-image span {
+
+    display: none;
+
+}
+
+
+/*
+ * 沒有圖片時的模糊佔位
+ */
+
+.case-hero-image:not(:has(img))::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 95px;
+
+    height: 70px;
+
+    border-radius:
+        14px;
 
     background:
-        radial-gradient(
-            circle at center,
-            rgba(124, 92, 255, 0.12),
-            transparent 65%
+        linear-gradient(
+            135deg,
+            rgba(124, 92, 255, 0.32),
+            rgba(124, 92, 255, 0.08)
         );
+
+    filter:
+        blur(18px);
+
+    opacity:
+        0.7;
 
 }
 
 
-/*
- * 箱子資訊
- */
+/* ========================================
+   箱子資訊
+======================================== */
 
 .case-hero-info {
 
     flex:
-        0 1 300px;
+        0 1 320px;
 
     display: flex;
 
@@ -222,7 +259,7 @@ main {
 
 .case-detail-game {
 
-    margin-bottom: 7px;
+    margin-bottom: 6px;
 
     color:
         var(--color-primary);
@@ -248,9 +285,11 @@ main {
     color:
         var(--color-text);
 
-    font-size: 1.75rem;
+    font-size: 1.65rem;
 
     font-weight: 800;
+
+    line-height: 1.25;
 
     letter-spacing:
         -0.03em;
@@ -264,7 +303,7 @@ main {
 
 .case-hero-info .case-detail-price {
 
-    margin-top: 9px;
+    margin-top: 8px;
 
     color:
         var(--color-text-muted);
@@ -280,7 +319,20 @@ main {
 
 
 /* ========================================
-   預覽區
+   開箱按鈕
+======================================== */
+
+.case-hero-info #open-case-button {
+
+    margin-top: 18px;
+
+    min-width: 145px;
+
+}
+
+
+/* ========================================
+   開箱預覽
 ======================================== */
 
 .case-preview-wrapper {
@@ -289,14 +341,12 @@ main {
 
     width: 100%;
 
-    height: 175px;
-
-    margin-top: 4px;
+    height: 170px;
 
     overflow: hidden;
 
     background:
-        rgba(7, 9, 13, 0.94);
+        rgba(7, 9, 13, 0.96);
 
     border:
         1px solid
@@ -306,8 +356,8 @@ main {
         var(--radius-medium);
 
     box-shadow:
-        inset 0 0 50px
-        rgba(0, 0, 0, 0.35);
+        inset 0 0 45px
+        rgba(0, 0, 0, 0.4);
 
 }
 
@@ -324,13 +374,10 @@ main {
 
     z-index: 20;
 
-    top: 0;
+    inset:
+        0 auto 0 0;
 
-    left: 0;
-
-    width: 130px;
-
-    height: 100%;
+    width: 120px;
 
     pointer-events: none;
 
@@ -352,13 +399,10 @@ main {
 
     z-index: 20;
 
-    top: 0;
+    inset:
+        0 0 0 auto;
 
-    right: 0;
-
-    width: 130px;
-
-    height: 100%;
+    width: 120px;
 
     pointer-events: none;
 
@@ -475,10 +519,10 @@ main {
 
     align-items: center;
 
-    gap: 12px;
+    gap: 10px;
 
     padding:
-        10px 18px;
+        8px 14px;
 
     will-change:
         transform;
@@ -493,7 +537,7 @@ main {
 .case-preview-item {
 
     flex:
-        0 0 150px;
+        0 0 145px;
 
     height: 150px;
 
@@ -505,10 +549,11 @@ main {
 
     justify-content: space-between;
 
-    padding: 10px;
+    padding:
+        9px;
 
     background:
-        rgba(19, 23, 31, 0.92);
+        #12161e;
 
     border:
         1px solid
@@ -525,11 +570,15 @@ main {
 }
 
 
+/* ========================================
+   預覽物品圖片
+======================================== */
+
 .case-preview-item-image {
 
-    width: 112px;
+    width: 108px;
 
-    height: 112px;
+    height: 108px;
 
     display: flex;
 
@@ -538,9 +587,6 @@ main {
     justify-content: center;
 
     overflow: hidden;
-
-    border-radius:
-        8px;
 
 }
 
@@ -558,6 +604,10 @@ main {
 }
 
 
+/* ========================================
+   預覽物品名稱
+======================================== */
+
 .case-preview-item-name {
 
     width: 100%;
@@ -567,7 +617,7 @@ main {
     color:
         var(--color-text-muted);
 
-    font-size: 0.67rem;
+    font-size: 0.66rem;
 
     font-weight: 700;
 
@@ -581,44 +631,27 @@ main {
 
 
 /* ========================================
-   圖片載入失敗
+   圖片失敗模糊佔位
 ======================================== */
 
 .case-item-blur {
 
-    width: 65%;
+    width: 68px;
 
-    height: 65%;
+    height: 68px;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    border-radius: 50%;
+    border-radius:
+        50%;
 
     background:
         linear-gradient(
             135deg,
             rgba(124, 92, 255, 0.45),
-            rgba(255, 80, 160, 0.2)
+            rgba(255, 80, 160, 0.18)
         );
 
     filter:
-        blur(20px);
-
-}
-
-
-.case-item-blur span {
-
-    color:
-        rgba(255, 255, 255, 0.25);
-
-    font-size: 0.6rem;
+        blur(18px);
 
 }
 
@@ -630,42 +663,38 @@ main {
 .case-preview-item.winning-item {
 
     transform:
-        scale(1.08);
+        scale(1.06);
 
     border-color:
         var(--color-primary);
 
     box-shadow:
-        0 0 30px
+        0 0 28px
         rgba(124, 92, 255, 0.5);
 
 }
 
 
 /* ========================================
-   開箱控制
+   開箱狀態
 ======================================== */
 
 .case-hero-actions {
 
     width: 100%;
 
+    min-height: 18px;
+
     display: flex;
 
-    align-items: center;
+    justify-content: center;
 
-    justify-content: flex-end;
-
-    gap: 18px;
-
-    margin-top: 16px;
+    margin-top: 8px;
 
 }
 
 
 .case-preview-status {
-
-    min-width: 0;
 
     color:
         var(--color-text-muted);
@@ -674,16 +703,7 @@ main {
 
     font-weight: 600;
 
-}
-
-
-/* ========================================
-   開箱按鈕
-======================================== */
-
-#open-case-button {
-
-    min-width: 145px;
+    text-align: center;
 
 }
 
@@ -694,14 +714,16 @@ main {
 
 .case-contents {
 
-    margin-top: 55px;
+    margin-top:
+        48px;
 
 }
 
 
 .case-contents .section-header {
 
-    margin-bottom: 22px;
+    margin-bottom:
+        22px;
 
 }
 
@@ -713,7 +735,8 @@ main {
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
 
-    gap: 14px;
+    gap:
+        14px;
 
 }
 
@@ -799,7 +822,8 @@ main {
 
     display: block;
 
-    padding: 16px;
+    padding:
+        16px;
 
 }
 
@@ -810,38 +834,48 @@ main {
 
 .case-item-info {
 
-    padding: 14px;
+    padding:
+        14px;
 
 }
 
 
 .case-item-rarity {
 
-    margin-bottom: 6px;
+    margin-bottom:
+        6px;
 
-    font-size: 0.68rem;
+    font-size:
+        0.68rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
 }
 
 
 .case-item-info h3 {
 
-    margin-bottom: 8px;
+    margin-bottom:
+        8px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
     color:
         var(--color-text);
 
-    font-size: 0.8rem;
+    font-size:
+        0.8rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    text-overflow: ellipsis;
+    text-overflow:
+        ellipsis;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
 
 }
 
@@ -851,9 +885,11 @@ main {
     color:
         var(--color-text-muted);
 
-    font-size: 0.72rem;
+    font-size:
+        0.72rem;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
     font-variant-numeric:
         tabular-nums;
@@ -928,7 +964,8 @@ main {
     color:
         var(--color-text-muted);
 
-    font-size: 0.82rem;
+    font-size:
+        0.82rem;
 
 }
 
@@ -954,16 +991,20 @@ main {
     min-height:
         100px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 18px;
+    gap:
+        18px;
 
     color:
         var(--color-text-muted);
 
-    font-size: 0.8rem;
+    font-size:
+        0.8rem;
 
 }
 
@@ -973,14 +1014,16 @@ main {
     color:
         var(--color-text);
 
-    font-weight: 700;
+    font-weight:
+        700;
 
 }
 
 
 .footer-container span {
 
-    margin-left: auto;
+    margin-left:
+        auto;
 
 }
 
@@ -993,50 +1036,30 @@ main {
 
     .case-hero-top {
 
-        gap: 35px;
+        gap:
+            35px;
 
     }
 
 
     .case-hero-image {
 
-        flex-basis: 230px;
+        flex-basis:
+            220px;
 
-        width: 230px;
+        width:
+            220px;
 
-        height: 170px;
+        height:
+            155px;
 
     }
 
 
     .case-hero-info {
 
-        flex-basis: 260px;
-
-    }
-
-
-    .case-preview-wrapper {
-
-        height: 170px;
-
-    }
-
-
-    .case-preview-item {
-
-        flex-basis: 145px;
-
-        height: 145px;
-
-    }
-
-
-    .case-preview-item-image {
-
-        width: 106px;
-
-        height: 106px;
+        flex-basis:
+            260px;
 
     }
 
@@ -1060,7 +1083,7 @@ main {
     .case-page {
 
         padding:
-            24px 0 55px;
+            22px 0 55px;
 
     }
 
@@ -1068,44 +1091,49 @@ main {
     .case-preview {
 
         padding:
-            22px 12px 20px;
+            20px 12px 18px;
 
     }
 
 
     .case-hero-top {
 
-        min-height: 0;
+        min-height:
+            0;
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        gap: 5px;
+        gap:
+            4px;
 
     }
 
 
     .case-hero-image {
 
-        order: 1;
+        flex-basis:
+            auto;
 
-        flex-basis: auto;
+        width:
+            170px;
 
-        width: 190px;
-
-        height: 135px;
+        height:
+            120px;
 
     }
 
 
     .case-hero-info {
 
-        order: 2;
+        width:
+            100%;
 
-        width: 100%;
+        align-items:
+            center;
 
-        align-items: center;
-
-        text-align: center;
+        text-align:
+            center;
 
     }
 
@@ -1120,14 +1148,27 @@ main {
 
     .case-detail-game {
 
-        margin-bottom: 5px;
+        margin-bottom:
+            4px;
 
     }
 
 
     .case-hero-info .case-detail-price {
 
-        margin-top: 6px;
+        margin-top:
+            5px;
+
+    }
+
+
+    .case-hero-info #open-case-button {
+
+        margin-top:
+            12px;
+
+        width:
+            100%;
 
     }
 
@@ -1135,10 +1176,10 @@ main {
     .case-preview-wrapper {
 
         height:
-            155px;
+            150px;
 
         margin-top:
-            16px;
+            18px;
 
     }
 
@@ -1147,7 +1188,7 @@ main {
     .case-preview-wrapper::after {
 
         width:
-            70px;
+            65px;
 
     }
 
@@ -1155,10 +1196,10 @@ main {
     .case-preview-track {
 
         gap:
-            9px;
+            8px;
 
         padding:
-            8px 12px;
+            7px 10px;
 
     }
 
@@ -1166,13 +1207,13 @@ main {
     .case-preview-item {
 
         flex-basis:
-            125px;
+            120px;
 
         height:
-            135px;
+            130px;
 
         padding:
-            8px;
+            7px;
 
     }
 
@@ -1180,10 +1221,10 @@ main {
     .case-preview-item-image {
 
         width:
-            95px;
+            92px;
 
         height:
-            95px;
+            92px;
 
     }
 
@@ -1198,33 +1239,8 @@ main {
 
     .case-hero-actions {
 
-        flex-direction:
-            column;
-
-        gap:
-            10px;
-
         margin-top:
-            14px;
-
-    }
-
-
-    .case-preview-status {
-
-        order:
-            2;
-
-        text-align:
-            center;
-
-    }
-
-
-    #open-case-button {
-
-        width:
-            100%;
+            7px;
 
     }
 
@@ -1232,7 +1248,7 @@ main {
     .case-contents {
 
         margin-top:
-            40px;
+            38px;
 
     }
 
@@ -1286,10 +1302,10 @@ main {
     .case-hero-image {
 
         width:
-            160px;
+            145px;
 
         height:
-            115px;
+            105px;
 
     }
 
@@ -1297,7 +1313,7 @@ main {
     .case-preview-wrapper {
 
         height:
-            145px;
+            140px;
 
     }
 
@@ -1305,10 +1321,10 @@ main {
     .case-preview-item {
 
         flex-basis:
-            112px;
+            110px;
 
         height:
-            122px;
+            120px;
 
     }
 
