@@ -412,6 +412,10 @@ function updateLoginUI(user) {
    玩家下拉選單
 ======================================== */
 
+/* ========================================
+   玩家下拉選單
+======================================== */
+
 function initializePlayerMenu() {
 
     const playerMenu =
@@ -457,8 +461,47 @@ function initializePlayerMenu() {
         "click",
         event => {
 
+            event.preventDefault();
+
             event.stopPropagation();
 
+
+            /*
+             * ====================================
+             * 未登入
+             * ====================================
+             *
+             * 不開啟下拉選單
+             * 直接前往登入頁
+             */
+
+            if (
+                playerMenu.classList.contains(
+                    "logged-out"
+                )
+            ) {
+
+                playerMenu.classList.remove(
+                    "open"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+
+                return;
+
+            }
+
+
+            /*
+             * ====================================
+             * 已登入
+             * ====================================
+             *
+             * 才允許開啟下拉選單
+             */
 
             playerMenu.classList.toggle(
                 "open"
