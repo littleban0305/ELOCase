@@ -1463,3 +1463,380 @@ main {
     }
 
 }
+
+/* ========================================
+   箱子圖片縮小
+======================================== */
+
+.case-detail-image {
+
+    min-height: 280px;
+
+}
+
+
+.case-detail-image img {
+
+    width: 78%;
+
+    height: 78%;
+
+    object-fit: contain;
+
+    margin: auto;
+
+}
+
+
+/* ========================================
+   開箱預覽
+======================================== */
+
+.case-preview {
+
+    margin-top: 48px;
+
+}
+
+
+.case-preview .section-header {
+
+    margin-bottom: 18px;
+
+}
+
+
+.case-preview-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 220px;
+
+    overflow: hidden;
+
+    background:
+        #090c12;
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+}
+
+
+/* ========================================
+   左右遮罩
+======================================== */
+
+.case-preview-wrapper::before {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 5;
+
+    inset:
+        0 auto 0 0;
+
+    width: 130px;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            #090c12,
+            transparent
+        );
+
+}
+
+
+.case-preview-wrapper::after {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 5;
+
+    inset:
+        0 0 0 auto;
+
+    width: 130px;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            270deg,
+            #090c12,
+            transparent
+        );
+
+}
+
+
+/* ========================================
+   中央指示線
+======================================== */
+
+.case-preview-pointer {
+
+    position: absolute;
+
+    z-index: 10;
+
+    top: 0;
+
+    left: 50%;
+
+    width: 2px;
+
+    height: 100%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 18px
+        rgba(124, 92, 255, 0.9);
+
+}
+
+
+.case-preview-pointer::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-left:
+        7px solid transparent;
+
+    border-right:
+        7px solid transparent;
+
+    border-top:
+        10px solid
+        var(--color-primary);
+
+}
+
+
+.case-preview-pointer::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-left:
+        7px solid transparent;
+
+    border-right:
+        7px solid transparent;
+
+    border-bottom:
+        10px solid
+        var(--color-primary);
+
+}
+
+
+/* ========================================
+   預覽軌道
+======================================== */
+
+.case-preview-track {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        20px;
+
+    will-change:
+        transform;
+
+}
+
+
+/* ========================================
+   預覽物品
+======================================== */
+
+.case-preview-item {
+
+    flex:
+        0 0 170px;
+
+    height: 180px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 12px;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+}
+
+
+.case-preview-item-image {
+
+    width: 125px;
+
+    height: 125px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+.case-preview-item-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+.case-preview-item-name {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.case-preview-status {
+
+    margin-top: 14px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.75rem;
+
+    text-align: center;
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 650px) {
+
+    .case-detail-image {
+
+        min-height: 220px;
+
+    }
+
+
+    .case-detail-image img {
+
+        width: 65%;
+
+        height: 65%;
+
+    }
+
+
+    .case-preview-wrapper {
+
+        height: 190px;
+
+    }
+
+
+    .case-preview-item {
+
+        flex-basis: 145px;
+
+        height: 155px;
+
+    }
+
+
+    .case-preview-item-image {
+
+        width: 105px;
+
+        height: 105px;
+
+    }
+
+}
