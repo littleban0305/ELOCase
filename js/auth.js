@@ -253,24 +253,20 @@ function updateLoginUI(user) {
             ".player-menu"
         );
 
-
     const playerMenuButton =
         document.querySelector(
             "#player-menu-button"
         );
-
 
     const playerMenuName =
         document.querySelector(
             "#navbar-player-name"
         );
 
-
     const logoutButton =
         document.querySelector(
             "#navbar-logout-button"
         );
-
 
     const balance =
         document.querySelector(
@@ -280,11 +276,30 @@ function updateLoginUI(user) {
 
     /*
      * ====================================
-     * 沒有登入
+     * 未登入
      * ====================================
      */
 
     if (!user) {
+
+        if (balance) {
+
+            balance.textContent =
+                "0";
+
+        }
+
+
+        if (playerMenuButton) {
+
+            playerMenuButton.textContent =
+                "登入";
+
+            playerMenuButton.type =
+                "button";
+
+        }
+
 
         if (playerMenuName) {
 
@@ -296,6 +311,10 @@ function updateLoginUI(user) {
 
         if (playerMenu) {
 
+            playerMenu.classList.remove(
+                "open"
+            );
+
             playerMenu.classList.add(
                 "logged-out"
             );
@@ -303,46 +322,30 @@ function updateLoginUI(user) {
         }
 
 
+        /*
+         * 未登入時直接前往登入頁
+         */
+
+        if (playerMenuButton) {
+
+            playerMenuButton.onclick =
+                () => {
+
+                    window.location.href =
+                        "login.html";
+
+                };
+
+        }
+
+
         return;
-
     }
 
 
     /*
      * ====================================
-     * 玩家餘額
-     * ====================================
-     */
-
-    if (balance) {
-
-        balance.textContent =
-            Number(
-                user.eloCoin || 0
-            ).toLocaleString();
-
-    }
-
-
-    /*
-     * ====================================
-     * 玩家名稱
-     * ====================================
-     */
-
-    if (playerMenuName) {
-
-        playerMenuName.textContent =
-            user.displayName ||
-            user.username ||
-            "玩家";
-
-    }
-
-
-    /*
-     * ====================================
-     * 玩家選單狀態
+     * 已登入
      * ====================================
      */
 
@@ -355,47 +358,50 @@ function updateLoginUI(user) {
     }
 
 
-    /*
-     * ====================================
-     * 玩家按鈕
-     * ====================================
-     */
+    if (balance) {
+
+        balance.textContent =
+            Number(
+                user.eloCoin || 0
+            ).toLocaleString();
+
+    }
+
+
+    if (playerMenuName) {
+
+        playerMenuName.textContent =
+            user.displayName ||
+            user.username ||
+            "玩家";
+
+    }
+
 
     if (playerMenuButton) {
 
-        playerMenuButton.setAttribute(
-            "aria-label",
-            "開啟玩家選單"
-        );
+        /*
+         * 清除未登入時的 onclick
+         */
+
+        playerMenuButton.onclick =
+            null;
 
     }
 
 
     /*
-     * ====================================
      * 登出
-     * ====================================
      */
 
-    if (
-        logoutButton &&
-        !logoutButton.dataset.bound
-    ) {
+    if (logoutButton) {
 
-        logoutButton.addEventListener(
-            "click",
-            event => {
-
-                event.preventDefault();
+        logoutButton.onclick =
+            () => {
 
                 logout();
 
-            }
-        );
-
-
-        logoutButton.dataset.bound =
-            "true";
+            };
 
     }
 
