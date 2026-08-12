@@ -1425,3 +1425,33 @@ main {
     }
 
 }
+
+/* ========================================
+   未登入 Navbar
+======================================== */
+
+.player-menu.logged-out
+.player-menu-button {
+
+    cursor:
+        pointer;
+
+}
+
+
+.player-menu.logged-out
+.player-menu-arrow {
+
+    display:
+        none;
+
+}
+
+
+.player-menu.logged-out
+.player-menu-dropdown {
+
+    display:
+        none !important;
+
+}
