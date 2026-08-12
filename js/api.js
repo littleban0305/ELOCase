@@ -28,10 +28,14 @@ async function sendApiRequest(action, parameters = {}) {
             });
 
 
-        const response =
-            await fetch(
-                `${CONFIG.API_URL}?${query.toString()}`
-            );
+        const response = await fetch(
+            `${CONFIG.API_URL}?${query.toString()}`,
+            {
+                method: "GET",
+                redirect: "follow",
+                cache: "no-store"
+            }
+        );
 
 
         if (!response.ok) {
