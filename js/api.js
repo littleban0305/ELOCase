@@ -8,100 +8,100 @@ async function sendApiRequest(
     let lastError = null;
 
 
-    for (
-        let attempt = 1;
-        attempt <= maxAttempts;
-        attempt++
+    /*
+     * ====================================
+     * 整個 API 請求開始
+     * ====================================
+     */
+
+    if (
+        window.ELOLoading &&
+        typeof window.ELOLoading.start === "function"
     ) {
 
-        /*
-         * Loading
-         */
+        window.ELOLoading.start();
 
-        if (
-            window.ELOLoading &&
-            typeof window.ELOLoading.start === "function"
+    }
+
+
+    try {
+
+        for (
+            let attempt = 1;
+            attempt <= maxAttempts;
+            attempt++
         ) {
 
-            window.ELOLoading.start();
+            try {
 
-        }
+                const query =
+                    new URLSearchParams({
 
+                        action,
 
-        try {
+                        ...parameters
 
-            const query =
-                new URLSearchParams({
-
-                    action,
-
-                    ...parameters
-
-                });
+                    });
 
 
-            const response =
-                await fetch(
-                    `${CONFIG.API_URL}?${query.toString()}`,
-                    {
+                const response =
+                    await fetch(
+                        `${CONFIG.API_URL}?${query.toString()}`,
+                        {
 
-                        method:
-                            "GET",
+                            method:
+                                "GET",
 
-                        redirect:
-                            "follow",
+                            redirect:
+                                "follow",
 
-                        cache:
-                            "no-store"
+                            cache:
+                                "no-store"
 
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    `API 請求失敗（${response.status}）`
-                );
-
-            }
+                        }
+                    );
 
 
-            const result =
-                await response.json();
+                if (!response.ok) {
+
+                    throw new Error(
+                        `API 請求失敗（${response.status}）`
+                    );
+
+                }
 
 
-            if (!result.success) {
-
-                throw new Error(
-                    result.error ||
-                    "發生未知錯誤"
-                );
-
-            }
+                const result =
+                    await response.json();
 
 
-            return result.data;
+                if (!result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "發生未知錯誤"
+                    );
+
+                }
 
 
-        } catch (error) {
-
-            lastError =
-                error;
+                return result.data;
 
 
-            /*
-             * 如果還有重試機會
-             */
+            } catch (error) {
 
-            if (
-                attempt < maxAttempts
-            ) {
+                lastError =
+                    error;
 
-                /*
-                 * 300ms
-                 * 600ms
-                 */
+
+                if (
+                    attempt >= maxAttempts
+                ) {
+
+                    throw lastError;
+
+                }
+
 
                 await new Promise(
                     resolve =>
@@ -111,49 +111,29 @@ async function sendApiRequest(
                         )
                 );
 
-
-                continue;
-
             }
 
+        }
 
-            /*
-             * 三次都失敗
-             */
+    } finally {
 
-            throw lastError;
+        /*
+         * ====================================
+         * 整個 API 流程結束
+         * ====================================
+         */
 
+        if (
+            window.ELOLoading &&
+            typeof window.ELOLoading.finish === "function"
+        ) {
 
-        } finally {
-
-            /*
-             * 每一次 API 嘗試都結束 Loading
-             *
-             * Loading 本身有 requestCount
-             * 所以不會因為第一次失敗就消失
-             */
-
-            if (
-                window.ELOLoading &&
-                typeof window.ELOLoading.finish === "function"
-            ) {
-
-                window.ELOLoading.finish();
-
-            }
+            window.ELOLoading.finish();
 
         }
 
     }
 
-}
-
-
-async function getCases() {
-
-    return await sendApiRequest(
-        "getCases"
-    );
 }
 
 
