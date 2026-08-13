@@ -464,6 +464,112 @@ async function sendApiRequest(
 }
 
 /* ========================================
+   更新玩家資料
+======================================== */
+
+async function updatePlayer(
+    displayName
+) {
+
+    const sessionToken =
+        getSessionToken();
+
+
+    if (!sessionToken) {
+
+        throw new Error(
+            "請先登入"
+        );
+
+    }
+
+
+    const requestData = {
+
+        action:
+            "updatePlayer",
+
+        token:
+            sessionToken,
+
+        displayName:
+            displayName
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
+
+                    redirect:
+                        "follow",
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `API 請求失敗（${response.status}）`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.error ||
+                "更新玩家資料失敗"
+            );
+
+        }
+
+
+        return result.data;
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ 更新玩家資料失敗：",
+            error
+        );
+
+        throw error;
+
+    }
+
+}
+
+/* ========================================
    取得所有箱子
 ======================================== */
 
