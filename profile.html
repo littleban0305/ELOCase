@@ -991,17 +991,8 @@
                          */
         
                         const updatedUser =
-                            await sendApiRequest(
-                                "updatePlayer",
-                                {
-        
-                                    token:
-                                        sessionToken,
-        
-                                    displayName:
-                                        newDisplayName
-        
-                                }
+                            await updatePlayer(
+                                newDisplayName
                             );
         
         
