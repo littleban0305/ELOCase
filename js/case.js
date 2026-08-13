@@ -2179,19 +2179,36 @@ function playCaseOpeningIntro() {
 
             /*
              * ====================================
-             * 初始化
+             * 重置動畫
              * ====================================
              */
 
             animation.className =
-                "case-opening-animation active";
+                "case-opening-animation";
 
 
             /*
              * ====================================
-             * 0.45 秒
+             * 顯示動畫
+             * ====================================
+             */
+
+            requestAnimationFrame(
+                () => {
+
+                    animation.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            /*
+             * ====================================
+             * 0.2 秒
              *
-             * 鑰匙飛進來
+             * 鑰匙開始飛入
              * ====================================
              */
 
@@ -2199,17 +2216,37 @@ function playCaseOpeningIntro() {
                 () => {
 
                     animation.classList.add(
-                        "key-in"
+                        "key-fly"
                     );
 
                 },
-                450
+                200
             );
 
 
             /*
              * ====================================
-             * 1.5 秒
+             * 1.15 秒
+             *
+             * 鑰匙抵達鎖孔
+             * ====================================
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.add(
+                        "key-lock"
+                    );
+
+                },
+                1150
+            );
+
+
+            /*
+             * ====================================
+             * 1.65 秒
              *
              * 鑰匙轉動
              * ====================================
@@ -2218,24 +2255,20 @@ function playCaseOpeningIntro() {
             setTimeout(
                 () => {
 
-                    animation.classList.remove(
-                        "key-in"
-                    );
-
                     animation.classList.add(
                         "key-turn"
                     );
 
                 },
-                1500
+                1650
             );
 
 
             /*
              * ====================================
-             * 2.35 秒
+             * 2.15 秒
              *
-             * 箱子震動
+             * 黃光開始爆發
              * ====================================
              */
 
@@ -2243,19 +2276,19 @@ function playCaseOpeningIntro() {
                 () => {
 
                     animation.classList.add(
-                        "shake"
+                        "light-burst"
                     );
 
                 },
-                2350
+                2150
             );
 
 
             /*
              * ====================================
-             * 2.8 秒
+             * 2.45 秒
              *
-             * 箱蓋打開
+             * 黃光覆蓋箱子
              * ====================================
              */
 
@@ -2263,72 +2296,40 @@ function playCaseOpeningIntro() {
                 () => {
 
                     animation.classList.add(
-                        "open"
+                        "light-cover"
                     );
 
                 },
-                2800
+                2450
             );
 
 
             /*
              * ====================================
-             * 4.25 秒
+             * 2.9 秒
              *
-             * 開箱動畫結束
+             * Intro 完成
+             *
+             * 接下來交給現在的滑動條
              * ====================================
              */
 
             setTimeout(
                 () => {
 
-                    animation.classList.add(
-                        "finish"
+                    animation.classList.remove(
+                        "active"
                     );
 
-                },
-                4250
-            );
-
-
-            /*
-             * ====================================
-             * 4.75 秒
-             *
-             * 開箱動畫完全消失
-             *
-             * → 滑動條才出現
-             * ====================================
-             */
-
-            setTimeout(
-                () => {
 
                     animation.className =
                         "case-opening-animation";
 
 
-                    const previewContainer =
-                        document.querySelector(
-                            "#case-preview-container"
-                        );
-
-
-                    if (
-                        previewContainer
-                    ) {
-
-                        previewContainer.classList.add(
-                            "show"
-                        );
-
-                    }
-
-
                     resolve();
 
                 },
-                4750
+                2900
             );
 
         }
