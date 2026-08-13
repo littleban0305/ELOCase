@@ -1455,3 +1455,522 @@ main {
         none !important;
 
 }
+
+/* ========================================
+   ELOCase 開箱動畫
+======================================== */
+
+.case-opening-animation {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,0.08),
+            rgba(0,0,0,0.45)
+        );
+
+    opacity: 0;
+
+}
+
+
+/*
+ * 開箱動畫啟動
+ */
+
+.case-opening-animation.active {
+
+    display: flex;
+
+    animation:
+        caseOpeningFadeIn
+        0.25s
+        ease-out
+        forwards;
+
+}
+
+
+/*
+ * 場景
+ */
+
+.case-opening-scene {
+
+    position: relative;
+
+    width: 360px;
+
+    height: 280px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/*
+ * 箱子
+ */
+
+.case-opening-box {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 55%;
+
+    width: 190px;
+
+    height: 130px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+}
+
+
+/*
+ * 箱子本體
+ */
+
+.case-opening-box-body {
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 190px;
+
+    height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.2);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #252b38,
+            #10141c
+        );
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,0.5);
+
+}
+
+
+.case-opening-box-body span {
+
+    color:
+        rgba(255,255,255,0.8);
+
+    font-size:
+        1.1rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.12em;
+
+}
+
+
+/*
+ * 箱蓋
+ */
+
+.case-opening-box-lid {
+
+    position: absolute;
+
+    left: -5px;
+
+    top: 0;
+
+    width: 200px;
+
+    height: 38px;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.2);
+
+    border-radius:
+        10px 10px 5px 5px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #303746,
+            #151a23
+        );
+
+    transform-origin:
+        center bottom;
+
+}
+
+
+/*
+ * 鎖
+ */
+
+.case-opening-lock {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 55px;
+
+    transform:
+        translateX(-50%);
+
+    font-size:
+        30px;
+
+    filter:
+        drop-shadow(
+            0 5px 12px
+            rgba(0,0,0,0.5)
+        );
+
+}
+
+
+/*
+ * 鑰匙
+ */
+
+.case-opening-key {
+
+    position: absolute;
+
+    left: -80px;
+
+    top: 85px;
+
+    font-size:
+        52px;
+
+    transform:
+        rotate(-25deg);
+
+    filter:
+        drop-shadow(
+            0 8px 15px
+            rgba(0,0,0,0.45)
+        );
+
+}
+
+
+/*
+ * 光效
+ */
+
+.case-opening-glow {
+
+    position: absolute;
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.9),
+            rgba(150,120,255,0.3),
+            transparent 70%
+        );
+
+    opacity: 0;
+
+    filter:
+        blur(8px);
+
+}
+
+
+/* ========================================
+   動畫
+======================================== */
+
+@keyframes caseOpeningFadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/*
+ * 鑰匙進入
+ */
+
+.case-opening-animation.key-in
+.case-opening-key {
+
+    animation:
+        caseKeyInsert
+        0.65s
+        cubic-bezier(
+            0.2,
+            0.8,
+            0.2,
+            1
+        )
+        forwards;
+
+}
+
+
+@keyframes caseKeyInsert {
+
+    from {
+
+        transform:
+            translateX(-80px)
+            rotate(-25deg);
+
+    }
+
+    to {
+
+        transform:
+            translateX(120px)
+            rotate(-25deg);
+
+    }
+
+}
+
+
+/*
+ * 鑰匙轉動
+ */
+
+.case-opening-animation.key-turn
+.case-opening-key {
+
+    animation:
+        caseKeyTurn
+        0.55s
+        ease-in-out
+        forwards;
+
+}
+
+
+@keyframes caseKeyTurn {
+
+    0% {
+
+        transform:
+            translateX(120px)
+            rotate(-25deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateX(120px)
+            rotate(65deg);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(120px)
+            rotate(35deg);
+
+    }
+
+}
+
+
+/*
+ * 箱子震動
+ */
+
+.case-opening-animation.shake
+.case-opening-box {
+
+    animation:
+        caseBoxShake
+        0.4s
+        ease-in-out;
+
+}
+
+
+@keyframes caseBoxShake {
+
+    0%,
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    25% {
+        transform:
+            translate(
+                calc(-50% - 5px),
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                calc(-50% + 5px),
+                -50%
+            );
+    }
+
+    75% {
+        transform:
+            translate(
+                calc(-50% - 3px),
+                -50%
+            );
+    }
+
+}
+
+
+/*
+ * 開蓋
+ */
+
+.case-opening-animation.open
+.case-opening-box-lid {
+
+    animation:
+        caseBoxOpen
+        0.8s
+        cubic-bezier(
+            0.2,
+            0.8,
+            0.2,
+            1
+        )
+        forwards;
+
+}
+
+
+@keyframes caseBoxOpen {
+
+    from {
+
+        transform:
+            rotateX(0deg);
+
+    }
+
+    to {
+
+        transform:
+            translateY(-30px)
+            rotateX(-70deg);
+
+    }
+
+}
+
+
+/*
+ * 光爆發
+ */
+
+.case-opening-animation.open
+.case-opening-glow {
+
+    animation:
+        caseGlow
+        1s
+        ease-out
+        forwards;
+
+}
+
+
+@keyframes caseGlow {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.3);
+
+    }
+
+    40% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.5);
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            scale(2.2);
+
+    }
+
+}
