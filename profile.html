@@ -896,7 +896,7 @@
                 async () => {
         
                     /*
-                     * 防止連續點擊
+                     * 防止重複點擊
                      */
         
                     if (
@@ -909,7 +909,7 @@
         
         
                     /*
-                     * 取得目前 Session
+                     * 取得 Session Token
                      */
         
                     const sessionToken =
@@ -936,7 +936,7 @@
         
         
                     /*
-                     * 基本檢查
+                     * 檢查是否為空
                      */
         
                     if (!newDisplayName) {
@@ -951,6 +951,10 @@
         
                     }
         
+        
+                    /*
+                     * 檢查長度
+                     */
         
                     if (
                         newDisplayName.length > 30
@@ -970,7 +974,7 @@
                     try {
         
                         /*
-                         * 鎖定按鈕
+                         * 鎖定儲存按鈕
                          */
         
                         editProfileSave.disabled =
@@ -981,50 +985,51 @@
         
         
                         /*
-                         * 呼叫 API
+                         * ====================================
+                         * 呼叫後端 updatePlayer
+                         * ====================================
                          */
         
-                        const response =
+                        const updatedUser =
                             await sendApiRequest(
                                 "updatePlayer",
                                 {
+        
                                     token:
                                         sessionToken,
         
                                     displayName:
                                         newDisplayName
+        
                                 }
                             );
         
         
                         /*
-                         * API 失敗
+                         * ====================================
+                         * 更新 LocalStorage
+                         * ====================================
                          */
         
-                        if (
-                            !response ||
-                            !response.success
-                        ) {
+                        localStorage.setItem(
+                            "elocaseUser",
+                            JSON.stringify(
+                                updatedUser
+                            )
+                        );
         
-                            throw new Error(
-                                response?.error ||
-                                "更新玩家資料失敗"
+        
+                        /*
+                         * ====================================
+                         * 更新頁面上的玩家名稱
+                         * ====================================
+                         */
+        
+                        const profileName =
+                            document.querySelector(
+                                "#profile-name"
                             );
         
-                        }
-        
-        
-                        /*
-                         * 取得最新玩家資料
-                         */
-        
-                        const updatedUser =
-                            response.data;
-        
-        
-                        /*
-                         * 更新個人頁
-                         */
         
                         if (profileName) {
         
@@ -1036,67 +1041,10 @@
                         }
         
         
-                        if (profileUsername) {
-        
-                            profileUsername.textContent =
-                                `玩家名稱：${
-                                    updatedUser.username
-                                }`;
-        
-                        }
-        
-        
-                        if (profileBalance) {
-        
-                            profileBalance.textContent =
-                                `$${Number(
-                                    updatedUser.eloCoin || 0
-                                ).toLocaleString()}`;
-        
-                        }
-        
-        
-                        if (profileLevel) {
-        
-                            profileLevel.textContent =
-                                `Lv.${
-                                    updatedUser.level ?? 0
-                                }`;
-        
-                        }
-        
-        
-                        if (infoUsername) {
-        
-                            infoUsername.textContent =
-                                updatedUser.username ||
-                                "-";
-        
-                        }
-        
-        
-                        if (infoDisplayName) {
-        
-                            infoDisplayName.textContent =
-                                updatedUser.displayName ||
-                                updatedUser.username ||
-                                "-";
-        
-                        }
-        
-        
-                        if (infoLevel) {
-        
-                            infoLevel.textContent =
-                                `Lv.${
-                                    updatedUser.level ?? 0
-                                }`;
-        
-                        }
-        
-        
                         /*
-                         * Navbar 名稱
+                         * ====================================
+                         * 更新 Navbar 玩家名稱
+                         * ====================================
                          */
         
                         const navbarPlayerName =
@@ -1116,45 +1064,32 @@
         
         
                         /*
-                         * Navbar 餘額
+                         * ====================================
+                         * 如果頁面有顯示名稱資訊
+                         * 一起更新
+                         * ====================================
                          */
         
-                        const navbarBalance =
+                        const infoDisplayName =
                             document.querySelector(
-                                ".balance-value"
+                                "#info-display-name"
                             );
         
         
-                        if (navbarBalance) {
+                        if (infoDisplayName) {
         
-                            navbarBalance.textContent =
-                                Number(
-                                    updatedUser.eloCoin || 0
-                                ).toLocaleString();
+                            infoDisplayName.textContent =
+                                updatedUser.displayName ||
+                                updatedUser.username ||
+                                "-";
         
                         }
         
         
                         /*
-                         * 更新 LocalStorage
-                         *
-                         * 這裡先沿用目前玩家 Cache
-                         */
-        
-                        const playerCacheKey =
-                            "eloCase_player";
-        
-        
-                        localStorage.setItem(
-                            playerCacheKey,
-                            JSON.stringify(
-                                updatedUser
-                            )
-                        );
-        
-        
-                        /*
-                         * 關閉 Modal
+                         * ====================================
+                         * 關閉編輯視窗
+                         * ====================================
                          */
         
                         closeEditProfileModal();
@@ -1163,7 +1098,7 @@
                     } catch (error) {
         
                         console.error(
-                            "更新玩家資料失敗：",
+                            "❌ 更新玩家資料失敗：",
                             error
                         );
         
@@ -1177,7 +1112,7 @@
                     } finally {
         
                         /*
-                         * 恢復按鈕
+                         * 恢復儲存按鈕
                          */
         
                         editProfileSave.disabled =
