@@ -2162,11 +2162,15 @@ main {
 
     transform:
         translateY(25px);
-
+    
+    margin-bottom: 25px;
+    
     transition:
         opacity 0.45s ease,
         transform 0.45s ease,
         visibility 0s linear 0.45s;
+
+
 
 }
 
