@@ -1695,26 +1695,37 @@ main {
 ======================================== */
 
 .case-opening-key {
+
     position: absolute;
 
     width: 340px;
     max-width: 48%;
 
-    left: -2%;
-    top: 8%;
+    left: 50%;
+    top: 15%;
 
     opacity: 0;
 
     transform:
-        translate(-120px, -50px)
-        rotate(-25deg);
+        translate(
+            420px,
+            -180px
+        )
+        rotate(
+            -35deg
+        );
 
     z-index: 4;
 
     filter:
         drop-shadow(
             0 0 18px
-            rgba(255, 190, 40, .9)
+            rgba(
+                255,
+                190,
+                40,
+                .9
+            )
         );
 }
 
@@ -2255,16 +2266,27 @@ main {
 
 .case-opening-animation.key-fly
 .case-opening-key {
+
     opacity: 1;
 
     transition:
         transform
-        .85s
-        cubic-bezier(.2, .8, .25, 1);
+        .9s
+        cubic-bezier(
+            .2,
+            .8,
+            .25,
+            1
+        );
 
     transform:
-        translate(300px, 125px)
-        rotate(0deg);
+        translate(
+            180px,
+            90px
+        )
+        rotate(
+            0deg
+        );
 }
 
 
@@ -2274,14 +2296,25 @@ main {
 
 .case-opening-animation.key-lock
 .case-opening-key {
+
     transition:
         transform
-        .45s
-        cubic-bezier(.2, .9, .2, 1);
+        .4s
+        cubic-bezier(
+            .2,
+            .9,
+            .2,
+            1
+        );
 
     transform:
-        translate(325px, 140px)
-        rotate(0deg);
+        translate(
+            205px,
+            105px
+        )
+        rotate(
+            0deg
+        );
 }
 
 
@@ -2291,14 +2324,25 @@ main {
 
 .case-opening-animation.key-turn
 .case-opening-key {
+
     transition:
         transform
         .45s
-        cubic-bezier(.4, 0, .2, 1);
+        cubic-bezier(
+            .4,
+            0,
+            .2,
+            1
+        );
 
     transform:
-        translate(325px, 140px)
-        rotate(75deg);
+        translate(
+            205px,
+            105px
+        )
+        rotate(
+            75deg
+        );
 }
 
 
