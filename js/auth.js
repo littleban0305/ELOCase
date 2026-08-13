@@ -247,6 +247,23 @@ function clearUserCache() {
 
 }
 
+function clearInventoryCache(
+    userId
+) {
+
+    if (!userId) {
+
+        return;
+
+    }
+
+
+    removeApiCache(
+        `inventory_${userId}`
+    );
+
+}
+
 /* ========================================
    檢查玩家資料是否需要重新驗證
 ======================================== */
