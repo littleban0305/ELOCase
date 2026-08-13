@@ -2128,3 +2128,374 @@ main {
         transform 0.45s ease;
 
 }
+
+/* ========================================
+   ELOCase 開箱 Intro
+======================================== */
+
+.case-opening-animation {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+}
+
+
+.case-opening-animation.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+/* ========================================
+   場景
+======================================== */
+
+.case-opening-scene {
+
+    position: relative;
+
+    width: min(
+        720px,
+        80vw
+    );
+
+    height: min(
+        520px,
+        70vh
+    );
+
+}
+
+
+/* ========================================
+   箱子
+======================================== */
+
+.case-opening-box {
+
+    position: absolute;
+
+    width: 430px;
+
+    max-width: 65%;
+
+    left: 50%;
+
+    top: 55%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 2;
+
+}
+
+
+/* ========================================
+   鑰匙
+======================================== */
+
+.case-opening-key {
+
+    position: absolute;
+
+    width: 150px;
+
+    left: 5%;
+
+    top: 20%;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -100px,
+            -40px
+        )
+        rotate(
+            -25deg
+        );
+
+    z-index: 4;
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(
+                255,
+                190,
+                40,
+                .8
+            )
+        );
+
+}
+
+
+/* ========================================
+   鑰匙飛入
+======================================== */
+
+.case-opening-animation.key-fly
+.case-opening-key {
+
+    opacity: 1;
+
+    transition:
+        transform
+        .85s
+        cubic-bezier(
+            .2,
+            .8,
+            .25,
+            1
+        );
+
+    transform:
+        translate(
+            330px,
+            130px
+        )
+        rotate(
+            0deg
+        );
+
+}
+
+
+/* ========================================
+   鑰匙靠近鎖孔
+======================================== */
+
+.case-opening-animation.key-lock
+.case-opening-key {
+
+    transition:
+        transform
+        .45s
+        cubic-bezier(
+            .2,
+            .9,
+            .2,
+            1
+        );
+
+    transform:
+        translate(
+            355px,
+            145px
+        )
+        rotate(
+            0deg
+        );
+
+}
+
+
+/* ========================================
+   鑰匙轉動
+======================================== */
+
+.case-opening-animation.key-turn
+.case-opening-key {
+
+    transition:
+        transform
+        .45s
+        cubic-bezier(
+            .4,
+            0,
+            .2,
+            1
+        );
+
+    transform:
+        translate(
+            355px,
+            145px
+        )
+        rotate(
+            75deg
+        );
+
+}
+
+
+/* ========================================
+   黃光
+======================================== */
+
+.case-opening-light {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 55%;
+
+    width: 80px;
+
+    height: 80px;
+
+    border-radius: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(
+            0
+        );
+
+    opacity: 0;
+
+    z-index: 5;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                255,
+                255,
+                255,
+                1
+            ) 0%,
+            rgba(
+                255,
+                220,
+                80,
+                .95
+            ) 18%,
+            rgba(
+                255,
+                170,
+                0,
+                .7
+            ) 40%,
+            rgba(
+                255,
+                170,
+                0,
+                0
+            ) 72%
+        );
+
+}
+
+
+/* ========================================
+   黃光爆發
+======================================== */
+
+.case-opening-animation.light-burst
+.case-opening-light {
+
+    opacity: 1;
+
+    transition:
+        transform
+        .35s
+        ease-out;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(
+            4
+        );
+
+}
+
+
+/* ========================================
+   黃光覆蓋
+======================================== */
+
+.case-opening-animation.light-cover
+.case-opening-light {
+
+    transition:
+        transform
+        .45s
+        ease-in;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(
+            15
+        );
+
+}
+
+
+/* ========================================
+   箱子微震
+======================================== */
+
+.case-opening-animation.key-turn
+.case-opening-box {
+
+    animation:
+        caseBoxShake
+        .12s
+        linear
+        3;
+
+}
+
+
+@keyframes caseBoxShake {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                calc(-50% + 4px),
+                -50%
+            );
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
