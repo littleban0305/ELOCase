@@ -959,3 +959,602 @@
    }
 
 }
+
+/* ========================================
+   編輯資料 Modal
+======================================== */
+
+.profile-modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        9999;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    opacity:
+        0;
+
+    visibility:
+        hidden;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity .2s ease,
+        visibility .2s ease;
+
+}
+
+
+.profile-modal.show {
+
+    opacity:
+        1;
+
+    visibility:
+        visible;
+
+    pointer-events:
+        auto;
+
+}
+
+
+/* ========================================
+   背景
+======================================== */
+
+.profile-modal-backdrop {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .72
+        );
+
+    backdrop-filter:
+        blur(5px);
+
+}
+
+
+/* ========================================
+   視窗
+======================================== */
+
+.profile-modal-box {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(
+            100%,
+            430px
+        );
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #151a23,
+            #0d1118
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+    box-shadow:
+        0 25px 80px
+        rgba(
+            0,
+            0,
+            0,
+            .55
+        );
+
+    transform:
+        translateY(10px)
+        scale(.98);
+
+    transition:
+        transform .2s ease;
+
+}
+
+
+.profile-modal.show
+.profile-modal-box {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+/* ========================================
+   Header
+======================================== */
+
+.profile-modal-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        21px 23px;
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.profile-modal-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        .6rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .13em;
+
+}
+
+
+.profile-modal-header h2 {
+
+    margin:
+        0;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.profile-modal-close {
+
+    width:
+        30px;
+
+    height:
+        30px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--color-text-muted);
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius:
+        8px;
+
+    font-size:
+        1.25rem;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    transition:
+        color .15s ease,
+        background .15s ease;
+
+}
+
+
+.profile-modal-close:hover {
+
+    color:
+        var(--color-text);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .05
+        );
+
+}
+
+
+/* ========================================
+   Body
+======================================== */
+
+.profile-modal-body {
+
+    padding:
+        23px;
+
+}
+
+
+.profile-form-group {
+
+    margin-bottom:
+        19px;
+
+}
+
+
+.profile-form-group:last-child {
+
+    margin-bottom:
+        0;
+
+}
+
+
+.profile-form-group label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        .72rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.profile-form-group input {
+
+    width:
+        100%;
+
+    height:
+        43px;
+
+    padding:
+        0 13px;
+
+    box-sizing:
+        border-box;
+
+    color:
+        var(--color-text);
+
+    background:
+        #090d13;
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        9px;
+
+    outline:
+        none;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .75rem;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+
+}
+
+
+.profile-form-group input:focus {
+
+    border-color:
+        rgba(
+            124,
+            92,
+            255,
+            .65
+        );
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            124,
+            92,
+            255,
+            .08
+        );
+
+}
+
+
+.profile-form-group input:disabled {
+
+    color:
+        var(--color-text-muted);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+
+    cursor:
+        not-allowed;
+
+}
+
+
+.profile-form-hint {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        .6rem;
+
+}
+
+
+/* ========================================
+   Footer
+======================================== */
+
+.profile-modal-footer {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        9px;
+
+    padding:
+        17px 23px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .12
+        );
+
+    border-top:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.profile-modal-button {
+
+    min-width:
+        80px;
+
+    height:
+        38px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        8px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .7rem;
+
+    font-weight:
+        750;
+
+    cursor:
+        pointer;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        transform .15s ease;
+
+}
+
+
+.profile-modal-button:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.profile-modal-button.secondary {
+
+    color:
+        var(--color-text-muted);
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.profile-modal-button.secondary:hover {
+
+    color:
+        var(--color-text);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .04
+        );
+
+}
+
+
+.profile-modal-button.primary {
+
+    color:
+        #fff;
+
+    background:
+        var(--color-primary);
+
+    border:
+        1px solid
+        var(--color-primary);
+
+}
+
+
+.profile-modal-button.primary:hover {
+
+    background:
+        #6b4de8;
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 650px) {
+
+    .profile-modal {
+
+        padding:
+            12px;
+
+    }
+
+
+    .profile-modal-box {
+
+        width:
+            100%;
+
+    }
+
+
+    .profile-modal-header {
+
+        padding:
+            19px;
+
+    }
+
+
+    .profile-modal-body {
+
+        padding:
+            20px;
+
+    }
+
+
+    .profile-modal-footer {
+
+        padding:
+            15px 20px;
+
+    }
+
+}
