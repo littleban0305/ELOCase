@@ -600,21 +600,16 @@ function startCaseWaitingAnimation() {
     * ====================================
     */
    
-   const previewWrapper =
+   const previewContainer =
        document.querySelector(
-           ".case-preview-wrapper"
+           "#case-preview-container"
        );
    
-   if (previewWrapper) {
+   if (previewContainer) {
    
-       previewWrapper.style.display =
-           "block";
-   
-       previewWrapper.style.visibility =
-           "visible";
-   
-       previewWrapper.style.opacity =
-           "1";
+       previewContainer.classList.add(
+           "show"
+       );
    
    }
 
