@@ -1713,7 +1713,7 @@ main {
     transform:
        translate(
            370px,
-           -230px
+           -210px
        )
        rotate(-35deg);
 
@@ -2268,7 +2268,7 @@ main {
     transform:
        translate(
            370px,
-           -10px
+           10px
        )
        rotate(0deg);
 }
@@ -2294,7 +2294,7 @@ main {
     transform:
         translate(
             300px,
-            50px
+            70px
         )
         rotate(0deg);
 }
