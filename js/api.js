@@ -274,7 +274,34 @@ async function openCase(caseId) {
 
     /*
      * ====================================
-     * 開箱時不要顯示全域 Loading Bar
+     * 建立本次開箱專用 requestId
+     *
+     * 這個 ID 非常重要。
+     *
+     * 就算 POST 回傳 404，
+     * 我們之後仍然可以用同一個 ID
+     * 找回這次開箱結果。
+     * ====================================
+     */
+
+    const requestId =
+        "OPENCASE_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .substring(2, 10);
+
+
+    console.log(
+        "🎁 開箱 requestId：",
+        requestId
+    );
+
+
+    /*
+     * ====================================
+     * POST 開箱
      * ====================================
      */
 
@@ -287,25 +314,19 @@ async function openCase(caseId) {
             sessionToken,
 
         caseId:
-            caseId
+            caseId,
+
+        requestId:
+            requestId
 
     };
 
 
     try {
 
-        /*
-         * ====================================
-         * POST 開箱
-         * ====================================
-         */
-
-        const requestUrl =
-            `${CONFIG.API_URL}?_=${Date.now()}`;
-        
         const response =
             await fetch(
-                requestUrl,
+                CONFIG.API_URL,
                 {
 
                     method:
@@ -323,17 +344,8 @@ async function openCase(caseId) {
                             requestData
                         ),
 
-                    /*
-                     * 讓 Google Apps Script
-                     * 自己處理 redirect
-                     */
-
                     redirect:
                         "follow",
-
-                    /*
-                     * 不使用舊快取
-                     */
 
                     cache:
                         "no-store"
@@ -359,7 +371,7 @@ async function openCase(caseId) {
 
         /*
          * ====================================
-         * 解析結果
+         * 解析 JSON
          * ====================================
          */
 
