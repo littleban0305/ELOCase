@@ -1641,7 +1641,6 @@ function playCasePreviewAnimation(
 
 }
 
-
 /* ========================================
    初始化開箱按鈕
 ======================================== */
@@ -1655,9 +1654,7 @@ function initializeOpenCaseButton() {
 
 
     if (!button) {
-
         return;
-
     }
 
 
@@ -1731,37 +1728,96 @@ function initializeOpenCaseButton() {
                     "開箱中...";
 
 
-                /*
-                 * ====================================
-                 * 立刻開始等待動畫
-                 * ====================================
-                 */
-                window.ELOCaseOpening = true;
-               
-                startCaseWaitingAnimation();
+                window.ELOCaseOpening =
+                    true;
 
 
                 /*
                  * ====================================
-                 * API 在背景處理
+                 * ⭐ API 立即開始
                  *
-                 * 可以 1 秒
-                 * 可以 10 秒
-                 * 可以 20 秒
+                 * 不等待開箱動畫。
                  *
-                 * 動畫都不會停
+                 * 鑰匙動畫播放的同時，
+                 * Google Apps Script 已經開始處理。
                  * ====================================
                  */
 
-                const result =
-                    await openCase(
+                const apiPromise =
+                    openCase(
                         caseId
                     );
 
 
                 /*
                  * ====================================
-                 * 更新餘額
+                 * ⭐ 播放開箱 Intro
+                 *
+                 * API 與動畫並行。
+                 * ====================================
+                 */
+
+                await playCaseOpeningIntro();
+
+
+                /*
+                 * ====================================
+                 * Intro 播放完畢
+                 *
+                 * 判斷 API 是否已經完成
+                 * ====================================
+                 */
+
+                let apiFinished =
+                    false;
+
+
+                apiPromise.then(
+                    () => {
+
+                        apiFinished =
+                            true;
+
+                    },
+                    () => {
+
+                        apiFinished =
+                            true;
+
+                    }
+                );
+
+
+                /*
+                 * ====================================
+                 * 如果 API 還沒回來
+                 *
+                 * 啟動現在的高速滑動條
+                 * ====================================
+                 */
+
+                if (
+                    !apiFinished
+                ) {
+
+                    startCaseWaitingAnimation();
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 等待 API
+                 * ====================================
+                 */
+
+                const result =
+                    await apiPromise;
+
+
+                /*
+                 * ====================================
+                 * 更新玩家餘額
                  * ====================================
                  */
 
@@ -1798,9 +1854,20 @@ function initializeOpenCaseButton() {
 
                 /*
                  * ====================================
-                 * API 成功
+                 * ⭐ API 成功
                  *
-                 * 等待動畫 → 正式減速動畫
+                 * 如果滑動條已經開始：
+                 *
+                 *     高速等待
+                 *          ↓
+                 *     正式減速動畫
+                 *
+                 * 如果 API 在 Intro 期間
+                 * 就完成：
+                 *
+                 *     Intro
+                 *       ↓
+                 *     直接正式動畫
                  * ====================================
                  */
 
@@ -1818,7 +1885,34 @@ function initializeOpenCaseButton() {
 
 
                 /*
-                 * API 失敗
+                 * ====================================
+                 * 停止等待動畫
+                 * ====================================
+                 */
+
+                caseWaitingActive =
+                    false;
+
+
+                if (
+                    caseWaitingAnimationFrame
+                ) {
+
+                    cancelAnimationFrame(
+                        caseWaitingAnimationFrame
+                    );
+
+
+                    caseWaitingAnimationFrame =
+                        null;
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 停止滑動條 Transition
+                 * ====================================
                  */
 
                 const track =
@@ -1835,6 +1929,12 @@ function initializeOpenCaseButton() {
                 }
 
 
+                /*
+                 * ====================================
+                 * 顯示錯誤
+                 * ====================================
+                 */
+
                 alert(
                     error.message ||
                     "開箱失敗"
@@ -1849,8 +1949,10 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
-                window.ELOCaseOpening = false;
-               
+                window.ELOCaseOpening =
+                    false;
+
+
                 document.body.classList.remove(
                     "case-opening"
                 );
