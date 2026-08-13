@@ -1206,16 +1206,27 @@ async function openCase(caseId) {
                  */
             
                 const savedUser =
-                    getSavedUser();
-            
-            
-                /*
-                 * ====================================
-                 * 清除玩家資料 Cache
-                 * ====================================
-                 */
-            
-                clearUserCache();
+                   getSavedUser();
+               
+               if (
+                   savedUser &&
+                   savedUser.userId
+               ) {
+               
+                   /*
+                    * 開箱後只需要更新會變動的資料
+                    *
+                    * 玩家基本資料繼續使用 Cache
+                    */
+               
+                   localStorage.setItem(
+                       "elocaseUser",
+                       JSON.stringify(
+                           savedUser
+                       )
+                   );
+               
+               }
             
             
                 /*
@@ -1442,34 +1453,24 @@ async function openCase(caseId) {
                           */
                      
                          const savedUser =
-                             getSavedUser();
-                     
-                     
-                         /*
-                          * ====================================
-                          * 清除玩家資料 Cache
-                          * ====================================
-                          */
-                     
-                         clearUserCache();
-                     
-                     
-                         /*
-                          * ====================================
-                          * 清除 Inventory Cache
-                          * ====================================
-                          */
-                     
-                         if (
-                             savedUser &&
-                             savedUser.userId
-                         ) {
-                     
-                             clearInventoryCache(
-                                 savedUser.userId
-                             );
-                     
-                         }
+                            getSavedUser();
+                        
+                        /*
+                         * 玩家資料 Cache 保留
+                         *
+                         * 不再 clearUserCache()
+                         */
+                        
+                        if (
+                            savedUser &&
+                            savedUser.userId
+                        ) {
+                        
+                            clearInventoryCache(
+                                savedUser.userId
+                            );
+                        
+                        }
                      
                      
                          return result.data.result;
