@@ -2274,11 +2274,34 @@ function playCaseOpeningIntro() {
                 () => {
 
                     animation.classList.remove(
-                        "active"
-                    );
-
-
-                    resolve();
+                         "active"
+                     );
+                     
+                     
+                     /*
+                      * ====================================
+                      * 開箱動畫完成
+                      *
+                      * 現在才讓滑動條出現
+                      * ====================================
+                      */
+                     
+                     const previewContainer =
+                         document.querySelector(
+                             "#case-preview-container"
+                         );
+                     
+                     
+                     if (previewContainer) {
+                     
+                         previewContainer.classList.add(
+                             "show"
+                         );
+                     
+                     }
+                     
+                     
+                     resolve();
 
                 },
                 4500
