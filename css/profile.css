@@ -670,6 +670,91 @@
 
 }
 
+/* ========================================
+   帳號操作按鈕
+======================================== */
+
+.profile-account-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+}
+
+
+.profile-edit-button {
+
+    padding:
+        9px 17px;
+
+    color:
+        var(--color-text);
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            .08
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            92,
+            255,
+            .25
+        );
+
+    border-radius:
+        8px;
+
+    font-size:
+        .7rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+
+}
+
+
+.profile-edit-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            .14
+        );
+
+    border-color:
+        rgba(
+            124,
+            92,
+            255,
+            .42
+        );
+
+}
 
 .profile-logout-button {
 
@@ -857,11 +942,20 @@
     }
 
 
-    .profile-logout-button {
-
-        width:
-            100%;
-
-    }
+    .profile-account-actions {
+   
+       width:
+           100%;
+   
+   }
+   
+   
+   .profile-edit-button,
+   .profile-logout-button {
+   
+       flex:
+           1;
+   
+   }
 
 }
