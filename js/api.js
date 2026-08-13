@@ -355,36 +355,51 @@ async function openCase(caseId) {
          */
 
         if (response.ok) {
-
+        
             const result =
                 await response.json();
-
-
+        
+        
+            /*
+             * ====================================
+             * POST 正常成功
+             * ====================================
+             */
+        
             if (
                 result.success
             ) {
-
-                /*
-                 * 直接成功
-                 */
-
+        
+                console.log(
+                    "🎉 POST 直接取得開箱結果"
+                );
+        
+        
                 return result.data;
-
+        
             }
-
-
+        
+        
             /*
-             * API 本身回報錯誤
+             * ====================================
+             * POST 有正常回應，
+             * 但 API 回報失敗
              *
-             * 這種情況不要盲目查詢，
-             * 因為後端已經明確告訴我們錯誤。
+             * 不要馬上判定開箱失敗。
+             *
+             * 因為後端可能已經完成，
+             * 只是回傳內容出現異常。
+             *
+             * 改走 requestId 查詢。
+             * ====================================
              */
-
-            throw new Error(
+        
+            console.warn(
+                "⚠️ POST 回傳 API 錯誤：",
                 result.error ||
-                "開箱失敗"
+                "未知錯誤"
             );
-
+        
         }
 
 
