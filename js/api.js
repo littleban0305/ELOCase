@@ -710,16 +710,51 @@ async function openCase(caseId) {
             if (
                 result.success
             ) {
-        
+            
                 console.log(
                     "🎉 POST 直接取得開箱結果"
                 );
-        
-
+            
+            
+                /*
+                 * ====================================
+                 * 先取得目前玩家
+                 * ====================================
+                 */
+            
+                const savedUser =
+                    getSavedUser();
+            
+            
+                /*
+                 * ====================================
+                 * 清除玩家資料 Cache
+                 * ====================================
+                 */
+            
                 clearUserCache();
-               
+            
+            
+                /*
+                 * ====================================
+                 * 清除 Inventory Cache
+                 * ====================================
+                 */
+            
+                if (
+                    savedUser &&
+                    savedUser.userId
+                ) {
+            
+                    clearInventoryCache(
+                        savedUser.userId
+                    );
+            
+                }
+            
+            
                 return result.data;
-        
+            
             }
         
         
@@ -916,7 +951,43 @@ async function openCase(caseId) {
                              result.data.result
                          );
                      
+                     
+                         /*
+                          * ====================================
+                          * 先取得目前玩家
+                          * ====================================
+                          */
+                     
+                         const savedUser =
+                             getSavedUser();
+                     
+                     
+                         /*
+                          * ====================================
+                          * 清除玩家資料 Cache
+                          * ====================================
+                          */
+                     
                          clearUserCache();
+                     
+                     
+                         /*
+                          * ====================================
+                          * 清除 Inventory Cache
+                          * ====================================
+                          */
+                     
+                         if (
+                             savedUser &&
+                             savedUser.userId
+                         ) {
+                     
+                             clearInventoryCache(
+                                 savedUser.userId
+                             );
+                     
+                         }
+                     
                      
                          return result.data.result;
                      
