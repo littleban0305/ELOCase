@@ -1382,7 +1382,7 @@ function playCasePreviewAnimation(
      */
 
     const animationDuration =
-        5200;
+       3500;
 
 
     /*
