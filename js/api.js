@@ -116,6 +116,133 @@ function getApiCache(
 
 }
 
+/* ========================================
+   讀取 Cache（允許過期資料）
+======================================== */
+
+function getApiCacheStale(key) {
+
+    const raw =
+        localStorage.getItem(
+            API_CACHE_PREFIX +
+            key
+        );
+
+
+    if (!raw) {
+
+        return null;
+
+    }
+
+
+    try {
+
+        const cacheData =
+            JSON.parse(
+                raw
+            );
+
+
+        return {
+
+            data:
+                cacheData.data,
+
+            savedAt:
+                Number(
+                    cacheData.savedAt || 0
+                ),
+
+            expiresAt:
+                Number(
+                    cacheData.expiresAt || 0
+                ),
+
+            expired:
+                Date.now() >=
+                Number(
+                    cacheData.expiresAt || 0
+                )
+
+        };
+
+
+    } catch (error) {
+
+        console.warn(
+            "⚠️ Cache 資料損壞：",
+            key
+        );
+
+
+        return null;
+
+    }
+
+}
+
+/* ========================================
+   檢查 Cache 是否已過期
+======================================== */
+
+function isApiCacheExpired(key) {
+
+    const raw =
+        localStorage.getItem(
+            API_CACHE_PREFIX +
+            key
+        );
+
+
+    /*
+     * 沒有 Cache
+     */
+
+    if (!raw) {
+
+        return true;
+
+    }
+
+
+    try {
+
+        const cacheData =
+            JSON.parse(
+                raw
+            );
+
+
+        /*
+         * 沒有 expiresAt
+         */
+
+        if (
+            !cacheData.expiresAt
+        ) {
+
+            return true;
+
+        }
+
+
+        return (
+            Date.now() >=
+            Number(
+                cacheData.expiresAt
+            )
+        );
+
+
+    } catch (error) {
+
+        return true;
+
+    }
+
+}
+
 
 /*
  * 刪除 Cache
@@ -342,17 +469,17 @@ async function sendApiRequest(
 
 async function getCases() {
 
-    /*
-     * ====================================
-     * 先讀 LocalStorage
-     * ====================================
-     */
-
     const cached =
-        getApiCache(
+        getApiCacheStale(
             "cases"
         );
 
+
+    /*
+     * ====================================
+     * 有任何舊資料
+     * ====================================
+     */
 
     if (cached) {
 
@@ -360,20 +487,51 @@ async function getCases() {
             "⚡ getCases 使用 LocalStorage"
         );
 
-        return cached;
+
+        /*
+         * Cache 過期
+         * → 舊資料照樣先顯示
+         * → 背景更新
+         */
+
+        if (
+            cached.expired
+        ) {
+
+            console.log(
+                "🕐 Cases Cache 已過期 → 背景更新"
+            );
+
+
+            refreshCasesInBackground();
+
+        } else {
+
+            console.log(
+                "🟢 Cases Cache 尚未過期"
+            );
+
+        }
+
+
+        /*
+         * ⭐ 永遠先回傳本機資料
+         */
+
+        return cached.data;
 
     }
 
 
     /*
      * ====================================
-     * Cache 沒有
-     * → 呼叫 API
+     * 完全沒有 Cache
+     * → 第一次才等待 API
      * ====================================
      */
 
     console.log(
-        "🌐 getCases 呼叫 API"
+        "🌐 getCases 沒有 Cache → 呼叫 API"
     );
 
 
@@ -383,12 +541,6 @@ async function getCases() {
         );
 
 
-    /*
-     * ====================================
-     * 儲存 24 小時
-     * ====================================
-     */
-
     saveApiCache(
         "cases",
         data
@@ -396,6 +548,62 @@ async function getCases() {
 
 
     return data;
+
+}
+
+/* ========================================
+   背景更新箱子資料
+======================================== */
+
+async function refreshCasesInBackground() {
+
+    try {
+
+        console.log(
+            "🔄 背景更新 Cases..."
+        );
+
+
+        const data =
+            await sendApiRequest(
+                "getCases"
+            );
+
+
+        saveApiCache(
+            "cases",
+            data
+        );
+
+
+        console.log(
+            "✅ Cases 背景更新完成"
+        );
+
+
+        /*
+         * 如果目前頁面有箱子列表，
+         * 通知頁面重新整理
+         */
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "eloCasesUpdated",
+                {
+                    detail: data
+                }
+            )
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "⚠️ Cases 背景更新失敗：",
+            error.message
+        );
+
+    }
 
 }
 
@@ -415,15 +623,21 @@ async function getCase(
 
 
     if (cached) {
-
-        console.log(
-            "⚡ getCase 使用 LocalStorage：",
-            caseId
-        );
-
-        return cached;
-
-    }
+   
+       console.log(
+           "⚡ getCases 使用 LocalStorage"
+       );
+   
+   
+       /*
+        * 先直接回傳快取
+        */
+       refreshCasesInBackground();
+   
+   
+       return cached;
+   
+   }
 
 
     console.log(
