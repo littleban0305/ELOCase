@@ -582,15 +582,41 @@ let caseWaitingActive = false;
 function startCaseWaitingAnimation() {
 
     const track =
-        document.querySelector(
-            "#case-preview-track"
-        );
-
-
-    const status =
-        document.querySelector(
-            "#case-preview-status"
-        );
+       document.querySelector(
+           "#case-preview-track"
+       );
+   
+   const status =
+       document.querySelector(
+           "#case-preview-status"
+       );
+   
+   
+   /*
+    * ====================================
+    * ⭐ 顯示現有跑馬滑動條
+    *
+    * Intro 結束後才會執行這裡
+    * ====================================
+    */
+   
+   const previewWrapper =
+       document.querySelector(
+           ".case-preview-wrapper"
+       );
+   
+   if (previewWrapper) {
+   
+       previewWrapper.style.display =
+           "block";
+   
+       previewWrapper.style.visibility =
+           "visible";
+   
+       previewWrapper.style.opacity =
+           "1";
+   
+   }
 
 
     if (!track) {
