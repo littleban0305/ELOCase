@@ -1840,17 +1840,6 @@ main {
    鑰匙轉動
 ======================================== */
 
-.case-opening-animation.key-turn
-.case-opening-key {
-
-    animation:
-        caseKeyTurn
-        0.65s
-        ease-in-out
-        forwards;
-
-}
-
 
 @keyframes caseKeyTurn {
 
@@ -2318,34 +2307,6 @@ main {
 
 
 /* ========================================
-   鑰匙轉動
-======================================== */
-
-.case-opening-animation.key-turn
-.case-opening-key {
-
-    transition:
-        transform
-        .45s
-        cubic-bezier(
-            .4,
-            0,
-            .2,
-            1
-        );
-
-    transform:
-        translate(
-            70px,
-            20px
-        )
-        rotate(
-            75deg
-        );
-}
-
-
-/* ========================================
    黃光
 ======================================== */
 
@@ -2461,17 +2422,6 @@ main {
 /* ========================================
    箱子微震
 ======================================== */
-
-.case-opening-animation.key-turn
-.case-opening-box {
-
-    animation:
-        caseBoxShake
-        .12s
-        linear
-        3;
-
-}
 
 
 @keyframes caseBoxShake {
