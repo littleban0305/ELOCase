@@ -2054,3 +2054,119 @@ document.addEventListener(
 
     }
 );
+
+function playCaseOpeningIntro() {
+
+    return new Promise(
+        resolve => {
+
+            const animation =
+                document.querySelector(
+                    "#case-opening-animation"
+                );
+
+
+            if (!animation) {
+
+                resolve();
+
+                return;
+
+            }
+
+
+            animation.className =
+                "case-opening-animation active";
+
+
+            /*
+             * 0.3 秒：
+             * 鑰匙進入
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.add(
+                        "key-in"
+                    );
+
+                },
+                300
+            );
+
+
+            /*
+             * 鑰匙轉動
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.remove(
+                        "key-in"
+                    );
+
+                    animation.classList.add(
+                        "key-turn"
+                    );
+
+                },
+                1000
+            );
+
+
+            /*
+             * 箱子震動
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.add(
+                        "shake"
+                    );
+
+                },
+                1550
+            );
+
+
+            /*
+             * 箱子開啟
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.add(
+                        "open"
+                    );
+
+                },
+                1950
+            );
+
+
+            /*
+             * 動畫完成
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.classList.remove(
+                        "active"
+                    );
+
+
+                    resolve();
+
+                },
+                2900
+            );
+
+        }
+    );
+
+}
