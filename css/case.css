@@ -1703,8 +1703,8 @@ main {
     /*
      * 以箱子容器左上角為基準
      */
-    left: 0;
-    top: 0;
+    left: 5%;
+    top: 20%;
 
     opacity: 0;
 
@@ -1713,13 +1713,11 @@ main {
      * 箱子右上方
      */
     transform:
-        translate(
-            -229px,
-            -57px
-        )
-        rotate(
-            -25deg
-        );
+       translate(
+           -100px,
+           -40px
+       )
+       rotate(-25deg);
 
     z-index: 4;
 
@@ -2274,7 +2272,7 @@ main {
 
     transform:
        translate(
-           40px,
+           370px,
            10px
        )
        rotate(0deg);
@@ -2299,11 +2297,11 @@ main {
         );
 
     transform:
-        translate(
-            171px,
-            53px
-        )
-        rotate(0deg);
+       translate(
+           300px,
+           70px
+       )
+       rotate(0deg);
 }
 
 
