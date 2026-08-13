@@ -1695,21 +1695,25 @@ main {
 ======================================== */
 
 .case-opening-key {
-
     position: absolute;
 
     width: 340px;
-    max-width: 48%;
 
+    /*
+     * 直接以場景中央作為基準
+     */
     left: 50%;
-    top: 15%;
+    top: 50%;
 
     opacity: 0;
 
+    /*
+     * 初始位置：箱子右上方
+     */
     transform:
         translate(
-            420px,
-            -180px
+            180px,
+            -260px
         )
         rotate(
             -35deg
@@ -1720,12 +1724,7 @@ main {
     filter:
         drop-shadow(
             0 0 18px
-            rgba(
-                255,
-                190,
-                40,
-                .9
-            )
+            rgba(255, 190, 40, .9)
         );
 }
 
@@ -2282,7 +2281,7 @@ main {
     transform:
         translate(
             180px,
-            90px
+            -40px
         )
         rotate(
             0deg
@@ -2309,8 +2308,8 @@ main {
 
     transform:
         translate(
-            205px,
-            105px
+            70px,
+            20px
         )
         rotate(
             0deg
@@ -2337,8 +2336,8 @@ main {
 
     transform:
         translate(
-            205px,
-            105px
+            70px,
+            20px
         )
         rotate(
             75deg
