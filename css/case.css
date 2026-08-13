@@ -2183,25 +2183,22 @@ main {
 ======================================== */
 
 .case-opening-box {
-
     position: absolute;
 
     width: 390px;
-
     max-width: 65%;
 
     left: 50%;
-
     top: 55%;
 
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
+    transform: translate(-50%, -50%);
+}
 
-    z-index: 2;
+.case-opening-box-image {
+    display: block;
 
+    width: 100%;
+    height: auto;
 }
 
 
