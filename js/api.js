@@ -608,40 +608,86 @@ async function refreshCasesInBackground() {
 }
 
 
-async function getCase(
-    caseId
-) {
+async function getCase(caseId) {
 
     const cacheKey =
         `case_${caseId}`;
 
 
+    /*
+     * ====================================
+     * 讀取 Cache
+     * 即使過期也照樣可以拿
+     * ====================================
+     */
+
     const cached =
-        getApiCache(
+        getApiCacheStale(
             cacheKey
         );
 
 
-    if (cached) {
-   
-       console.log(
-           "⚡ getCases 使用 LocalStorage"
-       );
-   
-   
-       /*
-        * 先直接回傳快取
-        */
-       refreshCasesInBackground();
-   
-   
-       return cached;
-   
-   }
+    /*
+     * ====================================
+     * 有舊資料
+     * ====================================
+     */
 
+    if (cached) {
+
+        console.log(
+            "⚡ getCase 使用 LocalStorage：",
+            caseId
+        );
+
+
+        /*
+         * 已過期
+         * → 背景更新
+         */
+
+        if (
+            cached.expired
+        ) {
+
+            console.log(
+                "🕐 Case Cache 已過期 → 背景更新：",
+                caseId
+            );
+
+
+            refreshCaseInBackground(
+                caseId
+            );
+
+        } else {
+
+            console.log(
+                "🟢 Case Cache 尚未過期：",
+                caseId
+            );
+
+        }
+
+
+        /*
+         * ⭐ 立即回傳舊資料
+         */
+
+        return cached.data;
+
+    }
+
+
+    /*
+     * ====================================
+     * 完全沒有 Cache
+     * → 第一次才等待 API
+     * ====================================
+     */
 
     console.log(
-        "🌐 getCase 呼叫 API：",
+        "🌐 getCase 沒有 Cache → 呼叫 API：",
         caseId
     );
 
@@ -655,6 +701,12 @@ async function getCase(
         );
 
 
+    /*
+     * ====================================
+     * 儲存 24 小時
+     * ====================================
+     */
+
     saveApiCache(
         cacheKey,
         data
@@ -662,6 +714,85 @@ async function getCase(
 
 
     return data;
+
+}
+
+/* ========================================
+   背景更新單一箱子
+======================================== */
+
+async function refreshCaseInBackground(
+    caseId
+) {
+
+    const cacheKey =
+        `case_${caseId}`;
+
+
+    try {
+
+        console.log(
+            "🔄 背景更新 Case：",
+            caseId
+        );
+
+
+        const data =
+            await sendApiRequest(
+                "getCase",
+                {
+                    caseId
+                }
+            );
+
+
+        /*
+         * 更新 Cache
+         */
+
+        saveApiCache(
+            cacheKey,
+            data
+        );
+
+
+        console.log(
+            "✅ Case 背景更新完成：",
+            caseId
+        );
+
+
+        /*
+         * 通知目前頁面
+         */
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "eloCaseUpdated",
+                {
+                    detail: {
+
+                        caseId:
+                            caseId,
+
+                        data:
+                            data
+
+                    }
+                }
+            )
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "⚠️ Case 背景更新失敗：",
+            caseId,
+            error.message
+        );
+
+    }
 
 }
 
@@ -759,11 +890,24 @@ async function getCaseItems(
         `caseItems_${caseId}`;
 
 
+    /*
+     * ====================================
+     * 讀取 Cache
+     * 即使過期也先使用
+     * ====================================
+     */
+
     const cached =
-        getApiCache(
+        getApiCacheStale(
             cacheKey
         );
 
+
+    /*
+     * ====================================
+     * 有舊資料
+     * ====================================
+     */
 
     if (cached) {
 
@@ -772,13 +916,53 @@ async function getCaseItems(
             caseId
         );
 
-        return cached;
+
+        /*
+         * 過期
+         * → 背景更新
+         */
+
+        if (
+            cached.expired
+        ) {
+
+            console.log(
+                "🕐 CaseItems Cache 已過期 → 背景更新：",
+                caseId
+            );
+
+
+            refreshCaseItemsInBackground(
+                caseId
+            );
+
+        } else {
+
+            console.log(
+                "🟢 CaseItems Cache 尚未過期：",
+                caseId
+            );
+
+        }
+
+
+        /*
+         * ⭐ 立即回傳
+         */
+
+        return cached.data;
 
     }
 
 
+    /*
+     * ====================================
+     * 完全沒有 Cache
+     * ====================================
+     */
+
     console.log(
-        "🌐 getCaseItems 呼叫 API：",
+        "🌐 getCaseItems 沒有 Cache → 呼叫 API：",
         caseId
     );
 
@@ -792,6 +976,12 @@ async function getCaseItems(
         );
 
 
+    /*
+     * ====================================
+     * 儲存 24 小時
+     * ====================================
+     */
+
     saveApiCache(
         cacheKey,
         data
@@ -799,6 +989,85 @@ async function getCaseItems(
 
 
     return data;
+
+}
+
+/* ========================================
+   背景更新箱子內容物
+======================================== */
+
+async function refreshCaseItemsInBackground(
+    caseId
+) {
+
+    const cacheKey =
+        `caseItems_${caseId}`;
+
+
+    try {
+
+        console.log(
+            "🔄 背景更新 CaseItems：",
+            caseId
+        );
+
+
+        const data =
+            await sendApiRequest(
+                "getCaseItems",
+                {
+                    caseId
+                }
+            );
+
+
+        /*
+         * 更新 Cache
+         */
+
+        saveApiCache(
+            cacheKey,
+            data
+        );
+
+
+        console.log(
+            "✅ CaseItems 背景更新完成：",
+            caseId
+        );
+
+
+        /*
+         * 通知目前頁面
+         */
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "eloCaseItemsUpdated",
+                {
+                    detail: {
+
+                        caseId:
+                            caseId,
+
+                        data:
+                            data
+
+                    }
+                }
+            )
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "⚠️ CaseItems 背景更新失敗：",
+            caseId,
+            error.message
+        );
+
+    }
 
 }
 
