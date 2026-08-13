@@ -1530,42 +1530,62 @@ main {
  * 箱子
  */
 
-.case-opening-box {
+/* ========================================
+   ELOCase 真實開箱動畫
+======================================== */
+
+.case-opening-animation {
 
     position: absolute;
 
-    left: 50%;
+    inset: 0;
 
-    top: 55%;
+    z-index: 100;
 
-    width: 280px;
+    display: none;
 
-    height: 190px;
+    align-items: center;
 
-    transform:
-        translate(
-            -50%,
-            -50%
+    justify-content: center;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(20, 20, 30, 0.35),
+            rgba(0, 0, 0, 0.88)
         );
+
+    opacity: 0;
 
 }
 
 
-/*
- * 箱子本體
- */
+.case-opening-animation.active {
 
-.case-opening-box-body {
+    display: flex;
 
-    position: absolute;
+    animation:
+        caseOpeningFadeIn
+        0.35s
+        ease-out
+        forwards;
 
-    left: 0;
+}
 
-    bottom: 0;
 
-    width: 280px;
+/* ========================================
+   場景
+======================================== */
 
-    height: 150px;
+.case-opening-scene {
+
+    position: relative;
+
+    width: 620px;
+
+    height: 500px;
 
     display: flex;
 
@@ -1573,72 +1593,27 @@ main {
 
     justify-content: center;
 
-    border:
-        2px solid
-        rgba(255,255,255,0.2);
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #252b38,
-            #10141c
-        );
-
-    box-shadow:
-        0 20px 45px
-        rgba(0,0,0,0.5);
-
 }
 
 
-.case-opening-box-body span {
+/* ========================================
+   箱子容器
+======================================== */
 
-    color:
-        rgba(255,255,255,0.8);
-
-    font-size:
-        1.1rem;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        0.12em;
-
-}
-
-
-/*
- * 箱蓋
- */
-
-.case-opening-box-lid {
+.case-opening-box {
 
     position: absolute;
 
-    top: 0;
+    left: 50%;
 
-    width: 290px;
+    bottom: 55px;
 
-    height: 52px;
+    width: 430px;
 
-    left: -5px;
+    height: 330px;
 
-    border:
-        2px solid
-        rgba(255,255,255,0.2);
-
-    border-radius:
-        10px 10px 5px 5px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #303746,
-            #151a23
-        );
+    transform:
+        translateX(-50%);
 
     transform-origin:
         center bottom;
@@ -1646,90 +1621,153 @@ main {
 }
 
 
-/*
- * 鎖
- */
+/* ========================================
+   箱身
+======================================== */
 
-.case-opening-lock {
+.case-opening-body {
 
     position: absolute;
 
     left: 50%;
 
-    top: 78px;
+    bottom: 0;
 
-    font-size: 40px;
+    width: 430px;
+
+    height: auto;
 
     transform:
         translateX(-50%);
 
+    user-select: none;
+
+    pointer-events: none;
+
     filter:
         drop-shadow(
-            0 5px 12px
-            rgba(0,0,0,0.5)
+            0 25px 35px
+            rgba(0, 0, 0, 0.65)
         );
 
 }
 
 
-/*
- * 鑰匙
- */
+/* ========================================
+   箱蓋
+======================================== */
+
+.case-opening-lid {
+
+    position: absolute;
+
+    z-index: 3;
+
+    left: 50%;
+
+    top: 0;
+
+    width: 440px;
+
+    height: auto;
+
+    transform:
+        translateX(-50%);
+
+    transform-origin:
+        50% 92%;
+
+    user-select: none;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 18px 25px
+            rgba(0, 0, 0, 0.55)
+        );
+
+}
+
+
+/* ========================================
+   鑰匙
+======================================== */
 
 .case-opening-key {
 
     position: absolute;
 
-    left: -80px;
+    z-index: 10;
 
-    top: 85px;
+    width: 105px;
 
-    font-size: 68px;
+    height: auto;
+
+    left: 45px;
+
+    top: 265px;
 
     transform:
-        rotate(-25deg);
+        rotate(-18deg);
+
+    user-select: none;
+
+    pointer-events: none;
 
     filter:
         drop-shadow(
-            0 8px 15px
-            rgba(0,0,0,0.45)
+            0 10px 18px
+            rgba(0, 0, 0, 0.65)
         );
 
 }
 
 
-/*
- * 光效
- */
+/* ========================================
+   光芒
+======================================== */
 
 .case-opening-glow {
 
     position: absolute;
 
-    width: 120px;
+    z-index: 1;
 
-    height: 120px;
+    width: 240px;
+
+    height: 240px;
+
+    left: 50%;
+
+    top: 46%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
 
     border-radius: 50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,0.9),
-            rgba(150,120,255,0.3),
+            rgba(255, 220, 120, 0.95),
+            rgba(255, 180, 50, 0.35),
             transparent 70%
         );
 
     opacity: 0;
 
     filter:
-        blur(8px);
+        blur(10px);
 
 }
 
 
 /* ========================================
-   動畫
+   淡入
 ======================================== */
 
 @keyframes caseOpeningFadeIn {
@@ -1745,16 +1783,16 @@ main {
 }
 
 
-/*
- * 鑰匙進入
- */
+/* ========================================
+   鑰匙插入
+======================================== */
 
 .case-opening-animation.key-in
 .case-opening-key {
 
     animation:
         caseKeyInsert
-        0.65s
+        0.8s
         cubic-bezier(
             0.2,
             0.8,
@@ -1770,33 +1808,39 @@ main {
 
     from {
 
+        left: 45px;
+
+        top: 265px;
+
         transform:
-            translateX(-80px)
-            rotate(-25deg);
+            rotate(-18deg);
 
     }
 
     to {
 
+        left: 255px;
+
+        top: 265px;
+
         transform:
-            translateX(120px)
-            rotate(-25deg);
+            rotate(-18deg);
 
     }
 
 }
 
 
-/*
- * 鑰匙轉動
- */
+/* ========================================
+   鑰匙轉動
+======================================== */
 
 .case-opening-animation.key-turn
 .case-opening-key {
 
     animation:
         caseKeyTurn
-        0.55s
+        0.65s
         ease-in-out
         forwards;
 
@@ -1807,41 +1851,50 @@ main {
 
     0% {
 
+        left: 255px;
+
+        top: 265px;
+
         transform:
-            translateX(120px)
-            rotate(-25deg);
+            rotate(-18deg);
 
     }
 
     50% {
 
+        left: 255px;
+
+        top: 265px;
+
         transform:
-            translateX(120px)
-            rotate(65deg);
+            rotate(72deg);
 
     }
 
     100% {
 
+        left: 255px;
+
+        top: 265px;
+
         transform:
-            translateX(120px)
-            rotate(35deg);
+            rotate(45deg);
 
     }
 
 }
 
 
-/*
- * 箱子震動
- */
+/* ========================================
+   箱子震動
+======================================== */
 
 .case-opening-animation.shake
 .case-opening-box {
 
     animation:
         caseBoxShake
-        0.4s
+        0.5s
         ease-in-out;
 
 }
@@ -1851,54 +1904,65 @@ main {
 
     0%,
     100% {
+
         transform:
-            translate(
-                -50%,
-                -50%
-            );
+            translateX(-50%);
+
     }
 
-    25% {
+    20% {
+
         transform:
-            translate(
-                calc(-50% - 5px),
-                -50%
+            translateX(
+                calc(-50% - 7px)
             );
+
     }
 
-    50% {
+    40% {
+
         transform:
-            translate(
-                calc(-50% + 5px),
-                -50%
+            translateX(
+                calc(-50% + 8px)
             );
+
     }
 
-    75% {
+    60% {
+
         transform:
-            translate(
-                calc(-50% - 3px),
-                -50%
+            translateX(
+                calc(-50% - 6px)
             );
+
+    }
+
+    80% {
+
+        transform:
+            translateX(
+                calc(-50% + 4px)
+            );
+
     }
 
 }
 
 
-/*
- * 開蓋
- */
+/* ========================================
+   箱蓋打開
+======================================== */
 
 .case-opening-animation.open
-.case-opening-box-lid {
+.case-opening-lid {
 
     animation:
-        caseBoxOpen
-        0.8s
+        caseLidOpen
+        1s
         cubic-bezier(
-            0.2,
-            0.8,
-            0.2,
+            0.16,
+            0.84,
+            0.25,
             1
         )
         forwards;
@@ -1906,59 +1970,79 @@ main {
 }
 
 
-@keyframes caseBoxOpen {
+@keyframes caseLidOpen {
 
-    from {
+    0% {
 
         transform:
-            rotateX(0deg);
+            translateX(-50%)
+            rotateX(0deg)
+            translateY(0);
 
     }
 
-    to {
+    45% {
 
         transform:
-            translateY(-30px)
-            rotateX(-70deg);
+            translateX(-50%)
+            rotateX(-35deg)
+            translateY(-25px);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(-50%)
+            rotateX(-75deg)
+            translateY(-85px);
 
     }
 
 }
 
 
-/*
- * 光爆發
- */
+/* ========================================
+   光爆發
+======================================== */
 
 .case-opening-animation.open
 .case-opening-glow {
 
     animation:
-        caseGlow
-        1s
+        caseGlowBurst
+        1.25s
         ease-out
         forwards;
 
 }
 
 
-@keyframes caseGlow {
+@keyframes caseGlowBurst {
 
     0% {
 
         opacity: 0;
 
         transform:
-            scale(0.3);
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.35);
 
     }
 
-    40% {
+    35% {
 
         opacity: 1;
 
         transform:
-            scale(1.5);
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
 
     }
 
@@ -1967,8 +2051,40 @@ main {
         opacity: 0;
 
         transform:
-            scale(2.2);
+            translate(
+                -50%,
+                -50%
+            )
+            scale(2);
 
+    }
+
+}
+
+
+/* ========================================
+   開箱完成 → 淡出
+======================================== */
+
+.case-opening-animation.finish {
+
+    animation:
+        caseOpeningFadeOut
+        0.45s
+        ease-in
+        forwards;
+
+}
+
+
+@keyframes caseOpeningFadeOut {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 
 }
@@ -1977,7 +2093,7 @@ main {
    滑動條第二階段
 ======================================== */
 
-.case-preview-container {
+#case-preview-container {
 
     opacity: 0;
 
@@ -1986,7 +2102,7 @@ main {
     pointer-events: none;
 
     transform:
-        translateY(20px);
+        translateY(25px);
 
     transition:
         opacity 0.45s ease,
@@ -1996,11 +2112,7 @@ main {
 }
 
 
-/*
- * 開箱動畫完成後
- */
-
-.case-preview-container.show {
+#case-preview-container.show {
 
     opacity: 1;
 
