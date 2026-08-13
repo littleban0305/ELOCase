@@ -1792,8 +1792,6 @@ function initializeOpenCaseButton() {
                 * ====================================
                 */
                
-               startCaseWaitingAnimation();
-               
                
                /*
                 * ====================================
@@ -2274,6 +2272,15 @@ function playCaseOpeningIntro() {
                 },
                 2450
             );
+
+           setTimeout(
+             () => {
+         
+                 startCaseWaitingAnimation();
+         
+             },
+             2450
+         );
 
 
             /*
