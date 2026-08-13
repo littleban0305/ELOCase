@@ -2094,10 +2094,8 @@ main {
 ======================================== */
 
 #case-preview-container {
-
-    opacity: 0;
-
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
 
     pointer-events: none;
 
