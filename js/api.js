@@ -453,12 +453,88 @@ async function getCase(
 
 async function getInventory(userId) {
 
-    return await sendApiRequest(
-        "getInventory",
-        {
+    /*
+     * ====================================
+     * 檢查 userId
+     * ====================================
+     */
+
+    if (!userId) {
+
+        throw new Error(
+            "缺少 userId"
+        );
+
+    }
+
+
+    /*
+     * ====================================
+     * Inventory Cache
+     *
+     * 只快取 5 分鐘
+     * ====================================
+     */
+
+    const cacheKey =
+        `inventory_${userId}`;
+
+
+    const cached =
+        getApiCache(
+            cacheKey
+        );
+
+
+    if (cached) {
+
+        console.log(
+            "⚡ getInventory 使用 LocalStorage：",
             userId
-        }
+        );
+
+        return cached;
+
+    }
+
+
+    /*
+     * ====================================
+     * Cache 沒有
+     * → 呼叫 API
+     * ====================================
+     */
+
+    console.log(
+        "🌐 getInventory 呼叫 API：",
+        userId
     );
+
+
+    const data =
+        await sendApiRequest(
+            "getInventory",
+            {
+                userId
+            }
+        );
+
+
+    /*
+     * ====================================
+     * 儲存 5 分鐘
+     * ====================================
+     */
+
+    saveApiCache(
+        cacheKey,
+        data,
+        5 * 60 * 1000
+    );
+
+
+    return data;
+
 }
 
 async function getCaseItems(
