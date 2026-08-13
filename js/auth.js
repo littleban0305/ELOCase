@@ -232,6 +232,22 @@ function getSavedUser() {
 }
 
 /* ========================================
+   清除玩家資料快取
+======================================== */
+
+function clearUserCache() {
+
+    localStorage.removeItem(
+        "elocaseUser"
+    );
+
+    localStorage.removeItem(
+        "elocaseUserVerifiedAt"
+    );
+
+}
+
+/* ========================================
    檢查玩家資料是否需要重新驗證
 ======================================== */
 
@@ -250,7 +266,7 @@ function shouldVerifyUser() {
      */
 
     const verifyInterval =
-        10 * 60 * 1000;
+       24 * 60 * 60 * 1000;
 
 
     return (
