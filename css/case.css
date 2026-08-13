@@ -1712,8 +1712,8 @@ main {
      */
     transform:
        translate(
-           400px,
-           -260px
+           370px,
+           -230px
        )
        rotate(-35deg);
 
@@ -2267,8 +2267,8 @@ main {
 
     transform:
        translate(
-           400px,
-           -40px
+           370px,
+           -10px
        )
        rotate(0deg);
 }
@@ -2293,8 +2293,8 @@ main {
 
     transform:
         translate(
-            330px,
-            20px
+            300px,
+            50px
         )
         rotate(0deg);
 }
