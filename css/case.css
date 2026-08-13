@@ -1695,35 +1695,45 @@ main {
 ======================================== */
 
 .case-opening-key {
+
     position: absolute;
 
-    width: 340px;
+    width: 150px;
 
     /*
-     * 直接以場景中央作為基準
+     * 以箱子容器左上角為基準
      */
-    left: 50%;
-    top: 50%;
+    left: 0;
+    top: 0;
 
     opacity: 0;
 
     /*
-     * 初始位置：箱子右上方
+     * 起始位置
+     * 箱子右上方
      */
     transform:
-       translate(
-           370px,
-           -210px
-       )
-       rotate(-35deg);
+        translate(
+            -229px,
+            -57px
+        )
+        rotate(
+            -25deg
+        );
 
     z-index: 4;
 
     filter:
         drop-shadow(
-            0 0 18px
-            rgba(255, 190, 40, .9)
+            0 0 12px
+            rgba(
+                255,
+                190,
+                40,
+                .8
+            )
         );
+
 }
 
 
@@ -2264,7 +2274,7 @@ main {
 
     transform:
        translate(
-           370px,
+           40px,
            10px
        )
        rotate(0deg);
@@ -2290,8 +2300,8 @@ main {
 
     transform:
         translate(
-            300px,
-            70px
+            171px,
+            53px
         )
         rotate(0deg);
 }
