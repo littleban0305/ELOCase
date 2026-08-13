@@ -754,6 +754,130 @@
 
         }
 
+        /* ========================================
+           編輯資料 Modal
+        ======================================== */
+        
+        const editProfileButton =
+            document.querySelector(
+                "#edit-profile-button"
+            );
+        
+        
+        const editProfileModal =
+            document.querySelector(
+                "#edit-profile-modal"
+            );
+        
+        
+        const editProfileClose =
+            document.querySelector(
+                "#edit-profile-close"
+            );
+        
+        
+        const editProfileCancel =
+            document.querySelector(
+                "#edit-profile-cancel"
+            );
+        
+        
+        const editProfileBackdrop =
+            document.querySelector(
+                "#edit-profile-backdrop"
+            );
+        
+        
+        const editDisplayName =
+            document.querySelector(
+                "#edit-display-name"
+            );
+        
+        
+        const editUsername =
+            document.querySelector(
+                "#edit-username"
+            );
+        
+        
+        function openEditProfileModal() {
+        
+            const user =
+                getSavedUser();
+        
+        
+            if (!user) {
+        
+                return;
+        
+            }
+        
+        
+            editDisplayName.value =
+                user.displayName ||
+                user.username ||
+                "";
+        
+        
+            editUsername.value =
+                user.username ||
+                "";
+        
+        
+            editProfileModal.classList.add(
+                "show"
+            );
+        
+        }
+        
+        
+        function closeEditProfileModal() {
+        
+            editProfileModal.classList.remove(
+                "show"
+            );
+        
+        }
+        
+        
+        if (editProfileButton) {
+        
+            editProfileButton.addEventListener(
+                "click",
+                openEditProfileModal
+            );
+        
+        }
+        
+        
+        if (editProfileClose) {
+        
+            editProfileClose.addEventListener(
+                "click",
+                closeEditProfileModal
+            );
+        
+        }
+        
+        
+        if (editProfileCancel) {
+        
+            editProfileCancel.addEventListener(
+                "click",
+                closeEditProfileModal
+            );
+        
+        }
+        
+        
+        if (editProfileBackdrop) {
+        
+            editProfileBackdrop.addEventListener(
+                "click",
+                closeEditProfileModal
+            );
+        
+        }
 
         initializeProfile();
 
