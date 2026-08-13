@@ -10,7 +10,7 @@
 .profile-page {
 
     padding:
-        36px 0 80px;
+        32px 0 70px;
 
 }
 
@@ -20,7 +20,7 @@
     width:
         min(
             calc(100% - 32px),
-            1050px
+            1000px
         );
 
     margin:
@@ -30,672 +30,10 @@
 
 
 /* ========================================
-   玩家 Hero
+   玩家標頭
 ======================================== */
 
-.profile-hero {
-
-    position:
-        relative;
-
-    min-height:
-        230px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        26px;
-
-    padding:
-        38px;
-
-    overflow:
-        hidden;
-
-    background:
-        radial-gradient(
-            circle at 10% 50%,
-            rgba(
-                124,
-                92,
-                255,
-                .20
-            ),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 85% 0%,
-            rgba(
-                124,
-                92,
-                255,
-                .10
-            ),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #151a24,
-            #0b0e14
-        );
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        20px;
-
-    box-shadow:
-        0 20px 60px
-        rgba(
-            0,
-            0,
-            0,
-            .30
-        );
-
-}
-
-
-.profile-hero::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        0;
-
-    right:
-        0;
-
-    bottom:
-        0;
-
-    height:
-        1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(
-                124,
-                92,
-                255,
-                .55
-            ),
-            transparent
-        );
-
-}
-
-
-.profile-hero-glow {
-
-    position:
-        absolute;
-
-    width:
-        280px;
-
-    height:
-        280px;
-
-    right:
-        -120px;
-
-    top:
-        -150px;
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(
-            124,
-            92,
-            255,
-            .08
-        );
-
-    filter:
-        blur(25px);
-
-    pointer-events:
-        none;
-
-}
-
-
-/* ========================================
-   頭像
-======================================== */
-
-.profile-avatar {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    width:
-        96px;
-
-    height:
-        96px;
-
-    flex:
-        0 0 96px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    color:
-        #fff;
-
-    font-size:
-        2rem;
-
-    font-weight:
-        800;
-
-    background:
-        linear-gradient(
-            135deg,
-            #8365ff,
-            #6040e8
-        );
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .18
-        );
-
-    border-radius:
-        50%;
-
-    box-shadow:
-        0 0 35px
-        rgba(
-            124,
-            92,
-            255,
-            .35
-        );
-
-}
-
-
-.profile-avatar::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        -5px;
-
-    border:
-        1px solid
-        rgba(
-            124,
-            92,
-            255,
-            .25
-        );
-
-    border-radius:
-        50%;
-
-}
-
-
-/* ========================================
-   玩家身份
-======================================== */
-
-.profile-identity {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-}
-
-
-.profile-label {
-
-    display:
-        block;
-
-    color:
-        var(--color-primary);
-
-    font-size:
-        .62rem;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        .15em;
-
-}
-
-
-.profile-identity h1 {
-
-    margin:
-        5px 0 3px;
-
-    color:
-        var(--color-text);
-
-    font-size:
-        2rem;
-
-    font-weight:
-        850;
-
-    line-height:
-        1.2;
-
-    letter-spacing:
-        -.035em;
-
-}
-
-
-.profile-identity p {
-
-    margin:
-        0;
-
-    color:
-        var(--color-text-muted);
-
-    font-size:
-        .78rem;
-
-}
-
-
-.profile-online {
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    gap:
-        6px;
-
-    margin-top:
-        12px;
-
-    padding:
-        5px 9px;
-
-    color:
-        #70df9a;
-
-    font-size:
-        .6rem;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        .08em;
-
-    background:
-        rgba(
-            75,
-            215,
-            130,
-            .07
-        );
-
-    border:
-        1px solid
-        rgba(
-            75,
-            215,
-            130,
-            .15
-        );
-
-    border-radius:
-        999px;
-
-}
-
-
-.profile-online-dot {
-
-    width:
-        6px;
-
-    height:
-        6px;
-
-    border-radius:
-        50%;
-
-    background:
-        #67dd90;
-
-    box-shadow:
-        0 0 9px
-        rgba(
-            103,
-            221,
-            144,
-            .8
-        );
-
-}
-
-
-/* ========================================
-   數據
-======================================== */
-
-.profile-stats {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            minmax(
-                0,
-                1fr
-            )
-        );
-
-    gap:
-        12px;
-
-    margin-top:
-        14px;
-
-}
-
-
-.profile-stat {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        14px;
-
-    padding:
-        21px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #131821,
-            #0c1016
-        );
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        15px;
-
-    transition:
-        transform .2s ease,
-        border-color .2s ease;
-
-}
-
-
-.profile-stat:hover {
-
-    transform:
-        translateY(-2px);
-
-    border-color:
-        rgba(
-            124,
-            92,
-            255,
-            .30
-        );
-
-}
-
-
-.profile-stat-icon {
-
-    width:
-        45px;
-
-    height:
-        45px;
-
-    flex:
-        0 0 45px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    color:
-        var(--color-primary);
-
-    font-size:
-        .72rem;
-
-    font-weight:
-        850;
-
-    background:
-        rgba(
-            124,
-            92,
-            255,
-            .10
-        );
-
-    border:
-        1px solid
-        rgba(
-            124,
-            92,
-            255,
-            .18
-        );
-
-    border-radius:
-        11px;
-
-}
-
-
-.coin-icon {
-
-    color:
-        #ffd76b;
-
-    background:
-        rgba(
-            255,
-            215,
-            107,
-            .08
-        );
-
-    border-color:
-        rgba(
-            255,
-            215,
-            107,
-            .18
-        );
-
-}
-
-
-.profile-stat-label {
-
-    display:
-        block;
-
-    margin-bottom:
-        4px;
-
-    color:
-        var(--color-text-muted);
-
-    font-size:
-        .65rem;
-
-    font-weight:
-        650;
-
-}
-
-
-.profile-stat strong {
-
-    display:
-        block;
-
-    color:
-        var(--color-text);
-
-    font-size:
-        1.15rem;
-
-    font-weight:
-        800;
-
-}
-
-
-.profile-stat:first-child strong {
-
-    color:
-        #ffd76b;
-
-}
-
-
-.profile-active {
-
-    color:
-        #6ddd95 !important;
-
-}
-
-
-/* ========================================
-   通用卡片
-======================================== */
-
-.profile-card {
-
-    margin-top:
-        14px;
-
-    overflow:
-        hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            #131821,
-            #0c1016
-        );
-
-    border:
-        1px solid
-        var(--color-border);
-
-    border-radius:
-        16px;
-
-}
-
-
-.profile-card-header {
-
-    padding:
-        24px 25px 18px;
-
-}
-
-
-.profile-card-header h2 {
-
-    margin:
-        5px 0 0;
-
-    color:
-        var(--color-text);
-
-    font-size:
-        1.05rem;
-
-    font-weight:
-        800;
-
-}
-
-
-/* ========================================
-   玩家資訊
-======================================== */
-
-.profile-info {
-
-    border-top:
-        1px solid
-        var(--color-border);
-
-}
-
-
-.profile-info-row {
+.profile-header {
 
     display:
         flex;
@@ -707,32 +45,41 @@
         space-between;
 
     gap:
-        20px;
+        30px;
+
+    min-height:
+        170px;
 
     padding:
-        16px 25px;
+        30px 32px;
 
-    border-bottom:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .045
+    background:
+        linear-gradient(
+            180deg,
+            #141922,
+            #0e1219
         );
 
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
 }
 
 
-.profile-info-row:last-child {
+.profile-user {
 
-    border-bottom:
-        0;
+    display:
+        flex;
 
-}
+    align-items:
+        center;
 
-
-.profile-info-row > div {
+    gap:
+        20px;
 
     min-width:
         0;
@@ -740,53 +87,224 @@
 }
 
 
-.profile-info-label {
+/* ========================================
+   頭像
+======================================== */
+
+.profile-avatar {
+
+    width:
+        82px;
+
+    height:
+        82px;
+
+    flex:
+        0 0 82px;
 
     display:
-        block;
+        flex;
 
-    margin-bottom:
-        3px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1.7rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7657f5,
+            #5c40d8
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .12
+        );
+
+    border-radius:
+        50%;
+
+    box-shadow:
+        0 8px 25px
+        rgba(
+            0,
+            0,
+            0,
+            .3
+        );
+
+}
+
+
+/* ========================================
+   玩家名稱
+======================================== */
+
+.profile-user-info {
+
+    min-width:
+        0;
+
+}
+
+
+.profile-user-info h1 {
+
+    margin:
+        0 0 5px;
+
+    overflow:
+        hidden;
 
     color:
         var(--color-text);
 
     font-size:
-        .75rem;
+        1.65rem;
 
     font-weight:
-        700;
+        800;
+
+    line-height:
+        1.2;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
 
 }
 
 
-.profile-info-description {
+.profile-user-info p {
 
-    display:
-        block;
+    margin:
+        0;
 
     color:
         var(--color-text-muted);
 
     font-size:
-        .64rem;
+        .76rem;
 
 }
 
 
-.profile-info-row strong {
+/* ========================================
+   餘額 / 等級
+======================================== */
+
+.profile-balance-box {
+
+    display:
+        flex;
+
+    align-items:
+        center;
 
     flex:
         0 0 auto;
+
+    min-width:
+        250px;
+
+    padding:
+        17px 20px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+}
+
+
+.profile-balance-item {
+
+    flex:
+        1;
+
+}
+
+
+.profile-balance-item span {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.profile-balance-item strong {
 
     color:
         var(--color-text);
 
     font-size:
-        .78rem;
+        1rem;
 
     font-weight:
-        750;
+        800;
+
+}
+
+
+.profile-balance-item:first-child strong {
+
+    color:
+        #ffd66b;
+
+}
+
+
+.profile-balance-divider {
+
+    width:
+        1px;
+
+    height:
+        35px;
+
+    margin:
+        0 18px;
+
+    background:
+        var(--color-border);
 
 }
 
@@ -795,7 +313,7 @@
    快速操作
 ======================================== */
 
-.profile-actions {
+.profile-nav {
 
     display:
         grid;
@@ -818,10 +336,7 @@
 }
 
 
-.profile-action {
-
-    position:
-        relative;
+.profile-nav-button {
 
     display:
         flex;
@@ -830,13 +345,13 @@
         center;
 
     gap:
-        13px;
+        12px;
 
     min-height:
-        75px;
+        58px;
 
     padding:
-        16px 18px;
+        0 18px;
 
     color:
         var(--color-text);
@@ -845,44 +360,35 @@
         none;
 
     background:
-        linear-gradient(
-            145deg,
-            #131821,
-            #0c1016
-        );
+        var(--color-surface);
 
     border:
         1px solid
         var(--color-border);
 
     border-radius:
-        14px;
+        var(--radius-medium);
 
     transition:
-        transform .2s ease,
-        border-color .2s ease,
-        background .2s ease;
+        background var(--transition-normal),
+        border-color var(--transition-normal),
+        transform var(--transition-fast);
 
 }
 
 
-.profile-action:hover {
+.profile-nav-button:hover {
 
     transform:
         translateY(-2px);
 
     border-color:
-        rgba(
-            124,
-            92,
-            255,
-            .35
-        );
+        var(--color-border-light);
 
 }
 
 
-.profile-action-primary {
+.profile-nav-button.primary {
 
     background:
         linear-gradient(
@@ -891,7 +397,7 @@
                 124,
                 92,
                 255,
-                .18
+                .14
             ),
             rgba(
                 124,
@@ -906,22 +412,19 @@
             124,
             92,
             255,
-            .25
+            .28
         );
 
 }
 
 
-.profile-action-icon {
+.profile-nav-icon {
 
     width:
-        38px;
+        30px;
 
     height:
-        38px;
-
-    flex:
-        0 0 38px;
+        30px;
 
     display:
         flex;
@@ -935,52 +438,35 @@
     color:
         var(--color-primary);
 
+    font-size:
+        .8rem;
+
     background:
         rgba(
             124,
             92,
             255,
-            .10
+            .09
         );
 
     border-radius:
-        10px;
+        8px;
 
 }
 
 
-.profile-action strong {
-
-    display:
-        block;
-
-    margin-bottom:
-        3px;
+.profile-nav-button span:nth-child(2) {
 
     font-size:
-        .76rem;
+        .75rem;
 
     font-weight:
-        800;
+        750;
 
 }
 
 
-.profile-action small {
-
-    display:
-        block;
-
-    color:
-        var(--color-text-muted);
-
-    font-size:
-        .62rem;
-
-}
-
-
-.profile-action-arrow {
+.profile-nav-arrow {
 
     margin-left:
         auto;
@@ -989,16 +475,139 @@
         var(--color-text-muted);
 
     font-size:
-        1rem;
+        .9rem;
 
 }
 
 
 /* ========================================
-   登出區
+   玩家資訊
 ======================================== */
 
-.profile-logout-area {
+.profile-section {
+
+    margin-top:
+        14px;
+
+    overflow:
+        hidden;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+}
+
+
+.profile-section-header {
+
+    padding:
+        21px 24px;
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.profile-section-header h2 {
+
+    margin:
+        0;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        .95rem;
+
+    font-weight:
+        800;
+
+}
+
+
+/* ========================================
+   詳細資料
+======================================== */
+
+.profile-detail-row {
+
+    min-height:
+        58px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        0 24px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .045
+        );
+
+}
+
+
+.profile-detail-row:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+
+.profile-detail-label {
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        .72rem;
+
+}
+
+
+.profile-detail-row strong {
+
+    color:
+        var(--color-text);
+
+    font-size:
+        .74rem;
+
+    font-weight:
+        700;
+
+}
+
+
+/* ========================================
+   帳號
+======================================== */
+
+.profile-account {
 
     display:
         flex;
@@ -1016,30 +625,25 @@
         14px;
 
     padding:
-        22px 25px;
+        20px 24px;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .018
-        );
+        var(--color-surface);
 
     border:
         1px solid
         var(--color-border);
 
     border-radius:
-        15px;
+        var(--radius-large);
 
 }
 
 
-.profile-logout-area h3 {
+.profile-account h2 {
 
     margin:
-        5px 0 3px;
+        0 0 4px;
 
     color:
         var(--color-text);
@@ -1053,7 +657,7 @@
 }
 
 
-.profile-logout-area p {
+.profile-account p {
 
     margin:
         0;
@@ -1062,7 +666,7 @@
         var(--color-text-muted);
 
     font-size:
-        .65rem;
+        .66rem;
 
 }
 
@@ -1073,98 +677,59 @@
         0 0 auto;
 
     padding:
-        10px 18px;
+        9px 17px;
 
     color:
-        #ff7885;
+        #e86b76;
 
     background:
-        rgba(
-            255,
-            90,
-            105,
-            .055
-        );
+        transparent;
 
     border:
         1px solid
         rgba(
-            255,
-            90,
-            105,
-            .18
+            232,
+            107,
+            118,
+            .22
         );
 
     border-radius:
-        9px;
+        8px;
 
     font-size:
         .7rem;
 
     font-weight:
-        750;
+        700;
 
     cursor:
         pointer;
 
     transition:
-        background .2s ease,
-        border-color .2s ease,
-        transform .2s ease;
+        background var(--transition-fast),
+        border-color var(--transition-fast);
 
 }
 
 
 .profile-logout-button:hover {
 
-    transform:
-        translateY(-1px);
-
     background:
         rgba(
-            255,
-            90,
-            105,
-            .10
+            232,
+            107,
+            118,
+            .07
         );
 
     border-color:
         rgba(
-            255,
-            90,
-            105,
-            .32
+            232,
+            107,
+            118,
+            .4
         );
-
-}
-
-
-/* ========================================
-   平板
-======================================== */
-
-@media (max-width: 800px) {
-
-    .profile-hero {
-
-        padding:
-            30px;
-
-    }
-
-
-    .profile-stats {
-
-        grid-template-columns:
-            repeat(
-                3,
-                minmax(
-                    0,
-                    1fr
-                )
-            );
-
-    }
 
 }
 
@@ -1173,7 +738,7 @@
    手機
 ======================================== */
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 
     .profile-page {
 
@@ -1193,22 +758,24 @@
     }
 
 
-    .profile-hero {
+    .profile-header {
 
-        min-height:
-            auto;
+        align-items:
+            flex-start;
 
         flex-direction:
             column;
 
-        align-items:
-            center;
-
-        text-align:
-            center;
-
         padding:
-            30px 20px;
+            25px 20px;
+
+    }
+
+
+    .profile-user {
+
+        width:
+            100%;
 
     }
 
@@ -1216,34 +783,40 @@
     .profile-avatar {
 
         width:
-            82px;
+            68px;
 
         height:
-            82px;
+            68px;
 
         flex-basis:
-            82px;
-
-    }
-
-
-    .profile-identity h1 {
+            68px;
 
         font-size:
-            1.55rem;
+            1.4rem;
 
     }
 
 
-    .profile-online {
+    .profile-user-info h1 {
 
-        margin-top:
-            10px;
+        font-size:
+            1.35rem;
 
     }
 
 
-    .profile-stats {
+    .profile-balance-box {
+
+        width:
+            100%;
+
+        min-width:
+            0;
+
+    }
+
+
+    .profile-nav {
 
         grid-template-columns:
             1fr;
@@ -1251,59 +824,35 @@
     }
 
 
-    .profile-stat {
+    .profile-detail-row {
+
+        min-height:
+            54px;
 
         padding:
-            18px;
+            0 18px;
 
     }
 
 
-    .profile-card-header {
+    .profile-section-header {
 
         padding:
-            21px;
+            19px 18px;
 
     }
 
 
-    .profile-info-row {
+    .profile-account {
 
         align-items:
-            flex-start;
-
-        padding:
-            15px 21px;
-
-    }
-
-
-    .profile-info-row strong {
-
-        text-align:
-            right;
-
-    }
-
-
-    .profile-actions {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .profile-logout-area {
-
-        align-items:
-            flex-start;
+            stretch;
 
         flex-direction:
             column;
 
         padding:
-            20px;
+            19px 18px;
 
     }
 
