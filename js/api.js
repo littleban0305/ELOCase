@@ -639,7 +639,9 @@ async function openCase(caseId) {
                     "🎉 POST 直接取得開箱結果"
                 );
         
-        
+
+                clearUserCache();
+               
                 return result.data;
         
             }
@@ -829,19 +831,20 @@ async function openCase(caseId) {
                      */
 
                     else if (
-                        result.data.status ===
-                        "success"
-                    ) {
-
-                        console.log(
-                            "🎉 找回開箱結果：",
-                            result.data.result
-                        );
-
-
-                        return result.data.result;
-
-                    }
+                         result.data.status ===
+                         "success"
+                     ) {
+                     
+                         console.log(
+                             "🎉 找回開箱結果：",
+                             result.data.result
+                         );
+                     
+                         clearUserCache();
+                     
+                         return result.data.result;
+                     
+                     }
 
                 }
 
