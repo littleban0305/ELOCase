@@ -1,3 +1,136 @@
+/* ========================================
+   ELOCase LocalStorage Cache
+======================================== */
+
+const API_CACHE_PREFIX =
+    "ELOCASE_CACHE_";
+
+const API_CACHE_24_HOURS =
+    24 * 60 * 60 * 1000;
+
+
+/*
+ * 儲存 Cache
+ */
+function saveApiCache(
+    key,
+    data,
+    duration =
+        API_CACHE_24_HOURS
+) {
+
+    const cacheData = {
+
+        data:
+            data,
+
+        savedAt:
+            Date.now(),
+
+        expiresAt:
+            Date.now() +
+            duration
+
+    };
+
+
+    localStorage.setItem(
+
+        API_CACHE_PREFIX +
+        key,
+
+        JSON.stringify(
+            cacheData
+        )
+
+    );
+
+}
+
+
+/*
+ * 讀取 Cache
+ */
+function getApiCache(
+    key
+) {
+
+    const raw =
+        localStorage.getItem(
+            API_CACHE_PREFIX +
+            key
+        );
+
+
+    if (!raw) {
+
+        return null;
+
+    }
+
+
+    try {
+
+        const cacheData =
+            JSON.parse(
+                raw
+            );
+
+
+        /*
+         * 已過期
+         */
+
+        if (
+            Date.now() >=
+            cacheData.expiresAt
+        ) {
+
+            localStorage.removeItem(
+                API_CACHE_PREFIX +
+                key
+            );
+
+            return null;
+
+        }
+
+
+        return cacheData.data;
+
+
+    } catch (error) {
+
+        /*
+         * Cache 壞掉
+         */
+
+        localStorage.removeItem(
+            API_CACHE_PREFIX +
+            key
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/*
+ * 刪除 Cache
+ */
+function removeApiCache(
+    key
+) {
+
+    localStorage.removeItem(
+        API_CACHE_PREFIX +
+        key
+    );
+
+}
+
 async function sendApiRequest(
     action,
     parameters = {}
@@ -209,21 +342,113 @@ async function sendApiRequest(
 
 async function getCases() {
 
-    return await sendApiRequest(
-        "getCases"
+    /*
+     * ====================================
+     * 先讀 LocalStorage
+     * ====================================
+     */
+
+    const cached =
+        getApiCache(
+            "cases"
+        );
+
+
+    if (cached) {
+
+        console.log(
+            "⚡ getCases 使用 LocalStorage"
+        );
+
+        return cached;
+
+    }
+
+
+    /*
+     * ====================================
+     * Cache 沒有
+     * → 呼叫 API
+     * ====================================
+     */
+
+    console.log(
+        "🌐 getCases 呼叫 API"
     );
+
+
+    const data =
+        await sendApiRequest(
+            "getCases"
+        );
+
+
+    /*
+     * ====================================
+     * 儲存 24 小時
+     * ====================================
+     */
+
+    saveApiCache(
+        "cases",
+        data
+    );
+
+
+    return data;
 
 }
 
 
-async function getCase(caseId) {
+async function getCase(
+    caseId
+) {
 
-    return await sendApiRequest(
-        "getCase",
-        {
+    const cacheKey =
+        `case_${caseId}`;
+
+
+    const cached =
+        getApiCache(
+            cacheKey
+        );
+
+
+    if (cached) {
+
+        console.log(
+            "⚡ getCase 使用 LocalStorage：",
             caseId
-        }
+        );
+
+        return cached;
+
+    }
+
+
+    console.log(
+        "🌐 getCase 呼叫 API：",
+        caseId
     );
+
+
+    const data =
+        await sendApiRequest(
+            "getCase",
+            {
+                caseId
+            }
+        );
+
+
+    saveApiCache(
+        cacheKey,
+        data
+    );
+
+
+    return data;
+
 }
 
 async function getInventory(userId) {
@@ -236,14 +461,54 @@ async function getInventory(userId) {
     );
 }
 
-async function getCaseItems(caseId) {
+async function getCaseItems(
+    caseId
+) {
 
-    return await sendApiRequest(
-        "getCaseItems",
-        {
+    const cacheKey =
+        `caseItems_${caseId}`;
+
+
+    const cached =
+        getApiCache(
+            cacheKey
+        );
+
+
+    if (cached) {
+
+        console.log(
+            "⚡ getCaseItems 使用 LocalStorage：",
             caseId
-        }
+        );
+
+        return cached;
+
+    }
+
+
+    console.log(
+        "🌐 getCaseItems 呼叫 API：",
+        caseId
     );
+
+
+    const data =
+        await sendApiRequest(
+            "getCaseItems",
+            {
+                caseId
+            }
+        );
+
+
+    saveApiCache(
+        cacheKey,
+        data
+    );
+
+
+    return data;
 
 }
 
