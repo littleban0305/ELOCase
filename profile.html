@@ -879,6 +879,320 @@
         
         }
 
+        /* ========================================
+           儲存編輯資料
+        ======================================== */
+        
+        const editProfileSave =
+            document.querySelector(
+                "#edit-profile-save"
+            );
+        
+        
+        if (editProfileSave) {
+        
+            editProfileSave.addEventListener(
+                "click",
+                async () => {
+        
+                    /*
+                     * 防止連續點擊
+                     */
+        
+                    if (
+                        editProfileSave.disabled
+                    ) {
+        
+                        return;
+        
+                    }
+        
+        
+                    /*
+                     * 取得目前 Session
+                     */
+        
+                    const sessionToken =
+                        getSessionToken();
+        
+        
+                    if (!sessionToken) {
+        
+                        alert(
+                            "登入狀態已失效，請重新登入"
+                        );
+        
+                        return;
+        
+                    }
+        
+        
+                    /*
+                     * 取得新的顯示名稱
+                     */
+        
+                    const newDisplayName =
+                        editDisplayName.value.trim();
+        
+        
+                    /*
+                     * 基本檢查
+                     */
+        
+                    if (!newDisplayName) {
+        
+                        alert(
+                            "顯示名稱不能為空"
+                        );
+        
+                        editDisplayName.focus();
+        
+                        return;
+        
+                    }
+        
+        
+                    if (
+                        newDisplayName.length > 30
+                    ) {
+        
+                        alert(
+                            "顯示名稱最多 30 個字"
+                        );
+        
+                        editDisplayName.focus();
+        
+                        return;
+        
+                    }
+        
+        
+                    try {
+        
+                        /*
+                         * 鎖定按鈕
+                         */
+        
+                        editProfileSave.disabled =
+                            true;
+        
+                        editProfileSave.textContent =
+                            "儲存中...";
+        
+        
+                        /*
+                         * 呼叫 API
+                         */
+        
+                        const response =
+                            await sendApiRequest(
+                                "updatePlayer",
+                                {
+                                    token:
+                                        sessionToken,
+        
+                                    displayName:
+                                        newDisplayName
+                                }
+                            );
+        
+        
+                        /*
+                         * API 失敗
+                         */
+        
+                        if (
+                            !response ||
+                            !response.success
+                        ) {
+        
+                            throw new Error(
+                                response?.error ||
+                                "更新玩家資料失敗"
+                            );
+        
+                        }
+        
+        
+                        /*
+                         * 取得最新玩家資料
+                         */
+        
+                        const updatedUser =
+                            response.data;
+        
+        
+                        /*
+                         * 更新個人頁
+                         */
+        
+                        if (profileName) {
+        
+                            profileName.textContent =
+                                updatedUser.displayName ||
+                                updatedUser.username ||
+                                "玩家";
+        
+                        }
+        
+        
+                        if (profileUsername) {
+        
+                            profileUsername.textContent =
+                                `玩家名稱：${
+                                    updatedUser.username
+                                }`;
+        
+                        }
+        
+        
+                        if (profileBalance) {
+        
+                            profileBalance.textContent =
+                                `$${Number(
+                                    updatedUser.eloCoin || 0
+                                ).toLocaleString()}`;
+        
+                        }
+        
+        
+                        if (profileLevel) {
+        
+                            profileLevel.textContent =
+                                `Lv.${
+                                    updatedUser.level ?? 0
+                                }`;
+        
+                        }
+        
+        
+                        if (infoUsername) {
+        
+                            infoUsername.textContent =
+                                updatedUser.username ||
+                                "-";
+        
+                        }
+        
+        
+                        if (infoDisplayName) {
+        
+                            infoDisplayName.textContent =
+                                updatedUser.displayName ||
+                                updatedUser.username ||
+                                "-";
+        
+                        }
+        
+        
+                        if (infoLevel) {
+        
+                            infoLevel.textContent =
+                                `Lv.${
+                                    updatedUser.level ?? 0
+                                }`;
+        
+                        }
+        
+        
+                        /*
+                         * Navbar 名稱
+                         */
+        
+                        const navbarPlayerName =
+                            document.querySelector(
+                                "#navbar-player-name"
+                            );
+        
+        
+                        if (navbarPlayerName) {
+        
+                            navbarPlayerName.textContent =
+                                updatedUser.displayName ||
+                                updatedUser.username ||
+                                "玩家";
+        
+                        }
+        
+        
+                        /*
+                         * Navbar 餘額
+                         */
+        
+                        const navbarBalance =
+                            document.querySelector(
+                                ".balance-value"
+                            );
+        
+        
+                        if (navbarBalance) {
+        
+                            navbarBalance.textContent =
+                                Number(
+                                    updatedUser.eloCoin || 0
+                                ).toLocaleString();
+        
+                        }
+        
+        
+                        /*
+                         * 更新 LocalStorage
+                         *
+                         * 這裡先沿用目前玩家 Cache
+                         */
+        
+                        const playerCacheKey =
+                            "eloCase_player";
+        
+        
+                        localStorage.setItem(
+                            playerCacheKey,
+                            JSON.stringify(
+                                updatedUser
+                            )
+                        );
+        
+        
+                        /*
+                         * 關閉 Modal
+                         */
+        
+                        closeEditProfileModal();
+        
+        
+                    } catch (error) {
+        
+                        console.error(
+                            "更新玩家資料失敗：",
+                            error
+                        );
+        
+        
+                        alert(
+                            error.message ||
+                            "更新失敗，請稍後再試"
+                        );
+        
+        
+                    } finally {
+        
+                        /*
+                         * 恢復按鈕
+                         */
+        
+                        editProfileSave.disabled =
+                            false;
+        
+                        editProfileSave.textContent =
+                            "儲存";
+        
+                    }
+        
+                }
+            );
+        
+        }
+
         initializeProfile();
 
     </script>
