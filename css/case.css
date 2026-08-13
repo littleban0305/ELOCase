@@ -1538,9 +1538,9 @@ main {
 
     top: 55%;
 
-    width: 190px;
+    width: 280px;
 
-    height: 130px;
+    height: 190px;
 
     transform:
         translate(
@@ -1563,9 +1563,9 @@ main {
 
     bottom: 0;
 
-    width: 190px;
+    width: 280px;
 
-    height: 105px;
+    height: 150px;
 
     display: flex;
 
@@ -1618,13 +1618,13 @@ main {
 
     position: absolute;
 
-    left: -5px;
-
     top: 0;
 
-    width: 200px;
+    width: 290px;
 
-    height: 38px;
+    height: 52px;
+
+    left: -5px;
 
     border:
         2px solid
@@ -1656,13 +1656,12 @@ main {
 
     left: 50%;
 
-    top: 55px;
+    top: 78px;
+
+    font-size: 40px;
 
     transform:
         translateX(-50%);
-
-    font-size:
-        30px;
 
     filter:
         drop-shadow(
@@ -1685,8 +1684,7 @@ main {
 
     top: 85px;
 
-    font-size:
-        52px;
+    font-size: 68px;
 
     transform:
         rotate(-25deg);
@@ -1972,5 +1970,49 @@ main {
             scale(2.2);
 
     }
+
+}
+
+/* ========================================
+   滑動條第二階段
+======================================== */
+
+.case-preview-container {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+        translateY(20px);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        visibility 0s linear 0.45s;
+
+}
+
+
+/*
+ * 開箱動畫完成後
+ */
+
+.case-preview-container.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translateY(0);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
 
 }
