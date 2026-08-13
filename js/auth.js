@@ -338,6 +338,12 @@ async function verifySession() {
         getSessionToken();
 
 
+    /*
+     * ====================================
+     * 沒有 Session
+     * ====================================
+     */
+
     if (!sessionToken) {
 
         return null;
@@ -347,7 +353,7 @@ async function verifySession() {
 
     /*
      * ====================================
-     * 先讀取前端快取
+     * 先讀取玩家快取
      * ====================================
      */
 
@@ -356,14 +362,54 @@ async function verifySession() {
 
 
     /*
-     * 如果有快取，而且還沒過期
+     * ====================================
+     * ⭐ 有玩家快取
+     *
      * 直接使用
+     * 不等待 API
+     * ====================================
      */
 
-    if (
-        savedUser &&
-        !shouldVerifyUser()
-    ) {
+    if (savedUser) {
+
+        console.log(
+            "⚡ verifySession 使用 LocalStorage"
+        );
+
+
+        /*
+         * ====================================
+         * 超過 24 小時
+         *
+         * 背景驗證
+         * ====================================
+         */
+
+        if (
+            shouldVerifyUser()
+        ) {
+
+            console.log(
+                "🕐 玩家資料已超過 24 小時 → 背景驗證"
+            );
+
+
+            refreshSessionInBackground(
+                sessionToken
+            );
+
+        } else {
+
+            console.log(
+                "🟢 玩家資料尚未過期"
+            );
+
+        }
+
+
+        /*
+         * ⭐ 直接回傳
+         */
 
         return savedUser;
 
@@ -372,9 +418,16 @@ async function verifySession() {
 
     /*
      * ====================================
-     * 需要重新驗證
+     * 沒有玩家快取
+     *
+     * 第一次載入才等待 API
      * ====================================
      */
+
+    console.log(
+        "🌐 沒有玩家 Cache → 驗證 Session"
+    );
+
 
     try {
 
@@ -388,7 +441,9 @@ async function verifySession() {
 
 
         /*
-         * 更新玩家資料
+         * ====================================
+         * 儲存最新玩家資料
+         * ====================================
          */
 
         localStorage.setItem(
@@ -412,19 +467,25 @@ async function verifySession() {
 
     } catch (error) {
 
+        console.error(
+            "❌ 初次 Session 驗證失敗：",
+            error
+        );
+
+
         /*
-         * Session 真的失效
+         * 第一次沒有 Cache，
+         * API 又失敗，
+         * 才真的視為無法登入。
          */
 
         localStorage.removeItem(
             "elocaseSessionToken"
         );
 
-
         localStorage.removeItem(
             "elocaseUser"
         );
-
 
         localStorage.removeItem(
             "elocaseUserVerifiedAt"
@@ -432,6 +493,88 @@ async function verifySession() {
 
 
         return null;
+
+    }
+
+}
+
+/* ========================================
+   背景重新驗證 Session
+======================================== */
+
+async function refreshSessionInBackground(
+    sessionToken
+) {
+
+    try {
+
+        console.log(
+            "🔄 背景驗證玩家 Session..."
+        );
+
+
+        const user =
+            await sendApiRequest(
+                "getPlayerBySession",
+                {
+                    sessionToken
+                }
+            );
+
+
+        /*
+         * ====================================
+         * 更新玩家資料
+         * ====================================
+         */
+
+        localStorage.setItem(
+            "elocaseUser",
+            JSON.stringify(
+                user
+            )
+        );
+
+
+        localStorage.setItem(
+            "elocaseUserVerifiedAt",
+            String(
+                Date.now()
+            )
+        );
+
+
+        console.log(
+            "✅ 背景 Session 驗證完成"
+        );
+
+
+        /*
+         * ====================================
+         * 如果目前頁面有 Navbar
+         * 立即更新 ELOCoin / 名稱
+         * ====================================
+         */
+
+        updateLoginUI(
+            user
+        );
+
+
+    } catch (error) {
+
+        /*
+         * ====================================
+         * 背景驗證失敗
+         *
+         * 不要直接把玩家踢出去。
+         * ====================================
+         */
+
+        console.warn(
+            "⚠️ 背景 Session 驗證失敗：",
+            error.message
+        );
 
     }
 
