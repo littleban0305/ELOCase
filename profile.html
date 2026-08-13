@@ -31,8 +31,6 @@
         <div class="navbar-container">
 
 
-            <!-- 品牌 -->
-
             <a
                 href="index.html"
                 class="brand"
@@ -40,8 +38,6 @@
                 ELOCase
             </a>
 
-
-            <!-- 導覽 -->
 
             <nav class="nav-links">
 
@@ -79,12 +75,10 @@
             </nav>
 
 
-            <!-- 右側 -->
-
             <div class="navbar-actions">
 
 
-                <!-- 餘額 -->
+                <!-- ELOCoin -->
 
                 <div class="balance">
 
@@ -101,7 +95,7 @@
                 </div>
 
 
-                <!-- 玩家 -->
+                <!-- 玩家選單 -->
 
                 <div class="player-menu">
 
@@ -171,7 +165,7 @@
 
 
     <!-- ========================================
-         個人資料
+         個人頁面
     ======================================== -->
 
     <main>
@@ -182,77 +176,48 @@
 
 
                 <!-- ========================================
-                     個人 Hero
+                     玩家標頭
                 ======================================== -->
 
-                <div class="profile-hero">
+                <div class="profile-header">
 
 
-                    <!-- 背景裝飾 -->
-
-                    <div class="profile-hero-glow"></div>
+                    <div class="profile-user">
 
 
-                    <!-- 頭像 -->
+                        <div class="profile-avatar">
 
-                    <div class="profile-avatar">
+                            <span>
+                                ◉
+                            </span>
 
-                        <span>
-                            ◉
-                        </span>
-
-                    </div>
+                        </div>
 
 
-                    <!-- 玩家資訊 -->
+                        <div class="profile-user-info">
 
-                    <div class="profile-identity">
+                            <h1 id="profile-name">
+                                載入中...
+                            </h1>
 
-                        <span class="profile-label">
-                            ELOCASE PLAYER
-                        </span>
-
-                        <h1 id="profile-name">
-                            載入中...
-                        </h1>
-
-                        <p id="profile-username">
-                            玩家名稱：-
-                        </p>
-
-                        <div class="profile-online">
-
-                            <span class="profile-online-dot"></span>
-
-                            ONLINE
+                            <p id="profile-username">
+                                玩家名稱：-
+                            </p>
 
                         </div>
 
                     </div>
 
 
-                </div>
+
+                    <!-- 玩家數據 -->
+
+                    <div class="profile-balance-box">
 
 
+                        <div class="profile-balance-item">
 
-                <!-- ========================================
-                     玩家數據
-                ======================================== -->
-
-                <div class="profile-stats">
-
-
-                    <!-- ELOCoin -->
-
-                    <div class="profile-stat">
-
-                        <div class="profile-stat-icon coin-icon">
-                            $
-                        </div>
-
-                        <div>
-
-                            <span class="profile-stat-label">
+                            <span>
                                 ELOCoin
                             </span>
 
@@ -262,21 +227,14 @@
 
                         </div>
 
-                    </div>
+
+                        <div class="profile-balance-divider"></div>
 
 
-                    <!-- 等級 -->
+                        <div class="profile-balance-item">
 
-                    <div class="profile-stat">
-
-                        <div class="profile-stat-icon">
-                            LV
-                        </div>
-
-                        <div>
-
-                            <span class="profile-stat-label">
-                                玩家等級
+                            <span>
+                                等級
                             </span>
 
                             <strong id="profile-level">
@@ -288,27 +246,55 @@
                     </div>
 
 
-                    <!-- 狀態 -->
+                </div>
 
-                    <div class="profile-stat">
 
-                        <div class="profile-stat-icon">
-                            ◈
-                        </div>
 
-                        <div>
+                <!-- ========================================
+                     快速操作
+                ======================================== -->
 
-                            <span class="profile-stat-label">
-                                帳號狀態
-                            </span>
+                <div class="profile-nav">
 
-                            <strong class="profile-active">
-                                正常
-                            </strong>
 
-                        </div>
+                    <a
+                        href="inventory.html"
+                        class="profile-nav-button"
+                    >
 
-                    </div>
+                        <span class="profile-nav-icon">
+                            ◇
+                        </span>
+
+                        <span>
+                            我的物品
+                        </span>
+
+                        <span class="profile-nav-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="cases.html"
+                        class="profile-nav-button primary"
+                    >
+
+                        <span class="profile-nav-icon">
+                            ◆
+                        </span>
+
+                        <span>
+                            開始開箱
+                        </span>
+
+                        <span class="profile-nav-arrow">
+                            →
+                        </span>
+
+                    </a>
 
                 </div>
 
@@ -318,42 +304,26 @@
                      玩家資訊
                 ======================================== -->
 
-                <div class="profile-card">
+                <div class="profile-section">
 
 
-                    <div class="profile-card-header">
+                    <div class="profile-section-header">
 
-                        <div>
-
-                            <span class="profile-label">
-                                PLAYER
-                            </span>
-
-                            <h2>
-                                玩家資訊
-                            </h2>
-
-                        </div>
+                        <h2>
+                            玩家資訊
+                        </h2>
 
                     </div>
 
 
-                    <div class="profile-info">
+                    <div class="profile-details">
 
 
-                        <div class="profile-info-row">
+                        <div class="profile-detail-row">
 
-                            <div>
-
-                                <span class="profile-info-label">
-                                    玩家名稱
-                                </span>
-
-                                <span class="profile-info-description">
-                                    你的 ELOCase 玩家帳號
-                                </span>
-
-                            </div>
+                            <span class="profile-detail-label">
+                                玩家名稱
+                            </span>
 
                             <strong id="info-username">
                                 -
@@ -362,19 +332,11 @@
                         </div>
 
 
-                        <div class="profile-info-row">
+                        <div class="profile-detail-row">
 
-                            <div>
-
-                                <span class="profile-info-label">
-                                    顯示名稱
-                                </span>
-
-                                <span class="profile-info-description">
-                                    在 ELOCase 顯示的名稱
-                                </span>
-
-                            </div>
+                            <span class="profile-detail-label">
+                                顯示名稱
+                            </span>
 
                             <strong id="info-display-name">
                                 -
@@ -383,19 +345,11 @@
                         </div>
 
 
-                        <div class="profile-info-row">
+                        <div class="profile-detail-row">
 
-                            <div>
-
-                                <span class="profile-info-label">
-                                    玩家等級
-                                </span>
-
-                                <span class="profile-info-description">
-                                    目前帳號等級
-                                </span>
-
-                            </div>
+                            <span class="profile-detail-label">
+                                玩家等級
+                            </span>
 
                             <strong id="info-level">
                                 Lv.0
@@ -411,89 +365,20 @@
 
 
                 <!-- ========================================
-                     快速操作
+                     帳號操作
                 ======================================== -->
 
-                <div class="profile-actions">
+                <div class="profile-account">
 
-
-                    <a
-                        href="cases.html"
-                        class="profile-action profile-action-primary"
-                    >
-
-                        <span class="profile-action-icon">
-                            ◆
-                        </span>
-
-                        <span>
-
-                            <strong>
-                                開始開箱
-                            </strong>
-
-                            <small>
-                                前往 ELOCase
-                            </small>
-
-                        </span>
-
-                        <span class="profile-action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="inventory.html"
-                        class="profile-action"
-                    >
-
-                        <span class="profile-action-icon">
-                            ◇
-                        </span>
-
-                        <span>
-
-                            <strong>
-                                我的物品
-                            </strong>
-
-                            <small>
-                                查看你的收藏
-                            </small>
-
-                        </span>
-
-                        <span class="profile-action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-                </div>
-
-
-
-                <!-- ========================================
-                     登出
-                ======================================== -->
-
-                <div class="profile-logout-area">
 
                     <div>
 
-                        <span class="profile-label">
-                            ACCOUNT
-                        </span>
-
-                        <h3>
-                            帳號操作
-                        </h3>
+                        <h2>
+                            帳號
+                        </h2>
 
                         <p>
-                            登出目前的 ELOCase 帳號
+                            管理目前的 ELOCase 登入狀態
                         </p>
 
                     </div>
@@ -504,7 +389,7 @@
                         class="profile-logout-button"
                         type="button"
                     >
-                        登出帳號
+                        登出
                     </button>
 
                 </div>
@@ -551,7 +436,7 @@
 
 
             /* ========================================
-               玩家名稱
+               基本資料
             ======================================== */
 
             const displayName =
@@ -559,6 +444,27 @@
                 user.username ||
                 "玩家";
 
+
+            const username =
+                user.username ||
+                "-";
+
+
+            const level =
+                Number(
+                    user.level ?? 0
+                );
+
+
+            const eloCoin =
+                Number(
+                    user.eloCoin || 0
+                );
+
+
+            /* ========================================
+               Hero 名稱
+            ======================================== */
 
             const profileName =
                 document.querySelector(
@@ -575,13 +481,8 @@
 
 
             /* ========================================
-               玩家帳號
+               Hero 帳號
             ======================================== */
-
-            const username =
-                user.username ||
-                "-";
-
 
             const profileUsername =
                 document.querySelector(
@@ -598,7 +499,43 @@
 
 
             /* ========================================
-               玩家名稱資訊
+               ELOCoin
+            ======================================== */
+
+            const profileBalance =
+                document.querySelector(
+                    "#profile-balance"
+                );
+
+
+            if (profileBalance) {
+
+                profileBalance.textContent =
+                    `$${eloCoin.toLocaleString()}`;
+
+            }
+
+
+            /* ========================================
+               等級
+            ======================================== */
+
+            const profileLevel =
+                document.querySelector(
+                    "#profile-level"
+                );
+
+
+            if (profileLevel) {
+
+                profileLevel.textContent =
+                    `Lv.${level}`;
+
+            }
+
+
+            /* ========================================
+               玩家資訊
             ======================================== */
 
             const infoUsername =
@@ -615,10 +552,6 @@
             }
 
 
-            /* ========================================
-               顯示名稱
-            ======================================== */
-
             const infoDisplayName =
                 document.querySelector(
                     "#info-display-name"
@@ -633,62 +566,6 @@
             }
 
 
-            /* ========================================
-               ELOCoin
-            ======================================== */
-
-            const eloCoin =
-                Number(
-                    user.eloCoin || 0
-                );
-
-
-            const formattedCoin =
-                eloCoin.toLocaleString();
-
-
-            const profileBalance =
-                document.querySelector(
-                    "#profile-balance"
-                );
-
-
-            if (profileBalance) {
-
-                profileBalance.textContent =
-                    `$${formattedCoin}`;
-
-            }
-
-
-            /* ========================================
-               等級
-            ======================================== */
-
-            const level =
-                Number(
-                    user.level ?? 0
-                );
-
-
-            const levelText =
-                `Lv.${level}`;
-
-
-            const profileLevel =
-                document.querySelector(
-                    "#profile-level"
-                );
-
-
-            if (profileLevel) {
-
-                profileLevel.textContent =
-                    levelText;
-
-            }
-
-
             const infoLevel =
                 document.querySelector(
                     "#info-level"
@@ -698,7 +575,7 @@
             if (infoLevel) {
 
                 infoLevel.textContent =
-                    levelText;
+                    `Lv.${level}`;
 
             }
 
@@ -716,7 +593,7 @@
             if (balance) {
 
                 balance.textContent =
-                    formattedCoin;
+                    eloCoin.toLocaleString();
 
             }
 
