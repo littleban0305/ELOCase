@@ -2177,14 +2177,21 @@ function playCaseOpeningIntro() {
             }
 
 
+            /*
+             * ====================================
+             * 初始化
+             * ====================================
+             */
+
             animation.className =
                 "case-opening-animation active";
 
 
             /*
              * ====================================
-             * 0.4 秒
-             * 鑰匙開始進入
+             * 0.45 秒
+             *
+             * 鑰匙飛進來
              * ====================================
              */
 
@@ -2196,13 +2203,14 @@ function playCaseOpeningIntro() {
                     );
 
                 },
-                400
+                450
             );
 
 
             /*
              * ====================================
-             * 1.2 秒
+             * 1.5 秒
+             *
              * 鑰匙轉動
              * ====================================
              */
@@ -2219,14 +2227,15 @@ function playCaseOpeningIntro() {
                     );
 
                 },
-                1200
+                1500
             );
 
 
             /*
              * ====================================
-             * 2.4 秒
-             * 箱子開始震動
+             * 2.35 秒
+             *
+             * 箱子震動
              * ====================================
              */
 
@@ -2238,14 +2247,15 @@ function playCaseOpeningIntro() {
                     );
 
                 },
-                2400
+                2350
             );
 
 
             /*
              * ====================================
-             * 3.0 秒
-             * 箱子正式打開
+             * 2.8 秒
+             *
+             * 箱蓋打開
              * ====================================
              */
 
@@ -2257,54 +2267,68 @@ function playCaseOpeningIntro() {
                     );
 
                 },
-                3000
+                2800
             );
 
 
             /*
              * ====================================
-             * 4.5 秒
-             * 開箱 Intro 完成
+             * 4.25 秒
              *
-             * → 接滑動條
+             * 開箱動畫結束
              * ====================================
              */
 
             setTimeout(
                 () => {
 
-                    animation.classList.remove(
-                         "active"
-                     );
-                     
-                     
-                     /*
-                      * ====================================
-                      * 開箱動畫完成
-                      *
-                      * 現在才讓滑動條出現
-                      * ====================================
-                      */
-                     
-                     const previewContainer =
-                         document.querySelector(
-                             "#case-preview-container"
-                         );
-                     
-                     
-                     if (previewContainer) {
-                     
-                         previewContainer.classList.add(
-                             "show"
-                         );
-                     
-                     }
-                     
-                     
-                     resolve();
+                    animation.classList.add(
+                        "finish"
+                    );
 
                 },
-                4500
+                4250
+            );
+
+
+            /*
+             * ====================================
+             * 4.75 秒
+             *
+             * 開箱動畫完全消失
+             *
+             * → 滑動條才出現
+             * ====================================
+             */
+
+            setTimeout(
+                () => {
+
+                    animation.className =
+                        "case-opening-animation";
+
+
+                    const previewContainer =
+                        document.querySelector(
+                            "#case-preview-container"
+                        );
+
+
+                    if (
+                        previewContainer
+                    ) {
+
+                        previewContainer.classList.add(
+                            "show"
+                        );
+
+                    }
+
+
+                    resolve();
+
+                },
+                4750
             );
 
         }
