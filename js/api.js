@@ -275,12 +275,6 @@ async function openCase(caseId) {
     /*
      * ====================================
      * 建立本次開箱專用 requestId
-     *
-     * 這個 ID 非常重要。
-     *
-     * 就算 POST 回傳 404，
-     * 我們之後仍然可以用同一個 ID
-     * 找回這次開箱結果。
      * ====================================
      */
 
@@ -356,36 +350,35 @@ async function openCase(caseId) {
 
         /*
          * ====================================
-         * HTTP 錯誤
+         * POST 成功
          * ====================================
          */
 
-        if (!response.ok) {
+        if (response.ok) {
 
-            throw new Error(
-                `開箱服務無法使用（${response.status}）`
-            );
-
-        }
+            const result =
+                await response.json();
 
 
-        /*
-         * ====================================
-         * 解析 JSON
-         * ====================================
-         */
+            if (
+                result.success
+            ) {
 
-        const result =
-            await response.json();
+                /*
+                 * 直接成功
+                 */
+
+                return result.data;
+
+            }
 
 
-        /*
-         * ====================================
-         * API 回報錯誤
-         * ====================================
-         */
-
-        if (!result.success) {
+            /*
+             * API 本身回報錯誤
+             *
+             * 這種情況不要盲目查詢，
+             * 因為後端已經明確告訴我們錯誤。
+             */
 
             throw new Error(
                 result.error ||
@@ -397,23 +390,251 @@ async function openCase(caseId) {
 
         /*
          * ====================================
-         * 成功
+         * ⭐ POST HTTP 錯誤
+         *
+         * 不直接判定開箱失敗。
+         *
+         * 改用同一個 requestId
+         * 去查詢後端結果。
          * ====================================
          */
 
-        return result.data;
+        console.warn(
+            "⚠️ POST 開箱回應異常：",
+            response.status
+        );
 
 
     } catch (error) {
 
-        console.error(
-            "openCase API 錯誤：",
-            error
+        /*
+         * ====================================
+         * ⭐ 網路錯誤 / 404
+         *
+         * 這裡故意不立刻 throw。
+         *
+         * 因為 Google Apps Script
+         * 可能已經把開箱做完。
+         * ====================================
+         */
+
+        console.warn(
+            "⚠️ POST 開箱連線異常：",
+            error.message
         );
 
+    }
 
-        throw error;
+
+    /*
+     * ====================================
+     * ⭐ 開始查詢結果
+     * ====================================
+     */
+
+    console.log(
+        "🔎 開始查詢開箱結果：",
+        requestId
+    );
+
+
+    const maxChecks =
+        15;
+
+
+    const checkInterval =
+        1000;
+
+
+    for (
+        let attempt = 1;
+        attempt <= maxChecks;
+        attempt++
+    ) {
+
+        try {
+
+            const query =
+                new URLSearchParams({
+
+                    action:
+                        "getOpenCaseResult",
+
+                    sessionToken:
+                        sessionToken,
+
+                    requestId:
+                        requestId
+
+                });
+
+
+            const resultUrl =
+                `${CONFIG.API_URL}?${query.toString()}`;
+
+
+            console.log(
+                `🔎 查詢開箱結果 ${attempt}/${maxChecks}`
+            );
+
+
+            const resultResponse =
+                await fetch(
+                    resultUrl,
+                    {
+
+                        method:
+                            "GET",
+
+                        redirect:
+                            "follow",
+
+                        cache:
+                            "no-store"
+
+                    }
+                );
+
+
+            /*
+             * ====================================
+             * HTTP 錯誤
+             * ====================================
+             */
+
+            if (
+                !resultResponse.ok
+            ) {
+
+                console.warn(
+                    "⚠️ 結果查詢 HTTP 錯誤：",
+                    resultResponse.status
+                );
+
+            } else {
+
+                const result =
+                    await resultResponse.json();
+
+
+                /*
+                 * ====================================
+                 * 成功
+                 * ====================================
+                 */
+
+                if (
+                    result.success &&
+                    result.data
+                ) {
+
+                    /*
+                     * processing
+                     */
+
+                    if (
+                        result.data.status ===
+                        "processing"
+                    ) {
+
+                        console.log(
+                            "⏳ 開箱仍在處理..."
+                        );
+
+                    }
+
+
+                    /*
+                     * success
+                     */
+
+                    else if (
+                        result.data.status ===
+                        "success"
+                    ) {
+
+                        console.log(
+                            "🎉 找回開箱結果：",
+                            result.data.result
+                        );
+
+
+                        return result.data.result;
+
+                    }
+
+                }
+
+
+                /*
+                 * ====================================
+                 * API 明確回報錯誤
+                 * ====================================
+                 */
+
+                if (
+                    !result.success &&
+                    result.error
+                ) {
+
+                    /*
+                     * 找不到紀錄可能只是
+                     * Google 還沒寫入 Sheet。
+                     *
+                     * 所以繼續等。
+                     */
+
+                    console.warn(
+                        "⚠️ 結果查詢：",
+                        result.error
+                    );
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "⚠️ 結果查詢失敗：",
+                error.message
+            );
+
+        }
+
+
+        /*
+         * ====================================
+         * 等待下一次查詢
+         * ====================================
+         */
+
+        if (
+            attempt <
+            maxChecks
+        ) {
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        checkInterval
+                    )
+            );
+
+        }
 
     }
+
+
+    /*
+     * ====================================
+     * 超過等待時間
+     * ====================================
+     */
+
+    throw new Error(
+        "開箱結果等待逾時，請稍後再試"
+    );
 
 }
