@@ -1697,27 +1697,24 @@ main {
 .case-opening-key {
     position: absolute;
 
-    width: 235px;
-    max-width: 35%;
+    width: 340px;
+    max-width: 48%;
 
-    left: 2%;
-    top: 15%;
+    left: -2%;
+    top: 8%;
 
     opacity: 0;
 
     transform:
-        translate(
-            -100px,
-            -40px
-        )
+        translate(-120px, -50px)
         rotate(-25deg);
 
     z-index: 4;
 
     filter:
         drop-shadow(
-            0 0 14px
-            rgba(255, 190, 40, .85)
+            0 0 18px
+            rgba(255, 190, 40, .9)
         );
 }
 
@@ -2258,28 +2255,16 @@ main {
 
 .case-opening-animation.key-fly
 .case-opening-key {
-
     opacity: 1;
 
     transition:
         transform
         .85s
-        cubic-bezier(
-            .2,
-            .8,
-            .25,
-            1
-        );
+        cubic-bezier(.2, .8, .25, 1);
 
     transform:
-        translate(
-            330px,
-            130px
-        )
-        rotate(
-            0deg
-        );
-
+        translate(300px, 125px)
+        rotate(0deg);
 }
 
 
@@ -2289,26 +2274,14 @@ main {
 
 .case-opening-animation.key-lock
 .case-opening-key {
-
     transition:
         transform
         .45s
-        cubic-bezier(
-            .2,
-            .9,
-            .2,
-            1
-        );
+        cubic-bezier(.2, .9, .2, 1);
 
     transform:
-        translate(
-            355px,
-            145px
-        )
-        rotate(
-            0deg
-        );
-
+        translate(325px, 140px)
+        rotate(0deg);
 }
 
 
@@ -2318,26 +2291,14 @@ main {
 
 .case-opening-animation.key-turn
 .case-opening-key {
-
     transition:
         transform
         .45s
-        cubic-bezier(
-            .4,
-            0,
-            .2,
-            1
-        );
+        cubic-bezier(.4, 0, .2, 1);
 
     transform:
-        translate(
-            355px,
-            145px
-        )
-        rotate(
-            75deg
-        );
-
+        translate(325px, 140px)
+        rotate(75deg);
 }
 
 
