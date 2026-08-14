@@ -879,25 +879,6 @@
                 placeholder="例如：幫我建立一組 8 個 CS2 步槍收藏品，包含不同稀有度與磨損程度"
             ></textarea>
 
-            <div class="ai-field" style="margin-top:14px;">
-            
-                <label class="ai-field-label">
-                    加入箱子
-                </label>
-            
-                <select
-                    id="ai-case-select"
-                    class="ai-select"
-                >
-            
-                    <option value="">
-                        載入箱子中...
-                    </option>
-            
-                </select>
-            
-            </div>
-
             <button
                 id="ai-generate"
                 class="button button-primary ai-generate-button"
@@ -1849,29 +1830,6 @@ async function saveAIItems() {
     }
 
 
-    const caseSelect =
-        document.querySelector(
-            "#ai-case-select"
-        );
-
-
-    const caseId =
-        caseSelect
-            ? caseSelect.value
-            : "";
-
-
-    if (!caseId) {
-
-        alert(
-            "請先選擇要加入的箱子"
-        );
-
-        return;
-
-    }
-
-
     /*
      * ========================================
      * 價格高 → 低
@@ -1930,9 +1888,6 @@ async function saveAIItems() {
 
                             collectionName:
                                 data.name,
-
-                            caseId:
-                                caseId,
 
                             items:
                                 data.items
@@ -2097,108 +2052,6 @@ promptInput.addEventListener(
 
     }
 );
-
-async function loadCases() {
-
-    const select =
-        document.querySelector(
-            "#ai-case-select"
-        );
-
-
-    if (!select) {
-        return;
-    }
-
-
-    try {
-
-        const response =
-            await fetch(
-                AI_API_URL +
-                "?action=getCases"
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if (
-            !result.success
-        ) {
-
-            throw new Error(
-                result.error ||
-                "無法取得箱子"
-            );
-
-        }
-
-
-        const cases =
-            Array.isArray(
-                result.data
-            )
-                ? result.data
-                : [];
-
-
-        select.innerHTML = `
-
-            <option value="">
-                選擇箱子
-            </option>
-
-            ${
-                cases
-                    .map(
-                        box => `
-
-                            <option
-                                value="${escapeAttribute(
-                                    box.caseId
-                                )}"
-                            >
-                                ${escapeHTML(
-                                    box.name
-                                )}
-                                ${
-                                    box.price != null
-                                        ? ` ($${Number(
-                                            box.price
-                                        ).toLocaleString()})`
-                                        : ""
-                                }
-                            </option>
-
-                        `
-                    )
-                    .join("")
-            }
-
-        `;
-
-
-    } catch (error) {
-
-        console.error(
-            "Load Cases Error:",
-            error
-        );
-
-
-        select.innerHTML = `
-
-            <option value="">
-                無法載入箱子
-            </option>
-
-        `;
-
-    }
-
-}
 
 function getRarityColorFrontend(
     rarity
