@@ -1135,29 +1135,35 @@ function renderAIResult(data) {
 
         <div class="ai-result-header">
 
-            <div>
+            <div style="flex:1;">
 
-                <h2 class="ai-result-name">
-                    ${escapeHTML(
-                        data.name ||
-                        "未命名收藏"
-                    )}
-                </h2>
+                <div class="ai-field">
 
-            </div>
+                    <label class="ai-field-label">
+                        收藏系列名稱
+                    </label>
 
+                    <input
+                        type="text"
+                        id="ai-collection-name"
+                        class="ai-input"
+                        value="${escapeAttribute(
+                            data.name || ""
+                        )}"
+                    >
 
-            <div>
-
-                <button
-                    type="button"
-                    class="button button-primary"
-                    id="save-ai-items"
-                >
-                    加入 Items
-                </button>
+                </div>
 
             </div>
+
+
+            <button
+                type="button"
+                class="button button-primary ai-save-button"
+                id="save-ai-items"
+            >
+                加入 Items
+            </button>
 
         </div>
 
@@ -1172,37 +1178,36 @@ function renderAIResult(data) {
             ${
                 items
                     .map(
-                        item =>
-                            renderAIItem(item)
+                        (item, index) =>
+                            renderAIItem(
+                                item,
+                                index
+                            )
                     )
                     .join("")
             }
 
         </div>
 
+
+        <button
+            type="button"
+            class="ai-add-item"
+            id="ai-add-item"
+        >
+            ＋ 新增物品
+        </button>
+
     `;
 
 
-    const saveButton =
-        document.querySelector(
-            "#save-ai-items"
-        );
+    /*
+     * ========================================
+     * 綁定事件
+     * ========================================
+     */
 
-
-    if (saveButton) {
-
-        saveButton.addEventListener(
-            "click",
-            () => {
-
-                saveAIItems(
-                    data
-                );
-
-            }
-        );
-
-    }
+    bindResultEvents();
 
 }
 
@@ -1218,23 +1223,20 @@ function renderAIItem(
 
     const rarity =
         String(
-            item.rarity ||
-            ""
-        ).trim();
-
-
-    const color =
-        String(
-            item.color ||
-            ""
+            item.rarity || ""
         ).trim();
 
 
     const wear =
         String(
-            item.wear ||
-            ""
+            item.wear || ""
         ).trim();
+
+
+    const color =
+        getRarityColorFrontend(
+            rarity
+        );
 
 
     return `
@@ -1242,6 +1244,7 @@ function renderAIItem(
         <div
             class="ai-item"
             data-index="${index}"
+            data-color="${escapeAttribute(color)}"
         >
 
             <div class="ai-item-top">
@@ -1272,8 +1275,7 @@ function renderAIItem(
                     type="text"
                     class="ai-input ai-edit-name"
                     value="${escapeAttribute(
-                        item.name ||
-                        ""
+                        item.name || ""
                     )}"
                 >
 
@@ -1307,15 +1309,14 @@ function renderAIItem(
                         顏色
                     </label>
 
-                    <select
-                        class="ai-select ai-edit-color"
-                    >
-
-                        ${colorOptions(
+                    <input
+                        type="text"
+                        class="ai-input ai-edit-color"
+                        value="${escapeAttribute(
                             color
-                        )}
-
-                    </select>
+                        )}"
+                        readonly
+                    >
 
                 </div>
 
@@ -1366,6 +1367,44 @@ function renderAIItem(
         </div>
 
     `;
+
+}
+
+function updateItemColor(card) {
+
+    const raritySelect =
+        card.querySelector(
+            ".ai-edit-rarity"
+        );
+
+    const colorInput =
+        card.querySelector(
+            ".ai-edit-color"
+        );
+
+
+    if (
+        !raritySelect ||
+        !colorInput
+    ) {
+
+        return;
+
+    }
+
+
+    const color =
+        getRarityColorFrontend(
+            raritySelect.value
+        );
+
+
+    colorInput.value =
+        color;
+
+
+    card.dataset.color =
+        color;
 
 }
 
@@ -1560,6 +1599,36 @@ function bindResultEvents() {
             }
         );
 
+
+    /*
+     * ========================================
+     * Rarity 改變時自動更新 Color
+     * ========================================
+     */
+
+    document
+        .querySelectorAll(
+            ".ai-edit-rarity"
+        )
+        .forEach(
+            select => {
+
+                select.addEventListener(
+                    "change",
+                    () => {
+
+                        updateItemColor(
+                            select.closest(
+                                ".ai-item"
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
+
 }
 
 
@@ -1718,9 +1787,9 @@ function collectEditedData() {
 
 
             const color =
-                card.querySelector(
-                    ".ai-edit-color"
-                ).value;
+                getRarityColorFrontend(
+                    rarity
+                );
 
 
             const wear =
