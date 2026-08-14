@@ -726,61 +726,26 @@
 
 
             } catch (error) {
-
+            
                 console.error(
                     "AI Error:",
                     error
                 );
-
-
+            
+            
                 resultContainer.innerHTML = `
-                
-                    <div class="ai-result-header">
-                
-                        <div>
-                
-                            <h2 class="ai-result-name">
-                
-                                ${escapeHTML(
-                                    data.name ||
-                                    "未命名收藏"
-                                )}
-                
-                            </h2>
-                
-                        </div>
-                
-                
-                        <div>
-                
-                            <button
-                                type="button"
-                                class="button button-primary"
-                                id="save-ai-items"
-                            >
-                                加入 Items
-                            </button>
-                
-                        </div>
-                
+            
+                    <div class="ai-error">
+            
+                        ${escapeHTML(
+                            error.message ||
+                            "AI 生成失敗"
+                        )}
+            
                     </div>
-                
-                
-                    <div class="ai-items">
-                
-                        ${
-                            items
-                                .map(
-                                    item =>
-                                        renderAIItem(item)
-                                )
-                                .join("")
-                        }
-                
-                    </div>
-                
+            
                 `;
-
+            
             } finally {
 
                 generateButton.disabled =
@@ -815,9 +780,9 @@
             resultContainer.innerHTML = `
 
                 <div class="ai-result-header">
-
+                
                     <div>
-
+                
                         <h2
                             class="ai-result-name"
                         >
@@ -826,13 +791,25 @@
                                 "未命名收藏"
                             )}
                         </h2>
-
+                
+                        <div
+                            class="ai-result-count"
+                            style="margin-top:6px;"
+                        >
+                            ${items.length} 個物品
+                        </div>
+                
                     </div>
-
-                    <div class="ai-result-count">
-                        ${items.length} 個物品
-                    </div>
-
+                
+                
+                    <button
+                        type="button"
+                        class="button button-primary"
+                        id="save-ai-items"
+                    >
+                        加入 Items
+                    </button>
+                
                 </div>
 
 
