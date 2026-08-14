@@ -1658,3 +1658,112 @@ async function openCase(caseId) {
     );
 
 }
+
+/* ========================================
+   AI 內容生成
+======================================== */
+
+async function generateAI(prompt) {
+
+    if (!prompt) {
+
+        throw new Error(
+            "缺少 AI 指令"
+        );
+
+    }
+
+
+    const requestData = {
+
+        action:
+            "generateAI",
+
+        prompt:
+            prompt
+
+    };
+
+
+    try {
+
+        console.log(
+            "🤖 AI 請求：",
+            prompt
+        );
+
+
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
+
+                    redirect:
+                        "follow",
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `AI API 請求失敗（${response.status}）`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.error ||
+                "AI 生成失敗"
+            );
+
+        }
+
+
+        console.log(
+            "🤖 AI 回應：",
+            result.data
+        );
+
+
+        return result.data;
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ AI 請求失敗：",
+            error
+        );
+
+        throw error;
+
+    }
+
+}
