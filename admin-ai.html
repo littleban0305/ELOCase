@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI 管理助手｜ELOCase</title>
+
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-ai.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="navbar-container">
+
+        <a
+            href="index.html"
+            class="brand"
+        >
+            ELOCase
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                首頁
+            </a>
+
+            <a
+                href="cases.html"
+                class="nav-link"
+            >
+                開箱
+            </a>
+
+            <a
+                href="inventory.html"
+                class="nav-link"
+            >
+                我的物品
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-link"
+            >
+                個人資料
+            </a>
+
+        </nav>
+
+
+        <div class="navbar-actions">
+
+            <div class="balance">
+
+                <span class="balance-label">
+                    $
+                </span>
+
+                <span
+                    class="balance-value"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="player-menu">
+
+                <button
+                    type="button"
+                    class="player-menu-button"
+                    id="player-menu-button"
+                >
+
+                    <span class="player-avatar">
+                        ◉
+                    </span>
+
+                    <span
+                        class="player-menu-name"
+                        id="navbar-player-name"
+                    >
+                        登入
+                    </span>
+
+                    <span class="player-menu-arrow">
+                        ▾
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+<section class="ai-page">
+
+
+    <div class="ai-header">
+
+        <span class="section-label">
+            ELOCase ADMIN
+        </span>
+
+        <h1>
+            AI 管理助手
+        </h1>
+
+        <p>
+            用自然語言快速建立收藏品與內容資料
+        </p>
+
+    </div>
+
+
+
+    <div class="ai-layout">
+
+
+        <!-- ====================================
+             AI 輸入
+        ==================================== -->
+
+        <section class="ai-card">
+
+            <div class="ai-card-header">
+
+                <div>
+
+                    <span class="ai-icon">
+                        ✦
+                    </span>
+
+                    <div>
+
+                        <h2>
+                            建立內容
+                        </h2>
+
+                        <p>
+                            告訴 AI 你想製作什麼
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <label
+                class="ai-label"
+                for="ai-prompt"
+            >
+                指令
+            </label>
+
+
+            <textarea
+                id="ai-prompt"
+                class="ai-prompt"
+                placeholder="例如：幫我設計一組暗黑科幻風格的收藏品，包含 6 個不同稀有度的物品"
+            ></textarea>
+
+
+            <div class="ai-actions">
+
+                <button
+                    type="button"
+                    id="ai-generate-button"
+                    class="button button-primary"
+                >
+                    ✦ 生成內容
+                </button>
+
+            </div>
+
+
+            <div
+                id="ai-status"
+                class="ai-status"
+            ></div>
+
+        </section>
+
+
+
+        <!-- ====================================
+             AI 預覽
+        ==================================== -->
+
+        <section
+            class="ai-card ai-result-card"
+            id="ai-result-card"
+        >
+
+            <div class="ai-card-header">
+
+                <div>
+
+                    <span class="ai-icon">
+                        ◈
+                    </span>
+
+                    <div>
+
+                        <h2>
+                            生成預覽
+                        </h2>
+
+                        <p>
+                            確認後再加入資料庫
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="ai-result"
+                class="ai-result"
+            >
+
+                <div class="ai-empty">
+
+                    <div class="ai-empty-icon">
+                        ✦
+                    </div>
+
+                    <p>
+                        AI 產生的內容會顯示在這裡
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="ai-result-actions"
+                class="ai-result-actions"
+                hidden
+            >
+
+                <button
+                    type="button"
+                    class="button button-secondary"
+                    id="ai-regenerate-button"
+                >
+                    重新生成
+                </button>
+
+                <button
+                    type="button"
+                    class="button button-primary"
+                    id="ai-save-button"
+                >
+                    加入資料
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<script src="js/loading.js"></script>
+
+<script src="js/config.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/ui.js"></script>
+
+
+<script>
+
+let latestAIResult = null;
+
+
+/* ========================================
+   DOM
+======================================== */
+
+const promptInput =
+    document.querySelector(
+        "#ai-prompt"
+    );
+
+
+const generateButton =
+    document.querySelector(
+        "#ai-generate-button"
+    );
+
+
+const regenerateButton =
+    document.querySelector(
+        "#ai-regenerate-button"
+    );
+
+
+const saveButton =
+    document.querySelector(
+        "#ai-save-button"
+    );
+
+
+const resultElement =
+    document.querySelector(
+        "#ai-result"
+    );
+
+
+const resultActions =
+    document.querySelector(
+        "#ai-result-actions"
+    );
+
+
+const statusElement =
+    document.querySelector(
+        "#ai-status"
+    );
+
+
+
+/* ========================================
+   生成
+======================================== */
+
+async function generateAIContent() {
+
+    const prompt =
+        promptInput.value.trim();
+
+
+    if (!prompt) {
+
+        statusElement.textContent =
+            "請先輸入內容";
+
+        promptInput.focus();
+
+        return;
+
+    }
+
+
+    try {
+
+        generateButton.disabled =
+            true;
+
+        generateButton.textContent =
+            "生成中...";
+
+
+        statusElement.textContent =
+            "AI 正在整理內容";
+
+
+        resultActions.hidden =
+            true;
+
+
+        const result =
+            await generateAI(
+                prompt
+            );
+
+
+        latestAIResult =
+            result;
+
+
+        renderAIResult(
+            result
+        );
+
+
+        resultActions.hidden =
+            false;
+
+
+        statusElement.textContent =
+            "生成完成";
+
+
+    } catch (error) {
+
+        console.error(
+            "AI 生成失敗：",
+            error
+        );
+
+
+        statusElement.textContent =
+            error.message ||
+            "AI 生成失敗";
+
+
+    } finally {
+
+        generateButton.disabled =
+            false;
+
+        generateButton.textContent =
+            "✦ 生成內容";
+
+    }
+
+}
+
+
+
+/* ========================================
+   顯示結果
+======================================== */
+
+function renderAIResult(
+    data
+) {
+
+    const items =
+        Array.isArray(
+            data.items
+        )
+            ? data.items
+            : [];
+
+
+    resultElement.innerHTML = `
+
+        <div class="ai-preview">
+
+            <h3>
+                ${escapeHTML(
+                    data.name || "未命名收藏"
+                )}
+            </h3>
+
+            <p class="ai-description">
+                ${escapeHTML(
+                    data.description || ""
+                )}
+            </p>
+
+
+            <div class="ai-items">
+
+                ${items.map(
+                    item => `
+
+                    <div class="ai-item">
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(
+                                    item.name || "-"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    item.rarity || "-"
+                                )}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            ${escapeHTML(
+                                item.description || ""
+                            )}
+                        </p>
+
+                    </div>
+
+                `
+                ).join("")}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* ========================================
+   HTML 安全處理
+======================================== */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/* ========================================
+   事件
+======================================== */
+
+generateButton.addEventListener(
+    "click",
+    generateAI
+);
+
+
+regenerateButton.addEventListener(
+    "click",
+    generateAI
+);
+
+
+saveButton.addEventListener(
+    "click",
+    () => {
+
+        console.log(
+            "目前 AI 結果：",
+            latestAIResult
+        );
+
+        alert(
+            "下一階段再接資料庫"
+        );
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
