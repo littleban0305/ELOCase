@@ -323,23 +323,49 @@
         ======================================== */
 
         .ai-item {
+            position: relative;
+            padding: 15px;
+            background: #0d1118;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-medium);
+            overflow: hidden;
+        }
 
-            position:
-                relative;
+        .ai-item-image {
+            width: 100%;
+            height: 180px;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            margin-bottom: 12px;
+        
+            background: #090d13;
+        
+            border-radius: 8px;
+        
+            overflow: hidden;
+        }
+        
+        .ai-item-image img {
+            width: 100%;
+            height: 100%;
+        
+            object-fit: contain;
+        
+            display: block;
+        
+            transition: transform 0.2s ease;
+        }
 
-            padding:
-                15px;
-
-            background:
-                #0d1118;
-
-            border:
-                1px solid
-                var(--color-border);
-
-            border-radius:
-                var(--radius-medium);
-
+        .ai-item:hover .ai-item-image img {
+            transform: scale(1.04);
+        }
+        
+        .ai-item-image-empty {
+            color: var(--color-text-muted);
+            font-size: 0.7rem;
         }
 
 
@@ -1117,15 +1143,9 @@ function renderAIResult(data) {
 
     const items =
         Array.isArray(data.items)
-            ? data.items
+            ? [...data.items]
             : [];
 
-
-    /*
-     * ========================================
-     * 價格：高 → 低
-     * ========================================
-     */
 
     items.sort(
         (a, b) =>
@@ -1243,20 +1263,43 @@ function renderAIItem(
 
 
     return `
-
+    
         <div
             class="ai-item"
             data-index="${index}"
             data-color="${escapeAttribute(color)}"
+            data-image-url="${escapeAttribute(item.imageUrl || "")}"
         >
-
+    
+            <div class="ai-item-image">
+    
+                ${
+                    item.imageUrl
+                        ? `
+                            <img
+                                src="${escapeAttribute(item.imageUrl)}"
+                                alt="${escapeAttribute(item.name || "物品圖片")}"
+                                loading="lazy"
+                                onerror="this.parentElement.innerHTML='<div class=&quot;ai-item-image-empty&quot;>圖片載入失敗</div>'"
+                            >
+                        `
+                        : `
+                            <div class="ai-item-image-empty">
+                                尚無圖片
+                            </div>
+                        `
+                }
+    
+            </div>
+    
+    
             <div class="ai-item-top">
-
+    
                 <span class="ai-item-number">
                     物品 ${index + 1}
                 </span>
-
-
+    
+    
                 <button
                     type="button"
                     class="ai-remove-button"
@@ -1264,16 +1307,16 @@ function renderAIItem(
                 >
                     移除
                 </button>
-
+    
             </div>
-
-
+    
+    
             <div class="ai-field">
-
+    
                 <label class="ai-field-label">
                     物品名稱
                 </label>
-
+    
                 <input
                     type="text"
                     class="ai-input ai-edit-name"
@@ -1281,37 +1324,37 @@ function renderAIItem(
                         item.name || ""
                     )}"
                 >
-
+    
             </div>
-
-
+    
+    
             <div class="ai-field-row">
-
+    
                 <div class="ai-field">
-
+    
                     <label class="ai-field-label">
                         稀有度
                     </label>
-
+    
                     <select
                         class="ai-select ai-edit-rarity"
                     >
-
+    
                         ${rarityOptions(
                             rarity
                         )}
-
+    
                     </select>
-
+    
                 </div>
-
-
+    
+    
                 <div class="ai-field">
-
+    
                     <label class="ai-field-label">
                         顏色
                     </label>
-
+    
                     <input
                         type="text"
                         class="ai-input ai-edit-color"
@@ -1320,39 +1363,39 @@ function renderAIItem(
                         )}"
                         readonly
                     >
-
+    
                 </div>
-
+    
             </div>
-
-
+    
+    
             <div class="ai-field-row">
-
+    
                 <div class="ai-field">
-
+    
                     <label class="ai-field-label">
                         磨損
                     </label>
-
+    
                     <select
                         class="ai-select ai-edit-wear"
                     >
-
+    
                         ${wearOptions(
                             wear
                         )}
-
+    
                     </select>
-
+    
                 </div>
-
-
+    
+    
                 <div class="ai-field">
-
+    
                     <label class="ai-field-label">
                         價值 USD
                     </label>
-
+    
                     <input
                         type="number"
                         min="0"
@@ -1362,13 +1405,13 @@ function renderAIItem(
                             item.value || 0
                         )}"
                     >
-
+    
                 </div>
-
+    
             </div>
-
+    
         </div>
-
+    
     `;
 
 }
@@ -1657,22 +1700,25 @@ function addNewAIItem() {
 
 
     currentAIData.items.push({
-
+    
         name:
             "",
-
+    
         rarity:
             "Mil-Spec",
-
+    
         color:
             "Blue",
-
+    
         wear:
             "Factory New (FN)",
-
+    
         value:
-            0
-
+            0,
+    
+        imageUrl:
+            ""
+    
     });
 
 
@@ -1826,22 +1872,25 @@ function collectEditedData() {
 
 
             items.push({
-
+            
                 name:
                     name,
-
+            
                 rarity:
                     rarity,
-
+            
                 color:
                     color,
-
+            
                 wear:
                     wear,
-
+            
                 value:
-                    value
-
+                    value,
+            
+                imageUrl:
+                    card.dataset.imageUrl || ""
+            
             });
 
         }
