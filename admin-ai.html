@@ -15,7 +15,12 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/components.css">
 
+
     <style>
+
+        /* ========================================
+           AI 頁面
+        ======================================== */
 
         .ai-page {
 
@@ -31,7 +36,7 @@
                 grid;
 
             grid-template-columns:
-                340px 1fr;
+                340px minmax(0, 1fr);
 
             gap:
                 22px;
@@ -41,6 +46,10 @@
 
         }
 
+
+        /* ========================================
+           左側 AI 面板
+        ======================================== */
 
         .ai-panel {
 
@@ -146,7 +155,12 @@
 
             box-shadow:
                 0 0 0 2px
-                rgba(124, 92, 255, 0.12);
+                rgba(
+                    124,
+                    92,
+                    255,
+                    0.12
+                );
 
         }
 
@@ -161,6 +175,10 @@
 
         }
 
+
+        /* ========================================
+           結果區
+        ======================================== */
 
         .ai-result {
 
@@ -209,13 +227,17 @@
         }
 
 
+        /* ========================================
+           結果標題
+        ======================================== */
+
         .ai-result-header {
 
             display:
                 flex;
 
             align-items:
-                flex-start;
+                center;
 
             justify-content:
                 space-between;
@@ -255,6 +277,9 @@
 
         .ai-result-count {
 
+            margin-top:
+                5px;
+
             color:
                 var(--color-text-muted);
 
@@ -264,24 +289,46 @@
         }
 
 
+        .ai-save-button {
+
+            flex:
+                0 0 auto;
+
+        }
+
+
+        /* ========================================
+           物品列表
+        ======================================== */
+
         .ai-items {
 
             display:
                 grid;
 
             grid-template-columns:
-                repeat(2, minmax(0, 1fr));
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
 
             gap:
-                10px;
+                12px;
 
         }
 
 
+        /* ========================================
+           單一物品
+        ======================================== */
+
         .ai-item {
 
+            position:
+                relative;
+
             padding:
-                14px;
+                15px;
 
             background:
                 #0d1118;
@@ -296,16 +343,41 @@
         }
 
 
-        .ai-item-name {
+        .ai-item:hover {
 
-            margin-bottom:
+            border-color:
+                var(--color-border-light);
+
+        }
+
+
+        .ai-item-top {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
                 10px;
 
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .ai-item-number {
+
             color:
-                var(--color-text);
+                var(--color-text-muted);
 
             font-size:
-                0.82rem;
+                0.65rem;
 
             font-weight:
                 700;
@@ -313,30 +385,68 @@
         }
 
 
-        .ai-item-meta {
-
-            display:
-                flex;
-
-            flex-wrap:
-                wrap;
-
-            gap:
-                6px;
-
-        }
-
-
-        .ai-tag {
+        .ai-remove-button {
 
             padding:
-                4px 7px;
+                3px 7px;
+
+            color:
+                var(--color-text-muted);
+
+            background:
+                transparent;
+
+            border:
+                1px solid
+                var(--color-border);
 
             border-radius:
                 6px;
 
-            background:
-                rgba(255,255,255,0.05);
+            cursor:
+                pointer;
+
+            font-size:
+                0.62rem;
+
+        }
+
+
+        .ai-remove-button:hover {
+
+            color:
+                #ff8794;
+
+            border-color:
+                rgba(
+                    255,
+                    70,
+                    90,
+                    0.35
+                );
+
+        }
+
+
+        /* ========================================
+           欄位
+        ======================================== */
+
+        .ai-field {
+
+            margin-top:
+                10px;
+
+        }
+
+
+        .ai-field-label {
+
+            display:
+                block;
+
+            margin-bottom:
+                5px;
 
             color:
                 var(--color-text-muted);
@@ -350,22 +460,132 @@
         }
 
 
-        .ai-value {
+        .ai-input,
+        .ai-select {
 
-            margin-top:
-                12px;
+            width:
+                100%;
+
+            box-sizing:
+                border-box;
+
+            padding:
+                8px 9px;
 
             color:
                 var(--color-text);
 
-            font-size:
-                0.78rem;
+            background:
+                #090d13;
 
-            font-weight:
-                800;
+            border:
+                1px solid
+                var(--color-border);
+
+            border-radius:
+                7px;
+
+            outline:
+                none;
+
+            font-family:
+                inherit;
+
+            font-size:
+                0.72rem;
 
         }
 
+
+        .ai-input:focus,
+        .ai-select:focus {
+
+            border-color:
+                var(--color-primary);
+
+            box-shadow:
+                0 0 0 2px
+                rgba(
+                    124,
+                    92,
+                    255,
+                    0.1
+                );
+
+        }
+
+
+        .ai-field-row {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                8px;
+
+        }
+
+
+        /* ========================================
+           新增物品
+        ======================================== */
+
+        .ai-add-item {
+
+            margin-top:
+                14px;
+
+            width:
+                100%;
+
+            padding:
+                11px;
+
+            color:
+                var(--color-text-muted);
+
+            background:
+                transparent;
+
+            border:
+                1px dashed
+                var(--color-border);
+
+            border-radius:
+                var(--radius-medium);
+
+            cursor:
+                pointer;
+
+            font-family:
+                inherit;
+
+            font-size:
+                0.72rem;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .ai-add-item:hover {
+
+            color:
+                var(--color-text);
+
+            border-color:
+                var(--color-primary);
+
+        }
+
+
+        /* ========================================
+           Loading
+        ======================================== */
 
         .ai-loading {
 
@@ -406,7 +626,12 @@
 
             border:
                 3px solid
-                rgba(255,255,255,0.08);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
 
             border-top-color:
                 var(--color-primary);
@@ -435,17 +660,31 @@
         }
 
 
+        /* ========================================
+           Error
+        ======================================== */
+
         .ai-error {
 
             padding:
                 16px;
 
             background:
-                rgba(255, 70, 90, 0.08);
+                rgba(
+                    255,
+                    70,
+                    90,
+                    0.08
+                );
 
             border:
                 1px solid
-                rgba(255, 70, 90, 0.2);
+                rgba(
+                    255,
+                    70,
+                    90,
+                    0.2
+                );
 
             border-radius:
                 var(--radius-medium);
@@ -461,6 +700,51 @@
 
         }
 
+
+        /* ========================================
+           成功
+        ======================================== */
+
+        .ai-success {
+
+            padding:
+                10px 12px;
+
+            margin-bottom:
+                12px;
+
+            color:
+                #8ee6b0;
+
+            background:
+                rgba(
+                    70,
+                    220,
+                    130,
+                    0.07
+                );
+
+            border:
+                1px solid
+                rgba(
+                    70,
+                    220,
+                    130,
+                    0.15
+                );
+
+            border-radius:
+                7px;
+
+            font-size:
+                0.7rem;
+
+        }
+
+
+        /* ========================================
+           手機
+        ======================================== */
 
         @media (max-width: 800px) {
 
@@ -479,6 +763,25 @@
 
             }
 
+
+            .ai-result-header {
+
+                align-items:
+                    stretch;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .ai-save-button {
+
+                width:
+                    100%;
+
+            }
+
         }
 
     </style>
@@ -488,650 +791,1228 @@
 
 <body>
 
-    <main>
 
-        <section class="section-container ai-page">
+<main>
 
-            <div class="section-header">
+<section class="section-container ai-page">
 
-                <span class="section-label">
-                    ELOCase
-                </span>
 
-                <h1>
-                    AI 助手
-                </h1>
+    <div class="section-header">
+
+        <span class="section-label">
+            ELOCase
+        </span>
+
+        <h1>
+            AI 助手
+        </h1>
+
+    </div>
+
+
+    <div class="ai-layout">
+
+
+        <!-- ========================================
+             左側
+        ======================================== -->
+
+        <div class="ai-panel">
+
+            <div class="ai-panel-title">
+                生成收藏資料
+            </div>
+
+
+            <div class="ai-panel-subtitle">
+
+                描述你想建立的收藏系列，
+                AI 會搜尋資料並整理成 ELOCase 格式。
+                生成後可以手動修改。
 
             </div>
 
 
-            <div class="ai-layout">
+            <textarea
+                id="ai-prompt"
+                class="ai-prompt"
+                placeholder="例如：幫我建立一組 8 個 CS2 步槍收藏品，包含不同稀有度與磨損程度"
+            ></textarea>
 
 
-                <!-- ==============================
-                     左側輸入
-                ============================== -->
+            <button
+                id="ai-generate"
+                class="button button-primary ai-generate-button"
+                type="button"
+            >
+                ✦ 生成資料
+            </button>
 
-                <div class="ai-panel">
+        </div>
 
-                    <div class="ai-panel-title">
-                        生成收藏資料
+
+        <!-- ========================================
+             右側
+        ======================================== -->
+
+        <div
+            class="ai-result"
+            id="ai-result"
+        >
+
+            <div class="ai-empty">
+
+                <div>
+
+                    <div>
+                        等待 AI 生成
                     </div>
 
-                    <div class="ai-panel-subtitle">
-                        描述你想建立的收藏系列，AI 會搜尋資料並整理成 ELOCase 格式。
+                    <div style="margin-top:6px;">
+                        生成後可以直接修改資料
                     </div>
-
-
-                    <textarea
-                        id="ai-prompt"
-                        class="ai-prompt"
-                        placeholder="例如：幫我建立一組 8 個物品的收藏系列..."
-                    ></textarea>
-
-
-                    <button
-                        id="ai-generate"
-                        class="button button-primary ai-generate-button"
-                        type="button"
-                    >
-                        ✦ 生成資料
-                    </button>
 
                 </div>
 
+            </div>
 
-                <!-- ==============================
-                     右側結果
-                ============================== -->
+        </div>
 
-                <div
-                    class="ai-result"
-                    id="ai-result"
+    </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+
+/* ========================================
+   API
+======================================== */
+
+const AI_API_URL =
+    "https://script.google.com/macros/s/AKfycbzfCdLdBUEv2tXaguqS0Fm9uf9PslygEYpL16eYrKVqEdoX9Z6AMpfU0Wd7xIUmI7FfDg/exec";
+
+
+/* ========================================
+   DOM
+======================================== */
+
+const promptInput =
+    document.querySelector(
+        "#ai-prompt"
+    );
+
+
+const generateButton =
+    document.querySelector(
+        "#ai-generate"
+    );
+
+
+const resultContainer =
+    document.querySelector(
+        "#ai-result"
+    );
+
+
+/* ========================================
+   目前 AI 資料
+======================================== */
+
+let currentAIData = null;
+
+
+/* ========================================
+   生成 AI
+======================================== */
+
+async function generateAI() {
+
+    const prompt =
+        promptInput.value.trim();
+
+
+    if (!prompt) {
+
+        promptInput.focus();
+
+        return;
+
+    }
+
+
+    generateButton.disabled =
+        true;
+
+    generateButton.textContent =
+        "AI 生成中...";
+
+
+    resultContainer.innerHTML = `
+
+        <div class="ai-loading">
+
+            <div class="ai-spinner"></div>
+
+            <div>
+                AI 正在搜尋與整理資料...
+            </div>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                AI_API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action:
+                                "generateAI",
+
+                            prompt:
+                                prompt
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "AI Result:",
+            result
+        );
+
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+                result.error ||
+                "AI 生成失敗"
+            );
+
+        }
+
+
+        currentAIData =
+            JSON.parse(
+                JSON.stringify(
+                    result.data
+                )
+            );
+
+
+        renderAIResult(
+            currentAIData
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "AI Error:",
+            error
+        );
+
+
+        resultContainer.innerHTML = `
+
+            <div class="ai-error">
+
+                ${escapeHTML(
+                    error.message ||
+                    "AI 生成失敗"
+                )}
+
+            </div>
+
+        `;
+
+    } finally {
+
+        generateButton.disabled =
+            false;
+
+        generateButton.textContent =
+            "✦ 生成資料";
+
+    }
+
+}
+
+
+/* ========================================
+   顯示結果
+======================================== */
+
+function renderAIResult(
+    data
+) {
+
+    const items =
+        Array.isArray(
+            data.items
+        )
+            ? data.items
+            : [];
+
+
+    resultContainer.innerHTML = `
+
+        <div class="ai-result-header">
+
+            <div>
+
+                <input
+                    id="ai-collection-name"
+                    class="ai-input"
+                    style="
+                        font-size:1rem;
+                        font-weight:800;
+                        padding:7px 9px;
+                    "
+                    value="${escapeAttribute(
+                        data.name ||
+                        ""
+                    )}"
                 >
 
-                    <div class="ai-empty">
+                <div
+                    class="ai-result-count"
+                >
+                    ${items.length} 個物品
+                </div>
 
-                        <div>
+            </div>
 
-                            <div>
-                                等待 AI 生成
-                            </div>
 
-                            <div style="margin-top:6px;">
-                                生成後結果會顯示在這裡
-                            </div>
+            <button
+                type="button"
+                class="button button-primary ai-save-button"
+                id="save-ai-items"
+            >
+                加入 Items
+            </button>
 
-                        </div>
+        </div>
 
-                    </div>
+
+        <div
+            id="ai-items"
+            class="ai-items"
+        >
+
+            ${items
+                .map(
+                    (item, index) =>
+                        renderAIItem(
+                            item,
+                            index
+                        )
+                )
+                .join("")
+            }
+
+        </div>
+
+
+        <button
+            type="button"
+            class="ai-add-item"
+            id="ai-add-item"
+        >
+            ＋ 新增物品
+        </button>
+
+    `;
+
+
+    bindResultEvents();
+
+}
+
+
+/* ========================================
+   單一物品
+======================================== */
+
+function renderAIItem(
+    item,
+    index
+) {
+
+    const rarity =
+        String(
+            item.rarity ||
+            ""
+        ).trim();
+
+
+    const color =
+        String(
+            item.color ||
+            ""
+        ).trim();
+
+
+    const wear =
+        String(
+            item.wear ||
+            ""
+        ).trim();
+
+
+    return `
+
+        <div
+            class="ai-item"
+            data-index="${index}"
+        >
+
+            <div class="ai-item-top">
+
+                <span class="ai-item-number">
+                    物品 ${index + 1}
+                </span>
+
+
+                <button
+                    type="button"
+                    class="ai-remove-button"
+                    data-remove-index="${index}"
+                >
+                    移除
+                </button>
+
+            </div>
+
+
+            <div class="ai-field">
+
+                <label class="ai-field-label">
+                    物品名稱
+                </label>
+
+                <input
+                    type="text"
+                    class="ai-input ai-edit-name"
+                    value="${escapeAttribute(
+                        item.name ||
+                        ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="ai-field-row">
+
+                <div class="ai-field">
+
+                    <label class="ai-field-label">
+                        稀有度
+                    </label>
+
+                    <select
+                        class="ai-select ai-edit-rarity"
+                    >
+
+                        ${rarityOptions(
+                            rarity
+                        )}
+
+                    </select>
+
+                </div>
+
+
+                <div class="ai-field">
+
+                    <label class="ai-field-label">
+                        顏色
+                    </label>
+
+                    <select
+                        class="ai-select ai-edit-color"
+                    >
+
+                        ${colorOptions(
+                            color
+                        )}
+
+                    </select>
 
                 </div>
 
             </div>
 
-        </section>
 
-    </main>
+            <div class="ai-field-row">
 
+                <div class="ai-field">
 
-    <script>
+                    <label class="ai-field-label">
+                        磨損
+                    </label>
 
-        /*
-         * ========================================
-         * Apps Script API
-         * ========================================
-         */
-
-        const AI_API_URL =
-            "https://script.google.com/macros/s/AKfycbzfCdLdBUEv2tXaguqS0Fm9uf9PslygEYpL16eYrKVqEdoX9Z6AMpfU0Wd7xIUmI7FfDg/exec";
-
-
-        /*
-         * ========================================
-         * DOM
-         * ========================================
-         */
-
-        const promptInput =
-            document.querySelector(
-                "#ai-prompt"
-            );
-
-
-        const generateButton =
-            document.querySelector(
-                "#ai-generate"
-            );
-
-
-        const resultContainer =
-            document.querySelector(
-                "#ai-result"
-            );
-
-
-        /*
-         * ========================================
-         * 生成 AI
-         * ========================================
-         */
-
-        async function generateAI() {
-
-            const prompt =
-                promptInput.value.trim();
-
-
-            if (!prompt) {
-
-                promptInput.focus();
-
-                return;
-
-            }
-
-
-            /*
-             * Loading
-             */
-
-            generateButton.disabled =
-                true;
-
-            generateButton.textContent =
-                "AI 生成中...";
-
-
-            resultContainer.innerHTML = `
-
-                <div class="ai-loading">
-
-                    <div class="ai-spinner"></div>
-
-                    <div>
-                        AI 正在整理資料...
-                    </div>
-
-                </div>
-
-            `;
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        AI_API_URL,
-                        {
-
-                            method:
-                                "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
-
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    action:
-                                        "generateAI",
-
-                                    prompt:
-                                        prompt
-
-                                })
-
-                        }
-                    );
-
-
-                const result =
-                    await response.json();
-
-
-                console.log(
-                    "AI Result:",
-                    result
-                );
-
-
-                /*
-                 * API 錯誤
-                 */
-
-                if (
-                    !result.success
-                ) {
-
-                    throw new Error(
-                        result.error ||
-                        "AI 生成失敗"
-                    );
-
-                }
-
-
-                /*
-                 * 顯示結果
-                 */
-
-                renderAIResult(
-                    result.data
-                );
-
-
-            } catch (error) {
-            
-                console.error(
-                    "AI Error:",
-                    error
-                );
-            
-            
-                resultContainer.innerHTML = `
-            
-                    <div class="ai-error">
-            
-                        ${escapeHTML(
-                            error.message ||
-                            "AI 生成失敗"
-                        )}
-            
-                    </div>
-            
-                `;
-            
-            } finally {
-
-                generateButton.disabled =
-                    false;
-
-                generateButton.textContent =
-                    "✦ 生成資料";
-
-            }
-
-        }
-
-
-        /*
-         * ========================================
-         * 顯示結果
-         * ========================================
-         */
-
-        function renderAIResult(
-            data
-        ) {
-
-            const items =
-                Array.isArray(
-                    data.items
-                )
-                    ? data.items
-                    : [];
-
-
-            resultContainer.innerHTML = `
-
-                <div class="ai-result-header">
-                
-                    <div>
-                
-                        <h2
-                            class="ai-result-name"
-                        >
-                            ${escapeHTML(
-                                data.name ||
-                                "未命名收藏"
-                            )}
-                        </h2>
-                
-                        <div
-                            class="ai-result-count"
-                            style="margin-top:6px;"
-                        >
-                            ${items.length} 個物品
-                        </div>
-                
-                    </div>
-                
-                
-                    <button
-                        type="button"
-                        class="button button-primary"
-                        id="save-ai-items"
+                    <select
+                        class="ai-select ai-edit-wear"
                     >
-                        加入 Items
-                    </button>
-                
+
+                        ${wearOptions(
+                            wear
+                        )}
+
+                    </select>
+
                 </div>
 
 
-                <div class="ai-items">
+                <div class="ai-field">
 
-                    ${items
-                        .map(
-                            item =>
-                                renderAIItem(
-                                    item
-                                )
-                        )
-                        .join("")
+                    <label class="ai-field-label">
+                        價值 USD
+                    </label>
+
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        class="ai-input ai-edit-value"
+                        value="${Number(
+                            item.value || 0
+                        )}"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ========================================
+   稀有度
+======================================== */
+
+function rarityOptions(
+    current
+) {
+
+    const options = [
+
+        "Consumer Grade",
+        "Industrial Grade",
+        "Mil-Spec",
+        "Restricted",
+        "Classified",
+        "Covert",
+        "Exceedingly Rare",
+        "Contraband"
+
+    ];
+
+
+    return options
+        .map(
+            option => `
+
+                <option
+                    value="${escapeAttribute(option)}"
+                    ${
+                        option === current
+                            ? "selected"
+                            : ""
                     }
+                >
+                    ${escapeHTML(option)}
+                </option>
 
-                </div>
+            `
+        )
+        .join("");
 
-            `;
+}
 
-            const saveButton =
-                document.querySelector(
-                    "#save-ai-items"
-                );
-            
-            
-            if (saveButton) {
-            
-                saveButton.addEventListener(
+
+/* ========================================
+   顏色
+======================================== */
+
+function colorOptions(
+    current
+) {
+
+    const options = [
+
+        "White",
+        "Light Blue",
+        "Blue",
+        "Purple",
+        "Pink",
+        "Red",
+        "Gold",
+        "Orange"
+
+    ];
+
+
+    return options
+        .map(
+            option => `
+
+                <option
+                    value="${escapeAttribute(option)}"
+                    ${
+                        option === current
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    ${escapeHTML(option)}
+                </option>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* ========================================
+   Wear
+======================================== */
+
+function wearOptions(
+    current
+) {
+
+    const options = [
+
+        "Factory New (FN)",
+        "Minimal Wear (MW)",
+        "Field-Tested (FT)",
+        "Well-Worn (WW)",
+        "Battle-Scarred (BS)"
+
+    ];
+
+
+    return options
+        .map(
+            option => `
+
+                <option
+                    value="${escapeAttribute(option)}"
+                    ${
+                        option === current
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    ${escapeHTML(option)}
+                </option>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* ========================================
+   綁定結果事件
+======================================== */
+
+function bindResultEvents() {
+
+    const saveButton =
+        document.querySelector(
+            "#save-ai-items"
+        );
+
+
+    if (saveButton) {
+
+        saveButton.addEventListener(
+            "click",
+            saveAIItems
+        );
+
+    }
+
+
+    const addButton =
+        document.querySelector(
+            "#ai-add-item"
+        );
+
+
+    if (addButton) {
+
+        addButton.addEventListener(
+            "click",
+            addNewAIItem
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            "[data-remove-index]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
                     "click",
                     () => {
-            
-                        saveAIItems(
-                            data
+
+                        removeAIItem(
+                            Number(
+                                button.dataset.removeIndex
+                            )
                         );
-            
+
                     }
                 );
-            
-            }
-
-        }
-
-
-        /*
-         * ========================================
-         * 單一物品
-         * ========================================
-         */
-
-        function renderAIItem(
-            item
-        ) {
-
-            return `
-
-                <div class="ai-item">
-
-                    <div class="ai-item-name">
-
-                        ${escapeHTML(
-                            item.name ||
-                            "未命名物品"
-                        )}
-
-                    </div>
-
-
-                    <div class="ai-item-meta">
-
-                        <span class="ai-tag">
-
-                            ${escapeHTML(
-                                item.rarity ||
-                                "-"
-                            )}
-
-                        </span>
-
-
-                        <span class="ai-tag">
-
-                            ${escapeHTML(
-                                item.color ||
-                                "-"
-                            )}
-
-                        </span>
-
-
-                        <span class="ai-tag">
-
-                            ${escapeHTML(
-                                item.wear ||
-                                "-"
-                            )}
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="ai-value">
-
-                        $${Number(
-                            item.value || 0
-                        ).toLocaleString()}
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-
-
-        /*
-         * ========================================
-         * HTML Escape
-         * ========================================
-         */
-
-        function escapeHTML(
-            value
-        ) {
-
-            return String(
-                value ?? ""
-            )
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
-
-        }
-
-
-        /*
-         * ========================================
-         * Event
-         * ========================================
-         */
-
-        generateButton.addEventListener(
-            "click",
-            generateAI
-        );
-
-
-        promptInput.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.ctrlKey &&
-                    event.key === "Enter"
-                ) {
-
-                    generateAI();
-
-                }
 
             }
         );
 
-        async function saveAIItems(
-            data
+}
+
+
+/* ========================================
+   新增物品
+======================================== */
+
+function addNewAIItem() {
+
+    if (!currentAIData) {
+
+        return;
+
+    }
+
+
+    if (
+        currentAIData.items.length >= 12
+    ) {
+
+        alert(
+            "最多只能有 12 個物品"
+        );
+
+        return;
+
+    }
+
+
+    currentAIData.items.push({
+
+        name:
+            "",
+
+        rarity:
+            "Mil-Spec",
+
+        color:
+            "Blue",
+
+        wear:
+            "Factory New (FN)",
+
+        value:
+            0
+
+    });
+
+
+    renderAIResult(
+        currentAIData
+    );
+
+}
+
+
+/* ========================================
+   移除物品
+======================================== */
+
+function removeAIItem(
+    index
+) {
+
+    if (!currentAIData) {
+
+        return;
+
+    }
+
+
+    if (
+        index < 0 ||
+        index >= currentAIData.items.length
+    ) {
+
+        return;
+
+    }
+
+
+    currentAIData.items.splice(
+        index,
+        1
+    );
+
+
+    renderAIResult(
+        currentAIData
+    );
+
+}
+
+
+/* ========================================
+   讀取目前畫面上的修改
+======================================== */
+
+function collectEditedData() {
+
+    if (!currentAIData) {
+
+        return null;
+
+    }
+
+
+    const collectionName =
+        document.querySelector(
+            "#ai-collection-name"
+        )?.value.trim();
+
+
+    if (!collectionName) {
+
+        throw new Error(
+            "收藏系列名稱不能為空"
+        );
+
+    }
+
+
+    const cards =
+        document.querySelectorAll(
+            ".ai-item"
+        );
+
+
+    if (
+        cards.length === 0
+    ) {
+
+        throw new Error(
+            "至少需要一個物品"
+        );
+
+    }
+
+
+    const items = [];
+
+
+    cards.forEach(
+        card => {
+
+            const name =
+                card.querySelector(
+                    ".ai-edit-name"
+                ).value.trim();
+
+
+            const rarity =
+                card.querySelector(
+                    ".ai-edit-rarity"
+                ).value;
+
+
+            const color =
+                card.querySelector(
+                    ".ai-edit-color"
+                ).value;
+
+
+            const wear =
+                card.querySelector(
+                    ".ai-edit-wear"
+                ).value;
+
+
+            const value =
+                Number(
+                    card.querySelector(
+                        ".ai-edit-value"
+                    ).value
+                );
+
+
+            if (!name) {
+
+                throw new Error(
+                    "有物品名稱尚未填寫"
+                );
+
+            }
+
+
+            if (
+                !Number.isFinite(value) ||
+                value < 0
+            ) {
+
+                throw new Error(
+                    `${name} 的價格無效`
+                );
+
+            }
+
+
+            items.push({
+
+                name:
+                    name,
+
+                rarity:
+                    rarity,
+
+                color:
+                    color,
+
+                wear:
+                    wear,
+
+                value:
+                    value
+
+            });
+
+        }
+    );
+
+
+    return {
+
+        name:
+            collectionName,
+
+        items:
+            items
+
+    };
+
+}
+
+
+/* ========================================
+   加入 Items
+======================================== */
+
+async function saveAIItems() {
+
+    let data;
+
+
+    try {
+
+        /*
+         * 非常重要：
+         * 重新讀取目前畫面上的資料
+         */
+
+        data =
+            collectEditedData();
+
+    } catch (error) {
+
+        alert(
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "sessionToken"
+        );
+
+
+    if (!token) {
+
+        alert(
+            "登入狀態已失效，請重新登入"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.querySelector(
+            "#save-ai-items"
+        );
+
+
+    if (button) {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "加入中...";
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                AI_API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action:
+                                "saveAIItems",
+
+                            token:
+                                token,
+
+                            collectionName:
+                                data.name,
+
+                            items:
+                                data.items
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "Save AI Items:",
+            result
+        );
+
+
+        if (
+            !result.success
         ) {
-        
-            const token =
-                localStorage.getItem(
-                    "sessionToken"
-                );
-        
-        
-            if (!token) {
-        
-                alert(
-                    "登入狀態已失效，請重新登入"
-                );
-        
-                return;
-        
-            }
-        
-        
-            const button =
-                document.querySelector(
-                    "#save-ai-items"
-                );
-        
-        
-            if (button) {
-        
-                button.disabled =
-                    true;
-        
-                button.textContent =
-                    "加入中...";
-        
-            }
-        
-        
-            try {
-        
-                const response =
-                    await fetch(
-                        AI_API_URL,
-                        {
-        
-                            method:
-                                "POST",
-        
-                            headers: {
-        
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
-        
-                            },
-        
-                            body:
-                                JSON.stringify({
-        
-                                    action:
-                                        "saveAIItems",
-        
-                                    token:
-                                        token,
-        
-                                    collectionName:
-                                        data.name,
-        
-                                    items:
-                                        data.items
-        
-                                })
-        
-                        }
-                    );
-        
-        
-                const result =
-                    await response.json();
-        
-        
-                console.log(
-                    "Save AI Items:",
-                    result
-                );
-        
-        
-                if (
-                    !result.success
-                ) {
-        
-                    throw new Error(
-                        result.error ||
-                        "加入 Items 失敗"
-                    );
-        
-                }
-        
-        
-                if (button) {
-        
-                    button.textContent =
-                        "✓ 已加入 Items";
-        
-                    button.disabled =
-                        true;
-        
-                }
-        
-        
-                alert(
-                    `成功加入 ${result.data.count} 個物品`
-                );
-        
-        
-            } catch (error) {
-        
-                console.error(
-                    error
-                );
-        
-        
-                alert(
-                    error.message
-                );
-        
-        
-                if (button) {
-        
-                    button.disabled =
-                        false;
-        
-                    button.textContent =
-                        "加入 Items";
-        
-                }
-        
-            }
-        
+
+            throw new Error(
+                result.error ||
+                "加入 Items 失敗"
+            );
+
         }
 
-    </script>
+
+        if (button) {
+
+            button.textContent =
+                "✓ 已加入 Items";
+
+        }
+
+
+        /*
+         * 讓畫面進入已完成狀態
+         */
+
+        const itemsContainer =
+            document.querySelector(
+                "#ai-items"
+            );
+
+
+        if (itemsContainer) {
+
+            itemsContainer.insertAdjacentHTML(
+                "beforebegin",
+                `
+                    <div class="ai-success">
+                        已成功加入
+                        ${result.data.count}
+                        個物品至 Items
+                    </div>
+                `
+            );
+
+        }
+
+
+        if (button) {
+
+            button.disabled =
+                true;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Save AI Items Error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "加入 Items 失敗"
+        );
+
+
+        if (button) {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "加入 Items";
+
+        }
+
+    }
+
+}
+
+
+/* ========================================
+   HTML Escape
+======================================== */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttribute(
+    value
+) {
+
+    return escapeHTML(
+        value
+    );
+
+}
+
+
+/* ========================================
+   Event
+======================================== */
+
+generateButton.addEventListener(
+    "click",
+    generateAI
+);
+
+
+promptInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.ctrlKey &&
+            event.key === "Enter"
+        ) {
+
+            generateAI();
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
 
