@@ -1110,16 +1110,25 @@ async function generateAI() {
    顯示結果
 ======================================== */
 
-function renderAIResult(
-    data
-) {
+function renderAIResult(data) {
 
     const items =
-        Array.isArray(
-            data.items
-        )
+        Array.isArray(data.items)
             ? data.items
             : [];
+
+
+    /*
+     * ========================================
+     * 價格：高 → 低
+     * ========================================
+     */
+
+    items.sort(
+        (a, b) =>
+            Number(b.value || 0) -
+            Number(a.value || 0)
+    );
 
 
     resultContainer.innerHTML = `
@@ -1128,75 +1137,72 @@ function renderAIResult(
 
             <div>
 
-                <input
-                    id="ai-collection-name"
-                    class="ai-input"
-                    style="
-                        font-size:1rem;
-                        font-weight:800;
-                        padding:7px 9px;
-                    "
-                    value="${escapeAttribute(
+                <h2 class="ai-result-name">
+                    ${escapeHTML(
                         data.name ||
-                        ""
-                    )}"
-                >
-
-                <div
-                    class="ai-result-count"
-                >
-                    ${items.length} 個物品
-                </div>
+                        "未命名收藏"
+                    )}
+                </h2>
 
             </div>
 
 
-            <button
-                type="button"
-                class="button button-primary ai-save-button"
-                id="save-ai-items"
-            >
-                加入 Items
-            </button>
+            <div>
+
+                <button
+                    type="button"
+                    class="button button-primary"
+                    id="save-ai-items"
+                >
+                    加入 Items
+                </button>
+
+            </div>
 
         </div>
 
-        <div
-            id="ai-items"
-            class="ai-item"
-            data-color="${escapeAttribute(
-                getRarityColorFrontend(
-                    item.rarity
-                )
-            )}"
-        >
 
-            ${items
-                .map(
-                    (item, index) =>
-                        renderAIItem(
-                            item,
-                            index
-                        )
-                )
-                .join("")
+        <div class="ai-result-count">
+            ${items.length} 個物品
+        </div>
+
+
+        <div class="ai-items">
+
+            ${
+                items
+                    .map(
+                        item =>
+                            renderAIItem(item)
+                    )
+                    .join("")
             }
 
         </div>
 
-
-        <button
-            type="button"
-            class="ai-add-item"
-            id="ai-add-item"
-        >
-            ＋ 新增物品
-        </button>
-
     `;
 
 
-    bindResultEvents();
+    const saveButton =
+        document.querySelector(
+            "#save-ai-items"
+        );
+
+
+    if (saveButton) {
+
+        saveButton.addEventListener(
+            "click",
+            () => {
+
+                saveAIItems(
+                    data
+                );
+
+            }
+        );
+
+    }
 
 }
 
