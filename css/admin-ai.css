@@ -1,0 +1,949 @@
+/* ========================================
+   ELOCase - AI Admin
+======================================== */
+
+
+/* ========================================
+   頁面
+======================================== */
+
+.ai-page {
+
+    width: min(
+        1180px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        55px 0 80px;
+
+}
+
+
+/* ========================================
+   標題
+======================================== */
+
+.ai-header {
+
+    margin-bottom:
+        32px;
+
+}
+
+
+.ai-header .section-label {
+
+    display: block;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.ai-header h1 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        clamp(
+            1.8rem,
+            4vw,
+            2.4rem
+        );
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        -0.04em;
+
+}
+
+
+.ai-header p {
+
+    margin:
+        0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.85rem;
+
+}
+
+
+/* ========================================
+   雙欄
+======================================== */
+
+.ai-layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    gap:
+        18px;
+
+    align-items:
+        start;
+
+}
+
+
+/* ========================================
+   AI 卡片
+======================================== */
+
+.ai-card {
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(18, 22, 30, 0.98),
+            rgba(11, 14, 19, 0.98)
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-large);
+
+    box-shadow:
+        0 18px 50px
+        rgba(0, 0, 0, 0.18);
+
+}
+
+
+.ai-card-header {
+
+    padding:
+        22px 24px;
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.ai-card-header > div {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+}
+
+
+.ai-card-header h2 {
+
+    margin:
+        0 0 3px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        0.95rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.ai-card-header p {
+
+    margin:
+        0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.7rem;
+
+}
+
+
+.ai-icon {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    flex:
+        0 0 34px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--color-primary);
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            0.10
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            92,
+            255,
+            0.22
+        );
+
+    border-radius:
+        10px;
+
+    font-size:
+        0.95rem;
+
+}
+
+
+/* ========================================
+   輸入區
+======================================== */
+
+.ai-card:first-child {
+
+    padding-bottom:
+        22px;
+
+}
+
+
+.ai-label {
+
+    display:
+        block;
+
+    margin:
+        22px 24px 8px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.7rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.ai-prompt {
+
+    width:
+        calc(100% - 48px);
+
+    min-height:
+        190px;
+
+    margin:
+        0 24px;
+
+    padding:
+        14px;
+
+    resize:
+        vertical;
+
+    color:
+        var(--color-text);
+
+    background:
+        rgba(
+            7,
+            9,
+            13,
+            0.85
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+    outline:
+        none;
+
+    font-family:
+        inherit;
+
+    font-size:
+        0.78rem;
+
+    line-height:
+        1.7;
+
+    transition:
+        border-color
+        var(--transition-fast),
+        box-shadow
+        var(--transition-fast);
+
+}
+
+
+.ai-prompt::placeholder {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.25
+        );
+
+}
+
+
+.ai-prompt:focus {
+
+    border-color:
+        rgba(
+            124,
+            92,
+            255,
+            0.65
+        );
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            124,
+            92,
+            255,
+            0.08
+        );
+
+}
+
+
+/* ========================================
+   操作
+======================================== */
+
+.ai-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    margin:
+        14px 24px 0;
+
+}
+
+
+.ai-actions .button {
+
+    min-width:
+        125px;
+
+}
+
+
+.ai-status {
+
+    min-height:
+        18px;
+
+    margin:
+        10px 24px 0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.68rem;
+
+    text-align:
+        right;
+
+}
+
+
+/* ========================================
+   結果區
+======================================== */
+
+.ai-result-card {
+
+    min-height:
+        430px;
+
+}
+
+
+.ai-result {
+
+    padding:
+        24px;
+
+}
+
+
+.ai-empty {
+
+    min-height:
+        320px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    color:
+        var(--color-text-muted);
+
+    text-align:
+        center;
+
+}
+
+
+.ai-empty-icon {
+
+    width:
+        52px;
+
+    height:
+        52px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--color-primary);
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            0.08
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            92,
+            255,
+            0.18
+        );
+
+    border-radius:
+        15px;
+
+    font-size:
+        1.3rem;
+
+}
+
+
+.ai-empty p {
+
+    margin:
+        0;
+
+    font-size:
+        0.72rem;
+
+}
+
+
+/* ========================================
+   AI 預覽
+======================================== */
+
+.ai-preview {
+
+    animation:
+        aiResultIn
+        0.25s
+        ease-out;
+
+}
+
+
+.ai-preview h3 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1.2rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.ai-description {
+
+    margin:
+        0 0 20px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.76rem;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* ========================================
+   物品
+======================================== */
+
+.ai-items {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        9px;
+
+}
+
+
+.ai-item {
+
+    padding:
+        13px 14px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--radius-medium);
+
+}
+
+
+.ai-item > div {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+
+}
+
+
+.ai-item strong {
+
+    overflow:
+        hidden;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        0.76rem;
+
+    font-weight:
+        700;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.ai-item span {
+
+    flex:
+        0 0 auto;
+
+    padding:
+        3px 7px;
+
+    color:
+        var(--color-primary);
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            0.08
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            92,
+            255,
+            0.16
+        );
+
+    border-radius:
+        6px;
+
+    font-size:
+        0.58rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.ai-item p {
+
+    margin:
+        6px 0 0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.65rem;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* ========================================
+   結果按鈕
+======================================== */
+
+.ai-result-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        9px;
+
+    padding:
+        0 24px 22px;
+
+}
+
+
+.ai-result-actions[hidden] {
+
+    display:
+        none;
+
+}
+
+
+.ai-result-actions .button {
+
+    min-width:
+        105px;
+
+}
+
+
+/* ========================================
+   動畫
+======================================== */
+
+@keyframes aiResultIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(5px);
+
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ========================================
+   平板
+======================================== */
+
+@media (max-width: 850px) {
+
+    .ai-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .ai-result-card {
+
+        min-height:
+            auto;
+
+    }
+
+
+    .ai-empty {
+
+        min-height:
+            220px;
+
+    }
+
+}
+
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 650px) {
+
+    .ai-page {
+
+        width:
+            calc(100% - 24px);
+
+        padding:
+            35px 0 55px;
+
+    }
+
+
+    .ai-header {
+
+        margin-bottom:
+            22px;
+
+    }
+
+
+    .ai-card-header {
+
+        padding:
+            18px;
+
+    }
+
+
+    .ai-label {
+
+        margin-left:
+            18px;
+
+        margin-right:
+            18px;
+
+    }
+
+
+    .ai-prompt {
+
+        width:
+            calc(100% - 36px);
+
+        margin-left:
+            18px;
+
+        margin-right:
+            18px;
+
+        min-height:
+            160px;
+
+    }
+
+
+    .ai-actions {
+
+        margin-left:
+            18px;
+
+        margin-right:
+            18px;
+
+    }
+
+
+    .ai-actions .button {
+
+        width:
+            100%;
+
+    }
+
+
+    .ai-status {
+
+        margin-left:
+            18px;
+
+        margin-right:
+            18px;
+
+    }
+
+
+    .ai-result {
+
+        padding:
+            18px;
+
+    }
+
+
+    .ai-result-actions {
+
+        padding:
+            0 18px 18px;
+
+        flex-direction:
+            column-reverse;
+
+    }
+
+
+    .ai-result-actions .button {
+
+        width:
+            100%;
+
+    }
+
+}
+
+
+/* ========================================
+   超小螢幕
+======================================== */
+
+@media (max-width: 380px) {
+
+    .ai-page {
+
+        width:
+            calc(100% - 18px);
+
+    }
+
+
+    .ai-item > div {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            6px;
+
+    }
+
+}
