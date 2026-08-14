@@ -963,6 +963,9 @@ const resultContainer =
 
 let currentAIData = null;
 
+// 防止「加入 Items」重複送出
+let isSavingAIItems = false;
+
 
 /* ========================================
    生成 AI
@@ -1551,12 +1554,7 @@ function bindResultEvents() {
 
 
     if (saveButton) {
-
-        saveButton.addEventListener(
-            "click",
-            saveAIItems
-        );
-
+        saveButton.onclick = saveAIItems;
     }
 
 
@@ -1869,6 +1867,23 @@ function collectEditedData() {
 
 async function saveAIItems() {
 
+    // ========================================
+    // 防止重複點擊 / 重複 POST
+    // ========================================
+
+    if (isSavingAIItems) {
+
+        console.log(
+            "⚠️ 已經正在加入 Items，忽略這次操作"
+        );
+
+        return;
+
+    }
+
+    isSavingAIItems = true;
+
+
     let data;
 
 
@@ -1878,6 +1893,8 @@ async function saveAIItems() {
             collectEditedData();
 
     } catch (error) {
+
+        isSavingAIItems = false;
 
         alert(
             error.message
@@ -1895,6 +1912,8 @@ async function saveAIItems() {
 
 
     if (!token) {
+
+        isSavingAIItems = false;
 
         alert(
             "登入狀態已失效，請重新登入"
@@ -2006,6 +2025,9 @@ async function saveAIItems() {
             button.textContent =
                 "✓ 已加入 Items";
 
+            button.disabled =
+                true;
+
         }
 
 
@@ -2016,15 +2038,14 @@ async function saveAIItems() {
 
 
         /*
-         * 防止重複加入
+         * ====================================
+         * 成功後保持鎖定
+         *
+         * 防止再次建立同一個箱子
+         * ====================================
          */
 
-        if (button) {
-
-            button.disabled =
-                true;
-
-        }
+        // isSavingAIItems 保持 true
 
 
     } catch (error) {
@@ -2050,6 +2071,16 @@ async function saveAIItems() {
                 "加入 Items";
 
         }
+
+
+        /*
+         * ====================================
+         * 失敗 → 解除鎖定
+         * 使用者可以重新嘗試
+         * ====================================
+         */
+
+        isSavingAIItems = false;
 
     }
 
