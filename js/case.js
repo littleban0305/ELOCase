@@ -298,6 +298,10 @@ function createCaseItemCard(item) {
                 "
             >
 
+            <span class="case-item-probability">
+                ${Number(item.probability || 0).toFixed(2)}%
+            </span>
+
                 ${escapeHtml(
                     item.rarity ||
                     "未知"
@@ -322,10 +326,6 @@ function createCaseItemCard(item) {
                     item.value || 0
                 ).toLocaleString()}
 
-            </div>
-
-            <div class="case-item-probability">
-                機率 ${Number(item.probability || 0).toFixed(2)}%
             </div>
 
         </div>
