@@ -324,6 +324,10 @@ function createCaseItemCard(item) {
 
             </div>
 
+            <div class="case-item-probability">
+                機率 ${Number(item.probability || 0).toFixed(2)}%
+            </div>
+
         </div>
 
     `;
