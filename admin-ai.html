@@ -784,6 +784,46 @@
 
         }
 
+        .ai-item[data-color="White"] {
+            border-color: rgba(220, 220, 220, 0.35);
+            background: rgba(220, 220, 220, 0.035);
+        }
+        
+        .ai-item[data-color="Light Blue"] {
+            border-color: rgba(100, 180, 255, 0.4);
+            background: rgba(100, 180, 255, 0.04);
+        }
+        
+        .ai-item[data-color="Blue"] {
+            border-color: rgba(70, 130, 255, 0.45);
+            background: rgba(70, 130, 255, 0.045);
+        }
+        
+        .ai-item[data-color="Purple"] {
+            border-color: rgba(160, 90, 255, 0.45);
+            background: rgba(160, 90, 255, 0.05);
+        }
+        
+        .ai-item[data-color="Pink"] {
+            border-color: rgba(255, 80, 180, 0.45);
+            background: rgba(255, 80, 180, 0.05);
+        }
+        
+        .ai-item[data-color="Red"] {
+            border-color: rgba(255, 70, 70, 0.5);
+            background: rgba(255, 70, 70, 0.055);
+        }
+        
+        .ai-item[data-color="Gold"] {
+            border-color: rgba(255, 200, 60, 0.5);
+            background: rgba(255, 200, 60, 0.055);
+        }
+        
+        .ai-item[data-color="Orange"] {
+            border-color: rgba(255, 130, 40, 0.5);
+            background: rgba(255, 130, 40, 0.055);
+        }
+
     </style>
 
 </head>
@@ -839,6 +879,24 @@
                 placeholder="例如：幫我建立一組 8 個 CS2 步槍收藏品，包含不同稀有度與磨損程度"
             ></textarea>
 
+            <div class="ai-field" style="margin-top:14px;">
+            
+                <label class="ai-field-label">
+                    加入箱子
+                </label>
+            
+                <select
+                    id="ai-case-select"
+                    class="ai-select"
+                >
+            
+                    <option value="">
+                        載入箱子中...
+                    </option>
+            
+                </select>
+            
+            </div>
 
             <button
                 id="ai-generate"
@@ -1122,10 +1180,14 @@ function renderAIResult(
 
         </div>
 
-
         <div
             id="ai-items"
-            class="ai-items"
+            class="ai-item"
+            data-color="${escapeAttribute(
+                getRarityColorFrontend(
+                    item.rarity
+                )
+            )}"
         >
 
             ${items
@@ -1756,11 +1818,6 @@ async function saveAIItems() {
 
     try {
 
-        /*
-         * 非常重要：
-         * 重新讀取目前畫面上的資料
-         */
-
         data =
             collectEditedData();
 
@@ -1790,6 +1847,42 @@ async function saveAIItems() {
         return;
 
     }
+
+
+    const caseSelect =
+        document.querySelector(
+            "#ai-case-select"
+        );
+
+
+    const caseId =
+        caseSelect
+            ? caseSelect.value
+            : "";
+
+
+    if (!caseId) {
+
+        alert(
+            "請先選擇要加入的箱子"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * ========================================
+     * 價格高 → 低
+     * ========================================
+     */
+
+    data.items.sort(
+        (a, b) =>
+            Number(b.value) -
+            Number(a.value)
+    );
 
 
     const button =
@@ -1838,6 +1931,9 @@ async function saveAIItems() {
                             collectionName:
                                 data.name,
 
+                            caseId:
+                                caseId,
+
                             items:
                                 data.items
 
@@ -1869,6 +1965,12 @@ async function saveAIItems() {
         }
 
 
+        /*
+         * ====================================
+         * 成功
+         * ====================================
+         */
+
         if (button) {
 
             button.textContent =
@@ -1877,31 +1979,15 @@ async function saveAIItems() {
         }
 
 
+        alert(
+            `成功加入 ${result.data.count} 個物品\n\n` +
+            `箱子：${result.data.caseName}`
+        );
+
+
         /*
-         * 讓畫面進入已完成狀態
+         * 防止重複加入
          */
-
-        const itemsContainer =
-            document.querySelector(
-                "#ai-items"
-            );
-
-
-        if (itemsContainer) {
-
-            itemsContainer.insertAdjacentHTML(
-                "beforebegin",
-                `
-                    <div class="ai-success">
-                        已成功加入
-                        ${result.data.count}
-                        個物品至 Items
-                    </div>
-                `
-            );
-
-        }
-
 
         if (button) {
 
@@ -2012,6 +2098,149 @@ promptInput.addEventListener(
     }
 );
 
+async function loadCases() {
+
+    const select =
+        document.querySelector(
+            "#ai-case-select"
+        );
+
+
+    if (!select) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                AI_API_URL +
+                "?action=getCases"
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+                result.error ||
+                "無法取得箱子"
+            );
+
+        }
+
+
+        const cases =
+            Array.isArray(
+                result.data
+            )
+                ? result.data
+                : [];
+
+
+        select.innerHTML = `
+
+            <option value="">
+                選擇箱子
+            </option>
+
+            ${
+                cases
+                    .map(
+                        box => `
+
+                            <option
+                                value="${escapeAttribute(
+                                    box.caseId
+                                )}"
+                            >
+                                ${escapeHTML(
+                                    box.name
+                                )}
+                                ${
+                                    box.price != null
+                                        ? ` ($${Number(
+                                            box.price
+                                        ).toLocaleString()})`
+                                        : ""
+                                }
+                            </option>
+
+                        `
+                    )
+                    .join("")
+            }
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Load Cases Error:",
+            error
+        );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                無法載入箱子
+            </option>
+
+        `;
+
+    }
+
+}
+
+function getRarityColorFrontend(
+    rarity
+) {
+
+    const map = {
+
+        "Consumer Grade":
+            "White",
+
+        "Industrial Grade":
+            "Light Blue",
+
+        "Mil-Spec":
+            "Blue",
+
+        "Restricted":
+            "Purple",
+
+        "Classified":
+            "Pink",
+
+        "Covert":
+            "Red",
+
+        "Exceedingly Rare":
+            "Gold",
+
+        "Contraband":
+            "Orange"
+
+    };
+
+
+    return map[
+        String(
+            rarity || ""
+        ).trim()
+    ] || "White";
+
+}
+    
 </script>
 
 </body>
