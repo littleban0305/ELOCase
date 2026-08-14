@@ -734,21 +734,51 @@
 
 
                 resultContainer.innerHTML = `
-
-                    <div class="ai-error">
-
-                        <strong>
-                            AI 生成失敗
-                        </strong>
-
-                        <div style="margin-top:6px;">
-                            ${escapeHTML(
-                                error.message
-                            )}
+                
+                    <div class="ai-result-header">
+                
+                        <div>
+                
+                            <h2 class="ai-result-name">
+                
+                                ${escapeHTML(
+                                    data.name ||
+                                    "未命名收藏"
+                                )}
+                
+                            </h2>
+                
                         </div>
-
+                
+                
+                        <div>
+                
+                            <button
+                                type="button"
+                                class="button button-primary"
+                                id="save-ai-items"
+                            >
+                                加入 Items
+                            </button>
+                
+                        </div>
+                
                     </div>
-
+                
+                
+                    <div class="ai-items">
+                
+                        ${
+                            items
+                                .map(
+                                    item =>
+                                        renderAIItem(item)
+                                )
+                                .join("")
+                        }
+                
+                    </div>
+                
                 `;
 
             } finally {
@@ -821,6 +851,27 @@
                 </div>
 
             `;
+
+            const saveButton =
+                document.querySelector(
+                    "#save-ai-items"
+                );
+            
+            
+            if (saveButton) {
+            
+                saveButton.addEventListener(
+                    "click",
+                    () => {
+            
+                        saveAIItems(
+                            data
+                        );
+            
+                    }
+                );
+            
+            }
 
         }
 
@@ -962,6 +1013,146 @@
 
             }
         );
+
+        async function saveAIItems(
+            data
+        ) {
+        
+            const token =
+                localStorage.getItem(
+                    "sessionToken"
+                );
+        
+        
+            if (!token) {
+        
+                alert(
+                    "登入狀態已失效，請重新登入"
+                );
+        
+                return;
+        
+            }
+        
+        
+            const button =
+                document.querySelector(
+                    "#save-ai-items"
+                );
+        
+        
+            if (button) {
+        
+                button.disabled =
+                    true;
+        
+                button.textContent =
+                    "加入中...";
+        
+            }
+        
+        
+            try {
+        
+                const response =
+                    await fetch(
+                        AI_API_URL,
+                        {
+        
+                            method:
+                                "POST",
+        
+                            headers: {
+        
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
+        
+                            },
+        
+                            body:
+                                JSON.stringify({
+        
+                                    action:
+                                        "saveAIItems",
+        
+                                    token:
+                                        token,
+        
+                                    collectionName:
+                                        data.name,
+        
+                                    items:
+                                        data.items
+        
+                                })
+        
+                        }
+                    );
+        
+        
+                const result =
+                    await response.json();
+        
+        
+                console.log(
+                    "Save AI Items:",
+                    result
+                );
+        
+        
+                if (
+                    !result.success
+                ) {
+        
+                    throw new Error(
+                        result.error ||
+                        "加入 Items 失敗"
+                    );
+        
+                }
+        
+        
+                if (button) {
+        
+                    button.textContent =
+                        "✓ 已加入 Items";
+        
+                    button.disabled =
+                        true;
+        
+                }
+        
+        
+                alert(
+                    `成功加入 ${result.data.count} 個物品`
+                );
+        
+        
+            } catch (error) {
+        
+                console.error(
+                    error
+                );
+        
+        
+                alert(
+                    error.message
+                );
+        
+        
+                if (button) {
+        
+                    button.disabled =
+                        false;
+        
+                    button.textContent =
+                        "加入 Items";
+        
+                }
+        
+            }
+        
+        }
 
     </script>
 
