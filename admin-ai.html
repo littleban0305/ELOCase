@@ -1402,12 +1402,32 @@ async function generateAI() {
         }
 
 
+        console.log(
+            "🔥 generateAI result.data =",
+            result.data
+        );
+        
+        console.log(
+            "🔥 generateAI casePrice =",
+            result.data?.casePrice
+        );
+        
         currentAIData =
             JSON.parse(
                 JSON.stringify(
                     result.data
                 )
             );
+        
+        console.log(
+            "🔥 currentAIData =",
+            currentAIData
+        );
+        
+        console.log(
+            "🔥 currentAIData.casePrice =",
+            currentAIData?.casePrice
+        );
 
 
         renderAIResult(
@@ -2361,6 +2381,18 @@ function collectEditedData() {
             )?.value
         );
 
+    console.log(
+        "🔥 DOM #ai-case-price value =",
+        document.querySelector(
+            "#ai-case-price"
+        )?.value
+    );
+    
+    console.log(
+        "🔥 collectEditedData casePrice =",
+        casePrice
+    );
+
     if (
         !Number.isFinite(casePrice) ||
         casePrice < 0
@@ -2915,6 +2947,16 @@ async function analyzeCurrentCase() {
 
         const data =
             collectEditedData();
+
+        console.log(
+            "🔥 analyzeCurrentCase data =",
+            data
+        );
+        
+        console.log(
+            "🔥 analyzeCurrentCase casePrice =",
+            data?.casePrice
+        );
 
 
         const response =
