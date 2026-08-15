@@ -1454,6 +1454,22 @@ function renderAIItem(
                     >
     
                 </div>
+
+                <div class="ai-field">
+                
+                    <label class="ai-field-label">
+                        掉落權重
+                    </label>
+                
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        class="ai-input ai-edit-weight"
+                        value="${Number(item.rarityWeight ?? 1)}"
+                    >
+                
+                </div>
     
             </div>
     
@@ -2099,6 +2115,22 @@ function collectEditedData() {
                     ).value
                 );
 
+            const rarityWeight =
+                Number(
+                    card.querySelector(
+                        ".ai-edit-weight"
+                    ).value
+                );
+
+            if (
+                !Number.isFinite(rarityWeight) ||
+                rarityWeight < 0
+            ) {
+                throw new Error(
+                    `${name} 的掉落權重無效`
+                );
+            }
+
 
             if (!name) {
 
@@ -2122,27 +2154,18 @@ function collectEditedData() {
 
 
             items.push({
-            
-                name:
-                    name,
-            
-                rarity:
-                    rarity,
-            
-                color:
-                    color,
-            
-                wear:
-                    wear,
-            
-                value:
-                    value,
-            
-                imageUrl:
-                    card.querySelector(
-                        ".ai-edit-image-url"
-                    )?.value.trim() || ""
-            
+                name: name,
+                rarity: rarity,
+                color: color,
+                wear: wear,
+                value: value,
+                imageUrl: currentAIData.items[
+                    Number(card.dataset.index)
+                ].imageUrl || "",
+                marketHashName: currentAIData.items[
+                    Number(card.dataset.index)
+                ].marketHashName || "",
+                rarityWeight: rarityWeight
             });
 
         }
