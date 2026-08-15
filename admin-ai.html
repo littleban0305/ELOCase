@@ -1175,6 +1175,25 @@ function renderAIResult(data) {
                         )}"
                     >
 
+                    <div class="ai-field">
+                    
+                        <label class="ai-field-label">
+                            箱子價格 USD
+                        </label>
+                    
+                        <input
+                            type="number"
+                            id="ai-case-price"
+                            class="ai-input"
+                            min="0"
+                            step="0.01"
+                            value="${Number(
+                                data.casePrice || data.price || 0
+                            )}"
+                        >
+                    
+                    </div>
+
                 </div>
 
             </div>
@@ -1852,6 +1871,24 @@ function collectEditedData() {
             "#ai-collection-name"
         )?.value.trim();
 
+    const casePrice =
+        Number(
+            document.querySelector(
+                "#ai-case-price"
+            )?.value
+        );
+
+    if (
+        !Number.isFinite(casePrice) ||
+        casePrice < 0
+    ) {
+    
+        throw new Error(
+            "箱子價格無效"
+        );
+    
+    }
+
 
     if (!collectionName) {
 
@@ -1967,13 +2004,16 @@ function collectEditedData() {
 
 
     return {
-
+    
         name:
             collectionName,
-
+    
+        casePrice:
+            casePrice,
+    
         items:
             items
-
+    
     };
 
 }
@@ -2091,19 +2131,22 @@ async function saveAIItems() {
 
                     body:
                         JSON.stringify({
-
+                    
                             action:
                                 "saveAIItems",
-
+                    
                             token:
                                 token,
-
+                    
                             collectionName:
                                 data.name,
-
+                    
+                            casePrice:
+                                data.casePrice,
+                    
                             items:
                                 data.items
-
+                    
                         })
 
                 }
