@@ -1373,7 +1373,18 @@ function renderAIItem(
                 >
     
             </div>
-    
+
+            <div class="ai-field">
+                <label class="ai-field-label">
+                    Steam Market Hash Name
+                </label>
+                <input
+                    type="text"
+                    class="ai-input ai-edit-market-hash-name"
+                    value="${escapeAttribute(item.marketHashName || "")}"
+                    placeholder="AK-47 | Slate (Field-Tested)"
+                >
+            </div>
     
             <div class="ai-field-row">
     
@@ -1894,62 +1905,37 @@ function removeAIItem(
 }
 
 function buildAIJson() {
+    const data = collectEditedData();
+    const totalWeight = data.items.reduce(function(total, item) {
+        return total + item.rarityWeight;
+    }, 0);
 
-    const data =
-        collectEditedData();
+    if (totalWeight <= 0) {
+        throw new Error("所有物品的掉落權重不能全部為 0");
+    }
 
-    const jsonData = {
-
+    return JSON.stringify({
         collection: {
-
-            name:
-                data.name,
-
-            casePrice:
-                data.casePrice,
-
-            game:
-                "CS2"
-
+            name: data.name,
+            casePrice: data.casePrice,
+            game: "CS2"
         },
-
-        items:
-            data.items.map(
-                item => ({
-
-                    name:
-                        item.name,
-
-                    marketHashName:
-                        item.marketHashName || "",
-
-                    rarity:
-                        item.rarity,
-
-                    color:
-                        item.color,
-
-                    wear:
-                        item.wear,
-
-                    value:
-                        item.value,
-
-                    imageUrl:
-                        item.imageUrl || ""
-
-                })
-            )
-
-    };
-
-
-    return JSON.stringify(
-        jsonData,
-        null,
-        2
-    );
-
+        items: data.items.map(function(item) {
+            return {
+                name: item.name,
+                marketHashName: item.marketHashName || "",
+                rarity: item.rarity,
+                color: item.color,
+                wear: item.wear,
+                value: item.value,
+                rarityWeight: item.rarityWeight,
+                probability: Number(
+                    (item.rarityWeight / totalWeight * 100).toFixed(4)
+                ),
+                imageUrl: item.imageUrl || ""
+            };
+        })
+    }, null, 2);
 }
 
 async function copyAIJson() {
@@ -2159,12 +2145,11 @@ function collectEditedData() {
                 color: color,
                 wear: wear,
                 value: value,
-                imageUrl: currentAIData.items[
-                    Number(card.dataset.index)
-                ].imageUrl || "",
-                marketHashName: currentAIData.items[
-                    Number(card.dataset.index)
-                ].marketHashName || "",
+                imageUrl: card.querySelector(".ai-edit-image-url").value.trim(),
+                marketHashName:
+                    card.querySelector(
+                        ".ai-edit-market-hash-name"
+                    ).value.trim(),
                 rarityWeight: rarityWeight
             });
 
