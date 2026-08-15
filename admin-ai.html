@@ -1271,8 +1271,8 @@ function renderAIItem(
             data-image-url="${escapeAttribute(item.imageUrl || "")}"
         >
     
-            <div class="ai-item-image">
-    
+            <div class="ai-item-image" data-image-preview>
+            
                 ${
                     item.imageUrl
                         ? `
@@ -1280,7 +1280,7 @@ function renderAIItem(
                                 src="${escapeAttribute(item.imageUrl)}"
                                 alt="${escapeAttribute(item.name || "物品圖片")}"
                                 loading="lazy"
-                                onerror="this.parentElement.innerHTML='<div class=&quot;ai-item-image-empty&quot;>圖片載入失敗</div>'"
+                                onerror="showImageError(this)"
                             >
                         `
                         : `
@@ -1289,7 +1289,23 @@ function renderAIItem(
                             </div>
                         `
                 }
-    
+            
+            </div>
+            
+            
+            <div class="ai-field">
+            
+                <label class="ai-field-label">
+                    圖片 URL
+                </label>
+            
+                <input
+                    type="url"
+                    class="ai-input ai-edit-image-url"
+                    value="${escapeAttribute(item.imageUrl || "")}"
+                    placeholder="https://..."
+                >
+            
             </div>
     
     
@@ -1670,6 +1686,57 @@ function bindResultEvents() {
             }
         );
 
+    document
+        .querySelectorAll(".ai-edit-image-url")
+        .forEach(
+            input => {
+    
+                input.addEventListener(
+                    "input",
+                    () => {
+    
+                        const card =
+                            input.closest(".ai-item");
+    
+                        const preview =
+                            card.querySelector(
+                                "[data-image-preview]"
+                            );
+    
+                        if (!preview) {
+                            return;
+                        }
+    
+                        const url =
+                            input.value.trim();
+    
+                        if (!url) {
+    
+                            preview.innerHTML = `
+                                <div class="ai-item-image-empty">
+                                    尚無圖片
+                                </div>
+                            `;
+    
+                            return;
+    
+                        }
+    
+                        preview.innerHTML = `
+                            <img
+                                src="${escapeAttribute(url)}"
+                                alt="物品圖片"
+                                loading="lazy"
+                                onerror="showImageError(this)"
+                            >
+                        `;
+    
+                    }
+                );
+    
+            }
+        );
+
 }
 
 
@@ -1889,7 +1956,9 @@ function collectEditedData() {
                     value,
             
                 imageUrl:
-                    card.dataset.imageUrl || ""
+                    card.querySelector(
+                        ".ai-edit-image-url"
+                    )?.value.trim() || ""
             
             });
 
@@ -2246,6 +2315,23 @@ function getRarityColorFrontend(
             rarity || ""
         ).trim()
     ] || "White";
+
+}
+
+function showImageError(img) {
+
+    const container =
+        img.closest("[data-image-preview]");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="ai-item-image-empty">
+            圖片載入失敗
+        </div>
+    `;
 
 }
     
