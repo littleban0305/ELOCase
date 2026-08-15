@@ -2978,9 +2978,7 @@ async function analyzeCurrentCase() {
 
 }
 
-function renderAIAnalysis(
-    data
-) {
+function renderAIAnalysis(data) {
 
     const container =
         document.querySelector(
@@ -2995,13 +2993,379 @@ function renderAIAnalysis(
     }
 
 
+    /*
+     * ========================================
+     * 基本防呆
+     * ========================================
+     */
+
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
+
+        container.innerHTML = `
+
+            <div class="ai-error">
+
+                AI 回傳的分析資料無效
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * ========================================
+     * 讀取分析資料
+     * ========================================
+     */
+
+    const analysisScore =
+        Number(
+            data.analysisScore
+        );
+
+
+    const casePrice =
+        Number(
+            data.casePrice
+        );
+
+
+    const targetReturnRate =
+        Number(
+            data.targetReturnRate
+        );
+
+
+    const targetEV =
+        Number(
+            data.targetEV
+        );
+
+
+    const currentEV =
+        Number(
+            data.currentEV
+        );
+
+
+    const currentReturnRate =
+        Number(
+            data.currentReturnRate
+        );
+
+
+    const optimizedEV =
+        Number(
+            data.optimizedEV
+        );
+
+
+    const optimizedReturnRate =
+        Number(
+            data.optimizedReturnRate
+        );
+
+
+    const evErrorPercent =
+        Number(
+            data.evErrorPercent
+        );
+
+
+    const totalWeight =
+        Number(
+            data.totalWeight
+        );
+
+
+    /*
+     * ========================================
+     * 安全格式化數字
+     * ========================================
+     */
+
+    function formatNumber(
+        value,
+        decimals = 2
+    ) {
+
+        if (
+            !Number.isFinite(value)
+        ) {
+
+            return "0.00";
+
+        }
+
+
+        return value.toFixed(
+            decimals
+        );
+
+    }
+
+
+    /*
+     * ========================================
+     * 警告
+     * ========================================
+     */
+
+    let warningsHTML = "";
+
+
+    if (
+        Array.isArray(
+            data.warnings
+        ) &&
+        data.warnings.length
+    ) {
+
+        warningsHTML = `
+
+            <div class="ai-analysis-section">
+
+                <div class="ai-analysis-label">
+                    注意事項
+                </div>
+
+                ${
+                    data.warnings
+                        .map(
+                            warning => `
+                                <div
+                                    style="
+                                        margin-bottom:5px;
+                                    "
+                                >
+                                    •
+                                    ${escapeHTML(
+                                        warning
+                                    )}
+                                </div>
+                            `
+                        )
+                        .join("")
+                }
+
+            </div>
+
+        `;
+
+    } else if (
+        data.warnings
+    ) {
+
+        warningsHTML = `
+
+            <div class="ai-analysis-section">
+
+                <div class="ai-analysis-label">
+                    注意事項
+                </div>
+
+                <div>
+                    ${escapeHTML(
+                        String(
+                            data.warnings
+                        )
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * ========================================
+     * 最佳化物品
+     * ========================================
+     */
+
     const items =
-        Array.isArray(data.items)
+        Array.isArray(
+            data.items
+        )
             ? data.items
             : [];
 
 
+    let itemsHTML = "";
+
+
+    if (
+        items.length
+    ) {
+
+        itemsHTML = `
+
+            <div class="ai-analysis-section">
+
+                <div class="ai-analysis-label">
+                    最佳化權重
+                </div>
+
+                ${
+                    items.map(
+                        item => {
+
+                            const currentWeight =
+                                Number(
+                                    item.currentWeight
+                                );
+
+
+                            const suggestedWeight =
+                                Number(
+                                    item.suggestedWeight
+                                );
+
+
+                            const value =
+                                Number(
+                                    item.value
+                                );
+
+
+                            const weightChanged =
+                                Number.isFinite(
+                                    currentWeight
+                                ) &&
+                                Number.isFinite(
+                                    suggestedWeight
+                                ) &&
+                                currentWeight !==
+                                suggestedWeight;
+
+
+                            return `
+
+                                <div
+                                    class="ai-analysis-item"
+                                >
+
+                                    <div
+                                        class="ai-analysis-item-name"
+                                    >
+                                        ${escapeHTML(
+                                            item.marketHashName ||
+                                            item.name ||
+                                            "未知物品"
+                                        )}
+                                    </div>
+
+
+                                    <div
+                                        class="ai-analysis-item-meta"
+                                    >
+
+                                        價值：
+                                        $${formatNumber(
+                                            value
+                                        )}
+
+                                        ・目前權重：
+                                        ${formatNumber(
+                                            currentWeight
+                                        )}
+
+                                        ・建議權重：
+                                        <strong>
+                                            ${formatNumber(
+                                                suggestedWeight
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+
+                                    ${
+                                        item.reason
+                                            ? `
+                                                <div
+                                                    class="ai-analysis-item-meta"
+                                                    style="
+                                                        margin-top:4px;
+                                                    "
+                                                >
+                                                    ${escapeHTML(
+                                                        item.reason
+                                                    )}
+                                                </div>
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            `;
+
+                        }
+                    ).join("")
+                }
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * ========================================
+     * 分析師建議
+     * ========================================
+     */
+
+    let recommendationHTML = "";
+
+
+    if (
+        data.recommendation
+    ) {
+
+        recommendationHTML = `
+
+            <div class="ai-analysis-section">
+
+                <div class="ai-analysis-label">
+                    分析師建議
+                </div>
+
+                <div>
+                    ${escapeHTML(
+                        data.recommendation
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * ========================================
+     * 分析結果
+     * ========================================
+     */
+
     container.innerHTML = `
+
+        <!-- ====================================
+             合理度
+        ==================================== -->
 
         <div class="ai-analysis-score">
 
@@ -3012,10 +3376,20 @@ function renderAIAnalysis(
                 </div>
 
                 <div class="ai-analysis-score-number">
-                    ${Number(
-                        data.score || 0
-                    ).toFixed(1)}
+
+                    ${
+                        Number.isFinite(
+                            analysisScore
+                        )
+                            ? formatNumber(
+                                analysisScore,
+                                1
+                            )
+                            : "0.0"
+                    }
+
                     / 10
+
                 </div>
 
             </div>
@@ -3023,186 +3397,214 @@ function renderAIAnalysis(
         </div>
 
 
+        <!-- ====================================
+             箱子價格
+        ==================================== -->
+
         <div class="ai-analysis-section">
 
             <div class="ai-analysis-label">
-                建議箱子價格
+                箱子價格
             </div>
 
             <div class="ai-analysis-value">
-                $${Number(
-                    data.recommendedCasePrice || 0
-                ).toFixed(2)}
+
+                $${formatNumber(
+                    casePrice
+                )}
+
             </div>
 
         </div>
 
 
+        <!-- ====================================
+             目前 EV
+        ==================================== -->
+
         <div class="ai-analysis-section">
 
             <div class="ai-analysis-label">
-                預估期望值
+                目前期望值
             </div>
 
             <div class="ai-analysis-value">
-                $${Number(
-                    data.expectedValue || 0
-                ).toFixed(2)}
+
+                $${formatNumber(
+                    currentEV
+                )}
+
             </div>
 
         </div>
 
 
+        <!-- ====================================
+             目前回報率
+        ==================================== -->
+
         <div class="ai-analysis-section">
 
             <div class="ai-analysis-label">
-                預估回報率
+                目前回報率
             </div>
 
             <div class="ai-analysis-value">
-                ${Number(
-                    data.returnRate || 0
-                ).toFixed(2)}%
+
+                ${formatNumber(
+                    currentReturnRate
+                )}%
+
             </div>
 
         </div>
 
 
+        <!-- ====================================
+             目標
+        ==================================== -->
+
         <div class="ai-analysis-section">
 
             <div class="ai-analysis-label">
-                分析
+                目標回報率
             </div>
 
-            <div>
+            <div class="ai-analysis-value">
+
+                ${formatNumber(
+                    targetReturnRate
+                )}%
+
+                ・目標 EV：
+
+                $${formatNumber(
+                    targetEV
+                )}
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             最佳化 EV
+        ==================================== -->
+
+        <div class="ai-analysis-section">
+
+            <div class="ai-analysis-label">
+                最佳化後期望值
+            </div>
+
+            <div class="ai-analysis-value">
+
+                $${formatNumber(
+                    optimizedEV
+                )}
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             最佳化回報率
+        ==================================== -->
+
+        <div class="ai-analysis-section">
+
+            <div class="ai-analysis-label">
+                最佳化後回報率
+            </div>
+
+            <div class="ai-analysis-value">
+
+                ${formatNumber(
+                    optimizedReturnRate
+                )}%
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             EV 誤差
+        ==================================== -->
+
+        <div class="ai-analysis-section">
+
+            <div class="ai-analysis-label">
+                EV 目標誤差
+            </div>
+
+            <div class="ai-analysis-value">
+
+                ${formatNumber(
+                    evErrorPercent
+                )}%
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             總權重
+        ==================================== -->
+
+        <div class="ai-analysis-section">
+
+            <div class="ai-analysis-label">
+                最佳化後總權重
+            </div>
+
+            <div class="ai-analysis-value">
+
+                ${formatNumber(
+                    totalWeight
+                )}
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             AI 分析
+        ==================================== -->
+
+        <div class="ai-analysis-section">
+
+            <div class="ai-analysis-label">
+                AI 分析
+            </div>
+
+            <div class="ai-analysis-value">
+
                 ${escapeHTML(
-                    data.summary ||
+                    data.analysis ||
                     "沒有分析內容"
                 )}
+
             </div>
 
         </div>
 
 
-        ${
-            data.risk
-                ? `
-                    <div class="ai-analysis-section">
-
-                        <div class="ai-analysis-label">
-                            注意事項
-                        </div>
-
-                        <div>
-                            ${escapeHTML(
-                                data.risk
-                            )}
-                        </div>
-
-                    </div>
-                `
-                : ""
-        }
+        ${warningsHTML}
 
 
-        ${
-            items.length
-                ? `
-                    <div class="ai-analysis-section">
-
-                        <div class="ai-analysis-label">
-                            建議權重
-                        </div>
-
-                        ${
-                            items.map(
-                                item => `
-
-                                    <div
-                                        class="ai-analysis-item"
-                                    >
-
-                                        <div
-                                            class="ai-analysis-item-name"
-                                        >
-                                            ${escapeHTML(
-                                                item.marketHashName
-                                            )}
-                                        </div>
-
-                                        <div
-                                            class="ai-analysis-item-meta"
-                                        >
-                                            建議權重：
-                                            <strong>
-                                                ${Number(
-                                                    item.recommendedWeight
-                                                )}
-                                            </strong>
-
-                                            ${
-                                                item.position
-                                                    ? `
-                                                        ・
-                                                        ${escapeHTML(
-                                                            item.position
-                                                        )}
-                                                    `
-                                                    : ""
-                                            }
-
-                                        </div>
-
-                                    </div>
-
-                                `
-                            ).join("")
-                        }
-
-                    </div>
-                `
-                : ""
-        }
+        ${itemsHTML}
 
 
-        ${
-            Array.isArray(
-                data.recommendations
-            ) &&
-            data.recommendations.length
-                ? `
+        ${recommendationHTML}
 
-                    <div class="ai-analysis-section">
 
-                        <div class="ai-analysis-label">
-                            分析師建議
-                        </div>
-
-                        ${
-                            data.recommendations
-                                .map(
-                                    text => `
-                                        <div
-                                            style="
-                                                margin-bottom:5px;
-                                            "
-                                        >
-                                            •
-                                            ${escapeHTML(
-                                                text
-                                            )}
-                                        </div>
-                                    `
-                                )
-                                .join("")
-                        }
-
-                    </div>
-
-                `
-                : ""
-        }
-
+        <!-- ====================================
+             重新分析
+        ==================================== -->
 
         <button
             type="button"
@@ -3214,6 +3616,12 @@ function renderAIAnalysis(
 
     `;
 
+
+    /*
+     * ========================================
+     * 綁定重新分析
+     * ========================================
+     */
 
     const refreshButton =
         document.querySelector(
