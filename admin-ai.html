@@ -1199,13 +1199,25 @@ function renderAIResult(data) {
             </div>
 
 
-            <button
-                type="button"
-                class="button button-primary ai-save-button"
-                id="save-ai-items"
-            >
-                加入 Items
-            </button>
+            <div style="display:flex; gap:8px;">
+            
+                <button
+                    type="button"
+                    class="button"
+                    id="copy-ai-json"
+                >
+                    ⧉ 複製 JSON
+                </button>
+            
+                <button
+                    type="button"
+                    class="button button-primary ai-save-button"
+                    id="save-ai-items"
+                >
+                    加入 Items
+                </button>
+            
+            </div>
 
         </div>
 
@@ -1756,6 +1768,19 @@ function bindResultEvents() {
             }
         );
 
+    const copyButton =
+        document.querySelector(
+            "#copy-ai-json"
+        );
+    
+    
+    if (copyButton) {
+    
+        copyButton.onclick =
+            copyAIJson;
+    
+    }
+
 }
 
 
@@ -1852,6 +1877,127 @@ function removeAIItem(
 
 }
 
+function buildAIJson() {
+
+    const data =
+        collectEditedData();
+
+    const jsonData = {
+
+        collection: {
+
+            name:
+                data.name,
+
+            casePrice:
+                data.casePrice,
+
+            game:
+                "CS2"
+
+        },
+
+        items:
+            data.items.map(
+                item => ({
+
+                    name:
+                        item.name,
+
+                    marketHashName:
+                        item.marketHashName || "",
+
+                    rarity:
+                        item.rarity,
+
+                    color:
+                        item.color,
+
+                    wear:
+                        item.wear,
+
+                    value:
+                        item.value,
+
+                    imageUrl:
+                        item.imageUrl || ""
+
+                })
+            )
+
+    };
+
+
+    return JSON.stringify(
+        jsonData,
+        null,
+        2
+    );
+
+}
+
+async function copyAIJson() {
+
+    try {
+
+        const json =
+            buildAIJson();
+
+
+        await navigator.clipboard.writeText(
+            json
+        );
+
+
+        const button =
+            document.querySelector(
+                "#copy-ai-json"
+            );
+
+
+        if (button) {
+
+            const originalText =
+                button.textContent;
+
+            button.textContent =
+                "✓ 已複製";
+
+            setTimeout(
+                () => {
+
+                    button.textContent =
+                        originalText;
+
+                },
+                1500
+            );
+
+        }
+
+
+        console.log(
+            "AI JSON：",
+            json
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "複製 JSON 失敗：",
+            error
+        );
+
+
+        alert(
+            "複製 JSON 失敗：" +
+            error.message
+        );
+
+    }
+
+}
 
 /* ========================================
    讀取目前畫面上的修改
