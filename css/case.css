@@ -1055,6 +1055,65 @@ main {
 
 }
 
+.case-item-card.rarity-blue {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(80,150,255,0.12),
+            var(--color-surface)
+        );
+
+}
+
+
+.case-item-card.rarity-purple {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(160,90,255,0.12),
+            var(--color-surface)
+        );
+
+}
+
+
+.case-item-card.rarity-pink {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,100,220,0.12),
+            var(--color-surface)
+        );
+
+}
+
+
+.case-item-card.rarity-red {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,70,70,0.12),
+            var(--color-surface)
+        );
+
+}
+
+
+.case-item-card.rarity-gold {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,200,60,0.15),
+            var(--color-surface)
+        );
+
+}
+
 
 .case-item-info h3 {
 
