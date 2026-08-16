@@ -1864,3 +1864,157 @@ async function getOpenHistory(){
     );
 
 }
+
+/* ========================================
+   ELOCase Challenge Mode API
+======================================== */
+
+
+/*
+ * 建立 Challenge
+ */
+async function createChallenge(
+    initialEC
+){
+
+    const sessionToken =
+        getSessionToken();
+
+
+    if(!sessionToken){
+
+        throw new Error(
+            "請先登入"
+        );
+
+    }
+
+
+    return await sendChallengePost({
+
+        action:
+            "createChallenge",
+
+        sessionToken,
+
+        initialEC
+
+    });
+
+}
+
+
+
+/*
+ * 加入 Challenge
+ */
+async function joinChallenge(
+    challengeCode
+){
+
+    const sessionToken =
+        getSessionToken();
+
+
+    if(!sessionToken){
+
+        throw new Error(
+            "請先登入"
+        );
+
+    }
+
+
+    return await sendChallengePost({
+
+        action:
+            "joinChallenge",
+
+        sessionToken,
+
+        challengeCode
+
+    });
+
+}
+
+
+
+/*
+ * 取得 Challenge
+ */
+async function getChallenge(
+    challengeId
+){
+
+    return await sendApiRequest(
+
+        "getChallenge",
+
+        {
+            challengeId
+        }
+
+    );
+
+}
+
+
+
+/*
+ * Challenge POST 共用
+ */
+async function sendChallengePost(
+    data
+){
+
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+
+                method:
+                    "POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        data
+                    ),
+
+                redirect:
+                    "follow",
+
+                cache:
+                    "no-store"
+
+            }
+        );
+
+
+
+    const result =
+        await response.json();
+
+
+
+    if(!result.success){
+
+        throw new Error(
+            result.error ||
+            "Challenge 操作失敗"
+        );
+
+    }
+
+
+
+    return result.data;
+
+}
