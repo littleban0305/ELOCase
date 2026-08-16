@@ -1,1 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Challenge Mode｜ELOCase
+</title>
+
+
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/challenge.css">
+
+
+</head>
+
+
+<body>
+
+
+<header class="challenge-navbar">
+
+
+<div class="challenge-navbar-container">
+
+
+<a href="index.html" class="challenge-brand">
+
+<span>
+ELOCase
+</span>
+
+<strong>
+Challenge Mode
+</strong>
+
+</a>
+
+
+
+<div class="challenge-user">
+
+<span id="challenge-player-name">
+登入
+</span>
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+<main>
+
+
+<section class="challenge-page">
+
+
+<div class="section-container">
+
+
+
+<h1>
+ELOCase Challenge Mode
+</h1>
+
+
+<p class="challenge-description">
+
+見好就跑。
+管理你的 Challenge EC，
+挑戰你的對手。
+
+</p>
+
+
+
+<div
+class="challenge-actions"
+id="challenge-actions"
+>
+
+
+
+<div class="challenge-card">
+
+
+<h2>
+建立 Challenge
+</h2>
+
+
+<label>
+挑戰資金
+</label>
+
+
+<input
+
+id="create-ec"
+
+type="number"
+
+value="10000"
+
+>
+
+
+<button
+id="create-challenge-button"
+class="button button-primary"
+>
+
+建立挑戰
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="challenge-card">
+
+
+<h2>
+加入 Challenge
+</h2>
+
+
+<label>
+Challenge Code
+</label>
+
+
+<input
+
+id="join-code"
+
+placeholder="CH_xxxxxxxx"
+
+>
+
+
+<button
+id="join-challenge-button"
+class="button button-primary"
+>
+
+加入挑戰
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<section
+id="challenge-room"
+class="challenge-room hidden"
+>
+
+
+<h2>
+Challenge Room
+</h2>
+
+
+
+<div class="challenge-vs">
+
+
+
+<div class="challenge-player-box">
+
+
+<h3>
+Player A
+</h3>
+
+
+<div>
+EC:
+<span id="player-a-ec">
+-
+</span>
+</div>
+
+
+<div>
+物品價值:
+<span id="player-a-value">
+-
+</span>
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="challenge-vs-text">
+
+VS
+
+</div>
+
+
+
+
+
+<div class="challenge-player-box">
+
+
+<h3>
+Player B
+</h3>
+
+
+<div>
+EC:
+<span id="player-b-ec">
+-
+</span>
+</div>
+
+
+<div>
+物品價值:
+<span id="player-b-value">
+-
+</span>
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/player.js"></script>
+<script src="js/challenge.js"></script>
+
+
+</body>
+
+</html>
