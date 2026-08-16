@@ -23,137 +23,135 @@ content="width=device-width, initial-scale=1.0"
 <body>
 
 
-<main class="register-page">
+<div class="register-page">
+
+    <div class="register-card">
 
 
-<div class="register-card">
+        <div class="register-header">
+
+            <h1>
+                建立 ELOCase 帳號
+            </h1>
+
+            <p>
+                加入 ELOCase，開始你的開箱旅程
+            </p>
+
+        </div>
 
 
-<h1>
-建立 ELOCase 帳號
-</h1>
+
+        <form id="register-form">
 
 
-<p class="register-subtitle">
-加入 ELOCase，開始你的開箱旅程
-</p>
+            <div class="form-group">
+
+                <label>
+                    玩家名稱
+                </label>
+
+                <input
+                    id="username"
+                    placeholder="輸入登入帳號"
+                >
+
+            </div>
 
 
 
-<div class="form-group">
+            <div class="form-group">
 
-<label>
-玩家名稱
-</label>
+                <label>
+                    顯示名稱
+                </label>
 
-<input
-id="username"
-type="text"
-placeholder="輸入玩家名稱"
->
+                <input
+                    id="displayName"
+                    placeholder="其他玩家看到的名稱"
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="example@email.com"
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    密碼
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="至少 6 個字元"
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    確認密碼
+                </label>
+
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="再次輸入密碼"
+                >
+
+            </div>
+
+
+
+            <button
+                class="button"
+                id="register-button"
+            >
+                建立帳號
+            </button>
+
+
+        </form>
+
+
+
+        <div class="register-message"></div>
+
+
+
+        <div class="register-footer">
+
+            已經有帳號？
+            <a href="login.html">
+                登入
+            </a>
+
+        </div>
+
+
+    </div>
 
 </div>
-
-
-
-<div class="form-group">
-
-<label>
-顯示名稱
-</label>
-
-<input
-id="displayName"
-type="text"
-placeholder="公開顯示名稱"
->
-
-</div>
-
-
-
-<div class="form-group">
-
-<label>
-Email
-</label>
-
-<input
-id="email"
-type="email"
-placeholder="example@email.com"
->
-
-</div>
-
-
-
-<div class="form-group">
-
-<label>
-密碼
-</label>
-
-<input
-id="password"
-type="password"
-placeholder="輸入密碼"
->
-
-</div>
-
-
-
-<div class="form-group">
-
-<label>
-確認密碼
-</label>
-
-<input
-id="confirmPassword"
-type="password"
-placeholder="再次輸入密碼"
->
-
-</div>
-
-
-
-<button
-id="register-button"
-class="primary-button"
->
-
-建立帳號
-
-</button>
-
-
-
-<div
-id="register-message"
-class="form-message"
->
-</div>
-
-
-
-<p class="login-link">
-
-已經有帳號？
-
-<a href="login.html">
-立即登入
-</a>
-
-</p>
-
-
-</div>
-
-
-</main>
 
 
 
