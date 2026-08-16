@@ -228,13 +228,10 @@ function createCaseItemCard(item) {
 
 
     card.className =
-        "case-item-card";
-
-
-    const rarityClass =
-        getRarityClass(
-            item.rarity
-        );
+       "case-item-card " +
+       getRarityClass(
+           item.rarity
+       );
 
 
     const imageContent =
@@ -283,32 +280,17 @@ function createCaseItemCard(item) {
     card.innerHTML = `
 
         <div class="case-item-image">
-
-            ${imageContent}
-
-        </div>
+         
+             ${imageContent}
+         
+             <span class="case-item-probability">
+                 ${Number(item.probability || 0).toFixed(2)}%
+             </span>
+         
+         </div>
 
 
         <div class="case-item-info">
-
-            <div
-                class="
-                    case-item-rarity
-                    ${rarityClass}
-                "
-            >
-
-            <span class="case-item-probability">
-                ${Number(item.probability || 0).toFixed(2)}%
-            </span>
-
-                ${escapeHtml(
-                    item.rarity ||
-                    "未知"
-                )}
-
-            </div>
-
 
             <h3>
 
