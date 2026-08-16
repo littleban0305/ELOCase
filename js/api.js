@@ -1767,3 +1767,11 @@ async function generateAI(prompt) {
     }
 
 }
+
+async function getRecentDrops(){
+
+    return await callAPI(
+        "getRecentDrops"
+    );
+
+}
