@@ -483,7 +483,10 @@ function renderCasePreview(items) {
 
 
             element.className =
-                "case-preview-item";
+                "case-preview-item " +
+                getRarityClass(
+                    item.rarity
+                );
 
 
             element.innerHTML = `
@@ -737,7 +740,10 @@ function startCaseWaitingAnimation() {
 
 
             element.className =
-                "case-preview-item";
+                "case-preview-item " +
+                getRarityClass(
+                    item.rarity
+                );
 
 
             element.innerHTML = `
@@ -1196,7 +1202,10 @@ function playCasePreviewAnimation(
 
 
             element.className =
-                "case-preview-item";
+                "case-preview-item " +
+                getRarityClass(
+                    item.rarity
+                );
 
 
             element.innerHTML = `
