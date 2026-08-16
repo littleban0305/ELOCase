@@ -1798,6 +1798,12 @@ async function saveOpenHistory(result){
     };
 
 
+    console.log(
+        "📦 儲存開箱紀錄",
+        requestData
+    );
+
+
     const response =
         await fetch(
             CONFIG.API_URL,
@@ -1806,11 +1812,9 @@ async function saveOpenHistory(result){
                 method:
                     "POST",
 
-                headers: {
-
+                headers:{
                     "Content-Type":
                         "text/plain;charset=utf-8"
-
                 },
 
                 body:
@@ -1832,11 +1836,17 @@ async function saveOpenHistory(result){
         await response.json();
 
 
+    console.log(
+        "📦 儲存結果",
+        data
+    );
+
+
     if(!data.success){
 
         throw new Error(
             data.error ||
-            "儲存開箱紀錄失敗"
+            "儲存失敗"
         );
 
     }
