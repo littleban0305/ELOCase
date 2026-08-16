@@ -1775,3 +1775,15 @@ async function getRecentDrops(){
     );
 
 }
+
+async function saveOpenHistory(result){
+
+    return await callAPI(
+        "saveOpenHistory",
+        {
+            item:
+                result.item
+        }
+    );
+
+}
