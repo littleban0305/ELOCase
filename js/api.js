@@ -1799,9 +1799,21 @@ async function saveOpenHistory(result){
 
 async function getOpenHistory(){
 
-    return await callAPI(
-        "getOpenHistory",
-        {}
-    );
+    const response =
+        await fetch(
+            API_URL,
+            {
+                method:"POST",
+
+                body:
+                    JSON.stringify({
+                        action:
+                            "getOpenHistory"
+                    })
+            }
+        );
+
+
+    return await response.json();
 
 }
