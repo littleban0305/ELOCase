@@ -60,9 +60,10 @@ async function loadLuckyPlayers(){
 
                     <div class="lucky-image">
 
-                        <img
+                        <img 
                             src="${item.itemImage}"
-                            alt=""
+                            alt="${item.itemName}"
+                            onerror="this.style.display='none'"
                         >
 
                     </div>
