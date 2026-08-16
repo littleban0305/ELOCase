@@ -1796,3 +1796,12 @@ async function saveOpenHistory(result){
     );
 
 }
+
+async function getOpenHistory(){
+
+    return await callAPI(
+        "getOpenHistory",
+        {}
+    );
+
+}
