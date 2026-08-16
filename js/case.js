@@ -37,7 +37,7 @@ function getRarityClass(rarity) {
     if (
         value.includes("consumer")
     ) {
-        return "rarity-blue";
+        return "rarity-white";
     }
 
 
@@ -51,29 +51,35 @@ function getRarityClass(rarity) {
     if (
         value.includes("mil-spec")
     ) {
-        return "rarity-purple";
+        return "rarity-blue";
     }
 
 
     if (
         value.includes("restricted")
     ) {
-        return "rarity-pink";
+        return "rarity-purple";
     }
 
 
     if (
-        value.includes("classified")
-    ) {
-        return "rarity-red";
-    }
+       value.includes("classified")
+   ) {
+       return "rarity-pink";
+   }
+   
+   
+   if (
+       value.includes("covert")
+   ) {
+       return "rarity-red";
+   }
 
-
-    if (
-        value.includes("covert")
-    ) {
-        return "rarity-gold";
-    }
+   if (
+       value.includes("contraband")
+   ) {
+       return "rarity-gold";
+   }
 
 
     return "";
