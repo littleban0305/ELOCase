@@ -1411,6 +1411,16 @@ async function generateAI() {
             "🔥 generateAI casePrice =",
             result.data?.casePrice
         );
+
+        if (
+            !result.data.casePrice &&
+            result.data.price
+        ) {
+        
+            result.data.casePrice =
+                result.data.price;
+        
+        }
         
         currentAIData =
             JSON.parse(
@@ -1477,6 +1487,16 @@ async function generateAI() {
 
 function renderAIResult(data) {
 
+    console.log(
+        "🔥 renderAIResult data.casePrice",
+        data.casePrice
+    );
+    
+    console.log(
+        "🔥 renderAIResult data.price",
+        data.price
+    );
+
     const items =
         Array.isArray(data.items)
             ? [...data.items]
@@ -1524,7 +1544,9 @@ function renderAIResult(data) {
                             min="0"
                             step="0.01"
                             value="${Number(
-                                data.casePrice ?? data.price ?? 0
+                                data.casePrice ??
+                                data.price ??
+                                2.5
                             )}"
                         >
                     
@@ -2944,6 +2966,14 @@ async function analyzeCurrentCase() {
 
 
     try {
+
+        if (
+            currentAIData &&
+            !currentAIData.casePrice
+        ) {
+            currentAIData.casePrice =
+                currentAIData.price;
+        }
 
         const data =
             collectEditedData();
