@@ -920,10 +920,10 @@ main {
 .case-item-image img {
 
     width:
-        115%;
+        120%;
 
     height:
-        115%;
+        120%;
 
     object-fit:
         contain;
@@ -931,8 +931,8 @@ main {
     display:
         block;
 
-    padding:
-        0;
+    transform:
+        translateX(12px);
 
 }
 
