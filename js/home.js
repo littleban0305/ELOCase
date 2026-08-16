@@ -24,7 +24,14 @@ async function loadLuckyPlayers(){
 
 
 
-        history.forEach(
+        const displayHistory = [
+            ...history,
+            ...history,
+            ...history
+        ];
+        
+        
+        displayHistory.forEach(
             item => {
 
 
