@@ -2018,3 +2018,47 @@ async function sendChallengePost(
     return result.data;
 
 }
+
+/* ========================================
+   玩家註冊
+======================================== */
+
+async function registerPlayer(
+    username,
+    displayName,
+    email,
+    password
+){
+
+    if(
+        !username ||
+        !displayName ||
+        !password
+    ){
+
+        throw new Error(
+            "資料不完整"
+        );
+
+    }
+
+
+    return await sendApiRequest(
+
+        "registerPlayer",
+
+        {
+
+            username,
+
+            displayName,
+
+            email,
+
+            password
+
+        }
+
+    );
+
+}
