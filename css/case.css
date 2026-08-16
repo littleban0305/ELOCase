@@ -1018,6 +1018,29 @@ main {
 
 }
 
+.case-item-card.rarity-white {
+
+    border-color:
+        rgba(220,220,220,0.4);
+
+}
+
+
+.case-item-card.rarity-lightblue {
+
+    border-color:
+        rgba(100,180,255,0.45);
+
+}
+
+
+.case-item-card.rarity-gold {
+
+    border-color:
+        rgba(255,200,60,0.6);
+
+}
+
 
 .case-item-info h3 {
 
