@@ -1,5 +1,6 @@
 async function loadLuckyPlayers(){
 
+
     const track =
         document.querySelector(
             "#lucky-track"
@@ -13,71 +14,84 @@ async function loadLuckyPlayers(){
 
     try{
 
-        const drops =
-            await getRecentDrops();
+
+        const history =
+            await getOpenHistory();
 
 
-        track.innerHTML="";
+
+        track.innerHTML = "";
 
 
-        drops.forEach(
-            drop=>{
 
-                const item =
+        history.forEach(
+            item => {
+
+
+                const element =
                     document.createElement(
                         "div"
                     );
 
 
-                item.className =
+                element.className =
                     "lucky-item";
 
 
-                item.innerHTML=`
+
+                element.innerHTML = `
+
 
                     <span class="lucky-player">
-                        ${escapeHtml(
-                            drop.username
-                        )}
+
+                        ${item.username}
+
                     </span>
+
 
 
                     <span class="lucky-text">
+
                         獲得
+
                     </span>
 
 
-                    <div class="
-                        lucky-image
-                        ${getRarityClass(
-                            drop.rarity
-                        )}
-                    ">
+
+                    <div class="lucky-image">
 
                         <img
-                        src="${drop.itemImage}"
+                            src="${item.itemImage}"
+                            alt=""
                         >
 
                     </div>
 
 
+
                     <span class="item-rarity">
-                        ${escapeHtml(
-                            drop.itemName
-                        )}
+
+                        ${item.itemName}
+
                     </span>
 
 
+
                     <span class="lucky-value">
-                        $${drop.value}
+
+                        $${Number(
+                            item.value
+                        ).toLocaleString()}
+
                     </span>
 
 
                 `;
 
 
+
                 track.appendChild(
-                    item
+                    element
                 );
 
 
@@ -87,11 +101,25 @@ async function loadLuckyPlayers(){
 
     }catch(error){
 
+
         console.error(
             "幸運玩家載入失敗",
             error
         );
 
+
+        track.innerHTML = `
+
+            <div class="case-loading">
+
+                無法載入紀錄
+
+            </div>
+
+        `;
+
+
     }
+
 
 }
