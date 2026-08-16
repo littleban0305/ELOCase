@@ -29,52 +29,54 @@ function getCaseIdFromUrl() {
 function getRarityClass(rarity) {
 
     const value =
-        String(
-            rarity || ""
-        )
+        String(rarity || "")
         .trim()
         .toLowerCase();
 
 
-    switch (value) {
-
-        case "blue":
-        case "藍色":
-        case "consumer":
-        case "消費級":
-
-            return "rarity-blue";
-
-
-        case "purple":
-        case "紫色":
-        case "industrial":
-        case "工業級":
-
-            return "rarity-purple";
-
-
-        case "pink":
-        case "粉色":
-        case "mil-spec":
-        case "受限":
-
-            return "rarity-pink";
-
-
-        case "red":
-        case "紅色":
-        case "classified":
-        case "保密":
-
-            return "rarity-red";
-
-
-        default:
-
-            return "";
-
+    if (
+        value.includes("consumer")
+    ) {
+        return "rarity-blue";
     }
+
+
+    if (
+        value.includes("industrial")
+    ) {
+        return "rarity-light-blue";
+    }
+
+
+    if (
+        value.includes("mil-spec")
+    ) {
+        return "rarity-purple";
+    }
+
+
+    if (
+        value.includes("restricted")
+    ) {
+        return "rarity-pink";
+    }
+
+
+    if (
+        value.includes("classified")
+    ) {
+        return "rarity-red";
+    }
+
+
+    if (
+        value.includes("covert")
+    ) {
+        return "rarity-gold";
+    }
+
+
+    return "";
 
 }
 
