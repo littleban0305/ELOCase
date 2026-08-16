@@ -13,12 +13,18 @@ async()=>{
 
     if(user){
 
-        document
-        .getElementById(
-            "challenge-player-name"
-        )
-        .innerText =
-            user.displayName;
+        const playerName =
+            document.getElementById(
+                "navbar-player-name"
+            );
+        
+        
+        if(playerName){
+        
+            playerName.innerText =
+                user.displayName;
+        
+        }
 
     }
 
