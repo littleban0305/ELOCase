@@ -1683,7 +1683,7 @@ main {
 
     animation:
         caseOpeningFadeIn
-        0.25s
+        0.8s
         ease-out
         forwards;
 
@@ -2195,7 +2195,7 @@ main {
 
     animation:
         caseLidOpen
-        1s
+        1.8s
         cubic-bezier(
             0.16,
             0.84,
@@ -2248,7 +2248,7 @@ main {
 
     animation:
         caseGlowBurst
-        1.25s
+        2s
         ease-out
         forwards;
 
@@ -2563,7 +2563,7 @@ main {
 
     transition:
         transform
-        .9s
+        1.5s
         cubic-bezier(
             .2,
             .8,
@@ -2591,8 +2591,8 @@ main {
 .case-opening-key {
 
     transition:
-        transform
-        .4s
+       transform
+       .8s
         cubic-bezier(
             .2,
             .9,
