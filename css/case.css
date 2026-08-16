@@ -1041,6 +1041,20 @@ main {
 
 }
 
+.rarity-light-blue {
+
+    border-color:
+        rgba(100,180,255,0.5);
+
+}
+
+.rarity-gold {
+
+    border-color:
+        rgba(255,200,60,0.6);
+
+}
+
 
 .case-item-info h3 {
 
