@@ -211,3 +211,73 @@ async function loadChallenge(){
 
 
 }
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const copyButton =
+document.getElementById(
+"copy-code-button"
+);
+
+
+
+if(copyButton){
+
+
+copyButton.addEventListener(
+"click",
+async()=>{
+
+
+const code =
+document
+.getElementById(
+"challenge-code"
+)
+.innerText;
+
+
+
+if(!code || code==="-" ){
+return;
+}
+
+
+
+await navigator.clipboard.writeText(
+code
+);
+
+
+
+const message =
+document.getElementById(
+"copy-message"
+);
+
+
+
+message.innerText =
+"✓ 已複製 Challenge Code";
+
+
+
+setTimeout(()=>{
+
+message.innerText="";
+
+},2000);
+
+
+
+});
+
+
+}
+
+
+
+});
