@@ -182,6 +182,8 @@
         infinite;
 
     will-change: transform;
+
+    gap:10px;
 }
 
 
