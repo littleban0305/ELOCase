@@ -76,11 +76,29 @@ async function createButton(){
 
 
 
-        alert(
-            "Challenge Code:\n"
-            +
-            result.challengeCode
+        /*
+         * 顯示 Challenge Code
+         */
+
+
+        document
+        .getElementById(
+            "challenge-code"
+        )
+        .innerText =
+            result.challengeCode;
+
+
+
+        document
+        .getElementById(
+            "created-challenge"
+        )
+        .classList
+        .remove(
+            "hidden"
         );
+
 
 
         loadChallenge();
