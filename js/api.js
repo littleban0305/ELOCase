@@ -2062,3 +2062,72 @@ async function registerPlayer(
     );
 
 }
+
+async function sendAuthRequest(data){
+
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "text/plain;charset=utf-8"
+                },
+
+                body:
+                    JSON.stringify(data),
+
+                redirect:
+                    "follow",
+
+                cache:
+                    "no-store"
+
+            }
+        );
+
+
+    const result =
+        await response.json();
+
+
+    if(!result.success){
+
+        throw new Error(
+            result.error ||
+            "Auth 操作失敗"
+        );
+
+    }
+
+
+    return result.data;
+
+}
+
+async function registerPlayer(
+    username,
+    displayName,
+    email,
+    password
+){
+
+    return await sendAuthRequest({
+
+        action:
+            "registerPlayer",
+
+        username,
+
+        displayName,
+
+        email,
+
+        password
+
+    });
+
+}
