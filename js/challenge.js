@@ -261,7 +261,7 @@ document.getElementById(
 
 
 message.innerText =
-"✓ 已複製 Challenge Code";
+"✓ 已複製挑戰代碼";
 
 
 
