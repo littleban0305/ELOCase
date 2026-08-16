@@ -1865,6 +1865,8 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
+               await saveOpenHistory(result);
+               
                 playCasePreviewAnimation(
                     result
                 );
