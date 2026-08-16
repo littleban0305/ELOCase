@@ -1,0 +1,101 @@
+.register-page {
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+.register-card {
+
+    width:360px;
+
+    padding:32px;
+
+    background:
+    var(--color-surface);
+
+    border:
+    1px solid var(--color-border);
+
+    border-radius:
+    var(--radius-large);
+
+}
+
+
+
+.register-card h1 {
+
+    text-align:center;
+
+    margin-bottom:8px;
+
+}
+
+
+.register-subtitle {
+
+    text-align:center;
+
+    color:
+    var(--color-text-muted);
+
+    font-size:.8rem;
+
+    margin-bottom:24px;
+
+}
+
+
+
+.form-group {
+
+    margin-bottom:16px;
+
+}
+
+
+.form-group label {
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:.8rem;
+
+}
+
+
+
+.form-group input {
+
+    width:100%;
+
+    padding:12px;
+
+    background:#10131a;
+
+    border:
+    1px solid var(--color-border);
+
+    border-radius:8px;
+
+    color:white;
+
+}
+
+
+
+.primary-button {
+
+    width:100%;
+
+    margin-top:10px;
+
+}
