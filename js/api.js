@@ -1770,24 +1770,26 @@ async function generateAI(prompt) {
 
 async function getRecentDrops(){
 
-    return await callAPI(
+    return await sendApiRequest(
         "getRecentDrops"
     );
 
 }
 
+
 async function saveOpenHistory(result){
 
-    const sessionToken =
-        getSessionToken();
+    const savedUser =
+        getSavedUser();
 
 
-    return await callAPI(
+    return await sendApiRequest(
         "saveOpenHistory",
         {
 
-            token:
-                sessionToken,
+            username:
+                savedUser?.displayName ||
+                "玩家",
 
             item:
                 result.item
@@ -1797,23 +1799,11 @@ async function saveOpenHistory(result){
 
 }
 
+
 async function getOpenHistory(){
 
-    const response =
-        await fetch(
-            API_URL,
-            {
-                method:"POST",
-
-                body:
-                    JSON.stringify({
-                        action:
-                            "getOpenHistory"
-                    })
-            }
-        );
-
-
-    return await response.json();
+    return await sendApiRequest(
+        "getOpenHistory"
+    );
 
 }
