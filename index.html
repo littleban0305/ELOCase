@@ -519,58 +519,31 @@
 
 <script>
 
-async function initializeHomePage() {
+async function initializeHomePage(){
 
-    try {
+    try{
 
         const user =
             await verifySession();
 
+
         updateLoginUI(user);
 
-    } catch (error) {
 
-        console.error(
-            "玩家登入狀態讀取失敗：",
-            error
-        );
-
-    }
+    }catch(error){}
 
 
-    const caseGrid =
-        document.querySelector(
-            "#case-grid"
-        );
+
+    loadLuckyPlayers();
 
 
-    if (!caseGrid) {
-        return;
-    }
+    const cases =
+        await getCases();
 
 
-    try {
-
-        const cases =
-            await getCases();
-
-        renderCases(cases);
-
-    } catch (error) {
-
-        console.error(
-            "箱子資料載入失敗：",
-            error
-        );
-
-
-        caseGrid.innerHTML = `
-            <div class="case-loading">
-                箱子資料載入失敗。
-            </div>
-        `;
-
-    }
+    renderCases(
+        cases
+    );
 
 }
 
