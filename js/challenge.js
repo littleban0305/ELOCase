@@ -299,3 +299,28 @@ message.innerText="";
 
 
 });
+
+const menuButton =
+document.getElementById(
+"player-menu-button"
+);
+
+
+const playerMenu =
+document.querySelector(
+".player-menu"
+);
+
+
+if(menuButton){
+
+menuButton.onclick =
+()=>{
+
+playerMenu.classList.toggle(
+"open"
+);
+
+};
+
+}
