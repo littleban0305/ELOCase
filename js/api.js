@@ -2023,46 +2023,6 @@ async function sendChallengePost(
    玩家註冊
 ======================================== */
 
-async function registerPlayer(
-    username,
-    displayName,
-    email,
-    password
-){
-
-    if(
-        !username ||
-        !displayName ||
-        !password
-    ){
-
-        throw new Error(
-            "資料不完整"
-        );
-
-    }
-
-
-    return await sendApiRequest(
-
-        "registerPlayer",
-
-        {
-
-            username,
-
-            displayName,
-
-            email,
-
-            password
-
-        }
-
-    );
-
-}
-
 async function sendAuthRequest(data){
 
     const response =
