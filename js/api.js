@@ -1783,19 +1783,66 @@ async function saveOpenHistory(result){
         getSavedUser();
 
 
-    return await sendApiRequest(
-        "saveOpenHistory",
-        {
+    const requestData = {
 
-            username:
-                savedUser?.displayName ||
-                "玩家",
+        action:
+            "saveOpenHistory",
 
-            item:
-                result.item
+        username:
+            savedUser?.displayName ||
+            "玩家",
 
-        }
-    );
+        item:
+            result.item
+
+    };
+
+
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+
+                method:
+                    "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        requestData
+                    ),
+
+                redirect:
+                    "follow",
+
+                cache:
+                    "no-store"
+
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if(!data.success){
+
+        throw new Error(
+            data.error ||
+            "儲存開箱紀錄失敗"
+        );
+
+    }
+
+
+    return data.data;
 
 }
 
