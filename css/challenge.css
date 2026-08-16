@@ -1,1 +1,180 @@
+/* ========================================
+   Challenge Mode
+======================================== */
 
+
+.challenge-navbar{
+
+    background:
+    #111827;
+
+    border-bottom:
+    1px solid #374151;
+
+}
+
+
+.challenge-navbar-container{
+
+    max-width:
+    1200px;
+
+    margin:
+    auto;
+
+    padding:
+    18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+.challenge-brand{
+
+    font-size:
+    24px;
+
+    font-weight:
+    700;
+
+}
+
+
+.challenge-brand strong{
+
+    color:
+    #f97316;
+
+    margin-left:
+    8px;
+
+}
+
+
+
+.challenge-page{
+
+    padding:
+    60px 0;
+
+}
+
+
+
+.challenge-description{
+
+    color:
+    #9ca3af;
+
+}
+
+
+
+.challenge-actions{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:
+    24px;
+
+    margin-top:
+    40px;
+
+}
+
+
+
+.challenge-card{
+
+    background:
+    #111827;
+
+    padding:
+    30px;
+
+    border-radius:
+    16px;
+
+}
+
+
+
+.challenge-card input{
+
+    width:
+    100%;
+
+    padding:
+    12px;
+
+    margin:
+    12px 0;
+
+}
+
+
+
+.challenge-room{
+
+    margin-top:
+    40px;
+
+}
+
+
+
+.challenge-vs{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:
+    40px;
+
+}
+
+
+
+.challenge-player-box{
+
+    background:
+    #111827;
+
+    padding:
+    30px;
+
+    border-radius:
+    16px;
+
+}
+
+
+
+.challenge-vs-text{
+
+    font-size:
+    40px;
+
+    color:
+    #f97316;
+
+}
+
+
+.hidden{
+
+    display:none;
+
+}
