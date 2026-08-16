@@ -920,10 +920,10 @@ main {
 .case-item-image img {
 
     width:
-        100%;
+        115%;
 
     height:
-        100%;
+        115%;
 
     object-fit:
         contain;
@@ -945,7 +945,7 @@ main {
         100%;
 
     aspect-ratio:
-        1 / 0.82;
+        1 / 0.9;
 
     display:
         flex;
@@ -955,9 +955,6 @@ main {
 
     justify-content:
         center;
-
-    overflow:
-        hidden;
 
 }
 
