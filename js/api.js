@@ -1778,11 +1778,20 @@ async function getRecentDrops(){
 
 async function saveOpenHistory(result){
 
+    const sessionToken =
+        getSessionToken();
+
+
     return await callAPI(
         "saveOpenHistory",
         {
+
+            token:
+                sessionToken,
+
             item:
                 result.item
+
         }
     );
 
