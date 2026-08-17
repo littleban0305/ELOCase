@@ -1,223 +1,293 @@
 /* ========================================
-   ELOCase Challenge Room
+   ELOCase Challenge Mode
+   Challenge Room
 ======================================== */
 
 
-.challenge-room-page{
-
-    padding:
-    64px 0 90px;
-
-}
+/* ========================================
+   Challenge Navbar
+======================================== */
 
 
-
-.room-card{
-
-    padding:
-    35px;
-
-    background:
-    var(--color-surface);
-
-    border:
-    1px solid var(--color-border);
-
-    border-radius:
-    var(--color-radius-large);
-
-}
+.challenge-navbar {
 
 
-
-.room-status{
-
-    padding:
-    14px;
-
-    margin-bottom:
-    30px;
+    width:100%;
 
 
     background:
-    rgba(
-        124,
-        92,
-        255,
-        .08
-    );
+    rgba(13,16,21,.92);
 
 
-    border:
-    1px solid var(--color-border);
+    border-bottom:
+    1px solid
+    var(--color-border);
 
 
-    border-radius:
-    10px;
+    backdrop-filter:
+    blur(12px);
 
-
-    color:
-    var(--color-text-secondary);
 
 }
 
 
 
-.room-status span{
-
-    color:
-    var(--color-primary-hover);
-
-    font-weight:
-    700;
-
-}
+.challenge-navbar-container{
 
 
+    max-width:
+    1200px;
 
 
+    margin:auto;
 
-.vs-area{
+
+    padding:
+    16px 24px;
+
 
     display:flex;
 
+
     align-items:center;
 
-    justify-content:center;
 
-    gap:40px;
-
-}
+    justify-content:space-between;
 
 
-
-
-.room-player{
-
-    flex:1;
-
-    padding:
-    30px;
-
-
-    text-align:center;
-
-
-    background:
-    var(--color-background);
-
-
-    border:
-    1px solid var(--color-border);
-
-
-    border-radius:
-    16px;
+    gap:20px;
 
 
 }
 
 
 
-.room-player h2{
+.challenge-brand{
 
-    margin-bottom:
-    20px;
+
+    text-decoration:none;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
 
 }
 
 
 
-
-.ec-box{
-
-    padding:
-    18px;
-
-
-    margin-bottom:
-    18px;
-
-
-    background:
-    rgba(
-        124,
-        92,
-        255,
-        .12
-    );
-
-
-    border-radius:
-    12px;
+.challenge-brand-main{
 
 
     color:
-    var(--color-primary-hover);
+    var(--color-text);
 
-
-}
-
-
-
-.ec-box strong{
-
-
-display:block;
-
-
-font-size:
-2rem;
-
-
-color:
-var(--color-text);
-
-
-}
-
-
-
-
-.vs-text{
 
     font-size:
-    2.5rem;
+    1.3rem;
 
 
     font-weight:
     900;
 
 
+}
+
+
+
+.challenge-brand-mode{
+
+
     color:
-    var(--color-primary);
+    #ff9d3d;
 
-
-}
-
-
-
-@media(max-width:800px){
-
-
-.vs-area{
-
-    flex-direction:
-    column;
-
-}
-
-
-
-.vs-text{
 
     font-size:
-    1.8rem;
+    .85rem;
+
+
+    font-weight:
+    800;
+
+
+    letter-spacing:
+    .04em;
+
 
 }
 
 
+
+
+.challenge-nav-links{
+
+
+    display:flex;
+
+
+    gap:24px;
+
+
 }
+
+
+
+.challenge-nav-link{
+
+
+    color:
+    var(--color-text-muted);
+
+
+    text-decoration:none;
+
+
+    font-size:.85rem;
+
+
+}
+
+
+
+.challenge-nav-link.active{
+
+
+    color:
+    #ff9d3d;
+
+
+    font-weight:
+    700;
+
+
+}
+
+
+
+
+.challenge-navbar-actions{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:18px;
+
+
+}
+
+
+
+
+.challenge-ec-display{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:6px;
+
+
+    padding:
+    8px 14px;
+
+
+    border-radius:
+    999px;
+
+
+    background:
+    rgba(255,157,61,.12);
+
+
+    border:
+    1px solid
+    rgba(255,157,61,.3);
+
+
+    color:
+    #ff9d3d;
+
+
+    font-size:.85rem;
+
+
+}
+
+
+
+
+/* ========================================
+   Page
+======================================== */
+
+
+.challenge-room-page{
+
+
+    padding:
+    60px 0 90px;
+
+
+}
+
+
+
+.challenge-label{
+
+
+    color:
+    #ff9d3d;
+
+
+}
+
+
+
+
+/* ========================================
+   Room Card
+======================================== */
+
+
+.room-card{
+
+
+    padding:
+    35px;
+
+
+    background:
+    var(--color-surface);
+
+
+    border:
+    1px solid
+    var(--color-border);
+
+
+    border-radius:
+    var(--radius-large);
+
+
+}
+
+
+
+
+
+
 
 /* ========================================
    Challenge Code
@@ -226,16 +296,10 @@ var(--color-text);
 
 .challenge-code-section{
 
-    margin-bottom:
-    30px;
-
-}
-
-
-.challenge-code-section h3{
 
     margin-bottom:
-    12px;
+    25px;
+
 
 }
 
@@ -246,24 +310,19 @@ var(--color-text);
 
     display:flex;
 
+
     align-items:center;
+
 
     justify-content:space-between;
 
-    gap:15px;
-
 
     padding:
-    16px;
+    15px 18px;
 
 
     background:
-    rgba(
-        255,
-        255,
-        255,
-        .03
-    );
+    rgba(255,255,255,.03);
 
 
     border:
@@ -286,20 +345,20 @@ var(--color-text);
     monospace;
 
 
+    color:
+    #ff9d3d;
+
+
     font-size:
-    1.3rem;
+    1.4rem;
 
 
     font-weight:
-    800;
+    900;
 
 
     letter-spacing:
-    .08em;
-
-
-    color:
-    var(--color-primary-hover);
+    .12em;
 
 
 }
@@ -310,7 +369,7 @@ var(--color-text);
 
 
     margin-top:
-    10px;
+    8px;
 
 
     color:
@@ -325,152 +384,332 @@ var(--color-text);
 
 
 
-@media(max-width:600px){
 
-
-.challenge-code-box{
-
-    flex-direction:
-    column;
-
-
-}
-
-
-
-.challenge-code-box button{
-
-    width:
-    100%;
-
-}
-
-
-}
-
-.player-inventory{
-
-margin-top:25px;
-
-}
-
-
-.challenge-items{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:10px;
-
-}
-
-
-.challenge-item-card{
-
-
-padding:10px;
-
-
-background:
-var(--color-surface);
-
-
-border:
-1px solid
-var(--color-border);
-
-
-border-radius:
-10px;
-
-
-font-size:.75rem;
-
-
-}
-
-
-
-.challenge-item-card img{
-
-width:100%;
-
-height:80px;
-
-object-fit:contain;
-
-margin-bottom:8px;
-
-}
-
-
-
-.challenge-item-card span{
-
-color:
-var(--color-primary-hover);
-
-font-weight:700;
-
-}
-
-
-
-.empty-inventory{
-
-color:
-var(--color-text-muted);
-
-font-size:.8rem;
-
-}
 
 /* ========================================
-   Challenge Inventory
+   Status
 ======================================== */
 
 
-.value-box {
+.room-status{
 
-    margin-top:15px;
 
-    padding:12px;
+    margin-bottom:
+    35px;
+
+
+    padding:
+    15px;
+
 
     background:
-    rgba(
-        124,
-        92,
-        255,
-        0.08
-    );
+    rgba(255,157,61,.08);
+
+
+    border:
+    1px solid
+    rgba(255,157,61,.25);
+
+
+    border-radius:
+    12px;
+
+
+}
+
+
+
+.room-status strong{
+
+
+    color:
+    #ff9d3d;
+
+
+}
+
+
+
+
+
+
+
+/* ========================================
+   VS Area
+======================================== */
+
+
+.vs-area{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    gap:35px;
+
+
+}
+
+
+
+
+.room-player{
+
+
+    flex:1;
+
+
+    padding:
+    30px;
+
+
+    background:
+    var(--color-background);
+
 
     border:
     1px solid
     var(--color-border);
 
+
     border-radius:
-    var(--radius-medium);
+    18px;
+
+
+    text-align:center;
+
 
 }
 
 
-.value-box strong {
+
+.player-side-title{
+
+
+    color:
+    #ff9d3d;
+
+
+    font-size:
+    .75rem;
+
+
+    font-weight:
+    800;
+
+
+    letter-spacing:
+    .12em;
+
+
+}
+
+
+
+.room-player h2{
+
+
+    margin:
+    10px 0 25px;
+
+
+    color:
+    var(--color-text);
+
+
+}
+
+
+
+
+
+.vs-text{
+
+
+    font-size:
+    2.8rem;
+
+
+    font-weight:
+    900;
+
+
+    color:
+    #ff9d3d;
+
+
+}
+
+
+
+
+
+/* ========================================
+   EC
+======================================== */
+
+
+.ec-box{
+
+
+    padding:
+    18px;
+
+
+    margin-bottom:
+    15px;
+
+
+    background:
+    rgba(255,157,61,.08);
+
+
+    border:
+    1px solid
+    rgba(255,157,61,.25);
+
+
+    border-radius:
+    14px;
+
+
+}
+
+
+
+.ec-box span{
+
+
+    display:block;
+
+
+    color:
+    var(--color-text-muted);
+
+
+    font-size:
+    .75rem;
+
+
+}
+
+
+
+.ec-box strong{
+
+
+    display:block;
+
+
+    margin-top:
+    8px;
+
+
+    font-size:
+    2rem;
+
+
+    color:
+    #ff9d3d;
+
+
+}
+
+
+
+
+
+
+/* ========================================
+   Value
+======================================== */
+
+
+.value-box{
+
+
+    padding:
+    14px;
+
+
+    margin-bottom:
+    20px;
+
+
+    border-radius:
+    12px;
+
+
+    background:
+    rgba(124,92,255,.08);
+
+
+}
+
+
+
+.value-box strong{
+
+
+    display:block;
+
+
+    margin-top:
+    6px;
+
 
     color:
     var(--color-primary-hover);
 
+
+    font-size:
+    1.4rem;
+
+
 }
 
 
 
 
 
-.challenge-items {
 
 
-    margin-top:15px;
+
+/* ========================================
+   Inventory
+======================================== */
+
+
+.player-inventory{
+
+
+    margin-top:
+    30px;
+
+
+}
+
+
+
+.player-inventory h3{
+
+
+    margin-bottom:
+    15px;
+
+
+}
+
+
+
+
+.challenge-items{
 
 
     display:grid;
@@ -480,20 +719,19 @@ font-size:.8rem;
     repeat(2,1fr);
 
 
-    gap:10px;
+    gap:
+    10px;
 
 
 }
 
 
 
-.challenge-item {
+.challenge-item{
 
 
-    min-height:90px;
-
-
-    padding:10px;
+    min-height:
+    90px;
 
 
     display:flex;
@@ -508,6 +746,10 @@ font-size:.8rem;
     align-items:center;
 
 
+    padding:
+    12px;
+
+
     background:
     var(--color-surface);
 
@@ -518,59 +760,47 @@ font-size:.8rem;
 
 
     border-radius:
-    var(--radius-medium);
-
-
-}
-
-
-
-.challenge-item-value {
-
-
-    margin-top:5px;
-
-
-    color:
-    var(--color-primary-hover);
+    12px;
 
 
     font-size:
-    0.8rem;
+    .8rem;
 
-
-    font-weight:
-    700;
 
 }
 
 
 
 
-.empty-item {
+.challenge-item-value{
 
 
-    grid-column:
-    1 / -1;
-
-
-    padding:30px;
-
-
-    text-align:center;
+    margin-top:
+    8px;
 
 
     color:
-    var(--color-text-muted);
+    #ff9d3d;
 
 
-    background:
-    rgba(
-        255,
-        255,
-        255,
-        0.02
-    );
+    font-weight:
+    800;
+
+
+}
+
+
+
+
+.empty-item{
+
+
+    grid-column:
+    1/-1;
+
+
+    padding:
+    30px;
 
 
     border:
@@ -579,7 +809,11 @@ font-size:.8rem;
 
 
     border-radius:
-    var(--radius-medium);
+    12px;
+
+
+    color:
+    var(--color-text-muted);
 
 
 }
@@ -588,93 +822,111 @@ font-size:.8rem;
 
 
 
-@media(max-width:800px){
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+
+@media(max-width:900px){
+
+
+.challenge-navbar-container{
+
+
+    flex-wrap:
+    wrap;
+
+
+}
+
+
+
+.vs-area{
+
+
+    flex-direction:
+    column;
+
+
+}
+
+
+
+.vs-text{
+
+
+    transform:
+    rotate(90deg);
+
+
+}
+
+
+
+.room-player{
+
+
+    width:
+    100%;
+
+
+}
+
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.room-card{
+
+
+    padding:
+    20px;
+
+
+}
+
+
+
+.challenge-code-box{
+
+
+    flex-direction:
+    column;
+
+
+    gap:
+    15px;
+
+
+}
+
 
 
 .challenge-items{
 
+
     grid-template-columns:
     1fr;
 
-}
-
-
-}
-
-/* ========================================
-   Challenge Open Case
-======================================== */
-
-
-.challenge-open-section {
-
-
-margin-top:20px;
-
-
-padding-top:20px;
-
-
-border-top:
-
-1px solid
-var(--color-border);
-
 
 }
 
 
 
-.challenge-open-section h3{
+.challenge-brand-mode{
 
 
-margin-bottom:12px;
-
-
-}
-
-
-
-.challenge-case-select{
-
-
-width:100%;
-
-
-height:42px;
-
-
-margin-bottom:12px;
-
-
-padding:0 12px;
-
-
-background:
-var(--color-background);
-
-
-border:
-1px solid
-var(--color-border);
-
-
-border-radius:
-var(--radius-medium);
-
-
-color:
-var(--color-text);
+    display:none;
 
 
 }
-
-
-.challenge-case-select:focus{
-
-
-border-color:
-var(--color-primary);
 
 
 }
