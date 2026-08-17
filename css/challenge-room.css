@@ -1,0 +1,220 @@
+/* ========================================
+   ELOCase Challenge Room
+======================================== */
+
+
+.challenge-room-page{
+
+    padding:
+    64px 0 90px;
+
+}
+
+
+
+.room-card{
+
+    padding:
+    35px;
+
+    background:
+    var(--color-surface);
+
+    border:
+    1px solid var(--color-border);
+
+    border-radius:
+    var(--color-radius-large);
+
+}
+
+
+
+.room-status{
+
+    padding:
+    14px;
+
+    margin-bottom:
+    30px;
+
+
+    background:
+    rgba(
+        124,
+        92,
+        255,
+        .08
+    );
+
+
+    border:
+    1px solid var(--color-border);
+
+
+    border-radius:
+    10px;
+
+
+    color:
+    var(--color-text-secondary);
+
+}
+
+
+
+.room-status span{
+
+    color:
+    var(--color-primary-hover);
+
+    font-weight:
+    700;
+
+}
+
+
+
+
+
+.vs-area{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:40px;
+
+}
+
+
+
+
+.room-player{
+
+    flex:1;
+
+    padding:
+    30px;
+
+
+    text-align:center;
+
+
+    background:
+    var(--color-background);
+
+
+    border:
+    1px solid var(--color-border);
+
+
+    border-radius:
+    16px;
+
+
+}
+
+
+
+.room-player h2{
+
+    margin-bottom:
+    20px;
+
+}
+
+
+
+
+.ec-box{
+
+    padding:
+    18px;
+
+
+    margin-bottom:
+    18px;
+
+
+    background:
+    rgba(
+        124,
+        92,
+        255,
+        .12
+    );
+
+
+    border-radius:
+    12px;
+
+
+    color:
+    var(--color-primary-hover);
+
+
+}
+
+
+
+.ec-box strong{
+
+
+display:block;
+
+
+font-size:
+2rem;
+
+
+color:
+var(--color-text);
+
+
+}
+
+
+
+
+.vs-text{
+
+    font-size:
+    2.5rem;
+
+
+    font-weight:
+    900;
+
+
+    color:
+    var(--color-primary);
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.vs-area{
+
+    flex-direction:
+    column;
+
+}
+
+
+
+.vs-text{
+
+    font-size:
+    1.8rem;
+
+}
+
+
+}
