@@ -829,6 +829,10 @@
 
 }
 
+.player-menu-dropdown.show {
+    display: block;
+}
+
 
 /* ---------- 選單項目 ---------- */
 
