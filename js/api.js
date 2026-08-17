@@ -2173,3 +2173,20 @@ async function getChallengeRoom(challengeId){
     );
 
 }
+
+async function getChallengeRoomData(
+    challengeId
+){
+
+    const response =
+        await callAPI(
+            "getChallengeRoomData",
+            {
+                challengeId
+            }
+        );
+
+
+    return response.data;
+
+}
