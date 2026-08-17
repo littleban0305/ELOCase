@@ -86,6 +86,13 @@ async function loadChallengeRoom(){
         const data =
             result;
 
+        document
+        .getElementById(
+            "challenge-code"
+        )
+        .innerText =
+        data.challenge.challengeCode;
+
 
 
         document
@@ -221,3 +228,68 @@ menu.classList.toggle(
 
 
 }
+
+document.addEventListener(
+"click",
+async(e)=>{
+
+
+if(
+e.target.id !==
+"copy-code-button"
+){
+
+return;
+
+}
+
+
+
+const code =
+document
+.getElementById(
+"challenge-code"
+)
+.innerText;
+
+
+
+if(
+!code ||
+code === "-"
+){
+
+return;
+
+}
+
+
+
+await navigator.clipboard.writeText(
+code
+);
+
+
+
+const message =
+document
+.getElementById(
+"copy-message"
+);
+
+
+
+message.innerText =
+"✓ 已複製挑戰代碼";
+
+
+
+setTimeout(()=>{
+
+message.innerText="";
+
+},2000);
+
+
+
+});
