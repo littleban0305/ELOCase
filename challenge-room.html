@@ -10,38 +10,20 @@ name="viewport"
 content="width=device-width, initial-scale=1.0"
 >
 
-
 <title>
-Challenge Room｜ELOCase Challenge Mode
+Challenge Room｜ELOCase
 </title>
 
 
-
-<link
-rel="stylesheet"
-href="css/global.css"
->
-
-<link
-rel="stylesheet"
-href="css/components.css"
->
-
-<link
-rel="stylesheet"
-href="css/challenge-room.css"
->
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/challenge-room.css">
 
 
 </head>
 
 
 <body>
-
-
-<!-- ========================================
-     Challenge Navbar
-======================================== -->
 
 
 <header class="challenge-navbar">
@@ -55,132 +37,105 @@ href="challenge.html"
 class="challenge-brand"
 >
 
-
-<span class="challenge-brand-main">
+<span>
 ELOCase
 </span>
 
-
-<span class="challenge-brand-mode">
+<strong>
 Challenge Mode
-</span>
-
-
-</a>
-
-
-
-
-
-<nav class="challenge-nav-links">
-
-
-<a
-href="challenge.html"
-class="challenge-nav-link active"
->
-挑戰
-</a>
-
-
-<a
-href="#"
-class="challenge-nav-link"
->
-紀錄
-</a>
-
-
-</nav>
-
-
-
-
-
-
-
-<div class="challenge-navbar-actions">
-
-
-
-<div class="challenge-ec-display">
-
-
-<span>
-⚡
-</span>
-
-
-<strong id="challenge-navbar-ec">
-0
 </strong>
 
-
-<span>
-EC
-</span>
+</a>
 
 
+
+
+<div class="challenge-navbar-status">
+
+
+
+<div class="challenge-user-box">
+
+
+<div class="challenge-box-title">
+我的 ELOCoin
 </div>
-
-
-
-
-
-
-
-<div class="player-menu">
-
-
-
-<button
-class="player-menu-button"
-id="player-menu-button"
->
-
-
-<span class="player-avatar">
-◉
-</span>
-
-
-<span
-class="player-menu-name"
-id="navbar-player-name"
->
-登入
-</span>
-
-
-<span class="player-menu-arrow">
-▾
-</span>
-
-
-</button>
-
-
 
 
 <div
-class="player-menu-dropdown"
+id="navbar-my-coin"
+class="challenge-box-value"
 >
+0
+</div>
 
 
-<a
-href="profile.html"
-class="player-menu-item"
+</div>
+
+
+
+
+
+<div class="challenge-user-box">
+
+
+<div class="challenge-box-title">
+我的物品價值
+</div>
+
+
+<div
+id="navbar-my-value"
+class="challenge-box-value"
 >
-個人資料
-</a>
+0
+</div>
+
+
+</div>
 
 
 
-<button
-class="player-menu-item player-menu-logout"
+
+
+
+
+<div class="challenge-user-box opponent">
+
+
+<div class="challenge-box-title">
+對手 ELOCoin
+</div>
+
+
+<div
+id="navbar-opponent-coin"
+class="challenge-box-value"
 >
-登出
-</button>
+0
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="challenge-user-box opponent">
+
+
+<div class="challenge-box-title">
+對手物品價值
+</div>
+
+
+<div
+id="navbar-opponent-value"
+class="challenge-box-value"
+>
+0
+</div>
 
 
 </div>
@@ -188,11 +143,6 @@ class="player-menu-item player-menu-logout"
 
 
 </div>
-
-
-
-</div>
-
 
 
 </div>
@@ -206,37 +156,26 @@ class="player-menu-item player-menu-logout"
 
 
 
-
 <main>
 
 
-<section
-class="challenge-room-page"
->
+<section class="challenge-room-page">
 
 
-<div
-class="section-container"
->
+<div class="section-container">
 
 
 
-
-
-<!-- ========================================
-     Header
-======================================== -->
 
 
 <div class="section-header">
 
 
-<span class="section-label challenge-label">
+<span class="section-label">
 
 Challenge Mode
 
 </span>
-
 
 
 <h1>
@@ -246,13 +185,11 @@ Challenge Mode
 </h1>
 
 
-
 <p>
 
-與另一位玩家競爭最終價值。
+管理你的挑戰資金，決定何時停止。
 
 </p>
-
 
 
 </div>
@@ -263,21 +200,11 @@ Challenge Mode
 
 
 
-
-
-
-<!-- ========================================
-     Room Card
-======================================== -->
-
-
 <div class="room-card">
 
 
 
 
-
-<!-- Challenge Code -->
 
 
 <div class="challenge-code-section">
@@ -288,25 +215,22 @@ Challenge Mode
 </h3>
 
 
-
 <div class="challenge-code-box">
 
 
-<span
-id="challenge-code"
->
+<span id="challenge-code">
 -
 </span>
-
 
 
 <button
 id="copy-code-button"
 class="button button-secondary"
 >
-複製
-</button>
 
+複製
+
+</button>
 
 
 </div>
@@ -316,10 +240,7 @@ class="button button-secondary"
 <div
 id="copy-message"
 class="copy-message"
->
-
-</div>
-
+></div>
 
 
 </div>
@@ -329,25 +250,16 @@ class="copy-message"
 
 
 
-
-
-<!-- Status -->
 
 
 <div class="room-status">
 
 
-<span>
 狀態：
-</span>
 
-
-
-<strong
-id="challenge-status"
->
+<span id="challenge-status">
 -
-</strong>
+</span>
 
 
 </div>
@@ -359,10 +271,6 @@ id="challenge-status"
 
 
 
-
-<!-- ========================================
-     VS
-======================================== -->
 
 <div class="vs-area">
 
@@ -370,28 +278,20 @@ id="challenge-status"
 
 
 
-<!-- Player A -->
 
+<!-- 我的區域 -->
 
 <div
-class="room-player"
+class="room-player my-player"
 >
 
 
-<div class="player-side-title">
 
-PLAYER A
+<h2 id="my-player-name">
 
-</div>
+我的挑戰
 
-
-
-<h2
-id="player-a-name"
->
-Player A
 </h2>
-
 
 
 
@@ -399,22 +299,17 @@ Player A
 <div class="ec-box">
 
 
-<span>
-Challenge EC
-</span>
+ELOCoin
 
 
+<strong id="my-player-coin">
 
-<strong
-id="player-a-ec"
->
--
+0
+
 </strong>
 
 
-
 </div>
-
 
 
 
@@ -423,15 +318,14 @@ id="player-a-ec"
 <div class="value-box">
 
 
-目前總價值
+物品價值
 
 
-<strong
-id="player-a-value"
->
+<strong id="my-player-value">
+
 0
-</strong>
 
+</strong>
 
 
 </div>
@@ -441,16 +335,14 @@ id="player-a-value"
 
 
 
-
 <button
-id="player-a-case-button"
+id="open-case-button"
 class="button button-primary"
 >
 
-選擇箱子
+選擇箱子開啟
 
 </button>
-
 
 
 
@@ -461,13 +353,14 @@ class="button button-primary"
 
 
 <h3>
-物品庫
+
+我的物品庫
+
 </h3>
 
 
-
 <div
-id="player-a-items"
+id="my-items"
 class="challenge-items"
 >
 
@@ -479,6 +372,8 @@ class="challenge-items"
 </div>
 
 
+</div>
+
 
 </div>
 
@@ -489,17 +384,8 @@ class="challenge-items"
 
 
 
-</div>
 
 
-
-
-
-
-
-
-
-<!-- VS -->
 
 
 <div class="vs-text">
@@ -514,30 +400,19 @@ VS
 
 
 
-
-<!-- Player B -->
-
+<!-- 對手區域 -->
 
 <div
-class="room-player"
+class="room-player opponent-player"
 >
 
 
-<div class="player-side-title">
 
-PLAYER B
+<h2 id="opponent-name">
 
-</div>
+等待對手
 
-
-
-
-<h2
-id="player-b-name"
->
-Player B
 </h2>
-
 
 
 
@@ -546,22 +421,17 @@ Player B
 <div class="ec-box">
 
 
-<span>
-Challenge EC
-</span>
+ELOCoin
 
 
+<strong id="opponent-coin">
 
-<strong
-id="player-b-ec"
->
--
+0
+
 </strong>
 
 
-
 </div>
-
 
 
 
@@ -570,15 +440,14 @@ id="player-b-ec"
 <div class="value-box">
 
 
-目前總價值
+物品價值
 
 
-<strong
-id="player-b-value"
->
+<strong id="opponent-value">
+
 0
-</strong>
 
+</strong>
 
 
 </div>
@@ -589,16 +458,12 @@ id="player-b-value"
 
 
 
+<div class="opponent-lock">
 
-<button
-id="player-b-case-button"
-class="button button-primary"
->
 
-選擇箱子
+對手開箱資料同步中
 
-</button>
-
+</div>
 
 
 
@@ -610,13 +475,15 @@ class="button button-primary"
 
 
 <h3>
-物品庫
+
+對手物品庫
+
 </h3>
 
 
 
 <div
-id="player-b-items"
+id="opponent-items"
 class="challenge-items"
 >
 
@@ -628,6 +495,8 @@ class="challenge-items"
 </div>
 
 
+</div>
+
 
 </div>
 
@@ -639,12 +508,6 @@ class="challenge-items"
 
 
 
-</div>
-
-
-
-
-
 
 
 </div>
@@ -656,8 +519,41 @@ class="challenge-items"
 
 
 
+
+<div class="challenge-actions">
+
+
+<button
+id="back-room-button"
+class="button button-secondary"
+>
+
+回到房間
+
+</button>
+
+
+
+<button
+id="finish-challenge-button"
+class="button button-danger"
+>
+
+結束挑戰
+
+</button>
+
+
 </div>
 
+
+
+
+
+
+
+
+</div>
 
 
 </div>
@@ -683,7 +579,6 @@ class="challenge-items"
 <script src="js/player.js"></script>
 
 <script src="js/challenge-room.js"></script>
-
 
 
 </body>
