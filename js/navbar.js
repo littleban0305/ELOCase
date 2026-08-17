@@ -237,6 +237,14 @@ function logoutPlayer(){
     );
 
 
+
+    /*
+     * 重新整理頁面
+     */
+
+    location.reload();
+
+
 }
 
 
