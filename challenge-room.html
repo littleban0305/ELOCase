@@ -169,6 +169,8 @@ class="player-menu-item player-menu-logout"
 
 
 
+
+
 <main>
 
 
@@ -193,7 +195,7 @@ class="player-menu-item player-menu-logout"
 
 
 <p>
-等待雙方完成挑戰準備。
+查看雙方挑戰進度與物品收藏。
 </p>
 
 
@@ -202,7 +204,12 @@ class="player-menu-item player-menu-logout"
 
 
 
+
+
+
 <div class="room-card">
+
+
 
 <div class="challenge-code-section">
 
@@ -210,6 +217,7 @@ class="player-menu-item player-menu-logout"
 <h3>
 挑戰代碼
 </h3>
+
 
 
 <div class="challenge-code-box">
@@ -244,6 +252,11 @@ class="copy-message"
 
 </div>
 
+
+
+
+
+
 <div class="room-status">
 
 狀態：
@@ -257,18 +270,34 @@ class="copy-message"
 
 
 
+
+
+
+
+
 <div class="vs-area">
 
+
+
+
+
+
+<!-- =========================
+     Player A
+========================= -->
 
 
 <div class="room-player">
 
 
 <h2>
+
 <span id="player-a-name">
 Player A
 </span>
+
 </h2>
+
 
 
 <div class="ec-box">
@@ -283,6 +312,7 @@ EC
 </div>
 
 
+
 <div>
 物品價值：
 <span id="player-a-value">
@@ -291,7 +321,35 @@ EC
 </div>
 
 
+
+
+
+<div class="player-inventory">
+
+
+<h3>
+物品庫
+</h3>
+
+
+<div
+id="player-a-items"
+class="challenge-items"
+>
+
+
 </div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -307,6 +365,15 @@ VS
 
 
 
+
+
+
+
+<!-- =========================
+     Player B
+========================= -->
+
+
 <div class="room-player">
 
 
@@ -317,6 +384,7 @@ Player B
 </span>
 
 </h2>
+
 
 
 <div class="ec-box">
@@ -331,6 +399,7 @@ EC
 </div>
 
 
+
 <div>
 物品價值：
 <span id="player-b-value">
@@ -339,11 +408,41 @@ EC
 </div>
 
 
+
+
+
+<div class="player-inventory">
+
+
+<h3>
+物品庫
+</h3>
+
+
+<div
+id="player-b-items"
+class="challenge-items"
+>
+
+
+</div>
+
+
 </div>
 
 
 
 </div>
+
+
+
+
+
+
+</div>
+
+
+
 
 
 
@@ -358,6 +457,8 @@ EC
 
 
 </main>
+
+
 
 
 
