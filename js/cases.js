@@ -309,6 +309,56 @@ function renderCaseItems(items) {
 
             `;
 
+            card.onclick =
+            ()=>{
+            
+            
+            const params =
+            new URLSearchParams(
+            window.location.search
+            );
+            
+            
+            const mode =
+            params.get(
+            "mode"
+            );
+            
+            
+            const challengeId =
+            params.get(
+            "challengeId"
+            );
+            
+            
+            
+            let url =
+            "case.html?caseId="
+            +
+            item.caseId;
+            
+            
+            
+            if(
+            mode === "challenge"
+            &&
+            challengeId
+            ){
+            
+            url +=
+            "&mode=challenge&challengeId="
+            +
+            challengeId;
+            
+            }
+            
+            
+            
+            location.href =
+            url;
+            
+            
+            };
 
             grid.appendChild(
                 card
