@@ -245,12 +245,12 @@ function initNavbar(){
 
 
     if(balance){
-
+    
         balance.textContent =
-            Number(
+            formatCurrency(
                 user.eloCoin
-            ) || 0;
-
+            );
+    
     }
 
 
@@ -383,5 +383,17 @@ function setActiveNav(){
         }
 
     });
+
+}
+
+function formatCurrency(value){
+
+    return Number(value || 0)
+        .toLocaleString(
+            "en-US",
+            {
+                maximumFractionDigits: 2
+            }
+        );
 
 }
