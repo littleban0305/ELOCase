@@ -236,26 +236,34 @@
 
 .register-message {
 
+    height:
+        0;
 
-    min-height:
-        24px;
+    margin:
+        0;
 
-
-    margin-top:
-        16px;
-
+    overflow:
+        hidden;
 
     text-align:
         center;
 
-
     color:
         var(--color-danger);
-
 
     font-size:
         0.85rem;
 
+}
+
+
+.register-message.show {
+
+    height:
+        auto;
+
+    margin-top:
+        16px;
 
 }
 
@@ -265,22 +273,17 @@
 
 .register-footer {
 
-
     margin-top:
-        20px;
-
+        16px;
 
     text-align:
         center;
 
-
     color:
         var(--color-text-muted);
 
-
     font-size:
         0.85rem;
-
 
 }
 
