@@ -1,3 +1,14 @@
+/* ========================================
+   ELOCase Google Authentication
+======================================== */
+
+
+/*
+ * ========================================
+ * 初始化 Google Login Button
+ * ========================================
+ */
+
 document.addEventListener(
     "DOMContentLoaded",
     function(){
@@ -9,9 +20,16 @@ document.addEventListener(
             );
 
 
+        /*
+         * 不是登入頁
+         */
+
         if(!button){
+
             return;
+
         }
+
 
 
         google.accounts.id.initialize({
@@ -40,7 +58,10 @@ document.addEventListener(
                     "large",
 
                 width:
-                    360
+                    360,
+
+                text:
+                    "signin_with"
 
             }
 
@@ -53,20 +74,32 @@ document.addEventListener(
 
 
 
-async function handleGoogleLogin(response){
+/*
+ * ========================================
+ * Google 登入回呼
+ * ========================================
+ */
+
+
+async function handleGoogleLogin(
+    response
+){
 
 
     const googleToken =
         response.credential;
 
 
+
     console.log(
-        "Google Token:",
+        "Google Credential:",
         googleToken
     );
 
 
+
     try {
+
 
 
         const result =
@@ -75,28 +108,67 @@ async function handleGoogleLogin(response){
             );
 
 
+
         console.log(
-            "Google 登入成功:",
+            "Google Login Result:",
             result
         );
 
 
+
+
         /*
-         * 儲存 Session
+         * ====================================
+         * 第一次 Google 登入
+         *
+         * 需要完善資料
+         * ====================================
          */
 
-        localStorage.setItem(
-            "sessionToken",
-            result.sessionToken
-        );
+
+        if(
+            result.needProfile
+        ){
 
 
-        localStorage.setItem(
-            "elocaseUser",
-            JSON.stringify(
-                result.user
-            )
+
+            localStorage.setItem(
+
+                "googleRegisterData",
+
+                JSON.stringify(
+                    result.googleData
+                )
+
+            );
+
+
+
+            location.href =
+                "google-profile.html";
+
+
+
+            return;
+
+        }
+
+
+
+
+        /*
+         * ====================================
+         * 已有 Google 帳號
+         *
+         * 直接登入
+         * ====================================
+         */
+
+
+        saveSession(
+            result
         );
+
 
 
         location.href =
@@ -104,12 +176,16 @@ async function handleGoogleLogin(response){
 
 
 
-    }catch(error){
+
+    }
+    catch(error){
 
 
         console.error(
+
             "Google 登入失敗:",
             error
+
         );
 
 
@@ -119,5 +195,123 @@ async function handleGoogleLogin(response){
 
 
     }
+
+
+}
+
+
+
+/*
+ * ========================================
+ * 呼叫 GAS Google Login API
+ * ========================================
+ */
+
+
+async function googleLogin(
+    googleToken
+){
+
+
+    if(
+        !googleToken
+    ){
+
+        throw new Error(
+            "缺少 Google Token"
+        );
+
+    }
+
+
+
+    const response =
+        await fetch(
+
+            CONFIG.API_URL,
+
+            {
+
+                method:
+                    "POST",
+
+
+                headers:{
+
+
+                    "Content-Type":
+                    "text/plain;charset=utf-8"
+
+
+                },
+
+
+                body:
+
+                    JSON.stringify({
+
+                        action:
+                            "googleLogin",
+
+
+                        googleToken:
+                            googleToken
+
+
+                    }),
+
+
+                redirect:
+                    "follow",
+
+
+                cache:
+                    "no-store"
+
+
+            }
+
+        );
+
+
+
+
+    if(
+        !response.ok
+    ){
+
+        throw new Error(
+            "Google 登入服務錯誤"
+        );
+
+    }
+
+
+
+
+    const result =
+        await response.json();
+
+
+
+
+    if(
+        !result.success
+    ){
+
+        throw new Error(
+
+            result.error ||
+            "Google 登入失敗"
+
+        );
+
+    }
+
+
+
+
+    return result.data;
+
 
 }
