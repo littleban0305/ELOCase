@@ -145,7 +145,18 @@ document.addEventListener(
     }
 );
 
+function logoutPlayer(){
 
+    localStorage.removeItem(
+        "sessionToken"
+    );
+
+
+    localStorage.removeItem(
+        "elocaseUser"
+    );
+
+}
 
 function initNavbar(){
 
