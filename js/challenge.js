@@ -1,6 +1,11 @@
 let currentChallengeId = null;
 
 
+/*
+========================================
+初始化
+========================================
+*/
 
 document.addEventListener(
 "DOMContentLoaded",
@@ -73,6 +78,8 @@ async()=>{
 
 
 
+
+
 /*
 ========================================
 建立 Challenge
@@ -85,14 +92,32 @@ async function createButton(){
     try{
 
 
+        const input =
+            document.getElementById(
+                "create-ec"
+            );
+
+
         const ec =
             Number(
-                document
-                .getElementById(
-                    "create-ec"
-                )
-                .value
+                input.value
             );
+
+
+
+        if(
+            !ec ||
+            ec <= 0
+        ){
+
+            alert(
+                "請輸入有效的挑戰資金"
+            );
+
+            return;
+
+        }
+
 
 
 
@@ -108,10 +133,15 @@ async function createButton(){
 
 
 
+        /*
+         * 進入等待房間
+         */
+
         location.href =
             "challenge-room.html?id="
             +
             result.challengeId;
+
 
 
     }
@@ -127,6 +157,9 @@ async function createButton(){
 
 
 }
+
+
+
 
 
 
@@ -144,25 +177,31 @@ async function joinButton(){
     try{
 
 
-        const code =
-            document
-            .getElementById(
+        const input =
+            document.getElementById(
                 "join-code"
-            )
-            .value
-            .trim();
+            );
+
+
+        const code =
+            input.value.trim();
 
 
 
         if(!code){
 
+
             alert(
                 "請輸入挑戰代碼"
             );
 
+
             return;
 
+
         }
+
+
 
 
 
@@ -177,6 +216,10 @@ async function joinButton(){
             result.challengeId;
 
 
+
+        /*
+         * 進入同一個挑戰房間
+         */
 
         location.href =
             "challenge-room.html?id="
@@ -198,6 +241,9 @@ async function joinButton(){
 
 
 }
+
+
+
 
 
 
@@ -227,16 +273,29 @@ function initCopyButton(){
 
 
 
+
     copyButton.onclick =
     async()=>{
 
 
-        const code =
-            document
-            .getElementById(
+        const codeElement =
+            document.getElementById(
                 "challenge-code"
-            )
-            ?.innerText;
+            );
+
+
+
+        if(!codeElement){
+
+            return;
+
+        }
+
+
+
+        const code =
+            codeElement.innerText.trim();
+
 
 
 
@@ -251,44 +310,66 @@ function initCopyButton(){
 
 
 
-        await navigator.clipboard.writeText(
-            code
-        );
 
 
+        try{
 
-        const message =
-            document.getElementById(
-                "copy-message"
+
+            await navigator.clipboard.writeText(
+                code
             );
 
 
 
-        if(message){
+            const message =
+                document.getElementById(
+                    "copy-message"
+                );
 
 
-            message.innerText =
-                "✓ 已複製挑戰代碼";
 
-
-
-            setTimeout(()=>{
+            if(message){
 
 
                 message.innerText =
-                    "";
+                    "✓ 已複製挑戰代碼";
 
 
-            },2000);
+
+                setTimeout(()=>{
+
+
+                    message.innerText =
+                        "";
+
+
+                },2000);
+
+
+            }
 
 
         }
+        catch(error){
+
+
+            alert(
+                "複製失敗，請手動複製"
+            );
+
+
+        }
+
 
 
     };
 
 
 }
+
+
+
+
 
 
 
@@ -309,10 +390,12 @@ function initPlayerMenu(){
         );
 
 
+
     const playerMenu =
         document.querySelector(
             ".player-menu"
         );
+
 
 
 
@@ -324,6 +407,8 @@ function initPlayerMenu(){
         return;
 
     }
+
+
 
 
 
@@ -339,6 +424,35 @@ function initPlayerMenu(){
 
 
     };
+
+
+
+
+    /*
+     * 點外面關閉選單
+     */
+
+    document.addEventListener(
+    "click",
+    (event)=>{
+
+
+        if(
+            !playerMenu.contains(
+                event.target
+            )
+        ){
+
+            playerMenu
+            .classList
+            .remove(
+                "open"
+            );
+
+        }
+
+
+    });
 
 
 }
