@@ -69,6 +69,8 @@ async()=>{
 
 
     loadChallengeRoom();
+    
+    initCaseButtons();
 
 
 
@@ -752,3 +754,58 @@ div
 
 }
 
+function initCaseButtons(){
+
+
+const buttons = [
+
+{
+id:
+"player-a-case-button"
+},
+
+{
+id:
+"player-b-case-button"
+}
+
+];
+
+
+buttons.forEach(
+item=>{
+
+
+const button =
+document.getElementById(
+item.id
+);
+
+
+
+if(!button){
+
+return;
+
+}
+
+
+
+button.onclick =
+()=>{
+
+
+location.href =
+"cases.html?mode=challenge&challengeId="
++
+challengeId;
+
+
+};
+
+
+
+});
+
+
+}
