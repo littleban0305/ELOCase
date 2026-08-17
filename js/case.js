@@ -21,6 +21,35 @@ function getCaseIdFromUrl() {
 
 }
 
+/* ========================================
+   Challenge Mode 判斷
+======================================== */
+
+function getChallengeDataFromUrl(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    return {
+
+        mode:
+            params.get(
+                "mode"
+            ),
+
+
+        challengeId:
+            params.get(
+                "challengeId"
+            )
+
+    };
+
+}
+
 
 /* ========================================
    稀有度 CSS
@@ -1767,10 +1796,63 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
-                const apiPromise =
-                    openCase(
-                        caseId
-                    );
+                let apiPromise;
+               
+               
+               /*
+                * ====================================
+                * Challenge Mode
+                * ====================================
+                */
+               
+               const challengeData =
+                   getChallengeDataFromUrl();
+               
+               
+               
+               if(
+                   challengeData.mode === "challenge"
+               ){
+               
+                   if(
+                       !challengeData.challengeId
+                   ){
+               
+                       throw new Error(
+                           "缺少 Challenge ID"
+                       );
+               
+                   }
+               
+               
+                   apiPromise =
+                       openChallengeCase({
+               
+                           sessionToken,
+               
+                           challengeId:
+                               challengeData.challengeId,
+               
+                           caseId
+               
+                       });
+               
+               
+               }
+               else{
+               
+               
+                   /*
+                    * 普通開箱
+                    */
+               
+                   apiPromise =
+                       openCase(
+                           caseId
+                       );
+               
+               
+               }
 
 
                 /*
@@ -1865,11 +1947,37 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
-               await saveOpenHistory(result);
+               if(
+                   challengeData.mode !== "challenge"
+               ){
+               
+                   await saveOpenHistory(
+                       result
+                   );
+               
+               }
                
                 playCasePreviewAnimation(
                     result
                 );
+
+               if(
+                   challengeData.mode === "challenge"
+               ){
+               
+                   setTimeout(
+                       ()=>{
+               
+                           location.href =
+                               "challenge-room.html?id="
+                               +
+                               challengeData.challengeId;
+               
+                       },
+                       4500
+                   );
+               
+               }
 
 
             } catch (error) {
