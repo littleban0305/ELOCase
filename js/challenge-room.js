@@ -1,6 +1,14 @@
 let challengeId = null;
 
+let refreshTimer = null;
 
+
+
+/*
+========================================
+初始化
+========================================
+*/
 
 document.addEventListener(
 "DOMContentLoaded",
@@ -24,9 +32,10 @@ async()=>{
         if(name){
 
             name.innerText =
-            user.displayName;
+                user.displayName;
 
         }
+
 
     }
 
@@ -42,6 +51,7 @@ async()=>{
         );
 
 
+
     challengeId =
         params.get(
             "id"
@@ -51,9 +61,11 @@ async()=>{
 
     if(!challengeId){
 
+
         alert(
             "缺少 Challenge ID"
         );
+
 
         return;
 
@@ -61,7 +73,21 @@ async()=>{
 
 
 
+
     loadChallengeRoom();
+
+
+
+    /*
+     * 每 3 秒同步一次
+     */
+
+    refreshTimer =
+        setInterval(
+            loadChallengeRoom,
+            3000
+        );
+
 
 
 });
@@ -69,6 +95,15 @@ async()=>{
 
 
 
+
+
+
+
+/*
+========================================
+取得 Challenge
+========================================
+*/
 
 async function loadChallengeRoom(){
 
@@ -83,99 +118,29 @@ async function loadChallengeRoom(){
 
 
 
-        const data =
-            result;
+        if(
+            !result ||
+            !result.challenge
+        ){
 
-        document
-        .getElementById(
-            "challenge-code"
-        )
-        .innerText =
-        data.challenge.challengeCode;
+            return;
 
-
-
-        document
-        .getElementById(
-            "challenge-status"
-        )
-        .innerText =
-        data.challenge.status;
+        }
 
 
 
-        const players =
-            data.players;
+        updateChallengeInfo(
+            result
+        );
 
-
-
-        players.forEach(
-        player=>{
-
-
-            if(
-                player.role ===
-                "playerA"
-            ){
-
-
-                document
-                .getElementById(
-                    "player-a-name"
-                )
-                .innerText =
-                player.displayName;
-
-
-
-                document
-                .getElementById(
-                    "player-a-ec"
-                )
-                .innerText =
-                player.challengeEC;
-
-
-            }
-
-
-
-            if(
-                player.role ===
-                "playerB"
-            ){
-
-
-                document
-                .getElementById(
-                    "player-b-name"
-                )
-                .innerText =
-                player.displayName;
-
-
-
-                document
-                .getElementById(
-                    "player-b-ec"
-                )
-                .innerText =
-                player.challengeEC;
-
-
-            }
-
-
-
-        });
 
 
     }
     catch(error){
 
 
-        alert(
-            error.message
+        console.error(
+            error
         );
 
 
@@ -190,106 +155,405 @@ async function loadChallengeRoom(){
 
 
 
-function initPlayerMenu(){
 
 
-const button =
-document.getElementById(
-"player-menu-button"
-);
+/*
+========================================
+更新畫面
+========================================
+*/
 
-
-const menu =
-document.querySelector(
-".player-menu"
-);
-
-
-
-if(
-button &&
-menu
+function updateChallengeInfo(
+data
 ){
 
 
-button.onclick =
-()=>{
+
+    const challenge =
+        data.challenge;
 
 
-menu.classList.toggle(
-"open"
-);
+
+    /*
+     * Code
+     */
+
+    const code =
+        document.getElementById(
+            "challenge-code"
+        );
 
 
-};
+    if(code){
+
+
+        code.innerText =
+            challenge.challengeCode;
+
+
+    }
+
+
+
+
+
+
+    /*
+     * 狀態
+     */
+
+    const status =
+        document.getElementById(
+            "challenge-status"
+        );
+
+
+
+    if(status){
+
+
+        status.innerText =
+            getStatusText(
+                challenge.status
+            );
+
+
+    }
+
+
+
+
+
+
+    /*
+     * 玩家
+     */
+
+    const players =
+        data.players || [];
+
+
+
+    resetPlayers();
+
+
+
+
+    players.forEach(
+    player=>{
+
+
+        if(
+            player.role ===
+            "playerA"
+        ){
+
+
+            setPlayer(
+                "a",
+                player
+            );
+
+
+        }
+
+
+
+        if(
+            player.role ===
+            "playerB"
+        ){
+
+
+            setPlayer(
+                "b",
+                player
+            );
+
+
+        }
+
+
+
+    });
+
 
 
 }
 
 
+
+
+
+
+
+
+
+function setPlayer(
+side,
+player
+){
+
+
+    const name =
+        document.getElementById(
+            "player-" + side + "-name"
+        );
+
+
+    const ec =
+        document.getElementById(
+            "player-" + side + "-ec"
+        );
+
+
+
+    if(name){
+
+        name.innerText =
+            player.displayName ||
+            "未知玩家";
+
+    }
+
+
+
+    if(ec){
+
+        ec.innerText =
+            player.challengeEC;
+
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+function resetPlayers(){
+
+
+    const bName =
+        document.getElementById(
+            "player-b-name"
+        );
+
+
+    const bEC =
+        document.getElementById(
+            "player-b-ec"
+        );
+
+
+
+    if(bName){
+
+        bName.innerText =
+            "等待玩家";
+
+    }
+
+
+
+    if(bEC){
+
+        bEC.innerText =
+            "-";
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+========================================
+狀態文字
+========================================
+*/
+
+function getStatusText(
+status
+){
+
+
+    switch(status){
+
+
+        case "waiting":
+
+            return "等待玩家加入";
+
+
+        case "active":
+
+            return "挑戰進行中";
+
+
+        case "finished":
+
+            return "挑戰完成";
+
+
+        default:
+
+            return status;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*
+========================================
+複製 Code
+========================================
+*/
 
 document.addEventListener(
 "click",
-async(e)=>{
+async(event)=>{
 
 
-if(
-e.target.id !==
-"copy-code-button"
-){
+    if(
+        event.target.id !==
+        "copy-code-button"
+    ){
 
-return;
+        return;
 
-}
-
-
-
-const code =
-document
-.getElementById(
-"challenge-code"
-)
-.innerText;
+    }
 
 
 
-if(
-!code ||
-code === "-"
-){
-
-return;
-
-}
+    const code =
+        document.getElementById(
+            "challenge-code"
+        )?.innerText;
 
 
 
-await navigator.clipboard.writeText(
-code
-);
+    if(
+        !code ||
+        code === "-"
+    ){
+
+        return;
+
+    }
 
 
 
-const message =
-document
-.getElementById(
-"copy-message"
-);
+
+    await navigator.clipboard.writeText(
+        code
+    );
 
 
 
-message.innerText =
-"✓ 已複製挑戰代碼";
+    const msg =
+        document.getElementById(
+            "copy-message"
+        );
 
 
 
-setTimeout(()=>{
+    if(msg){
 
-message.innerText="";
 
-},2000);
+        msg.innerText =
+            "✓ 已複製挑戰代碼";
 
+
+
+        setTimeout(()=>{
+
+
+            msg.innerText =
+                "";
+
+
+        },2000);
+
+
+    }
 
 
 });
+
+
+
+
+
+
+
+
+/*
+========================================
+玩家選單
+========================================
+*/
+
+function initPlayerMenu(){
+
+
+    const button =
+        document.getElementById(
+            "player-menu-button"
+        );
+
+
+    const menu =
+        document.querySelector(
+            ".player-menu"
+        );
+
+
+
+    if(
+        !button ||
+        !menu
+    ){
+
+        return;
+
+    }
+
+
+
+    button.onclick =
+    ()=>{
+
+
+        menu.classList.toggle(
+            "open"
+        );
+
+
+    };
+
+
+
+}
