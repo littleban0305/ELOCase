@@ -2163,30 +2163,46 @@ async function completeGoogleRegister(
 
 }
 
-async function getChallengeRoom(challengeId){
+/* ========================================
+   Challenge Room API
+======================================== */
 
-    return await apiGet(
+
+/*
+ * 取得 Challenge Room
+ */
+async function getChallengeRoom(
+    challengeId
+){
+
+    return await sendApiRequest(
+
         "getChallengeRoom",
+
         {
             challengeId
         }
+
     );
 
 }
 
+
+/*
+ * 取得 Challenge Room Data
+ */
 async function getChallengeRoomData(
     challengeId
 ){
 
-    const response =
-        await callAPI(
-            "getChallengeRoomData",
-            {
-                challengeId
-            }
-        );
+    return await sendApiRequest(
 
+        "getChallengeRoomData",
 
-    return response.data;
+        {
+            challengeId
+        }
+
+    );
 
 }
