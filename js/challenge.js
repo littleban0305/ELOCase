@@ -11,40 +11,60 @@ async()=>{
         await verifySession();
 
 
+
     if(user){
+
 
         const playerName =
             document.getElementById(
                 "navbar-player-name"
             );
-        
-        
+
+
         if(playerName){
-        
+
             playerName.innerText =
                 user.displayName;
-        
+
         }
 
     }
 
 
 
-    document
-    .getElementById(
-        "create-challenge-button"
-    )
-    .onclick =
-    createButton;
+    const createButtonElement =
+        document.getElementById(
+            "create-challenge-button"
+        );
+
+
+    if(createButtonElement){
+
+        createButtonElement.onclick =
+            createButton;
+
+    }
 
 
 
-    document
-    .getElementById(
-        "join-challenge-button"
-    )
-    .onclick =
-    joinButton;
+    const joinButtonElement =
+        document.getElementById(
+            "join-challenge-button"
+        );
+
+
+    if(joinButtonElement){
+
+        joinButtonElement.onclick =
+            joinButton;
+
+    }
+
+
+
+    initCopyButton();
+
+    initPlayerMenu();
 
 
 });
@@ -52,6 +72,12 @@ async()=>{
 
 
 
+
+/*
+========================================
+建立 Challenge
+========================================
+*/
 
 async function createButton(){
 
@@ -82,48 +108,35 @@ async function createButton(){
 
 
 
-        /*
-         * 顯示 Challenge Code
-         */
-
-
-        document
-        .getElementById(
-            "challenge-code"
-        )
-        .innerText =
-            result.challengeCode;
-
-
-
-        document
-        .getElementById(
-            "created-challenge"
-        )
-        .classList
-        .remove(
-            "hidden"
-        );
-
-
-
-        loadChallenge();
+        location.href =
+            "challenge-room.html?id="
+            +
+            result.challengeId;
 
 
     }
     catch(error){
 
+
         alert(
             error.message
         );
 
+
     }
+
 
 }
 
 
 
 
+
+/*
+========================================
+加入 Challenge
+========================================
+*/
 
 async function joinButton(){
 
@@ -136,7 +149,8 @@ async function joinButton(){
             .getElementById(
                 "join-code"
             )
-            .value;
+            .value
+            .trim();
 
 
 
@@ -146,22 +160,29 @@ async function joinButton(){
             );
 
 
+
         currentChallengeId =
             result.challengeId;
 
 
 
-        loadChallenge();
+        location.href =
+            "challenge-room.html?id="
+            +
+            result.challengeId;
 
 
     }
     catch(error){
 
+
         alert(
             error.message
         );
 
+
     }
+
 
 }
 
@@ -169,164 +190,142 @@ async function joinButton(){
 
 
 
-async function loadChallenge(){
+/*
+========================================
+複製 Challenge Code
+========================================
+*/
+
+function initCopyButton(){
 
 
-    const data =
-        await getChallenge(
-            currentChallengeId
+    const copyButton =
+        document.getElementById(
+            "copy-code-button"
         );
 
 
-    document
-    .getElementById(
-        "challenge-room"
-    )
-    .classList
-    .remove(
-        "hidden"
-    );
+
+    if(!copyButton){
+
+        return;
+
+    }
 
 
 
-    const players =
-        data.players;
+    copyButton.onclick =
+    async()=>{
+
+
+        const code =
+            document
+            .getElementById(
+                "challenge-code"
+            )
+            ?.innerText;
 
 
 
-    players.forEach(
-        player=>{
+        if(
+            !code ||
+            code === "-"
+        ){
+
+            return;
+
+        }
 
 
-            if(
-                player.role ===
-                "playerA"
-            ){
 
-                document
-                .getElementById(
-                    "player-a-ec"
-                )
-                .innerText =
-                    player.challengeEC;
+        await navigator.clipboard.writeText(
+            code
+        );
 
 
-            }
+
+        const message =
+            document.getElementById(
+                "copy-message"
+            );
 
 
-            if(
-                player.role ===
-                "playerB"
-            ){
 
-                document
-                .getElementById(
-                    "player-b-ec"
-                )
-                .innerText =
-                    player.challengeEC;
+        if(message){
 
 
-            }
+            message.innerText =
+                "✓ 已複製挑戰代碼";
+
+
+
+            setTimeout(()=>{
+
+
+                message.innerText =
+                    "";
+
+
+            },2000);
 
 
         }
-    );
 
 
-}
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-const copyButton =
-document.getElementById(
-"copy-code-button"
-);
-
-
-
-if(copyButton){
-
-
-copyButton.addEventListener(
-"click",
-async()=>{
-
-
-const code =
-document
-.getElementById(
-"challenge-code"
-)
-.innerText;
-
-
-
-if(!code || code==="-" ){
-return;
-}
-
-
-
-await navigator.clipboard.writeText(
-code
-);
-
-
-
-const message =
-document.getElementById(
-"copy-message"
-);
-
-
-
-message.innerText =
-"✓ 已複製挑戰代碼";
-
-
-
-setTimeout(()=>{
-
-message.innerText="";
-
-},2000);
-
-
-
-});
+    };
 
 
 }
 
 
 
-});
-
-const menuButton =
-document.getElementById(
-"player-menu-button"
-);
 
 
-const playerMenu =
-document.querySelector(
-".player-menu"
-);
+/*
+========================================
+玩家下拉選單
+========================================
+*/
+
+function initPlayerMenu(){
 
 
-if(menuButton){
+    const menuButton =
+        document.getElementById(
+            "player-menu-button"
+        );
 
-menuButton.onclick =
-()=>{
 
-playerMenu.classList.toggle(
-"open"
-);
+    const playerMenu =
+        document.querySelector(
+            ".player-menu"
+        );
 
-};
+
+
+    if(
+        !menuButton ||
+        !playerMenu
+    ){
+
+        return;
+
+    }
+
+
+
+    menuButton.onclick =
+    ()=>{
+
+
+        playerMenu
+        .classList
+        .toggle(
+            "open"
+        );
+
+
+    };
+
 
 }
