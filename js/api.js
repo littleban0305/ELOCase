@@ -2206,3 +2206,75 @@ async function getChallengeRoomData(
     );
 
 }
+
+/* ========================================
+   Challenge 開箱
+======================================== */
+
+async function openChallengeCase(
+    data
+){
+
+    const response =
+        await fetch(
+            CONFIG.API_URL,
+            {
+
+                method:
+                    "POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        action:
+                            "openChallengeCase",
+
+                        sessionToken:
+                            data.sessionToken,
+
+                        challengeId:
+                            data.challengeId,
+
+                        caseId:
+                            data.caseId
+
+                    }),
+
+                redirect:
+                    "follow",
+
+                cache:
+                    "no-store"
+
+            }
+        );
+
+
+    const result =
+        await response.json();
+
+
+
+    if(
+        !result.success
+    ){
+
+        throw new Error(
+            result.error ||
+            "Challenge 開箱失敗"
+        );
+
+    }
+
+
+
+    return result.data;
+
+}
