@@ -100,9 +100,9 @@ async function loadChallengeRoom(){
 
 
         const result =
-            await getChallengeRoomData(
+            await getChallenge(
                 challengeId
-            );
+            )
 
 
 
