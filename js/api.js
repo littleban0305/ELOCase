@@ -2091,3 +2091,34 @@ async function registerPlayer(
     });
 
 }
+
+/* ========================================
+   Google 登入
+======================================== */
+
+
+async function googleLogin(
+    googleToken
+){
+
+
+    if(!googleToken){
+
+        throw new Error(
+            "缺少 Google Token"
+        );
+
+    }
+
+
+    return await sendAuthRequest({
+
+        action:
+            "googleLogin",
+
+        googleToken
+
+    });
+
+
+}
