@@ -1,21 +1,90 @@
+/* ========================================
+   ELOCase - Cases List
+======================================== */
+
+
+/*
+========================================
+初始化
+========================================
+*/
+
 document.addEventListener(
-"DOMContentLoaded",
-async()=>{
+    "DOMContentLoaded",
+    async()=>{
 
 
-    const cases =
-        await getCases();
+        try{
 
 
-    renderCases(
-        cases
-    );
+            const user =
+                await verifySession();
 
 
-});
+            updateLoginUI(
+                user
+            );
 
 
-function renderCases(cases){
+            const cases =
+                await getCases();
+
+
+            renderCases(
+                cases
+            );
+
+
+        }
+        catch(error){
+
+
+            console.error(
+                "開箱列表載入失敗：",
+                error
+            );
+
+
+            const grid =
+                document.querySelector(
+                    "#case-grid"
+                );
+
+
+            if(grid){
+
+                grid.innerHTML =
+                `
+                <div class="case-loading">
+
+                    箱子資料載入失敗
+
+                </div>
+                `;
+
+            }
+
+
+        }
+
+
+    }
+);
+
+
+
+
+
+/*
+========================================
+渲染箱子列表
+========================================
+*/
+
+
+function renderCases(
+    cases
+){
 
 
     const grid =
@@ -24,7 +93,38 @@ function renderCases(cases){
         );
 
 
-    grid.innerHTML="";
+    if(!grid){
+
+        return;
+
+    }
+
+
+
+    grid.innerHTML = "";
+
+
+
+    if(
+        !cases ||
+        cases.length === 0
+    ){
+
+        grid.innerHTML =
+        `
+        <div class="case-loading">
+
+            目前沒有箱子
+
+        </div>
+        `;
+
+
+        return;
+
+    }
+
+
 
 
     cases.forEach(
@@ -41,60 +141,201 @@ function renderCases(cases){
                 "case-card";
 
 
+
             card.innerHTML =
             `
-            <h3>
-                ${item.name}
-            </h3>
 
-            <p>
-                $${item.price}
-            </p>
-            `;
+            <div class="case-card-image">
 
+                ${
+                    item.imageUrl
 
-            card.onclick =
-            ()=>{
+                    ?
 
+                    `
+                    <img
+                        src="${escapeHtml(
+                            item.imageUrl
+                        )}"
+                    >
+                    `
 
-                const params =
-                    new URLSearchParams(
-                        location.search
-                    );
+                    :
 
-
-                let url =
-                "case.html?caseId="
-                +
-                item.caseId;
-
-
-                if(
-                    params.get("mode")
-                    ===
-                    "challenge"
-                ){
-
-                    url +=
-                    "&mode=challenge&challengeId="
-                    +
-                    params.get(
-                        "challengeId"
-                    );
+                    `
+                    <div>
+                        ELOCase
+                    </div>
+                    `
 
                 }
 
-
-                location.href=url;
-
-
-            };
+            </div>
 
 
-            grid.appendChild(card);
+
+            <div class="case-card-info">
+
+
+                <h3>
+
+                    ${escapeHtml(
+                        item.name ||
+                        "未命名箱子"
+                    )}
+
+                </h3>
+
+
+                <div>
+
+                    $${Number(
+                        item.price || 0
+                    ).toLocaleString()}
+
+                </div>
+
+
+            </div>
+
+
+            `;
+
+
+
+            /*
+            ====================================
+            點擊箱子
+            ====================================
+            */
+
+
+            card.addEventListener(
+                "click",
+                ()=>{
+
+
+                    const params =
+                        new URLSearchParams(
+                            window.location.search
+                        );
+
+
+                    let url =
+                        "case.html?caseId="
+                        +
+                        encodeURIComponent(
+                            item.caseId
+                        );
+
+
+
+                    /*
+                    ====================================
+                    Challenge Mode
+                    ====================================
+                    */
+
+
+                    const mode =
+                        params.get(
+                            "mode"
+                        );
+
+
+                    const challengeId =
+                        params.get(
+                            "challengeId"
+                        );
+
+
+
+                    if(
+                        mode === "challenge"
+                        &&
+                        challengeId
+                    ){
+
+
+                        url +=
+                            "&mode=challenge&challengeId="
+                            +
+                            encodeURIComponent(
+                                challengeId
+                            );
+
+
+                    }
+
+
+
+
+                    console.log(
+                        "前往箱子：",
+                        url
+                    );
+
+
+
+                    window.location.href =
+                        url;
+
+
+
+                }
+            );
+
+
+
+            grid.appendChild(
+                card
+            );
 
 
         }
+    );
+
+
+}
+
+
+
+
+
+/*
+========================================
+HTML 防護
+========================================
+*/
+
+
+function escapeHtml(
+    value
+){
+
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
     );
 
 
