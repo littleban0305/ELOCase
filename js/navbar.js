@@ -149,14 +149,228 @@ document.addEventListener(
 
 function initNavbar(){
 
+
     /*
-     * 這裡放：
-     * - 登入狀態
-     * - 玩家名稱
-     * - EC餘額
-     * - 登出
-     * - dropdown
+     * ========================================
+     * Active Nav
+     * ========================================
      */
 
+    setActiveNav();
+
+
+
+    /*
+     * ========================================
+     * 取得登入玩家
+     * ========================================
+     */
+
+    const user =
+        getSavedUser();
+
+
+
+    const playerName =
+        document.querySelector(
+            "#navbar-player-name"
+        );
+
+
+    const balance =
+        document.querySelector(
+            "#navbar-balance"
+        );
+
+
+
+    /*
+     * ========================================
+     * 未登入
+     * ========================================
+     */
+
+    if(!user){
+
+
+        if(playerName){
+
+            playerName.textContent =
+                "登入";
+
+        }
+
+
+        if(balance){
+
+            balance.textContent =
+                "0";
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    /*
+     * ========================================
+     * 已登入
+     * ========================================
+     */
+
+
+    if(playerName){
+
+        playerName.textContent =
+            user.displayName ||
+            user.username ||
+            "玩家";
+
+    }
+
+
+
+    if(balance){
+
+        balance.textContent =
+            Number(
+                user.eloCoin
+            ) || 0;
+
+    }
+
+
+
+    /*
+     * ========================================
+     * Dropdown
+     * ========================================
+     */
+
+
+    const menuButton =
+        document.querySelector(
+            "#player-menu-button"
+        );
+
+
+    const dropdown =
+        document.querySelector(
+            "#player-menu-dropdown"
+        );
+
+
+
+    if(
+        menuButton &&
+        dropdown
+    ){
+
+
+        menuButton.addEventListener(
+            "click",
+            function(){
+
+                dropdown.classList.toggle(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function(e){
+
+
+                if(
+                    !menuButton.contains(e.target) &&
+                    !dropdown.contains(e.target)
+                ){
+
+                    dropdown.classList.remove(
+                        "show"
+                    );
+
+                }
+
+
+            }
+        );
+
+
+    }
+
+
+
+    /*
+     * ========================================
+     * 登出
+     * ========================================
+     */
+
+
+    const logoutButton =
+        document.querySelector(
+            "#navbar-logout-button"
+        );
+
+
+    if(logoutButton){
+
+
+        logoutButton.addEventListener(
+            "click",
+            function(){
+
+
+                logoutPlayer();
+
+
+                location.href =
+                    "index.html";
+
+
+            }
+        );
+
+
+    }
+
+
+
+}
+
+function setActiveNav(){
+
+    const current =
+        location.pathname
+        .split("/")
+        .pop();
+
+
+    document
+    .querySelectorAll(".nav-link")
+    .forEach(link=>{
+
+
+        const href =
+            link
+            .getAttribute("href");
+
+
+        if(href === current){
+
+            link.classList.add(
+                "active"
+            );
+
+        }
+
+    });
 
 }
