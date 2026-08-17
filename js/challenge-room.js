@@ -22,7 +22,6 @@ async()=>{
 
     if(user){
 
-
         const name =
             document.getElementById(
                 "navbar-player-name"
@@ -35,7 +34,6 @@ async()=>{
                 user.displayName;
 
         }
-
 
     }
 
@@ -51,7 +49,6 @@ async()=>{
         );
 
 
-
     challengeId =
         params.get(
             "id"
@@ -61,11 +58,9 @@ async()=>{
 
     if(!challengeId){
 
-
         alert(
             "缺少 Challenge ID"
         );
-
 
         return;
 
@@ -73,21 +68,15 @@ async()=>{
 
 
 
-
     loadChallengeRoom();
 
 
-
-    /*
-     * 每 3 秒同步一次
-     */
 
     refreshTimer =
         setInterval(
             loadChallengeRoom,
             3000
         );
-
 
 
 });
@@ -98,10 +87,9 @@ async()=>{
 
 
 
-
 /*
 ========================================
-取得 Challenge
+取得 Challenge Room
 ========================================
 */
 
@@ -112,7 +100,7 @@ async function loadChallengeRoom(){
 
 
         const result =
-            await getChallenge(
+            await getChallengeRoom(
                 challengeId
             );
 
@@ -134,15 +122,13 @@ async function loadChallengeRoom(){
         );
 
 
-
     }
     catch(error){
 
-
         console.error(
+            "載入 Challenge Room 失敗",
             error
         );
-
 
     }
 
@@ -159,7 +145,7 @@ async function loadChallengeRoom(){
 
 /*
 ========================================
-更新畫面
+更新房間資料
 ========================================
 */
 
@@ -168,15 +154,17 @@ data
 ){
 
 
-
     const challenge =
         data.challenge;
 
 
 
     /*
-     * Code
-     */
+    ================================
+    Challenge Code
+    ================================
+    */
+
 
     const code =
         document.getElementById(
@@ -186,21 +174,20 @@ data
 
     if(code){
 
-
         code.innerText =
             challenge.challengeCode;
-
 
     }
 
 
 
 
-
-
     /*
-     * 狀態
-     */
+    ================================
+    狀態
+    ================================
+    */
+
 
     const status =
         document.getElementById(
@@ -208,15 +195,12 @@ data
         );
 
 
-
     if(status){
-
 
         status.innerText =
             getStatusText(
                 challenge.status
             );
-
 
     }
 
@@ -226,56 +210,54 @@ data
 
 
     /*
-     * 玩家
-     */
-
-    const players =
-        data.players || [];
-
+    ================================
+    玩家
+    ================================
+    */
 
 
     resetPlayers();
 
 
 
+    const players =
+        data.players || [];
+
+
 
     players.forEach(
-    player=>{
+        player=>{
 
 
-        if(
-            player.role ===
-            "playerA"
-        ){
+            if(
+                player.role ===
+                "playerA"
+            ){
+
+                setPlayer(
+                    "a",
+                    player
+                );
+
+            }
 
 
-            setPlayer(
-                "a",
-                player
-            );
+
+            if(
+                player.role ===
+                "playerB"
+            ){
+
+                setPlayer(
+                    "b",
+                    player
+                );
+
+            }
 
 
         }
-
-
-
-        if(
-            player.role ===
-            "playerB"
-        ){
-
-
-            setPlayer(
-                "b",
-                player
-            );
-
-
-        }
-
-
-
-    });
+    );
 
 
 
@@ -289,10 +271,17 @@ data
 
 
 
+/*
+========================================
+設定玩家
+========================================
+*/
+
 function setPlayer(
 side,
 player
 ){
+
 
 
     const name =
@@ -307,6 +296,12 @@ player
         );
 
 
+    const value =
+        document.getElementById(
+            "player-" + side + "-value"
+        );
+
+
 
     if(name){
 
@@ -318,13 +313,29 @@ player
 
 
 
+
     if(ec){
 
         ec.innerText =
-            player.challengeEC;
+            Number(
+                player.challengeEC
+            )
+            .toLocaleString();
 
     }
 
+
+
+
+    if(value){
+
+        value.innerText =
+            Number(
+                player.finalValue
+            )
+            .toFixed(2);
+
+    }
 
 
 }
@@ -336,38 +347,69 @@ player
 
 
 
+
+/*
+========================================
+重置玩家
+========================================
+*/
+
 function resetPlayers(){
 
 
-    const bName =
-        document.getElementById(
-            "player-b-name"
-        );
+    const defaults = {
 
 
-    const bEC =
-        document.getElementById(
-            "player-b-ec"
-        );
+        "player-a-name":
+            "Player A",
 
 
+        "player-a-ec":
+            "-",
 
-    if(bName){
 
-        bName.innerText =
-            "等待玩家";
-
-    }
+        "player-a-value":
+            "0",
 
 
 
-    if(bEC){
+        "player-b-name":
+            "等待玩家",
 
-        bEC.innerText =
-            "-";
 
-    }
+        "player-b-ec":
+            "-",
 
+
+        "player-b-value":
+            "0"
+
+
+    };
+
+
+
+    Object.keys(defaults)
+    .forEach(
+        id=>{
+
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if(element){
+
+                element.innerText =
+                    defaults[id];
+
+            }
+
+
+        }
+    );
 
 
 }
@@ -389,7 +431,6 @@ function resetPlayers(){
 function getStatusText(
 status
 ){
-
 
     switch(status){
 
@@ -416,8 +457,8 @@ status
 
     }
 
-
 }
+
 
 
 
@@ -449,9 +490,11 @@ async(event)=>{
 
 
     const code =
-        document.getElementById(
+        document
+        .getElementById(
             "challenge-code"
-        )?.innerText;
+        )
+        ?.innerText;
 
 
 
@@ -463,7 +506,6 @@ async(event)=>{
         return;
 
     }
-
 
 
 
@@ -482,26 +524,22 @@ async(event)=>{
 
     if(msg){
 
-
         msg.innerText =
             "✓ 已複製挑戰代碼";
 
 
-
         setTimeout(()=>{
-
 
             msg.innerText =
                 "";
 
-
         },2000);
-
 
     }
 
 
 });
+
 
 
 
@@ -546,14 +584,11 @@ function initPlayerMenu(){
     button.onclick =
     ()=>{
 
-
         menu.classList.toggle(
             "open"
         );
 
-
     };
-
 
 
 }
