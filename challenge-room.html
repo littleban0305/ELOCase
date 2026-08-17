@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+挑戰房間｜ELOCase
+</title>
+
+
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/challenge-room.css">
+
+</head>
+
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="navbar-container">
+
+
+<a href="index.html" class="brand">
+ELOCase
+</a>
+
+
+<nav class="nav-links">
+
+<a href="index.html" class="nav-link">
+首頁
+</a>
+
+
+<a href="cases.html" class="nav-link">
+開箱
+</a>
+
+
+<a href="challenge.html" class="nav-link active">
+挑戰模式
+</a>
+
+
+<a href="inventory.html" class="nav-link">
+我的物品
+</a>
+
+
+</nav>
+
+
+<div class="navbar-actions">
+
+
+<div class="player-menu">
+
+<button
+class="player-menu-button"
+id="player-menu-button"
+>
+
+<span class="player-avatar">
+◉
+</span>
+
+
+<span
+class="player-menu-name"
+id="navbar-player-name"
+>
+登入
+</span>
+
+
+<span class="player-menu-arrow">
+▾
+</span>
+
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</header>
+
+
+
+
+<main>
+
+
+<section class="challenge-room-page">
+
+
+<div class="section-container">
+
+
+
+<div class="section-header">
+
+<span class="section-label">
+挑戰房間
+</span>
+
+
+<h1>
+Challenge Room
+</h1>
+
+
+<p>
+等待玩家準備。
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="room-card">
+
+
+<div class="room-code">
+
+Challenge ID:
+
+<strong id="challenge-id">
+-
+</strong>
+
+
+</div>
+
+
+
+
+<div class="room-players">
+
+
+
+<div class="room-player">
+
+
+<h2>
+Player A
+</h2>
+
+
+<h3 id="player-a-name">
+等待中
+</h3>
+
+
+<p>
+EC：
+<span id="player-a-ec">
+-
+</span>
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="room-vs">
+VS
+</div>
+
+
+
+
+
+<div class="room-player">
+
+
+<h2>
+Player B
+</h2>
+
+
+<h3 id="player-b-name">
+等待中
+</h3>
+
+
+<p>
+EC：
+<span id="player-b-ec">
+-
+</span>
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="room-status">
+
+等待玩家加入...
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/challenge-room.js"></script>
+
+
+</body>
+
+</html>
