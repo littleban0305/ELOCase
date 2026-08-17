@@ -181,6 +181,10 @@ document.addEventListener(
 
 function logoutPlayer(){
 
+    /*
+     * 清除登入資訊
+     */
+
     localStorage.removeItem(
         "sessionToken"
     );
@@ -189,6 +193,49 @@ function logoutPlayer(){
     localStorage.removeItem(
         "elocaseUser"
     );
+
+
+
+    /*
+     * 清除玩家相關 Cache
+     */
+
+    Object.keys(
+        localStorage
+    )
+    .forEach(key=>{
+
+
+        if(
+            key.startsWith(
+                "ELOCASE_CACHE_"
+            )
+        ){
+
+            localStorage.removeItem(
+                key
+            );
+
+        }
+
+
+    });
+
+
+
+    /*
+     * 清除其他可能資料
+     */
+
+    localStorage.removeItem(
+        "inventory"
+    );
+
+
+    localStorage.removeItem(
+        "player"
+    );
+
 
 }
 
