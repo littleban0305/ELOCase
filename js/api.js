@@ -2162,3 +2162,14 @@ async function completeGoogleRegister(
 
 
 }
+
+async function getChallengeRoom(challengeId){
+
+    return await apiGet(
+        "getChallengeRoom",
+        {
+            challengeId
+        }
+    );
+
+}
