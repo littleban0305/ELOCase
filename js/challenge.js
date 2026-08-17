@@ -154,6 +154,18 @@ async function joinButton(){
 
 
 
+        if(!code){
+
+            alert(
+                "請輸入挑戰代碼"
+            );
+
+            return;
+
+        }
+
+
+
         const result =
             await joinChallenge(
                 code
@@ -170,6 +182,7 @@ async function joinButton(){
             "challenge-room.html?id="
             +
             result.challengeId;
+
 
 
     }
