@@ -3,19 +3,19 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>ELOCase - 註冊</title>
+    <title>註冊｜ELOCase</title>
 
 
-<link rel="stylesheet" href="css/global.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
 
 </head>
 
@@ -23,141 +23,301 @@ content="width=device-width, initial-scale=1.0"
 <body>
 
 
-<div class="register-page">
+<header class="navbar">
 
-    <div class="register-card">
+    <div class="navbar-container">
 
 
-        <div class="register-header">
+        <a href="index.html" class="brand">
 
-            <h1>
-                建立 ELOCase 帳號
-            </h1>
+            ELOCase
 
-            <p>
-                加入 ELOCase，開始你的開箱旅程
-            </p>
-
-        </div>
+        </a>
 
 
 
-        <form id="register-form">
+        <a
+            href="index.html"
+            class="button button-secondary"
+        >
 
+            返回首頁
 
-            <div class="form-group">
-
-                <label>
-                    玩家名稱
-                </label>
-
-                <input
-                    id="username"
-                    placeholder="輸入登入帳號"
-                >
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label>
-                    顯示名稱
-                </label>
-
-                <input
-                    id="displayName"
-                    placeholder="其他玩家看到的名稱"
-                >
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label>
-                    Email
-                </label>
-
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="example@email.com"
-                >
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label>
-                    密碼
-                </label>
-
-                <input
-                    id="password"
-                    type="password"
-                    placeholder="至少 6 個字元"
-                >
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label>
-                    確認密碼
-                </label>
-
-                <input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="再次輸入密碼"
-                >
-
-            </div>
-
-
-
-            <button
-                class="button"
-                id="register-button"
-            >
-                建立帳號
-            </button>
-
-
-        </form>
-
-
-
-        <div class="register-message"></div>
-
-
-
-        <div class="register-footer">
-
-            已經有帳號？
-            <a href="login.html">
-                登入
-            </a>
-
-        </div>
+        </a>
 
 
     </div>
+
+</header>
+
+
+
+<main>
+
+
+<section class="register-page">
+
+
+<div class="register-card">
+
+
+
+<div class="register-header">
+
+
+<span class="section-label">
+
+    玩家註冊
+
+</span>
+
+
+<h1>
+
+    建立 ELOCase 帳號
+
+</h1>
+
 
 </div>
 
 
 
+
+
+<form id="register-form">
+
+
+
+<div class="form-group">
+
+
+<label for="username">
+
+    帳號名稱
+
+</label>
+
+
+<input
+
+    id="username"
+
+    name="username"
+
+    type="text"
+
+    placeholder="輸入登入帳號"
+
+    autocomplete="username"
+
+    required
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="displayName">
+
+    顯示名稱
+
+</label>
+
+
+<input
+
+    id="displayName"
+
+    name="displayName"
+
+    type="text"
+
+    placeholder="其他玩家看到的名稱"
+
+    required
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="email">
+
+    Email
+
+</label>
+
+
+<input
+
+    id="email"
+
+    name="email"
+
+    type="email"
+
+    placeholder="輸入 Email"
+
+    autocomplete="email"
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="password">
+
+    密碼
+
+</label>
+
+
+<input
+
+    id="password"
+
+    name="password"
+
+    type="password"
+
+    placeholder="輸入密碼"
+
+    autocomplete="new-password"
+
+    required
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="confirmPassword">
+
+    確認密碼
+
+</label>
+
+
+<input
+
+    id="confirmPassword"
+
+    name="confirmPassword"
+
+    type="password"
+
+    placeholder="再次輸入密碼"
+
+    autocomplete="new-password"
+
+    required
+
+>
+
+
+</div>
+
+
+
+
+
+<button
+
+    type="submit"
+
+    class="button button-primary button-large"
+
+>
+
+    建立帳號
+
+</button>
+
+
+
+</form>
+
+
+
+
+
+
+<div
+    id="register-message"
+    class="register-message"
+></div>
+
+
+
+
+
+
+<div class="register-footer">
+
+
+已經有帳號？
+
+<a href="login.html">
+
+    登入
+
+</a>
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+
+
+<script src="js/loading.js"></script>
+
 <script src="js/config.js"></script>
+
 <script src="js/api.js"></script>
+
 <script src="js/register.js"></script>
+
 
 
 </body>
