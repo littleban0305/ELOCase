@@ -202,7 +202,7 @@ function getSessionToken() {
    取得已儲存玩家
 ======================================== */
 
-function getSavedUser() {
+function getSavedUser(){
 
     const data =
         localStorage.getItem(
@@ -210,20 +210,23 @@ function getSavedUser() {
         );
 
 
-    if (!data) {
+    if(!data){
 
         return null;
 
     }
 
 
-    try {
+    try{
 
-        return JSON.parse(
-            data
+        return JSON.parse(data);
+
+    }
+    catch(error){
+
+        localStorage.removeItem(
+            "elocaseUser"
         );
-
-    } catch {
 
         return null;
 
