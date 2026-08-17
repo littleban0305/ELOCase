@@ -221,6 +221,70 @@ function renderCaseItems(items) {
             card.className =
                 "case-item-card";
 
+           card.style.cursor =
+                "pointer";
+            
+            
+            card.addEventListener(
+                "click",
+                ()=>{
+            
+                    console.log(item);
+                   
+                    const params =
+                        new URLSearchParams(
+                            window.location.search
+                        );
+            
+            
+                    const mode =
+                        params.get(
+                            "mode"
+                        );
+            
+            
+                    const challengeId =
+                        params.get(
+                            "challengeId"
+                        );
+            
+            
+            
+                    let url =
+                        "case.html?caseId="
+                        +
+                        item.caseId;
+            
+            
+            
+                    if(
+                        mode === "challenge"
+                        &&
+                        challengeId
+                    ){
+            
+                        url +=
+                            "&mode=challenge&challengeId="
+                            +
+                            challengeId;
+            
+                    }
+            
+            
+            
+                    console.log(
+                        "跳轉:",
+                        url
+                    );
+            
+            
+                    window.location.href =
+                        url;
+            
+            
+                }
+            );
+
 
             const rarityClass =
                 getRarityClass(
