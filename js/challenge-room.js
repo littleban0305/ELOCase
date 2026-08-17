@@ -69,6 +69,8 @@ async()=>{
 
 
     loadChallengeRoom();
+    loadChallengeCases();
+    initChallengeOpen();
 
 
 
@@ -748,6 +750,221 @@ div
 
 
 });
+
+
+}
+
+async function loadChallengeCases(){
+
+
+try{
+
+
+const cases =
+await getCases();
+
+
+
+const selects =
+[
+"player-a-case-select",
+"player-b-case-select"
+];
+
+
+
+selects.forEach(id=>{
+
+
+const select =
+document.getElementById(
+id
+);
+
+
+
+if(!select){
+
+return;
+
+}
+
+
+
+select.innerHTML="";
+
+
+
+cases.forEach(
+item=>{
+
+
+const option =
+document.createElement(
+"option"
+);
+
+
+option.value =
+item.caseId;
+
+
+option.innerText =
+item.name;
+
+
+
+select.appendChild(
+option
+);
+
+
+
+});
+
+
+});
+
+
+
+}
+catch(error){
+
+console.error(
+"載入箱子失敗",
+error
+);
+
+}
+
+
+
+}
+
+function initChallengeOpen(){
+
+
+const buttons =
+[
+{
+button:
+"player-a-open-button",
+
+select:
+"player-a-case-select"
+},
+
+{
+button:
+"player-b-open-button",
+
+select:
+"player-b-case-select"
+}
+
+];
+
+
+
+buttons.forEach(
+data=>{
+
+
+const btn =
+document.getElementById(
+data.button
+);
+
+
+
+if(!btn){
+
+return;
+
+}
+
+
+
+btn.onclick =
+()=>{
+
+
+openChallenge(
+data.select
+);
+
+
+};
+
+
+
+});
+
+
+
+}
+
+async function openChallenge(
+selectId
+){
+
+
+
+try{
+
+
+const caseId =
+document
+.getElementById(
+selectId
+)
+.value;
+
+
+
+const sessionToken =
+getSessionToken();
+
+
+
+const result =
+await sendChallengePost({
+
+action:
+"openChallengeCase",
+
+sessionToken,
+
+challengeId,
+
+caseId
+
+});
+
+
+
+alert(
+"獲得："
++
+result.item.name
+);
+
+
+
+loadChallengeRoom();
+
+
+
+}
+catch(error){
+
+
+alert(
+error.message
+);
+
+
+}
 
 
 }
