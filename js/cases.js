@@ -210,14 +210,56 @@ function renderCases(cases) {
 
             card.onclick =
             ()=>{
-
-
-                window.location.href =
-                    "case.html?caseId="
-                    +
-                    item.caseId;
-
-
+            
+            
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+            
+            
+                const mode =
+                    params.get(
+                        "mode"
+                    );
+            
+            
+                const challengeId =
+                    params.get(
+                        "challengeId"
+                    );
+            
+            
+            
+                if(
+                    mode === "challenge" &&
+                    challengeId
+                ){
+            
+            
+                    window.location.href =
+                        "case.html?caseId="
+                        +
+                        item.caseId
+                        +
+                        "&mode=challenge&challengeId="
+                        +
+                        challengeId;
+            
+            
+                }
+                else{
+            
+            
+                    window.location.href =
+                        "case.html?caseId="
+                        +
+                        item.caseId;
+            
+            
+                }
+            
+            
             };
 
 
