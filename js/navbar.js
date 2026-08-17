@@ -181,69 +181,26 @@ document.addEventListener(
 
 function logoutPlayer(){
 
-    /*
-     * 清除登入資訊
-     */
-
-    localStorage.removeItem(
-        "sessionToken"
-    );
-
-
-    localStorage.removeItem(
-        "elocaseUser"
-    );
-
-
-
-    /*
-     * 清除玩家相關 Cache
-     */
-
-    Object.keys(
+    console.log(
+        "登出前:",
         localStorage
-    )
-    .forEach(key=>{
-
-
-        if(
-            key.startsWith(
-                "ELOCASE_CACHE_"
-            )
-        ){
-
-            localStorage.removeItem(
-                key
-            );
-
-        }
-
-
-    });
-
-
-
-    /*
-     * 清除其他可能資料
-     */
-
-    localStorage.removeItem(
-        "inventory"
     );
 
 
-    localStorage.removeItem(
-        "player"
+    localStorage.clear();
+
+
+    sessionStorage.clear();
+
+
+    console.log(
+        "清除完成:",
+        localStorage
     );
 
 
-
-    /*
-     * 重新整理頁面
-     */
-
-    location.reload();
-
+    location.href =
+        "index.html";
 
 }
 
