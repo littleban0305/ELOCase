@@ -1,45 +1,33 @@
+/* ========================================
+   ELOCase Challenge Room
+======================================== */
+
+
 let challengeId = null;
+
+let currentUser = null;
+
+let myPlayer = null;
+
+let opponentPlayer = null;
 
 let refreshTimer = null;
 
 
 
-/*
-========================================
-初始化
-========================================
-*/
+
+/* ========================================
+   初始化
+======================================== */
+
 
 document.addEventListener(
 "DOMContentLoaded",
 async()=>{
 
 
-    const user =
+    currentUser =
         await verifySession();
-
-
-
-    if(user){
-
-        const name =
-            document.getElementById(
-                "navbar-player-name"
-            );
-
-
-        if(name){
-
-            name.innerText =
-                user.displayName;
-
-        }
-
-    }
-
-
-
-    initPlayerMenu();
 
 
 
@@ -68,9 +56,10 @@ async()=>{
 
 
 
+    initButtons();
+
+
     loadChallengeRoom();
-    
-    initCaseButtons();
 
 
 
@@ -88,12 +77,10 @@ async()=>{
 
 
 
+/* ========================================
+   載入房間
+======================================== */
 
-/*
-========================================
-取得 Challenge Room
-========================================
-*/
 
 async function loadChallengeRoom(){
 
@@ -104,7 +91,7 @@ async function loadChallengeRoom(){
         const result =
             await getChallenge(
                 challengeId
-            )
+            );
 
 
 
@@ -119,18 +106,27 @@ async function loadChallengeRoom(){
 
 
 
-        updateChallengeInfo(
+        processPlayers(
+            result.players
+        );
+
+
+
+        renderChallenge(
             result
         );
+
 
 
     }
     catch(error){
 
+
         console.error(
-            "載入 Challenge Room 失敗",
+            "Challenge Room 載入失敗",
             error
         );
+
 
     }
 
@@ -144,254 +140,46 @@ async function loadChallengeRoom(){
 
 
 
+/* ========================================
+   判斷玩家身份
+======================================== */
 
-/*
-========================================
-更新房間資料
-========================================
-*/
 
-function updateChallengeInfo(
-data
-){
+function processPlayers(players){
 
 
-const challenge =
-data.challenge;
+    myPlayer = null;
 
+    opponentPlayer = null;
 
 
-const code =
-document.getElementById(
-"challenge-code"
-);
 
+    players.forEach(
+        player=>{
 
-if(code){
 
-code.innerText =
-challenge.challengeCode;
+            if(
+                String(
+                    player.userId
+                )
+                ===
+                String(
+                    currentUser.userId
+                )
+            ){
 
-}
 
+                myPlayer =
+                    player;
 
 
-const status =
-document.getElementById(
-"challenge-status"
-);
+            }
+            else{
 
 
-if(status){
+                opponentPlayer =
+                    player;
 
-status.innerText =
-getStatusText(
-challenge.status
-);
-
-}
-
-
-
-
-resetPlayers();
-
-
-
-const players =
-data.players || [];
-
-
-
-players.forEach(
-player=>{
-
-
-if(
-player.role === "playerA"
-){
-
-
-setPlayer(
-"a",
-player
-);
-
-
-}
-
-
-
-if(
-player.role === "playerB"
-){
-
-
-setPlayer(
-"b",
-player
-);
-
-
-}
-
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-========================================
-設定玩家
-========================================
-*/
-
-function setPlayer(
-side,
-player
-){
-
-
-
-const name =
-document.getElementById(
-"player-"+side+"-name"
-);
-
-
-
-const ec =
-document.getElementById(
-"player-"+side+"-ec"
-);
-
-
-
-const value =
-document.getElementById(
-"player-"+side+"-value"
-);
-
-
-
-if(name){
-
-name.innerText =
-player.displayName ||
-"未知玩家";
-
-}
-
-
-
-if(ec){
-
-ec.innerText =
-Number(
-player.challengeEC
-)
-.toLocaleString();
-
-}
-
-
-
-if(value){
-
-value.innerText =
-Number(
-player.finalValue || 0
-)
-.toFixed(2);
-
-}
-
-
-
-
-renderItems(
-side,
-player.items || []
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-========================================
-重置玩家
-========================================
-*/
-
-function resetPlayers(){
-
-
-    const defaults = {
-
-
-        "player-a-name":
-            "Player A",
-
-
-        "player-a-ec":
-            "-",
-
-
-        "player-a-value":
-            "0",
-
-
-
-        "player-b-name":
-            "等待玩家",
-
-
-        "player-b-ec":
-            "-",
-
-
-        "player-b-value":
-            "0"
-
-
-    };
-
-
-
-    Object.keys(defaults)
-    .forEach(
-        id=>{
-
-
-            const element =
-                document.getElementById(
-                    id
-                );
-
-
-            if(element){
-
-                element.innerText =
-                    defaults[id];
 
             }
 
@@ -410,40 +198,141 @@ function resetPlayers(){
 
 
 
-/*
-========================================
-狀態文字
-========================================
-*/
-
-function getStatusText(
-status
-){
-
-    switch(status){
+/* ========================================
+   渲染
+======================================== */
 
 
-        case "waiting":
-
-            return "等待玩家加入";
+function renderChallenge(data){
 
 
-        case "active":
 
-            return "挑戰進行中";
-
-
-        case "finished":
-
-            return "挑戰完成";
+const challenge =
+data.challenge;
 
 
-        default:
 
-            return status;
+const code =
+document.getElementById(
+"challenge-code"
+);
 
 
-    }
+
+if(code){
+
+    code.innerText =
+        challenge.challengeCode;
+
+}
+
+
+
+
+const status =
+document.getElementById(
+"challenge-status"
+);
+
+
+
+if(status){
+
+    status.innerText =
+        getStatusText(
+            challenge.status
+        );
+
+}
+
+
+
+
+renderMyPlayer();
+
+
+
+renderOpponentPlayer();
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ========================================
+   我的資料
+======================================== */
+
+
+function renderMyPlayer(){
+
+
+if(!myPlayer){
+
+    return;
+
+}
+
+
+
+
+setText(
+"my-player-name",
+myPlayer.displayName ||
+"我的挑戰"
+);
+
+
+
+setText(
+"my-player-coin",
+formatNumber(
+myPlayer.challengeEC
+)
+);
+
+
+
+setText(
+"my-player-value",
+formatNumber(
+myPlayer.finalValue
+)
+);
+
+
+
+
+
+setText(
+"navbar-my-coin",
+formatNumber(
+myPlayer.challengeEC
+)
+);
+
+
+
+setText(
+"navbar-my-value",
+formatNumber(
+myPlayer.finalValue
+)
+);
+
+
+
+renderItems(
+"my-items",
+myPlayer.items
+);
+
 
 }
 
@@ -455,232 +344,113 @@ status
 
 
 
-/*
-========================================
-複製 Code
-========================================
-*/
-
-document.addEventListener(
-"click",
-async(event)=>{
+/* ========================================
+   對手資料
+======================================== */
 
 
-    if(
-        event.target.id !==
-        "copy-code-button"
-    ){
+function renderOpponentPlayer(){
 
-        return;
 
-    }
+if(!opponentPlayer){
+
+    return;
+
+}
 
 
 
-    const code =
-        document
-        .getElementById(
-            "challenge-code"
-        )
-        ?.innerText;
+
+setText(
+"opponent-name",
+opponentPlayer.displayName ||
+"等待對手"
+);
 
 
 
-    if(
-        !code ||
-        code === "-"
-    ){
-
-        return;
-
-    }
+setText(
+"opponent-coin",
+formatNumber(
+opponentPlayer.challengeEC
+)
+);
 
 
 
-    await navigator.clipboard.writeText(
-        code
-    );
-
-
-
-    const msg =
-        document.getElementById(
-            "copy-message"
-        );
-
-
-
-    if(msg){
-
-        msg.innerText =
-            "✓ 已複製挑戰代碼";
-
-
-        setTimeout(()=>{
-
-            msg.innerText =
-                "";
-
-        },2000);
-
-    }
-
-
-});
+setText(
+"opponent-value",
+formatNumber(
+opponentPlayer.finalValue
+)
+);
 
 
 
 
 
+setText(
+"navbar-opponent-coin",
+formatNumber(
+opponentPlayer.challengeEC
+)
+);
 
 
 
-
-/*
-========================================
-玩家選單
-========================================
-*/
-
-function initPlayerMenu(){
-
-
-    const button =
-        document.getElementById(
-            "player-menu-button"
-        );
-
-
-    const menu =
-        document.querySelector(
-            ".player-menu"
-        );
+setText(
+"navbar-opponent-value",
+formatNumber(
+opponentPlayer.finalValue
+)
+);
 
 
 
-    if(
-        !button ||
-        !menu
-    ){
-
-        return;
-
-    }
-
-
-
-    button.onclick =
-    ()=>{
-
-        menu.classList.toggle(
-            "open"
-        );
-
-    };
+renderItems(
+"opponent-items",
+opponentPlayer.items
+);
 
 
 }
 
-function renderInventory(
-side,
-items
-){
-
-
-    const container =
-        document.getElementById(
-            "player-"+side+"-items"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    container.innerHTML="";
-
-
-
-    if(
-        !items ||
-        items.length===0
-    ){
-
-        container.innerHTML =
-        `
-        <div class="empty-inventory">
-            尚無物品
-        </div>
-        `;
-
-        return;
-
-    }
 
 
 
 
-    items.forEach(item=>{
-
-
-        const card =
-        document.createElement(
-            "div"
-        );
-
-
-        card.className =
-            "challenge-item-card";
-
-
-        card.innerHTML =
-        `
-
-        <img src="${item.image || ''}">
-
-
-        <div>
-            ${item.itemId}
-        </div>
-
-
-        <span>
-            $${item.value}
-        </span>
-
-        `;
-
-
-        container.appendChild(card);
 
 
 
-    });
 
 
-}
+/* ========================================
+   物品列表
+======================================== */
+
 
 function renderItems(
-side,
+id,
 items
 ){
 
 
 const container =
 document.getElementById(
-"player-"+side+"-items"
+id
 );
 
 
 
 if(!container){
 
-return;
+    return;
 
 }
+
+
+
+container.innerHTML = "";
 
 
 
@@ -694,20 +464,17 @@ container.innerHTML =
 
 `
 <div class="empty-item">
+
 尚無物品
+
 </div>
 `;
-
 
 return;
 
 }
 
 
-
-
-container.innerHTML =
-"";
 
 
 
@@ -731,12 +498,12 @@ div.innerHTML =
 
 `
 <div>
-${item.itemId}
+${item.itemId || item.name}
 </div>
 
 <div class="challenge-item-value">
 
-${Number(item.value).toFixed(2)}
+${formatNumber(item.value)}
 
 </div>
 `;
@@ -752,50 +519,41 @@ div
 });
 
 
+
 }
 
-function initCaseButtons(){
 
 
-const buttons = [
-
-{
-id:
-"player-a-case-button"
-},
-
-{
-id:
-"player-b-case-button"
-}
-
-];
 
 
-buttons.forEach(
-item=>{
 
 
-const button =
+
+/* ========================================
+   按鈕
+======================================== */
+
+
+function initButtons(){
+
+
+
+const openButton =
 document.getElementById(
-item.id
+"open-case-button"
 );
 
 
 
-if(!button){
-
-return;
-
-}
+if(openButton){
 
 
-
-button.onclick =
+openButton.onclick =
 ()=>{
 
 
 location.href =
+
 "cases.html?mode=challenge&challengeId="
 +
 challengeId;
@@ -804,8 +562,303 @@ challengeId;
 };
 
 
+}
+
+
+
+
+
+const backButton =
+document.getElementById(
+"back-room-button"
+);
+
+
+
+if(backButton){
+
+
+backButton.onclick =
+()=>{
+
+
+location.href =
+"challenge-room.html?id="
++
+challengeId;
+
+
+};
+
+
+}
+
+
+
+
+
+
+const finishButton =
+document.getElementById(
+"finish-challenge-button"
+);
+
+
+
+if(finishButton){
+
+
+finishButton.onclick =
+()=>{
+
+
+finishChallenge();
+
+
+};
+
+
+}
+
+
+
+
+const copyButton =
+document.getElementById(
+"copy-code-button"
+);
+
+
+
+if(copyButton){
+
+
+copyButton.onclick =
+copyChallengeCode;
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* ========================================
+   結束挑戰
+======================================== */
+
+
+async function finishChallenge(){
+
+
+const confirmResult =
+confirm(
+"確定要結束挑戰嗎？"
+);
+
+
+
+if(!confirmResult){
+
+    return;
+
+}
+
+
+
+try{
+
+
+await sendChallengePost({
+
+action:
+"finishChallenge",
+
+challengeId,
+
+sessionToken:
+getSessionToken()
 
 });
+
+
+
+loadChallengeRoom();
+
+
+}
+catch(error){
+
+
+alert(
+error.message
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ========================================
+   複製
+======================================== */
+
+
+async function copyChallengeCode(){
+
+
+const code =
+document
+.getElementById(
+"challenge-code"
+)
+.innerText;
+
+
+
+if(!code){
+
+    return;
+
+}
+
+
+
+await navigator.clipboard.writeText(
+code
+);
+
+
+
+const msg =
+document.getElementById(
+"copy-message"
+);
+
+
+
+if(msg){
+
+
+msg.innerText =
+"已複製挑戰代碼";
+
+
+setTimeout(
+()=>{
+
+
+msg.innerText =
+"";
+
+
+},
+2000
+);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ========================================
+   工具
+======================================== */
+
+
+function setText(
+id,
+value
+){
+
+
+const element =
+document.getElementById(
+id
+);
+
+
+
+if(element){
+
+element.innerText =
+value;
+
+}
+
+
+}
+
+
+
+function formatNumber(value){
+
+
+return Number(
+value || 0
+)
+.toLocaleString();
+
+
+
+}
+
+
+
+function getStatusText(status){
+
+
+switch(status){
+
+
+case "waiting":
+
+return "等待玩家加入";
+
+
+case "active":
+
+return "挑戰進行中";
+
+
+case "finished":
+
+return "挑戰完成";
+
+
+default:
+
+return status;
+
+
+}
 
 
 }
