@@ -100,7 +100,7 @@ async function loadChallengeRoom(){
 
 
         const result =
-            await getChallengeRoom(
+            await getChallengeRoomData(
                 challengeId
             );
 
@@ -234,6 +234,11 @@ data
                 "playerA"
             ){
 
+                renderInventory(
+                    "a",
+                    player.items
+                );
+
                 setPlayer(
                     "a",
                     player
@@ -247,6 +252,11 @@ data
                 player.role ===
                 "playerB"
             ){
+
+                renderInventory(
+                    "b",
+                    player.items
+                );
 
                 setPlayer(
                     "b",
@@ -589,6 +599,88 @@ function initPlayerMenu(){
         );
 
     };
+
+
+}
+
+function renderInventory(
+side,
+items
+){
+
+
+    const container =
+        document.getElementById(
+            "player-"+side+"-items"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML="";
+
+
+
+    if(
+        !items ||
+        items.length===0
+    ){
+
+        container.innerHTML =
+        `
+        <div class="empty-inventory">
+            尚無物品
+        </div>
+        `;
+
+        return;
+
+    }
+
+
+
+
+    items.forEach(item=>{
+
+
+        const card =
+        document.createElement(
+            "div"
+        );
+
+
+        card.className =
+            "challenge-item-card";
+
+
+        card.innerHTML =
+        `
+
+        <img src="${item.image || ''}">
+
+
+        <div>
+            ${item.itemId}
+        </div>
+
+
+        <span>
+            $${item.value}
+        </span>
+
+        `;
+
+
+        container.appendChild(card);
+
+
+
+    });
 
 
 }
