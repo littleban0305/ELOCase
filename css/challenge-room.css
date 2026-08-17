@@ -600,3 +600,81 @@ font-size:.8rem;
 
 
 }
+
+/* ========================================
+   Challenge Open Case
+======================================== */
+
+
+.challenge-open-section {
+
+
+margin-top:20px;
+
+
+padding-top:20px;
+
+
+border-top:
+
+1px solid
+var(--color-border);
+
+
+}
+
+
+
+.challenge-open-section h3{
+
+
+margin-bottom:12px;
+
+
+}
+
+
+
+.challenge-case-select{
+
+
+width:100%;
+
+
+height:42px;
+
+
+margin-bottom:12px;
+
+
+padding:0 12px;
+
+
+background:
+var(--color-background);
+
+
+border:
+1px solid
+var(--color-border);
+
+
+border-radius:
+var(--radius-medium);
+
+
+color:
+var(--color-text);
+
+
+}
+
+
+.challenge-case-select:focus{
+
+
+border-color:
+var(--color-primary);
+
+
+}
