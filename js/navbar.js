@@ -161,20 +161,62 @@ function logoutPlayer(){
 function initNavbar(){
 
 
-    /*
-     * ========================================
-     * Active Nav
-     * ========================================
-     */
-
     setActiveNav();
 
 
 
     /*
-     * ========================================
-     * 取得登入玩家
-     * ========================================
+     * Dropdown
+     */
+
+    const menuButton =
+        document.querySelector(
+            "#player-menu-button"
+        );
+
+
+    const dropdown =
+        document.querySelector(
+            "#player-menu-dropdown"
+        );
+
+
+    if(
+        menuButton &&
+        dropdown
+    ){
+
+        menuButton.addEventListener(
+            "click",
+            function(e){
+
+                e.stopPropagation();
+
+                dropdown.classList.toggle(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function(){
+
+                dropdown.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /*
+     * 取得玩家
      */
 
     const user =
@@ -195,14 +237,7 @@ function initNavbar(){
 
 
 
-    /*
-     * ========================================
-     * 未登入
-     * ========================================
-     */
-
     if(!user){
-
 
         if(playerName){
 
@@ -225,13 +260,9 @@ function initNavbar(){
     }
 
 
-
     /*
-     * ========================================
-     * 已登入
-     * ========================================
+     * 已登入資料
      */
-
 
     if(playerName){
 
@@ -243,87 +274,20 @@ function initNavbar(){
     }
 
 
-
     if(balance){
-    
+
         balance.textContent =
             formatCurrency(
                 user.eloCoin
             );
-    
-    }
-
-
-
-    /*
-     * ========================================
-     * Dropdown
-     * ========================================
-     */
-
-
-    const menuButton =
-        document.querySelector(
-            "#player-menu-button"
-        );
-
-
-    const dropdown =
-        document.querySelector(
-            "#player-menu-dropdown"
-        );
-
-
-
-    if(
-        menuButton &&
-        dropdown
-    ){
-
-
-        menuButton.addEventListener(
-            "click",
-            function(){
-
-                dropdown.classList.toggle(
-                    "show"
-                );
-
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            function(e){
-
-
-                if(
-                    !menuButton.contains(e.target) &&
-                    !dropdown.contains(e.target)
-                ){
-
-                    dropdown.classList.remove(
-                        "show"
-                    );
-
-                }
-
-
-            }
-        );
-
 
     }
 
 
 
     /*
-     * ========================================
      * 登出
-     * ========================================
      */
-
 
     const logoutButton =
         document.querySelector(
@@ -333,25 +297,19 @@ function initNavbar(){
 
     if(logoutButton){
 
-
         logoutButton.addEventListener(
             "click",
             function(){
 
-
                 logoutPlayer();
-
 
                 location.href =
                     "index.html";
 
-
             }
         );
 
-
     }
-
 
 
 }
