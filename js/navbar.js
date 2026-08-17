@@ -71,6 +71,7 @@ document.addEventListener(
 
 
                     <button
+                        type="button"
                         class="player-menu-button"
                         id="player-menu-button"
                     >
@@ -88,7 +89,7 @@ document.addEventListener(
                         </span>
 
 
-                        <span>
+                        <span class="player-menu-arrow">
                             ▾
                         </span>
 
@@ -101,28 +102,59 @@ document.addEventListener(
                         id="player-menu-dropdown"
                     >
 
-                        <a
-                            href="profile.html"
-                            class="player-menu-item"
-                        >
-                            個人資料
-                        </a>
+
+                        <div id="navbar-guest-menu">
 
 
-                        <a
-                            href="inventory.html"
-                            class="player-menu-item"
-                        >
-                            我的物品
-                        </a>
+                            <a
+                                href="login.html"
+                                class="player-menu-item"
+                            >
+                                登入
+                            </a>
 
 
-                        <button
-                            id="navbar-logout-button"
-                            class="player-menu-item player-menu-logout"
-                        >
-                            登出
-                        </button>
+                            <a
+                                href="register.html"
+                                class="player-menu-item"
+                            >
+                                註冊
+                            </a>
+
+
+                        </div>
+
+
+
+                        <div id="navbar-user-menu">
+
+
+                            <a
+                                href="profile.html"
+                                class="player-menu-item"
+                            >
+                                個人資料
+                            </a>
+
+
+                            <a
+                                href="inventory.html"
+                                class="player-menu-item"
+                            >
+                                我的物品
+                            </a>
+
+
+                            <button
+                                type="button"
+                                id="navbar-logout-button"
+                                class="player-menu-item player-menu-logout"
+                            >
+                                登出
+                            </button>
+
+
+                        </div>
 
 
                     </div>
@@ -145,6 +177,8 @@ document.addEventListener(
     }
 );
 
+
+
 function logoutPlayer(){
 
     localStorage.removeItem(
@@ -158,6 +192,9 @@ function logoutPlayer(){
 
 }
 
+
+
+
 function initNavbar(){
 
 
@@ -166,8 +203,11 @@ function initNavbar(){
 
 
     /*
+     * ========================================
      * Dropdown
+     * ========================================
      */
+
 
     const menuButton =
         document.querySelector(
@@ -181,10 +221,12 @@ function initNavbar(){
         );
 
 
+
     if(
         menuButton &&
         dropdown
     ){
+
 
         menuButton.addEventListener(
             "click",
@@ -192,12 +234,15 @@ function initNavbar(){
 
                 e.stopPropagation();
 
+
                 dropdown.classList.toggle(
                     "show"
                 );
 
+
             }
         );
+
 
 
         document.addEventListener(
@@ -211,17 +256,33 @@ function initNavbar(){
             }
         );
 
+
     }
 
 
 
     /*
-     * 取得玩家
+     * ========================================
+     * 玩家資料
+     * ========================================
      */
+
 
     const user =
         getSavedUser();
 
+
+
+    const guestMenu =
+        document.querySelector(
+            "#navbar-guest-menu"
+        );
+
+
+    const userMenu =
+        document.querySelector(
+            "#navbar-user-menu"
+        );
 
 
     const playerName =
@@ -237,7 +298,15 @@ function initNavbar(){
 
 
 
+    /*
+     * ========================================
+     * 未登入
+     * ========================================
+     */
+
+
     if(!user){
+
 
         if(playerName){
 
@@ -255,14 +324,36 @@ function initNavbar(){
         }
 
 
+        if(guestMenu){
+
+            guestMenu.style.display =
+                "block";
+
+        }
+
+
+        if(userMenu){
+
+            userMenu.style.display =
+                "none";
+
+        }
+
+
         return;
+
 
     }
 
 
+
+
     /*
-     * 已登入資料
+     * ========================================
+     * 已登入
+     * ========================================
      */
+
 
     if(playerName){
 
@@ -272,6 +363,7 @@ function initNavbar(){
             "玩家";
 
     }
+
 
 
     if(balance){
@@ -285,9 +377,29 @@ function initNavbar(){
 
 
 
+    if(guestMenu){
+
+        guestMenu.style.display =
+            "none";
+
+    }
+
+
+    if(userMenu){
+
+        userMenu.style.display =
+            "block";
+
+    }
+
+
+
     /*
+     * ========================================
      * 登出
+     * ========================================
      */
+
 
     const logoutButton =
         document.querySelector(
@@ -297,24 +409,34 @@ function initNavbar(){
 
     if(logoutButton){
 
+
         logoutButton.addEventListener(
             "click",
             function(){
 
+
                 logoutPlayer();
+
 
                 location.href =
                     "index.html";
 
+
             }
         );
+
 
     }
 
 
+
 }
 
+
+
+
 function setActiveNav(){
+
 
     const current =
         location.pathname
@@ -322,36 +444,53 @@ function setActiveNav(){
         .pop();
 
 
+
     document
     .querySelectorAll(".nav-link")
-    .forEach(link=>{
+    .forEach(
+        function(link){
 
 
-        const href =
-            link
-            .getAttribute("href");
+            const href =
+                link.getAttribute(
+                    "href"
+                );
 
 
-        if(href === current){
 
-            link.classList.add(
-                "active"
-            );
+            if(
+                href === current
+            ){
+
+                link.classList.add(
+                    "active"
+                );
+
+            }
+
 
         }
+    );
 
-    });
 
 }
 
+
+
+
+
 function formatCurrency(value){
 
-    return Number(value || 0)
-        .toLocaleString(
-            "en-US",
-            {
-                maximumFractionDigits: 2
-            }
-        );
+
+    return Number(
+        value || 0
+    )
+    .toLocaleString(
+        "en-US",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+
 
 }
