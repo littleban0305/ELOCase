@@ -223,3 +223,83 @@ p {
     opacity: 1;
 
 }
+
+/* ========================================
+   Challenge Mode Theme
+======================================== */
+
+
+.challenge-brand-text {
+
+
+    margin-left:
+    8px;
+
+
+    color:
+    #ff9f43;
+
+
+    font-size:
+    .85rem;
+
+
+    font-weight:
+    800;
+
+
+}
+
+
+
+.challenge-mode .section-label {
+
+
+    background:
+    rgba(
+        255,
+        159,
+        67,
+        .15
+    );
+
+
+    border-color:
+    rgba(
+        255,
+        159,
+        67,
+        .4
+    );
+
+
+    color:
+    #ff9f43;
+
+
+}
+
+
+
+
+.challenge-mode .case-action {
+
+
+    color:
+    #ff9f43;
+
+
+}
+
+
+
+
+
+.challenge-mode .button-primary {
+
+
+    background:
+    #ff9f43;
+
+
+}
