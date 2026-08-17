@@ -126,3 +126,70 @@
 
     font-size: 0.85rem;
 }
+
+/* ========================================
+   Google Profile
+======================================== */
+
+
+.google-profile-info {
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin-bottom:28px;
+
+    padding:16px;
+
+    background:
+        var(--color-background);
+
+    border-radius:
+        var(--radius-medium);
+
+}
+
+
+
+.google-avatar {
+
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+
+}
+
+
+
+.google-profile-info h3 {
+
+
+    margin:0 0 6px;
+
+
+}
+
+
+
+.google-profile-info p {
+
+
+    margin:0;
+
+    font-size:0.85rem;
+
+    color:
+        var(--color-text-secondary);
+
+
+}
