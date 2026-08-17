@@ -2122,3 +2122,43 @@ async function googleLogin(
 
 
 }
+
+/* ========================================
+   完成 Google 註冊
+======================================== */
+
+
+async function completeGoogleRegister(
+    googleData,
+    username,
+    displayName
+){
+
+
+    return await sendAuthRequest({
+
+        action:
+            "completeGoogleRegister",
+
+
+        googleId:
+            googleData.googleId,
+
+
+        email:
+            googleData.email,
+
+
+        avatar:
+            googleData.avatar,
+
+
+        username,
+
+        
+        displayName
+
+    });
+
+
+}
