@@ -154,121 +154,88 @@ data
 ){
 
 
-    const challenge =
-        data.challenge;
+const challenge =
+data.challenge;
 
 
 
-    /*
-    ================================
-    Challenge Code
-    ================================
-    */
+const code =
+document.getElementById(
+"challenge-code"
+);
 
 
-    const code =
-        document.getElementById(
-            "challenge-code"
-        );
+if(code){
 
+code.innerText =
+challenge.challengeCode;
 
-    if(code){
-
-        code.innerText =
-            challenge.challengeCode;
-
-    }
+}
 
 
 
-
-    /*
-    ================================
-    狀態
-    ================================
-    */
+const status =
+document.getElementById(
+"challenge-status"
+);
 
 
-    const status =
-        document.getElementById(
-            "challenge-status"
-        );
+if(status){
 
+status.innerText =
+getStatusText(
+challenge.status
+);
 
-    if(status){
-
-        status.innerText =
-            getStatusText(
-                challenge.status
-            );
-
-    }
+}
 
 
 
 
-
-
-    /*
-    ================================
-    玩家
-    ================================
-    */
-
-
-    resetPlayers();
+resetPlayers();
 
 
 
-    const players =
-        data.players || [];
+const players =
+data.players || [];
 
 
 
-    players.forEach(
-        player=>{
+players.forEach(
+player=>{
 
 
-            if(
-                player.role ===
-                "playerA"
-            ){
+if(
+player.role === "playerA"
+){
 
-                renderInventory(
-                    "a",
-                    player.items
-                );
 
-                setPlayer(
-                    "a",
-                    player
-                );
+setPlayer(
+"a",
+player
+);
 
-            }
+
+}
 
 
 
-            if(
-                player.role ===
-                "playerB"
-            ){
-
-                renderInventory(
-                    "b",
-                    player.items
-                );
-
-                setPlayer(
-                    "b",
-                    player
-                );
-
-            }
+if(
+player.role === "playerB"
+){
 
 
-        }
-    );
+setPlayer(
+"b",
+player
+);
 
+
+}
+
+
+
+});
 
 
 }
@@ -294,58 +261,67 @@ player
 
 
 
-    const name =
-        document.getElementById(
-            "player-" + side + "-name"
-        );
-
-
-    const ec =
-        document.getElementById(
-            "player-" + side + "-ec"
-        );
-
-
-    const value =
-        document.getElementById(
-            "player-" + side + "-value"
-        );
+const name =
+document.getElementById(
+"player-"+side+"-name"
+);
 
 
 
-    if(name){
-
-        name.innerText =
-            player.displayName ||
-            "未知玩家";
-
-    }
+const ec =
+document.getElementById(
+"player-"+side+"-ec"
+);
 
 
 
-
-    if(ec){
-
-        ec.innerText =
-            Number(
-                player.challengeEC
-            )
-            .toLocaleString();
-
-    }
+const value =
+document.getElementById(
+"player-"+side+"-value"
+);
 
 
 
+if(name){
 
-    if(value){
+name.innerText =
+player.displayName ||
+"未知玩家";
 
-        value.innerText =
-            Number(
-                player.finalValue
-            )
-            .toFixed(2);
+}
 
-    }
+
+
+if(ec){
+
+ec.innerText =
+Number(
+player.challengeEC
+)
+.toLocaleString();
+
+}
+
+
+
+if(value){
+
+value.innerText =
+Number(
+player.finalValue || 0
+)
+.toFixed(2);
+
+}
+
+
+
+
+renderItems(
+side,
+player.items || []
+);
+
 
 
 }
@@ -681,6 +657,97 @@ items
 
 
     });
+
+
+}
+
+function renderItems(
+side,
+items
+){
+
+
+const container =
+document.getElementById(
+"player-"+side+"-items"
+);
+
+
+
+if(!container){
+
+return;
+
+}
+
+
+
+if(
+!items ||
+items.length === 0
+){
+
+
+container.innerHTML =
+
+`
+<div class="empty-item">
+尚無物品
+</div>
+`;
+
+
+return;
+
+}
+
+
+
+
+container.innerHTML =
+"";
+
+
+
+items.forEach(
+item=>{
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"challenge-item";
+
+
+
+div.innerHTML =
+
+`
+<div>
+${item.itemId}
+</div>
+
+<div class="challenge-item-value">
+
+${Number(item.value).toFixed(2)}
+
+</div>
+`;
+
+
+
+container.appendChild(
+div
+);
+
+
+
+});
 
 
 }
