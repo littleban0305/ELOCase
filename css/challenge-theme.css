@@ -493,3 +493,42 @@
 
 
 }
+
+/* ========================================
+   Challenge Navbar Height Fix
+======================================== */
+
+
+.challenge-navbar {
+
+    min-height:
+    104px;
+
+}
+
+
+
+.challenge-navbar-container {
+
+    min-height:
+    104px;
+
+    padding-top:
+    18px;
+
+    padding-bottom:
+    18px;
+
+}
+
+
+
+.challenge-user-box {
+
+    margin-top:
+    6px;
+
+    margin-bottom:
+    6px;
+
+}
