@@ -580,6 +580,6 @@ body.challenge-mode .challenge-navbar-container {
 
 body.challenge-mode main {
 
-    padding-top:40px !important;
+    padding-top:0 !important;
 
 }
