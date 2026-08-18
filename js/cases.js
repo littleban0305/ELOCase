@@ -351,19 +351,18 @@ function createChallengeBackButton(){
     }
 
 
-    const navbar =
+    const area =
        document.querySelector(
-           ".navbar"
+           "#challenge-back-area"
        );
-
-
-    if(!navbar){
-
-        return;
-
-    }
-
-
+   
+   
+   if(!area){
+   
+       return;
+   
+   }
+   
     if(
         document.querySelector(
             ".challenge-back-button"
@@ -395,8 +394,8 @@ function createChallengeBackButton(){
         "← 回到挑戰房間";
 
 
-    navbar.appendChild(
-        button
-    );
+    area.appendChild(
+       button
+   );
 
 }
