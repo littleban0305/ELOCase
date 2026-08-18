@@ -1905,6 +1905,25 @@ function initializeOpenCaseButton() {
                        result.remainingEC
                    );
                
+               
+                   /*
+                    * ====================================
+                    * Challenge Mode
+                    *
+                    * 新增獲得物品
+                    * ====================================
+                    */
+               
+                   await addChallengeItem(
+                       {
+                           challengeId:
+                               challengeData.challengeId,
+               
+                           item:
+                               result.item
+                       }
+                   );
+               
                }
                else{
                
@@ -2557,5 +2576,58 @@ function updateChallengeBalance(ec){
         Number(
             ec || 0
         ).toLocaleString();
+
+}
+
+/* ========================================
+   Challenge 新增物品
+======================================== */
+
+async function addChallengeItem(data){
+
+
+    try{
+
+
+        const response =
+            await sendChallengePost({
+
+                action:
+                    "addChallengeItem",
+
+
+                challengeId:
+                    data.challengeId,
+
+
+                sessionToken:
+                    getSessionToken(),
+
+
+                item:
+                    data.item
+
+            });
+
+
+
+        return response;
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "新增 Challenge 物品失敗",
+            error
+        );
+
+
+        throw error;
+
+
+    }
+
 
 }
