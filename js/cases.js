@@ -214,7 +214,7 @@ function renderCases(cases) {
             
                 const params =
                     new URLSearchParams(
-                        window.location.search
+                        location.search
                     );
             
             
@@ -231,37 +231,38 @@ function renderCases(cases) {
             
             
             
+                let url =
+                    "case.html?caseId="
+                    +
+                    encodeURIComponent(
+                        item.caseId
+                    );
+            
+            
+            
                 if(
                     mode === "challenge" &&
                     challengeId
                 ){
             
-            
-                    window.location.href =
-                        "case.html?caseId="
+                    url +=
+                        "&mode=challenge"
                         +
-                        item.caseId
+                        "&challengeId="
                         +
-                        "&mode=challenge&challengeId="
-                        +
-                        challengeId;
-            
+                        encodeURIComponent(
+                            challengeId
+                        );
             
                 }
-                else{
             
             
-                    window.location.href =
-                        "case.html?caseId="
-                        +
-                        item.caseId;
             
-            
-                }
+                location.href =
+                    url;
             
             
             };
-
 
 
             grid.appendChild(
