@@ -11,37 +11,94 @@ document.addEventListener(
         }
 
 
+        const challenge =
+            isChallengeMode();
+
+
+
+        const brandHTML =
+            challenge
+            ?
+            `
+            ELOCase
+
+            <span class="challenge-brand-text">
+                Challenge Mode
+            </span>
+            `
+            :
+            `
+            ELOCase
+            `;
+
+
+
+        const navHTML =
+            challenge
+            ?
+            `
+            <a href="challenge-room.html"
+            class="nav-link">
+                挑戰房間
+            </a>
+
+
+            <a href="cases.html?mode=challenge"
+            class="nav-link">
+                開箱
+            </a>
+
+
+            <a href="inventory.html"
+            class="nav-link">
+                我的物品
+            </a>
+            `
+            :
+            `
+            <a href="index.html"
+            class="nav-link">
+                首頁
+            </a>
+
+
+            <a href="cases.html"
+            class="nav-link">
+                開箱
+            </a>
+
+
+            <a href="inventory.html"
+            class="nav-link">
+                我的物品
+            </a>
+
+
+            <a href="profile.html"
+            class="nav-link">
+                個人資料
+            </a>
+            `;
+
+
+
         navbar.innerHTML = `
 
         <div class="navbar-container">
 
 
-            <a href="index.html" class="brand">
-                ELOCase
+            <a href="index.html"
+            class="brand">
+
+                ${brandHTML}
+
             </a>
 
 
 
             <nav class="nav-links">
 
-                <a href="index.html" class="nav-link">
-                    首頁
-                </a>
-
-
-                <a href="cases.html" class="nav-link">
-                    開箱
-                </a>
-
-
-                <a href="inventory.html" class="nav-link">
-                    我的物品
-                </a>
-
-
-                <a href="profile.html" class="nav-link">
-                    個人資料
-                </a>
+                ${navHTML}
 
             </nav>
 
@@ -52,18 +109,31 @@ document.addEventListener(
 
                 <div class="balance">
 
+
                     <span class="balance-label">
-                        $
+
+                    ${
+                        challenge
+                        ?
+                        "挑戰"
+                        :
+                        "ELO"
+                    }
+
                     </span>
+
 
                     <span
-                        class="balance-value"
-                        id="navbar-balance"
-                    >
+                    class="balance-value"
+                    id="navbar-balance">
+
                         0
+
                     </span>
 
+
                 </div>
+
 
 
 
@@ -71,10 +141,10 @@ document.addEventListener(
 
 
                     <button
-                        type="button"
-                        class="player-menu-button"
-                        id="player-menu-button"
-                    >
+                    type="button"
+                    class="player-menu-button"
+                    id="player-menu-button">
+
 
                         <span class="player-avatar">
                             ◉
@@ -82,10 +152,11 @@ document.addEventListener(
 
 
                         <span
-                            id="navbar-player-name"
-                            class="player-menu-name"
-                        >
+                        id="navbar-player-name"
+                        class="player-menu-name">
+
                             登入
+
                         </span>
 
 
@@ -93,32 +164,34 @@ document.addEventListener(
                             ▾
                         </span>
 
+
                     </button>
 
 
 
                     <div
-                        class="player-menu-dropdown"
-                        id="player-menu-dropdown"
-                    >
+                    class="player-menu-dropdown"
+                    id="player-menu-dropdown">
 
 
                         <div id="navbar-guest-menu">
 
 
                             <a
-                                href="login.html"
-                                class="player-menu-item"
-                            >
+                            href="login.html"
+                            class="player-menu-item">
+
                                 登入
+
                             </a>
 
 
                             <a
-                                href="register.html"
-                                class="player-menu-item"
-                            >
+                            href="register.html"
+                            class="player-menu-item">
+
                                 註冊
+
                             </a>
 
 
@@ -130,27 +203,30 @@ document.addEventListener(
 
 
                             <a
-                                href="profile.html"
-                                class="player-menu-item"
-                            >
+                            href="profile.html"
+                            class="player-menu-item">
+
                                 個人資料
+
                             </a>
 
 
                             <a
-                                href="inventory.html"
-                                class="player-menu-item"
-                            >
+                            href="inventory.html"
+                            class="player-menu-item">
+
                                 我的物品
+
                             </a>
 
 
                             <button
-                                type="button"
-                                id="navbar-logout-button"
-                                class="player-menu-item player-menu-logout"
-                            >
+                            type="button"
+                            id="navbar-logout-button"
+                            class="player-menu-item player-menu-logout">
+
                                 登出
+
                             </button>
 
 
@@ -171,6 +247,7 @@ document.addEventListener(
         `;
 
 
+
         initNavbar();
 
 
@@ -179,30 +256,52 @@ document.addEventListener(
 
 
 
-function logoutPlayer(){
 
-    console.log(
-        "登出前:",
-        localStorage
+
+function isChallengeMode(){
+
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    return (
+
+        params.get("mode")
+        ===
+        "challenge"
+
+    )
+    ||
+    location.pathname.includes(
+        "challenge-room"
     );
+
+
+}
+
+
+
+
+
+
+function logoutPlayer(){
 
 
     localStorage.clear();
 
-
     sessionStorage.clear();
-
-
-    console.log(
-        "清除完成:",
-        localStorage
-    );
 
 
     location.href =
         "index.html";
 
+
 }
+
+
 
 
 
@@ -212,13 +311,6 @@ function initNavbar(){
 
     setActiveNav();
 
-
-
-    /*
-     * ========================================
-     * Dropdown
-     * ========================================
-     */
 
 
     const menuButton =
@@ -239,27 +331,23 @@ function initNavbar(){
         dropdown
     ){
 
+        menuButton.onclick =
+        function(e){
 
-        menuButton.addEventListener(
-            "click",
-            function(e){
-
-                e.stopPropagation();
+            e.stopPropagation();
 
 
-                dropdown.classList.toggle(
-                    "show"
-                );
+            dropdown.classList.toggle(
+                "show"
+            );
 
-
-            }
-        );
+        };
 
 
 
         document.addEventListener(
             "click",
-            function(){
+            ()=>{
 
                 dropdown.classList.remove(
                     "show"
@@ -268,16 +356,10 @@ function initNavbar(){
             }
         );
 
-
     }
 
 
 
-    /*
-     * ========================================
-     * 玩家資料
-     * ========================================
-     */
 
 
     const user =
@@ -310,61 +392,31 @@ function initNavbar(){
 
 
 
-    /*
-     * ========================================
-     * 未登入
-     * ========================================
-     */
-
 
     if(!user){
 
 
-        if(playerName){
-
-            playerName.textContent =
-                "登入";
-
-        }
+        if(playerName)
+            playerName.textContent="登入";
 
 
-        if(balance){
-
-            balance.textContent =
-                "0";
-
-        }
+        if(balance)
+            balance.textContent="0";
 
 
-        if(guestMenu){
-
-            guestMenu.style.display =
-                "block";
-
-        }
+        if(guestMenu)
+            guestMenu.style.display="block";
 
 
-        if(userMenu){
-
-            userMenu.style.display =
-                "none";
-
-        }
+        if(userMenu)
+            userMenu.style.display="none";
 
 
         return;
 
-
     }
 
 
-
-
-    /*
-     * ========================================
-     * 已登入
-     * ========================================
-     */
 
 
     if(playerName){
@@ -389,28 +441,14 @@ function initNavbar(){
 
 
 
-    if(guestMenu){
-
-        guestMenu.style.display =
-            "none";
-
-    }
+    if(guestMenu)
+        guestMenu.style.display="none";
 
 
-    if(userMenu){
-
-        userMenu.style.display =
-            "block";
-
-    }
+    if(userMenu)
+        userMenu.style.display="block";
 
 
-
-    /*
-     * ========================================
-     * 登出
-     * ========================================
-     */
 
 
     const logoutButton =
@@ -419,23 +457,16 @@ function initNavbar(){
         );
 
 
+
     if(logoutButton){
 
 
-        logoutButton.addEventListener(
-            "click",
-            function(){
+        logoutButton.onclick =
+        ()=>{
 
+            logoutPlayer();
 
-                logoutPlayer();
-
-
-                location.href =
-                    "index.html";
-
-
-            }
-        );
+        };
 
 
     }
@@ -443,6 +474,7 @@ function initNavbar(){
 
 
 }
+
 
 
 
@@ -460,7 +492,7 @@ function setActiveNav(){
     document
     .querySelectorAll(".nav-link")
     .forEach(
-        function(link){
+        link=>{
 
 
             const href =
@@ -469,9 +501,9 @@ function setActiveNav(){
                 );
 
 
-
             if(
-                href === current
+                href &&
+                href.includes(current)
             ){
 
                 link.classList.add(
@@ -500,25 +532,9 @@ function formatCurrency(value){
     .toLocaleString(
         "en-US",
         {
-            maximumFractionDigits: 2
+            maximumFractionDigits:2
         }
     );
 
-
-}
-
-function isChallengeMode(){
-
-    const params =
-        new URLSearchParams(
-            location.search
-        );
-
-
-    return (
-        params.get("mode")
-        ===
-        "challenge"
-    );
 
 }
