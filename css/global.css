@@ -851,6 +851,7 @@ p {
 ======================================== */
 
 
+.challenge-mode 
 .challenge-navbar-container {
 
     min-height:
@@ -860,10 +861,33 @@ p {
 
 
 
-.challenge-navbar-container + main {
+body.challenge-mode 
+.challenge-navbar + main {
 
     padding-top:
     60px;
 
 }
 
+/* ========================================
+   Normal Cases Page Spacing
+======================================== */
+
+
+body:not(.challenge-mode)
+.case-list-page {
+
+    padding-top:
+    50px;
+
+}
+
+
+
+body:not(.challenge-mode)
+.section-header {
+
+    margin-bottom:
+    40px;
+
+}
