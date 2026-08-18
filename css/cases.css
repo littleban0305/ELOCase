@@ -24,7 +24,7 @@ main {
 ======================================== */
 
 .cases-page {
-    padding: 56px 0 90px;
+    padding: 8px 0 90px;
 }
 
 
@@ -459,5 +459,11 @@ main {
 
     align-items:
         center;
+
+}
+
+#challenge-back-area {
+
+    margin-bottom:18px;
 
 }
