@@ -506,3 +506,19 @@ function formatCurrency(value){
 
 
 }
+
+function isChallengeMode(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    return (
+        params.get("mode")
+        ===
+        "challenge"
+    );
+
+}
