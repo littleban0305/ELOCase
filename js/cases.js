@@ -352,9 +352,9 @@ function createChallengeBackButton(){
 
 
     const navbar =
-        document.querySelector(
-            ".navbar-container"
-        );
+       document.querySelector(
+           ".navbar"
+       );
 
 
     if(!navbar){
