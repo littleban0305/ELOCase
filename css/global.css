@@ -1,261 +1,380 @@
 /* ========================================
    ELOCase - Global Styles
-   ======================================== */
+======================================== */
 
 
-/* ---------- 基礎變數 ---------- */
+/* ========================================
+   基礎變數
+======================================== */
 
 :root {
 
-    --color-background: #090b0f;
-    --color-surface: #101319;
-    --color-surface-light: #171b22;
+    --color-background:#090b0f;
 
-    --color-border: #252b35;
-    --color-border-light: #303744;
+    --color-surface:#101319;
 
-    --color-text: #f2f4f7;
-    --color-text-secondary: #b4bbc5;
-    --color-text-muted: #747c88;
+    --color-surface-light:#171b22;
 
-    --color-primary: #7c5cff;
-    --color-primary-hover: #8c70ff;
+    --color-border:#252b35;
 
-    --color-success: #35c78a;
-    --color-warning: #e6b85c;
-    --color-danger: #e05b68;
+    --color-border-light:#303744;
 
-    --content-width: 1200px;
 
-    --radius-small: 6px;
-    --radius-medium: 10px;
-    --radius-large: 16px;
+    --color-text:#f2f4f7;
 
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
+    --color-text-secondary:#b4bbc5;
+
+    --color-text-muted:#747c88;
+
+
+    --color-primary:#7c5cff;
+
+    --color-primary-hover:#8c70ff;
+
+
+    --color-success:#35c78a;
+
+    --color-warning:#e6b85c;
+
+    --color-danger:#e05b68;
+
+
+    --content-width:1200px;
+
+
+    --radius-small:6px;
+
+    --radius-medium:10px;
+
+    --radius-large:16px;
+
+
+    --transition-fast:.15s ease;
+
+    --transition-normal:.25s ease;
+
 }
 
 
-/* ---------- Reset ---------- */
+
+/* ========================================
+   Reset
+======================================== */
+
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
 }
+
 
 
 html {
-    scroll-behavior: smooth;
+
+    scroll-behavior:smooth;
+
 }
+
 
 
 body {
 
-    min-height: 100vh;
+    min-height:100vh;
+
 
     background:
-        radial-gradient(
-            circle at 50% -20%,
-            rgba(124, 92, 255, 0.12),
-            transparent 45%
-        ),
-        var(--color-background);
 
-    color: var(--color-text);
+    radial-gradient(
+
+        circle at 50% -20%,
+
+        rgba(
+            124,
+            92,
+            255,
+            .12
+        ),
+
+        transparent 45%
+
+    ),
+
+    var(--color-background);
+
+
+    color:var(--color-text);
+
 
     font-family:
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        Arial,
-        sans-serif;
 
-    line-height: 1.6;
+    "Noto Sans TC",
 
-    -webkit-font-smoothing: antialiased;
+    "Microsoft JhengHei",
+
+    Arial,
+
+    sans-serif;
+
+
+    line-height:1.6;
+
+
+    -webkit-font-smoothing:antialiased;
+
 }
+
 
 
 a {
-    color: inherit;
-    text-decoration: none;
+
+    color:inherit;
+
+    text-decoration:none;
+
 }
+
 
 
 button,
 input,
 textarea,
 select {
-    font: inherit;
+
+    font:inherit;
+
 }
+
 
 
 button {
-    border: none;
+
+    border:none;
+
 }
+
 
 
 img {
-    max-width: 100%;
-    display: block;
+
+    max-width:100%;
+
+    display:block;
+
 }
 
 
-/* ---------- 共用容器 ---------- */
+
+/* ========================================
+   共用容器
+======================================== */
+
 
 .section-container,
 .navbar-container,
 .footer-container {
 
-    width: min(
+
+    width:min(
+
         calc(100% - 40px),
+
         var(--content-width)
+
     );
 
-    margin: 0 auto;
+
+    margin:0 auto;
+
 }
 
 
-/* ---------- 標題 ---------- */
+
+
+/* ========================================
+   標題
+======================================== */
+
 
 h1,
 h2,
 h3 {
-    line-height: 1.25;
-    font-weight: 700;
+
+    line-height:1.25;
+
+    font-weight:700;
+
 }
+
 
 
 h1 {
-    font-size: clamp(2rem, 3vw, 2.4rem);
+
+    font-size:clamp(
+
+        2rem,
+
+        3vw,
+
+        2.4rem
+
+    );
+
 }
+
 
 
 h2 {
-    font-size: 1.6rem;
+
+    font-size:1.6rem;
+
 }
+
 
 
 h3 {
-    font-size: 1rem;
+
+    font-size:1rem;
+
 }
 
 
-/* ---------- 共用文字 ---------- */
 
 p {
-    color: var(--color-text-secondary);
+
+    color:
+    var(--color-text-secondary);
+
 }
 
 
-/* ---------- Scrollbar ---------- */
+
+/* ========================================
+   Scrollbar
+======================================== */
+
 
 ::-webkit-scrollbar {
-    width: 8px;
+
+    width:8px;
+
 }
+
 
 
 ::-webkit-scrollbar-track {
-    background: var(--color-background);
+
+    background:
+    var(--color-background);
+
 }
+
 
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-border-light);
-    border-radius: 999px;
+
+    background:
+    var(--color-border-light);
+
+    border-radius:999px;
+
 }
+
 
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-muted);
+
+    background:
+    var(--color-text-muted);
+
 }
 
+
+
+
 /* ========================================
-   ELOCase - Global Loading Bar
+   Loading Bar
 ======================================== */
+
 
 #elo-loading-bar {
 
-    position: fixed;
 
-    top: 0;
+    position:fixed;
 
-    left: 0;
 
-    z-index: 99999;
+    top:0;
 
-    width: 0;
 
-    height: 2px;
+    left:0;
 
-    pointer-events: none;
 
-    opacity: 1;
+    z-index:99999;
+
+
+    width:0;
+
+
+    height:2px;
+
+
+    pointer-events:none;
+
 
     background:
-        linear-gradient(
-            90deg,
-            var(--color-primary),
-            #9d7cff,
-            var(--color-primary)
-        );
+
+    linear-gradient(
+
+        90deg,
+
+        var(--color-primary),
+
+        #9d7cff,
+
+        var(--color-primary)
+
+    );
+
 
     box-shadow:
-        0 0 8px
-        rgba(124, 92, 255, 0.85);
+
+    0 0 8px
+
+    rgba(
+        124,
+        92,
+        255,
+        .85
+    );
+
 
     transition:
-        width 0.2s ease,
-        opacity 0.18s ease;
+
+    width .2s ease,
+
+    opacity .18s ease;
+
 
 }
 
 
-#elo-loading-bar.loading-active {
-
-    opacity: 1;
-
-}
-
-
-#elo-loading-bar.loading-complete {
-
-    opacity: 1;
-
-}
 
 /* ========================================
-   Challenge Mode Theme
+   Challenge Theme
 ======================================== */
-
-
-.challenge-brand-text {
-
-
-    margin-left:
-    8px;
-
-
-    color:
-    #ff9f43;
-
-
-    font-size:
-    .85rem;
-
-
-    font-weight:
-    800;
-
-
-}
-
 
 
 .challenge-mode .section-label {
 
+    color:#ff9f43;
+
 
     background:
+
     rgba(
         255,
         159,
@@ -265,89 +384,41 @@ p {
 
 
     border-color:
+
     rgba(
         255,
         159,
         67,
-        .4
+        .35
     );
-
-
-    color:
-    #ff9f43;
-
 
 }
 
+
+
+.challenge-mode h1 {
+
+    color:#ff9f43;
+
+}
 
 
 
 .challenge-mode .case-action {
 
 
-    color:
-    #ff9f43;
-
-
-}
-
-
-
-
-
-.challenge-mode .button-primary {
-
-
-    background:
-    #ff9f43;
-
-
-}
-
-/* ========================================
-   ELOCase Challenge Mode Theme
-======================================== */
-
-
-/* Navbar */
-
-.challenge-brand-text {
-
-    margin-left:8px;
-
     color:#ff9f43;
 
-    font-size:.85rem;
-
-    font-weight:800;
 
 }
 
 
-
-/* 頁面標籤 */
-
-.challenge-mode .section-label {
-
-    color:
-    #ff9f43;
-
-    background:
-    transparent;
-
-    border-color:
-    transparent;
-
-}
-
-
-
-
-/* 箱子列表 */
 
 .challenge-mode .case-card:hover {
 
+
     border-color:
+
     rgba(
         255,
         159,
@@ -355,23 +426,153 @@ p {
         .5
     );
 
-}
-
-
-
-.challenge-mode .case-action {
-
-    color:#ff9f43;
 
 }
-
 
 
 
 .challenge-mode .case-card:hover
 .case-action {
 
+
     color:#ffb866;
+
+
+}
+
+/* ========================================
+   Challenge Navbar
+======================================== */
+
+
+/* Navbar 背景 */
+
+.challenge-mode #navbar {
+
+    background:
+
+    rgba(
+        9,
+        11,
+        15,
+        .92
+    );
+
+    border-bottom:
+
+    1px solid
+
+    var(--color-border);
+
+}
+
+
+
+/* Navbar Container */
+
+.challenge-mode .challenge-navbar-container {
+
+
+    width:min(
+
+        calc(100% - 40px),
+
+        var(--content-width)
+
+    );
+
+
+    margin:0 auto;
+
+
+    min-height:72px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:space-between;
+
+
+    gap:24px;
+
+
+}
+
+
+
+/* ========================================
+   Challenge Logo
+======================================== */
+
+
+.challenge-brand {
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+    white-space:nowrap;
+
+
+    font-size:1.15rem;
+
+
+    font-weight:800;
+
+
+}
+
+
+
+.challenge-brand span {
+
+
+    color:
+
+    var(--color-text);
+
+
+}
+
+
+
+.challenge-brand strong {
+
+
+    color:#ff9f43;
+
+
+    font-size:.85rem;
+
+
+}
+
+
+
+.challenge-brand-text {
+
+
+    margin-left:8px;
+
+
+    color:#ff9f43;
+
+
+    font-size:.85rem;
+
+
+    font-weight:800;
+
 
 }
 
@@ -379,9 +580,239 @@ p {
 
 
 /* ========================================
-   Case Detail
+   Challenge Navbar Status
 ======================================== */
 
+
+.challenge-navbar-status {
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:12px;
+
+
+}
+
+
+
+
+.challenge-user-box {
+
+
+    min-width:150px;
+
+
+    padding:
+
+    10px 16px;
+
+
+    background:
+
+    rgba(
+
+        255,
+
+        255,
+
+        255,
+
+        .04
+
+    );
+
+
+    border:
+
+    1px solid
+
+    rgba(
+
+        255,
+
+        255,
+
+        255,
+
+        .08
+
+    );
+
+
+    border-radius:
+
+    var(--radius-medium);
+
+
+    text-align:center;
+
+
+    transition:
+
+    var(--transition-normal);
+
+
+}
+
+
+
+.challenge-user-box:hover {
+
+
+    transform:
+
+    translateY(-2px);
+
+
+    border-color:
+
+    rgba(
+
+        255,
+
+        159,
+
+        67,
+
+        .35
+
+    );
+
+
+}
+
+
+
+.challenge-box-title {
+
+
+    font-size:.72rem;
+
+
+    color:
+
+    var(--color-text-muted);
+
+
+    margin-bottom:3px;
+
+
+}
+
+
+
+.challenge-box-value {
+
+
+    font-size:1.05rem;
+
+
+    font-weight:800;
+
+
+    color:#ff9f43;
+
+
+}
+
+
+
+
+/* 對手 */
+
+
+.challenge-user-box.opponent {
+
+
+    border-color:
+
+    rgba(
+
+        224,
+
+        91,
+
+        104,
+
+        .2
+
+    );
+
+
+}
+
+
+
+.challenge-user-box.opponent
+
+.challenge-box-value {
+
+
+    color:#e05b68;
+
+
+}
+
+
+
+
+
+/* ========================================
+   Challenge Room
+======================================== */
+
+
+.challenge-mode main {
+
+
+    padding-top:20px;
+
+
+}
+
+
+
+.challenge-mode .room-card {
+
+
+    border-color:
+
+    rgba(
+
+        255,
+
+        159,
+
+        67,
+
+        .25
+
+    );
+
+
+}
+
+
+
+.challenge-mode .vs-text {
+
+
+    color:#ff9f43;
+
+
+}
+
+
+
+
+/* ========================================
+   Case Detail Challenge
+======================================== */
 
 
 .challenge-mode .case-detail-game {
@@ -394,7 +825,8 @@ p {
 
 
 
-.challenge-mode 
+.challenge-mode
+
 .case-preview-pointer {
 
 
@@ -403,12 +835,19 @@ p {
 
     box-shadow:
 
+
     0 0 16px
+
     rgba(
+
         255,
+
         159,
+
         67,
+
         .9
+
     );
 
 
@@ -417,7 +856,8 @@ p {
 
 
 
-.challenge-mode 
+.challenge-mode
+
 .case-preview-pointer::before {
 
 
@@ -428,7 +868,8 @@ p {
 
 
 
-.challenge-mode 
+.challenge-mode
+
 .case-preview-pointer::after {
 
 
@@ -442,7 +883,9 @@ p {
 
 /* 開箱按鈕 */
 
+
 .challenge-mode
+
 #open-case-button {
 
 
@@ -460,6 +903,7 @@ p {
 
 
 .challenge-mode
+
 #open-case-button:hover {
 
 
@@ -470,9 +914,9 @@ p {
 
 
 
-/* 開箱狀態 */
 
 .challenge-mode
+
 .case-preview-status {
 
 
@@ -481,381 +925,130 @@ p {
 
 }
 
+
+
+
+
 /* ========================================
-   Challenge Mode 強調
+   Challenge Coin Highlight
 ======================================== */
 
 
-/* 挑戰模式標題 */
+.challenge-mode
 
-.challenge-mode h1 {
+.balance-value {
 
-    color:
-    #ff9f43;
-
-}
-
-
-/* ELOCoin */
-
-.challenge-mode .balance-value {
-
-    color:
-    #ff9f43;
-
-}
-
-
-/* 挑戰資金 */
-
-.challenge-mode .challenge-coin {
-
-    color:
-    #ff9f43;
-
-    font-weight:
-    800;
-
-}
-
-
-/* 挑戰房間卡片 */
-
-.challenge-mode .room-card {
-
-    border-color:
-    rgba(
-        255,
-        159,
-        67,
-        .25
-    );
-
-}
-
-
-/* VS */
-
-.challenge-mode .vs-text {
-
-    color:
-    #ff9f43;
-
-}
-
-.challenge-brand-text{
 
     color:#ff9f43;
 
-    margin-left:8px;
-
-    font-size:.8rem;
-
-    font-weight:800;
-
-}
-
-/* ========================================
-   Challenge Navbar
-======================================== */
-
-
-.challenge-mode #navbar {
-
-    background:
-        rgba(
-            9,
-            11,
-            15,
-            .92
-        );
-
-}
-
-
-.challenge-mode .challenge-navbar-container {
-
-    width:min(
-        calc(100% - 40px),
-        var(--content-width)
-    );
-
-    margin:auto;
-
-    height:72px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:24px;
 
 }
 
 
 
-/* Logo */
+.challenge-mode
 
-.challenge-brand {
+.challenge-coin {
 
-    display:flex;
 
-    align-items:center;
-
-    gap:10px;
-
-    white-space:nowrap;
-
-    font-size:1.15rem;
-
-    font-weight:800;
-
-}
-
-
-
-.challenge-brand span {
-
-    color:
-    var(--color-text);
-
-}
-
-
-
-.challenge-brand strong {
-
-    color:
-    #ff9f43;
-
-    font-size:.85rem;
-
-}
-
-
-
-
-/* ========================================
-   Challenge Status
-======================================== */
-
-
-.challenge-navbar-status {
-
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-
-}
-
-
-
-
-.challenge-user-box {
-
-
-    min-width:120px;
-
-
-    padding:
-    10px 16px;
-
-
-    background:
-    rgba(
-        255,
-        255,
-        255,
-        .04
-    );
-
-
-    border:
-    1px solid
-    rgba(
-        255,
-        255,
-        255,
-        .08
-    );
-
-
-    border-radius:
-    var(--radius-medium);
-
-
-    text-align:center;
-
-
-    transition:
-    var(--transition-normal);
-
-}
-
-
-
-.challenge-user-box:hover {
-
-
-    border-color:
-    rgba(
-        255,
-        159,
-        67,
-        .35
-    );
-
-
-    transform:
-    translateY(-2px);
-
-
-}
-
-
-
-.challenge-box-title {
-
-
-    font-size:.72rem;
-
-
-    color:
-    var(--color-text-muted);
-
-
-    margin-bottom:3px;
-
-
-}
-
-
-
-
-.challenge-box-value {
-
-
-    font-size:1.05rem;
+    color:#ff9f43;
 
 
     font-weight:800;
 
 
-    color:
-    #ff9f43;
-
-
 }
-
-
-
-
-/* 對手 */
-
-.challenge-user-box.opponent {
-
-
-    border-color:
-    rgba(
-        224,
-        91,
-        104,
-        .15
-    );
-
-
-}
-
-
-
-.challenge-user-box.opponent
-.challenge-box-value {
-
-
-    color:
-    #e05b68;
-
-
-}
-
 
 
 
 
 
 /* ========================================
-   Challenge Mode Navbar
-   手機版
+   Challenge Mobile
 ======================================== */
 
 
 @media(max-width:900px){
 
 
-.challenge-mode .challenge-navbar-container{
+    .challenge-mode
 
-    height:auto;
+    .challenge-navbar-container {
 
-    padding:
-    16px 0;
 
-    flex-direction:column;
+        min-height:auto;
+
+
+        padding:
+
+        16px 0;
+
+
+        flex-direction:column;
+
+
+        align-items:stretch;
+
+
+    }
+
+
+
+    .challenge-navbar-status {
+
+
+        display:grid;
+
+
+        grid-template-columns:
+
+        repeat(
+
+            2,
+
+            1fr
+
+        );
+
+
+    }
+
+
+
+    .challenge-user-box {
+
+
+        min-width:0;
+
+
+    }
+
 
 }
 
 
-
-.challenge-navbar-status{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-    repeat(
-        2,
-        1fr
-    );
-
-
-}
-
-
-
-.challenge-user-box{
-
-
-    min-width:0;
-
-
-}
-
-
-
-}
 
 /* ========================================
-   Challenge Navbar Spacing Fix
+   Normal Page Fix
 ======================================== */
 
 
-.challenge-mode 
-.challenge-navbar-container {
+/*
+   防止 Challenge CSS 影響普通頁面
 
-    min-height:
-    90px;
+   cases.html
+   index.html
+   inventory.html
 
-}
+*/
 
-.challenge-mode main {
 
-    padding-top:
-    20px;
+body:not(.challenge-mode)
+
+.challenge-brand-text {
+
+
+    display:none;
+
 
 }
