@@ -353,6 +353,10 @@ function initChallengeBack(){
             +
             challengeId;
 
+
+        button.style.display =
+            "inline-flex";
+
     }
 
 }
