@@ -1898,19 +1898,32 @@ function initializeOpenCaseButton() {
                  */
 
                if(
-                   challengeData.mode === "challenge"
+                   challengeData.mode !== "challenge"
                ){
-               
-                   updateChallengeBalance(
-                       result.remainingChallengeEC
-                   );
-               
-               }
-               else{
                
                    updateBalance(
                        result.remainingEloCoin
                    );
+               
+               
+                   const savedUser =
+                       getSavedUser();
+               
+               
+                   if(savedUser){
+               
+                       savedUser.eloCoin =
+                           result.remainingEloCoin;
+               
+               
+                       localStorage.setItem(
+                           "elocaseUser",
+                           JSON.stringify(
+                               savedUser
+                           )
+                       );
+               
+                   }
                
                }
 
