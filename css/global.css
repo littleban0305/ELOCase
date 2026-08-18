@@ -489,3 +489,65 @@ p {
 
 
 }
+
+/* ========================================
+   Challenge Mode 強調
+======================================== */
+
+
+/* 挑戰模式標題 */
+
+.challenge-mode h1 {
+
+    color:
+    #ff9f43;
+
+}
+
+
+/* ELOCoin */
+
+.challenge-mode .balance-value {
+
+    color:
+    #ff9f43;
+
+}
+
+
+/* 挑戰資金 */
+
+.challenge-mode .challenge-coin {
+
+    color:
+    #ff9f43;
+
+    font-weight:
+    800;
+
+}
+
+
+/* 挑戰房間卡片 */
+
+.challenge-mode .room-card {
+
+    border-color:
+    rgba(
+        255,
+        159,
+        67,
+        .25
+    );
+
+}
+
+
+/* VS */
+
+.challenge-mode .vs-text {
+
+    color:
+    #ff9f43;
+
+}
