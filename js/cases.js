@@ -387,7 +387,7 @@ function createChallengeBackButton(){
 
 
     button.className =
-        "button button-secondary challenge-back-button";
+       "case-back challenge-back-button";
 
 
     button.textContent =
