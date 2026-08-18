@@ -497,15 +497,38 @@ div.className =
 div.innerHTML =
 
 `
-<div>
-${item.itemId || item.name}
+
+<div class="challenge-item-image">
+
+${
+    item.image
+    ?
+    `
+    <img 
+        src="${item.image}"
+        alt=""
+    >
+    `
+    :
+    ""
+}
+
 </div>
+
+
+<div class="challenge-item-name">
+
+${item.name || "未知物品"}
+
+</div>
+
 
 <div class="challenge-item-value">
 
-${formatNumber(item.value)}
+$${formatNumber(item.value)}
 
 </div>
+
 `;
 
 
