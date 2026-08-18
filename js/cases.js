@@ -321,17 +321,22 @@ function escapeHtml(
 
 }
 
-function createChallengeBackButton(){
+function initChallengeBack(){
+
+    const button =
+        document.querySelector(
+            "#challenge-back"
+        );
+
+
+    if(!button){
+        return;
+    }
+
 
     const params =
         new URLSearchParams(
             location.search
-        );
-
-
-    const mode =
-        params.get(
-            "mode"
         );
 
 
@@ -341,61 +346,13 @@ function createChallengeBackButton(){
         );
 
 
-    if(
-        mode !== "challenge" ||
-        !challengeId
-    ){
+    if(challengeId){
 
-        return;
-
-    }
-
-
-    const area =
-       document.querySelector(
-           "#challenge-back-area"
-       );
-   
-   
-   if(!area){
-   
-       return;
-   
-   }
-   
-    if(
-        document.querySelector(
-            ".challenge-back-button"
-        )
-    ){
-
-        return;
+        button.href =
+            "challenge-room.html?id="
+            +
+            challengeId;
 
     }
-
-
-    const button =
-        document.createElement(
-            "a"
-        );
-
-
-    button.href =
-        "challenge-room.html?id="
-        +
-        challengeId;
-
-
-    button.className =
-       "case-back challenge-back-button";
-
-
-    button.textContent =
-        "← 回到挑戰房間";
-
-
-    area.appendChild(
-       button
-   );
 
 }
