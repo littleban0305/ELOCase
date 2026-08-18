@@ -2533,6 +2533,9 @@ function createReturnChallengeButton(
     }
 
 
+    container.innerHTML = "";
+
+
     const button =
         document.createElement(
             "a"
