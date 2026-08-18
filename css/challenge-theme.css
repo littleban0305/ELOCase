@@ -271,3 +271,64 @@
     justify-content:center;
 
 }
+
+/* ========================================
+   Final Challenge Navbar Fix
+======================================== */
+
+
+.challenge-navbar {
+
+    height:120px !important;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.challenge-navbar-container {
+
+    width:100%;
+
+    height:100% !important;
+
+    padding:
+    0 24px !important;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.challenge-navbar-status {
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.challenge-user-box {
+
+    height:82px;
+
+    padding:
+    12px 20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-direction:column;
+
+}
