@@ -329,23 +329,14 @@ p {
 
 .challenge-mode .section-label {
 
-    color:#ff9f43;
+    color:
+    #ff9f43;
 
     background:
-    rgba(
-        255,
-        159,
-        67,
-        .12
-    );
+    transparent;
 
     border-color:
-    rgba(
-        255,
-        159,
-        67,
-        .35
-    );
+    transparent;
 
 }
 
