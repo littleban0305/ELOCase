@@ -532,3 +532,54 @@
     6px;
 
 }
+
+/* ========================================
+   Challenge Navbar Global Fix
+======================================== */
+
+
+body.challenge-mode .navbar {
+
+    position: sticky;
+
+    top:0;
+
+    z-index:100;
+
+    min-height:104px;
+
+    background:
+    rgba(
+        9,
+        11,
+        15,
+        .92
+    );
+
+    backdrop-filter:
+    blur(16px);
+
+}
+
+
+
+body.challenge-mode .challenge-navbar-container {
+
+    min-height:104px;
+
+    padding:
+    18px 24px;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+body.challenge-mode main {
+
+    padding-top:40px !important;
+
+}
