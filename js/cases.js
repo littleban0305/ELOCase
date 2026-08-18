@@ -28,11 +28,14 @@ document.addEventListener(
 
             const cases =
                 await getCases();
-
-
+            
+            
             renderCases(
                 cases
             );
+            
+            
+            createChallengeBackButton();
 
 
         }
@@ -315,5 +318,85 @@ function escapeHtml(
         "&#039;"
     );
 
+
+}
+
+function createChallengeBackButton(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const mode =
+        params.get(
+            "mode"
+        );
+
+
+    const challengeId =
+        params.get(
+            "challengeId"
+        );
+
+
+    if(
+        mode !== "challenge" ||
+        !challengeId
+    ){
+
+        return;
+
+    }
+
+
+    const navbar =
+        document.querySelector(
+            ".navbar-container"
+        );
+
+
+    if(!navbar){
+
+        return;
+
+    }
+
+
+    if(
+        document.querySelector(
+            ".challenge-back-button"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const button =
+        document.createElement(
+            "a"
+        );
+
+
+    button.href =
+        "challenge-room.html?id="
+        +
+        challengeId;
+
+
+    button.className =
+        "button button-secondary challenge-back-button";
+
+
+    button.textContent =
+        "← 回到挑戰房間";
+
+
+    navbar.appendChild(
+        button
+    );
 
 }
