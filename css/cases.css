@@ -439,37 +439,3 @@ main {
     margin-left: auto;
 
 }
-
-/* ========================================
-   Challenge 返回按鈕
-======================================== */
-
-#challenge-back-area {
-
-    margin-bottom:
-        18px;
-
-}
-
-
-.challenge-back-button {
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-}
-
-#challenge-back-area {
-
-    margin-bottom:18px;
-
-}
-
-.challenge-back {
-
-    display:none;
-
-}
