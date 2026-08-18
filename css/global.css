@@ -845,3 +845,25 @@ p {
 
 
 }
+
+/* ========================================
+   Challenge Navbar Spacing Fix
+======================================== */
+
+
+.challenge-navbar-container {
+
+    min-height:
+    90px;
+
+}
+
+
+
+.challenge-navbar-container + main {
+
+    padding-top:
+    60px;
+
+}
+
