@@ -35,7 +35,7 @@ document.addEventListener(
             );
             
             
-            createChallengeBackButton();
+            initChallengeBack();
 
 
         }
