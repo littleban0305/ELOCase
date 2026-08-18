@@ -2771,3 +2771,37 @@ main {
     }
 
 }
+
+/* ========================================
+   Fix Challenge Navbar Conflict
+======================================== */
+
+
+.challenge-navbar {
+
+    min-height:
+    104px !important;
+
+}
+
+
+.challenge-navbar-container {
+
+    min-height:
+    104px !important;
+
+    padding-top:
+    18px !important;
+
+    padding-bottom:
+    18px !important;
+
+}
+
+
+.challenge-user-box {
+
+    transform:
+    translateY(0) !important;
+
+}
