@@ -133,3 +133,51 @@
     color:#e05b68;
 
 }
+
+/* ========================================
+   Final Override
+======================================== */
+
+
+.challenge-mode .section-label {
+
+    color:#ff9f43 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    padding:0 !important;
+
+}
+
+
+
+.challenge-mode .challenge-user-box {
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .04
+    ) !important;
+
+}
+
+
+
+.challenge-mode main {
+
+    padding-top:0;
+
+}
+
+
+
+.challenge-mode .challenge-room-page {
+
+    padding-top:40px;
+
+}
