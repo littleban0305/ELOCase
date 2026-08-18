@@ -226,3 +226,48 @@
     justify-content:center;
 
 }
+
+/* ========================================
+   Fix Challenge Navbar Overflow
+======================================== */
+
+
+.challenge-navbar {
+
+    height:
+    104px;
+
+}
+
+
+.challenge-navbar-container {
+
+    height:
+    104px;
+
+    padding:
+    0 24px;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.challenge-user-box {
+
+    height:
+    72px;
+
+    padding:
+    12px 18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
