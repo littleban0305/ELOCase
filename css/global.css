@@ -1052,33 +1052,3 @@ body:not(.challenge-mode)
 
 
 }
-
-/* ========================================
-   Normal Cases Page Spacing Fix
-======================================== */
-
-
-body:not(.challenge-mode) .case-list-page {
-
-    padding-top:80px;
-
-}
-
-
-/* Navbar 與所有普通頁面距離 */
-
-body:not(.challenge-mode) main {
-
-    padding-top:40px;
-
-}
-
-
-
-/* Cases 標題區 */
-
-body:not(.challenge-mode) .section-header {
-
-    margin-bottom:50px;
-
-}
