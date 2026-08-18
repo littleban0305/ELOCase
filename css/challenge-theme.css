@@ -1,0 +1,135 @@
+/* ========================================
+   ELOCase Challenge Theme
+======================================== */
+
+
+/* Navbar */
+
+.challenge-navbar {
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:
+    rgba(
+        9,
+        11,
+        15,
+        .92
+    );
+
+    backdrop-filter:blur(16px);
+
+}
+
+
+
+/* Logo */
+
+.challenge-brand strong {
+
+    color:#ff9f43;
+
+}
+
+
+
+
+/* Section Label */
+
+.challenge-mode .section-label {
+
+
+    color:#ff9f43;
+
+
+    background:none;
+
+
+    border:none;
+
+
+    padding:0;
+
+
+}
+
+
+
+/* 標題 */
+
+
+.challenge-mode h1 {
+
+    color:#fff;
+
+}
+
+
+
+
+/* Navbar spacing */
+
+
+.challenge-mode main {
+
+    padding-top:30px;
+
+}
+
+
+
+
+
+/* Navbar box */
+
+
+.challenge-user-box {
+
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .04
+    );
+
+
+    border:
+
+    1px solid
+
+    rgba(
+        255,
+        255,
+        255,
+        .1
+    );
+
+
+}
+
+
+
+
+.challenge-box-value {
+
+
+    color:#ff9f43;
+
+}
+
+
+
+.challenge-user-box.opponent
+.challenge-box-value {
+
+
+    color:#e05b68;
+
+}
