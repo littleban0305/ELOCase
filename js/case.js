@@ -2488,14 +2488,6 @@ function createReturnChallengeButton(
     challengeId
 ){
 
-   if(
-       container.querySelector(
-           ".return-challenge-button"
-       )
-   ){
-       return;
-   }
-
     const container =
         document.querySelector(
             ".case-hero-actions"
@@ -2507,6 +2499,15 @@ function createReturnChallengeButton(
     }
 
 
+    if(
+        container.querySelector(
+            ".return-challenge-button"
+        )
+    ){
+        return;
+    }
+
+
     const button =
         document.createElement(
             "a"
@@ -2514,13 +2515,13 @@ function createReturnChallengeButton(
 
 
     button.href =
-       "challenge-room.html?challengeId="
-       +
-       challengeId;
+        "challenge-room.html?challengeId="
+        +
+        challengeId;
 
 
     button.className =
-       "button button-secondary return-challenge-button";
+        "button button-secondary return-challenge-button";
 
 
     button.textContent =
