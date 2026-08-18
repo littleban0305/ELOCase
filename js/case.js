@@ -1897,9 +1897,22 @@ function initializeOpenCaseButton() {
                  * ====================================
                  */
 
-                updateBalance(
-                    result.remainingEloCoin
-                );
+               if(
+                   challengeData.mode === "challenge"
+               ){
+               
+                   updateChallengeBalance(
+                       result.remainingChallengeEC
+                   );
+               
+               }
+               else{
+               
+                   updateBalance(
+                       result.remainingEloCoin
+                   );
+               
+               }
 
 
                 /*
@@ -1965,16 +1978,8 @@ function initializeOpenCaseButton() {
                    challengeData.mode === "challenge"
                ){
                
-                   setTimeout(
-                       ()=>{
-               
-                           location.href =
-                               "challenge-room.html?id="
-                               +
-                               challengeData.challengeId;
-               
-                       },
-                       4500
+                   createReturnChallengeButton(
+                       challengeData.challengeId
                    );
                
                }
@@ -2482,5 +2487,46 @@ function initCaseBack(){
 
     }
 
+
+}
+
+function createReturnChallengeButton(
+    challengeId
+){
+
+    const container =
+        document.querySelector(
+            ".case-hero-actions"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    const button =
+        document.createElement(
+            "a"
+        );
+
+
+    button.href =
+        "challenge-room.html?id="
+        +
+        challengeId;
+
+
+    button.className =
+        "button button-secondary";
+
+
+    button.textContent =
+        "回到挑戰房間";
+
+
+    container.appendChild(
+        button
+    );
 
 }
