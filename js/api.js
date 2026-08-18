@@ -365,8 +365,18 @@ async function sendApiRequest(
                  * ====================================
                  */
 
-                const result =
-                    await response.json();
+                const text =
+                   await response.text();
+               
+               
+               console.log(
+                   "GAS RAW RESPONSE:",
+                   text
+               );
+               
+               
+               const result =
+                   JSON.parse(text);
 
 
                 /*
