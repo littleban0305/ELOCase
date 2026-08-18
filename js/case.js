@@ -1930,32 +1930,6 @@ function initializeOpenCaseButton() {
 
                 /*
                  * ====================================
-                 * 更新 LocalStorage
-                 * ====================================
-                 */
-
-                const savedUser =
-                    getSavedUser();
-
-
-                if (savedUser) {
-
-                    savedUser.eloCoin =
-                        result.remainingEloCoin;
-
-
-                    localStorage.setItem(
-                        "elocaseUser",
-                        JSON.stringify(
-                            savedUser
-                        )
-                    );
-
-                }
-
-
-                /*
-                 * ====================================
                  * ⭐ API 成功
                  *
                  * 如果滑動條已經開始：
@@ -1991,8 +1965,15 @@ function initializeOpenCaseButton() {
                    challengeData.mode === "challenge"
                ){
                
-                   createReturnChallengeButton(
-                       challengeData.challengeId
+                   setTimeout(
+                       ()=>{
+               
+                           createReturnChallengeButton(
+                               challengeData.challengeId
+                           );
+               
+                       },
+                       4000
                    );
                
                }
@@ -2507,6 +2488,14 @@ function createReturnChallengeButton(
     challengeId
 ){
 
+   if(
+       container.querySelector(
+           ".return-challenge-button"
+       )
+   ){
+       return;
+   }
+
     const container =
         document.querySelector(
             ".case-hero-actions"
@@ -2525,13 +2514,13 @@ function createReturnChallengeButton(
 
 
     button.href =
-        "challenge-room.html?id="
-        +
-        challengeId;
+       "challenge-room.html?challengeId="
+       +
+       challengeId;
 
 
     button.className =
-        "button button-secondary";
+       "button button-secondary return-challenge-button";
 
 
     button.textContent =
