@@ -303,3 +303,189 @@ p {
 
 
 }
+
+/* ========================================
+   ELOCase Challenge Mode Theme
+======================================== */
+
+
+/* Navbar */
+
+.challenge-brand-text {
+
+    margin-left:8px;
+
+    color:#ff9f43;
+
+    font-size:.85rem;
+
+    font-weight:800;
+
+}
+
+
+
+/* 頁面標籤 */
+
+.challenge-mode .section-label {
+
+    color:#ff9f43;
+
+    background:
+    rgba(
+        255,
+        159,
+        67,
+        .12
+    );
+
+    border-color:
+    rgba(
+        255,
+        159,
+        67,
+        .35
+    );
+
+}
+
+
+
+
+/* 箱子列表 */
+
+.challenge-mode .case-card:hover {
+
+    border-color:
+    rgba(
+        255,
+        159,
+        67,
+        .5
+    );
+
+}
+
+
+
+.challenge-mode .case-action {
+
+    color:#ff9f43;
+
+}
+
+
+
+
+.challenge-mode .case-card:hover
+.case-action {
+
+    color:#ffb866;
+
+}
+
+
+
+
+/* ========================================
+   Case Detail
+======================================== */
+
+
+
+.challenge-mode .case-detail-game {
+
+
+    color:#ff9f43;
+
+
+}
+
+
+
+.challenge-mode 
+.case-preview-pointer {
+
+
+    background:#ff9f43;
+
+
+    box-shadow:
+
+    0 0 16px
+    rgba(
+        255,
+        159,
+        67,
+        .9
+    );
+
+
+}
+
+
+
+
+.challenge-mode 
+.case-preview-pointer::before {
+
+
+    border-top-color:#ff9f43;
+
+
+}
+
+
+
+.challenge-mode 
+.case-preview-pointer::after {
+
+
+    border-bottom-color:#ff9f43;
+
+
+}
+
+
+
+
+/* 開箱按鈕 */
+
+.challenge-mode
+#open-case-button {
+
+
+    background:#ff9f43;
+
+
+    border-color:#ff9f43;
+
+
+    color:#111;
+
+
+}
+
+
+
+.challenge-mode
+#open-case-button:hover {
+
+
+    background:#ffb866;
+
+
+}
+
+
+
+/* 開箱狀態 */
+
+.challenge-mode
+.case-preview-status {
+
+
+    color:#ff9f43;
+
+
+}
