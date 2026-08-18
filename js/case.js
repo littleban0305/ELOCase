@@ -2540,7 +2540,7 @@ function createReturnChallengeButton(
 
 
     button.href =
-        "challenge-room.html?challengeId="
+        "challenge-room.html?id="
         +
         challengeId;
 
