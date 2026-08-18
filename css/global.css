@@ -573,7 +573,7 @@ p {
 }
 
 
-.challenge-navbar-container {
+.challenge-mode .challenge-navbar-container {
 
     width:min(
         calc(100% - 40px),
@@ -798,20 +798,14 @@ p {
 @media(max-width:900px){
 
 
-.challenge-navbar-container{
-
+.challenge-mode .challenge-navbar-container{
 
     height:auto;
 
     padding:
     16px 0;
 
-
     flex-direction:column;
-
-
-    align-items:stretch;
-
 
 }
 
@@ -856,38 +850,5 @@ p {
 
     min-height:
     90px;
-
-}
-
-
-
-body.challenge-mode 
-.challenge-navbar + main {
-
-    padding-top:
-    60px;
-
-}
-
-/* ========================================
-   Normal Cases Page Spacing
-======================================== */
-
-
-body:not(.challenge-mode)
-.case-list-page {
-
-    padding-top:
-    50px;
-
-}
-
-
-
-body:not(.challenge-mode)
-.section-header {
-
-    margin-bottom:
-    40px;
 
 }
