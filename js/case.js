@@ -2254,6 +2254,8 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
+        initCaseBack();
+       
         initializeCasePage();
 
         initializeOpenCaseButton();
@@ -2426,5 +2428,59 @@ function playCaseOpeningIntro() {
 
         }
     );
+
+}
+
+function initCaseBack(){
+
+
+    const button =
+        document.querySelector(
+            "#case-back"
+        );
+
+
+    if(!button){
+        return;
+    }
+
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const mode =
+        params.get("mode");
+
+
+    const challengeId =
+        params.get("challengeId");
+
+
+
+    if(
+        mode === "challenge"
+        &&
+        challengeId
+    ){
+
+        button.href =
+        "cases.html?mode=challenge&challengeId="
+        +
+        challengeId;
+
+
+    }
+    else{
+
+
+        button.href =
+        "cases.html";
+
+
+    }
+
 
 }
