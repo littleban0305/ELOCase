@@ -2697,12 +2697,24 @@ async function refreshChallengeCase(){
 
     /*
      * 開箱動畫期間不要刷新
-     *
-     * 避免把動畫中的 DOM 蓋掉
      */
 
     if(
         window.ELOCaseOpening
+    ){
+
+        return;
+
+    }
+
+
+    const challengeData =
+        getChallengeDataFromUrl();
+
+
+    if(
+        challengeData.mode !== "challenge" ||
+        !challengeData.challengeId
     ){
 
         return;
@@ -2724,7 +2736,33 @@ async function refreshChallengeCase(){
     try{
 
         /*
-         * 更新箱子資料
+         * ====================================
+         * 更新 Challenge 雙方即時資料
+         * ====================================
+         */
+
+        const challengeResult =
+            await getChallenge(
+                challengeData.challengeId
+            );
+
+
+        if(
+            challengeResult &&
+            challengeResult.players
+        ){
+
+            updateChallengeCasePlayers(
+                challengeResult.players
+            );
+
+        }
+
+
+        /*
+         * ====================================
+         * 更新 Case 資料
+         * ====================================
          */
 
         const caseData =
@@ -2750,7 +2788,9 @@ async function refreshChallengeCase(){
 
 
         /*
-         * 更新內容物
+         * ====================================
+         * 更新 Case 內容物
+         * ====================================
          */
 
         const items =
@@ -2864,5 +2904,151 @@ function updateChallengeCaseItems(items){
 
         }
     );
+
+}
+
+/* ========================================
+ * Challenge Case
+ * 更新雙方即時資料
+ * ======================================== */
+
+function updateChallengeCasePlayers(players){
+
+    if(
+        !players ||
+        players.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    const sessionUser =
+        getSavedUser();
+
+
+    if(!sessionUser){
+
+        return;
+
+    }
+
+
+    let myPlayer = null;
+
+    let opponentPlayer = null;
+
+
+    players.forEach(
+        player => {
+
+            if(
+                String(
+                    player.userId
+                )
+                ===
+                String(
+                    sessionUser.userId
+                )
+            ){
+
+                myPlayer =
+                    player;
+
+            }
+            else{
+
+                opponentPlayer =
+                    player;
+
+            }
+
+        }
+    );
+
+
+    /*
+     * ====================================
+     * 我的資料
+     * ====================================
+     */
+
+    if(myPlayer){
+
+        const myCoin =
+            document.querySelector(
+                "#navbar-my-coin"
+            );
+
+
+        const myValue =
+            document.querySelector(
+                "#navbar-my-value"
+            );
+
+
+        if(myCoin){
+
+            myCoin.textContent =
+                Number(
+                    myPlayer.challengeEC || 0
+                ).toLocaleString();
+
+        }
+
+
+        if(myValue){
+
+            myValue.textContent =
+                Number(
+                    myPlayer.finalValue || 0
+                ).toLocaleString();
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 對手資料
+     * ====================================
+     */
+
+    if(opponentPlayer){
+
+        const opponentCoin =
+            document.querySelector(
+                "#navbar-opponent-coin"
+            );
+
+
+        const opponentValue =
+            document.querySelector(
+                "#navbar-opponent-value"
+            );
+
+
+        if(opponentCoin){
+
+            opponentCoin.textContent =
+                Number(
+                    opponentPlayer.challengeEC || 0
+                ).toLocaleString();
+
+        }
+
+
+        if(opponentValue){
+
+            opponentValue.textContent =
+                Number(
+                    opponentPlayer.finalValue || 0
+                ).toLocaleString();
+
+        }
+
+    }
 
 }
