@@ -2,7 +2,9 @@
 ELOCase - Cases List
 ======================================== */
 
-let challengeCasesRefreshTimer = null;
+let challengeCasesNavbarTimer = null;
+
+let challengeCasesListTimer = null;
 
 
 /* ========================================
@@ -75,7 +77,7 @@ document.addEventListener(
                 challengeId
             ) {
 
-                challengeCasesRefreshTimer =
+                challengeCasesListTimer =
                     setInterval(
                         async () => {
 
@@ -426,9 +428,6 @@ function initChallengeBack(){
 Challenge Cases Navbar 即時更新
 ======================================== */
 
-let challengeCasesRefreshTimer = null;
-
-
 function startChallengeCasesRefresh(){
 
     const params =
@@ -460,18 +459,17 @@ function startChallengeCasesRefresh(){
 
 
     if(
-        challengeCasesRefreshTimer
+        challengeCasesNavbarTimer
     ){
-
+    
         clearInterval(
-            challengeCasesRefreshTimer
+            challengeCasesNavbarTimer
         );
-
+    
     }
-
-
-
-    challengeCasesRefreshTimer =
+    
+    
+    challengeCasesNavbarTimer =
         setInterval(
             refreshChallengeCasesNavbar,
             3000
