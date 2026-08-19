@@ -272,14 +272,46 @@ renderOpponentPlayer();
 
 function renderMyPlayer(){
 
-
 if(!myPlayer){
 
     return;
 
 }
 
-
+const finishButton =
+      document.getElementById(
+         "finish-challenge-button"
+      );
+   
+   
+if(finishButton){
+   
+      if(
+         String(
+            myPlayer.finished
+         ).toLowerCase()
+         ===
+         "true"
+      ){
+   
+         finishButton.disabled =
+            true;
+   
+         finishButton.innerText =
+            "已結束挑戰";
+   
+      }
+      else{
+   
+         finishButton.disabled =
+            false;
+   
+         finishButton.innerText =
+            "結束挑戰";
+   
+      }
+   
+}
 
 
 setText(
@@ -686,17 +718,183 @@ copyChallengeCode;
 
 async function finishChallenge(){
 
-
-const confirmResult =
-confirm(
-"確定要結束挑戰嗎？"
-);
-
+    const confirmResult =
+        confirm(
+            "確定要結束挑戰嗎？\n\n結束後將無法再開啟箱子。"
+        );
 
 
-if(!confirmResult){
+    if(!confirmResult){
 
-    return;
+        return;
+
+    }
+
+
+    const finishButton =
+        document.getElementById(
+            "finish-challenge-button"
+        );
+
+
+    try{
+
+        /*
+         * 防止重複點擊
+         */
+
+        if(finishButton){
+
+            finishButton.disabled = true;
+
+            finishButton.innerText =
+                "處理中...";
+
+        }
+
+
+        /*
+         * 呼叫 API
+         */
+
+        const result =
+            await sendChallengePost({
+
+                action:
+                    "finishChallenge",
+
+                challengeId:
+                    challengeId,
+
+                sessionToken:
+                    getSessionToken()
+
+            });
+
+
+        /*
+         * API 失敗
+         */
+
+        if(
+            !result ||
+            !result.success
+        ){
+
+            throw new Error(
+                result?.error ||
+                "結束挑戰失敗"
+            );
+
+        }
+
+
+        /*
+         * 取得結果
+         */
+
+        const data =
+            result.data;
+
+
+        /*
+         * 顯示目前完成狀態
+         */
+
+        if(data){
+
+            console.log(
+                "Finish Challenge Result:",
+                data
+            );
+
+        }
+
+
+        /*
+         * 雙方都完成
+         */
+
+        if(
+            data &&
+            data.allFinished
+        ){
+
+            /*
+             * 下一階段：
+             * 前往 Result
+             */
+
+            location.href =
+                "challenge-result.html?id="
+                +
+                encodeURIComponent(
+                    challengeId
+                );
+
+            return;
+
+        }
+
+
+        /*
+         * 只有自己完成
+         */
+
+        alert(
+            "你已完成挑戰！\n\n等待對手完成後即可查看結果。"
+        );
+
+
+        /*
+         * 重新載入房間
+         */
+
+        await loadChallengeRoom();
+
+
+        /*
+         * 按鈕狀態
+         */
+
+        if(finishButton){
+
+            finishButton.innerText =
+                "已結束挑戰";
+
+        }
+
+
+    }
+    catch(error){
+
+        console.error(
+            "結束挑戰失敗：",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "結束挑戰失敗"
+        );
+
+
+        /*
+         * 發生錯誤才恢復按鈕
+         */
+
+        if(finishButton){
+
+            finishButton.disabled =
+                false;
+
+            finishButton.innerText =
+                "結束挑戰";
+
+        }
+
+    }
 
 }
 
