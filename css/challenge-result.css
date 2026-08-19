@@ -522,3 +522,118 @@ Mobile
 
 
 }
+
+/* ========================================
+Challenge Result Navbar Spacing
+======================================== */
+
+
+.challenge-result-page {
+
+    padding-top:
+    70px;
+
+}
+
+
+
+/*
+Navbar 與 Result 標題距離
+*/
+
+.challenge-result-page .section-header {
+
+
+    margin-top:
+    35px;
+
+
+    margin-bottom:
+    45px;
+
+
+}
+
+
+
+
+/*
+Result 標籤
+*/
+
+
+.challenge-result-page .section-label {
+
+
+    display:
+    inline-flex;
+
+
+    padding:
+    8px 16px;
+
+
+    border-radius:
+    999px;
+
+
+    background:
+    rgba(
+        255,
+        159,
+        67,
+        .12
+    );
+
+
+    border:
+    1px solid
+    rgba(
+        255,
+        159,
+        67,
+        .35
+    );
+
+
+    color:
+    #ff9f43;
+
+
+    font-size:
+    .85rem;
+
+
+    font-weight:
+    800;
+
+
+    letter-spacing:
+    .08em;
+
+
+}
+
+
+
+/*
+Result Title
+*/
+
+
+.challenge-result-page h1 {
+
+
+    margin-top:
+    18px;
+
+
+    font-size:
+    2.5rem;
+
+
+    font-weight:
+    900;
+
+
+}
