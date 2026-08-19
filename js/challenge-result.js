@@ -55,6 +55,8 @@ async()=>{
 
     await loadChallengeResult();
 
+    initButtons();
+
 
 
 });
@@ -273,11 +275,14 @@ else{
 
 
 setText(
-    "result-title",
+    "winner-text",
     resultText
 );
 
-
+setText(
+    "result-title",
+    "挑戰結果"
+);
 
 
 setText(
@@ -316,7 +321,37 @@ setText(
 );
 
 
+setText(
+    "player-a-items",
+    formatNumber(
+        myValue
+    )
+);
 
+
+setText(
+    "player-a-coin",
+    formatNumber(
+        myPlayer.challengeEC
+    )
+);
+
+
+
+setText(
+    "player-b-items",
+    formatNumber(
+        opponentValue
+    )
+);
+
+
+setText(
+    "player-b-coin",
+    formatNumber(
+        opponentPlayer.challengeEC
+    )
+);
 
 
 const myCard =
@@ -417,5 +452,27 @@ return Number(
 )
 .toLocaleString();
 
+
+}
+
+function initButtons(){
+
+const button =
+document.getElementById(
+    "back-challenge-button"
+);
+
+
+if(button){
+
+button.onclick =
+()=>{
+
+location.href =
+"challenge.html";
+
+};
+
+}
 
 }
