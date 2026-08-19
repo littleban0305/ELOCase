@@ -481,6 +481,11 @@ return;
 items.forEach(
 item=>{
 
+console.log(
+    "🔍 Challenge Item 原始資料：",
+    item
+);
+
 
 const div =
 document.createElement(
