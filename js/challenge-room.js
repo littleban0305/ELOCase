@@ -898,51 +898,6 @@ async function finishChallenge(){
 
 }
 
-
-
-try{
-
-
-await sendChallengePost({
-
-action:
-"finishChallenge",
-
-challengeId,
-
-sessionToken:
-getSessionToken()
-
-});
-
-
-
-loadChallengeRoom();
-
-
-}
-catch(error){
-
-
-alert(
-error.message
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
 /* ========================================
    複製
 ======================================== */
