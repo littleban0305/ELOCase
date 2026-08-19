@@ -1,1 +1,524 @@
+/* ========================================
+ELOCase Challenge Result
+======================================== */
 
+
+/* ========================================
+Page
+======================================== */
+
+.challenge-result-page {
+
+    padding:
+    70px 0 100px;
+
+}
+
+
+
+.result-card {
+
+    padding:
+    45px;
+
+
+    background:
+    var(--color-surface);
+
+
+    border:
+    1px solid
+    var(--color-border);
+
+
+    border-radius:
+    24px;
+
+
+    text-align:
+    center;
+
+
+    overflow:
+    hidden;
+
+}
+
+
+
+/* ========================================
+Title
+======================================== */
+
+
+.challenge-result-title {
+
+    font-size:
+    2.2rem;
+
+
+    font-weight:
+    900;
+
+
+    color:
+    #ff9f43;
+
+
+    margin-bottom:
+    25px;
+
+
+    letter-spacing:
+    .08em;
+
+}
+
+
+
+.winner-text {
+
+    margin-bottom:
+    45px;
+
+
+    font-size:
+    1.8rem;
+
+
+    font-weight:
+    900;
+
+
+    color:
+    var(--color-text);
+
+}
+
+
+
+
+
+
+/* ========================================
+VS Area
+======================================== */
+
+
+.vs-result {
+
+    display:
+    flex;
+
+
+    align-items:
+    center;
+
+
+    justify-content:
+    center;
+
+
+    gap:
+    35px;
+
+}
+
+
+
+
+/* ========================================
+Player Card
+======================================== */
+
+
+.result-player {
+
+
+    flex:
+    1;
+
+
+    padding:
+    35px;
+
+
+    min-height:
+    320px;
+
+
+    background:
+    var(--color-background);
+
+
+    border:
+    1px solid
+    var(--color-border);
+
+
+    border-radius:
+    20px;
+
+
+    transition:
+    .3s;
+
+}
+
+
+
+.result-player:hover {
+
+
+    transform:
+    translateY(-5px);
+
+
+}
+
+
+
+.result-player h2 {
+
+
+    font-size:
+    1.5rem;
+
+
+    margin-bottom:
+    25px;
+
+
+}
+
+
+
+
+/* 玩家 A */
+
+.player-a {
+
+
+    border-color:
+    rgba(
+        124,
+        92,
+        255,
+        .5
+    );
+
+}
+
+
+
+/* 玩家 B */
+
+.player-b {
+
+
+    border-color:
+    rgba(
+        255,
+        159,
+        67,
+        .5
+    );
+
+}
+
+
+
+
+
+/* ========================================
+Value
+======================================== */
+
+
+.result-value {
+
+
+    margin-bottom:
+    25px;
+
+
+    padding:
+    20px;
+
+
+    background:
+    rgba(
+        255,
+        159,
+        67,
+        .08
+    );
+
+
+    border-radius:
+    15px;
+
+}
+
+
+
+.result-value strong {
+
+
+    display:
+    block;
+
+
+    margin-top:
+    10px;
+
+
+    font-size:
+    2.5rem;
+
+
+    color:
+    #ff9f43;
+
+
+}
+
+
+
+
+
+
+.result-player span {
+
+
+    color:
+    var(--color-text-muted);
+
+
+}
+
+
+
+.result-player div:not(.result-value){
+
+    margin-top:
+    12px;
+
+}
+
+
+
+
+
+/* ========================================
+VS
+======================================== */
+
+
+.result-vs {
+
+
+    font-size:
+    3rem;
+
+
+    font-weight:
+    1000;
+
+
+    color:
+    #ff9f43;
+
+
+    text-shadow:
+    0 0 20px
+    rgba(
+        255,
+        159,
+        67,
+        .5
+    );
+
+}
+
+
+
+
+
+/* ========================================
+Button
+======================================== */
+
+
+#back-challenge-button {
+
+
+    margin-top:
+    45px;
+
+
+    min-width:
+    220px;
+
+
+}
+
+
+
+
+
+
+/* ========================================
+Winner Highlight
+======================================== */
+
+
+.winner-player {
+
+
+    animation:
+    winnerGlow
+    1.5s
+    infinite
+    alternate;
+
+}
+
+
+
+@keyframes winnerGlow {
+
+
+from {
+
+    box-shadow:
+    0 0 10px
+    rgba(
+        255,
+        159,
+        67,
+        .2
+    );
+
+}
+
+
+
+to {
+
+    box-shadow:
+    0 0 35px
+    rgba(
+        255,
+        159,
+        67,
+        .8
+    );
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* ========================================
+Mobile
+======================================== */
+
+
+@media(max-width:900px){
+
+
+.vs-result {
+
+
+    flex-direction:
+    column;
+
+
+}
+
+
+
+.result-vs {
+
+
+    transform:
+    rotate(
+        90deg
+    );
+
+
+}
+
+
+
+.result-player {
+
+
+    width:
+    100%;
+
+
+}
+
+
+
+}
+
+
+
+
+
+@media(max-width:600px){
+
+
+.result-card {
+
+
+    padding:
+    25px;
+
+
+}
+
+
+
+.challenge-result-title {
+
+
+    font-size:
+    1.6rem;
+
+
+}
+
+
+
+.winner-text {
+
+
+    font-size:
+    1.4rem;
+
+
+}
+
+
+
+.result-value strong {
+
+
+    font-size:
+    2rem;
+
+
+}
+
+
+}
