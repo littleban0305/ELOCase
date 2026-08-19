@@ -1,21 +1,19 @@
 /* ========================================
-   ELOCase - Cases List
+ELOCase - Cases List
 ======================================== */
 
+let challengeCasesRefreshTimer = null;
 
-/*
-========================================
+
+/* ========================================
 初始化
-========================================
-*/
+======================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
-    async()=>{
+    async () => {
 
-
-        try{
-
+        try {
 
             const user =
                 await verifySession();
@@ -26,21 +24,89 @@ document.addEventListener(
             );
 
 
+            const params =
+                new URLSearchParams(
+                    location.search
+                );
+
+
+            const mode =
+                params.get(
+                    "mode"
+                );
+
+
+            const challengeId =
+                params.get(
+                    "challengeId"
+                );
+
+
+            /*
+             * 第一次立即載入
+             */
+
             const cases =
                 await getCases();
-            
-            
+
+
             renderCases(
                 cases
             );
-            
-            
+
+
             initChallengeBack();
 
 
-        }
-        catch(error){
+            /*
+             * ====================================
+             * Challenge Mode
+             *
+             * 每 3 秒更新箱子列表
+             *
+             * 不重新整理頁面
+             * ====================================
+             */
 
+            if (
+                mode === "challenge" &&
+                challengeId
+            ) {
+
+                challengeCasesRefreshTimer =
+                    setInterval(
+                        async () => {
+
+                            try {
+
+                                const updatedCases =
+                                    await getCases();
+
+
+                                renderCases(
+                                    updatedCases
+                                );
+
+
+                            }
+                            catch (error) {
+
+                                console.error(
+                                    "Challenge 箱子列表更新失敗：",
+                                    error
+                                );
+
+                            }
+
+                        },
+                        3000
+                    );
+
+            }
+
+
+        }
+        catch (error) {
 
             console.error(
                 "開箱列表載入失敗：",
@@ -54,7 +120,7 @@ document.addEventListener(
                 );
 
 
-            if(grid){
+            if (grid) {
 
                 grid.innerHTML =
                 `
@@ -67,17 +133,10 @@ document.addEventListener(
 
             }
 
-
         }
-
 
     }
 );
-
-
-
-
-
 /*
 ========================================
 渲染箱子列表
