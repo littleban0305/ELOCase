@@ -84,15 +84,12 @@ async()=>{
 
 async function loadChallengeRoom(){
 
-
     try{
-
 
         const result =
             await getChallenge(
                 challengeId
             );
-
 
 
         if(
@@ -105,11 +102,15 @@ async function loadChallengeRoom(){
         }
 
 
+        /*
+         * ========================================
+         * 更新玩家資料
+         * ========================================
+         */
 
         processPlayers(
             result.players
         );
-
 
 
         renderChallenge(
@@ -117,19 +118,71 @@ async function loadChallengeRoom(){
         );
 
 
+        /*
+         * ========================================
+         * 檢查雙方是否都已完成
+         * ========================================
+         */
+
+        if(
+            Array.isArray(result.players)
+        ){
+
+            const allFinished =
+                result.players.length >= 2 &&
+                result.players.every(
+                    player =>
+                        String(
+                            player.finished
+                        ).toLowerCase()
+                        ===
+                        "true"
+                );
+
+
+            if(allFinished){
+
+                /*
+                 * 停止輪詢
+                 */
+
+                if(refreshTimer){
+
+                    clearInterval(
+                        refreshTimer
+                    );
+
+                    refreshTimer = null;
+
+                }
+
+
+                /*
+                 * 前往 Challenge Result
+                 */
+
+                location.href =
+                    "challenge-result.html?id="
+                    +
+                    encodeURIComponent(
+                        challengeId
+                    );
+
+                return;
+
+            }
+
+        }
 
     }
     catch(error){
-
 
         console.error(
             "Challenge Room 載入失敗",
             error
         );
 
-
     }
-
 
 }
 
