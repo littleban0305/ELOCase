@@ -2189,14 +2189,22 @@ async function initializeCasePage() {
          */
 
         const items =
-            await getCaseItems(
-                caseId
-            );
-
-
-        renderCaseItems(
-            items
-        );
+             await getCaseItems(
+                 caseId
+             );
+         
+         
+         renderCaseItems(
+             items
+         );
+         
+         
+         /*
+          * Challenge Mode
+          * 每 3 秒更新
+          */
+         
+         startChallengeCaseRefresh();
 
 
     } catch (error) {
@@ -2634,5 +2642,226 @@ async function addChallengeItem(data){
 
     }
 
+
+}
+
+/* ========================================
+Challenge Case 即時更新
+======================================== */
+
+let challengeCaseRefreshTimer = null;
+
+
+function startChallengeCaseRefresh(){
+
+    const challengeData =
+        getChallengeDataFromUrl();
+
+
+    if(
+        challengeData.mode !== "challenge" ||
+        !challengeData.challengeId
+    ){
+
+        return;
+
+    }
+
+
+    /*
+     * 避免重複建立 Timer
+     */
+
+    if(
+        challengeCaseRefreshTimer
+    ){
+
+        clearInterval(
+            challengeCaseRefreshTimer
+        );
+
+    }
+
+
+    challengeCaseRefreshTimer =
+        setInterval(
+            refreshChallengeCase,
+            3000
+        );
+
+}
+
+
+async function refreshChallengeCase(){
+
+    /*
+     * 開箱動畫期間不要刷新
+     *
+     * 避免把動畫中的 DOM 蓋掉
+     */
+
+    if(
+        window.ELOCaseOpening
+    ){
+
+        return;
+
+    }
+
+
+    const caseId =
+        getCaseIdFromUrl();
+
+
+    if(!caseId){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+         * 更新箱子資料
+         */
+
+        const caseData =
+            await getCase(
+                caseId
+            );
+
+
+        if(
+            caseData
+        ){
+
+            renderCaseImage(
+                caseData
+            );
+
+
+            renderCaseInfo(
+                caseData
+            );
+
+        }
+
+
+        /*
+         * 更新內容物
+         */
+
+        const items =
+            await getCaseItems(
+                caseId
+            );
+
+
+        updateChallengeCaseItems(
+            items
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Challenge Case 即時更新失敗：",
+            error
+        );
+
+    }
+
+}
+
+/* ========================================
+Challenge Case
+只更新內容物卡片
+不重建 Preview
+======================================== */
+
+function updateChallengeCaseItems(items){
+
+    window.currentCaseItems =
+        items || [];
+
+
+    const container =
+        document.querySelector(
+            "#case-items"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    /*
+     * 如果資料沒有變化
+     * 就不用重新建立 DOM
+     */
+
+    const newData =
+        JSON.stringify(
+            items || []
+        );
+
+
+    if(
+        window.lastChallengeCaseItemsData ===
+        newData
+    ){
+
+        return;
+
+    }
+
+
+    window.lastChallengeCaseItemsData =
+        newData;
+
+
+    container.innerHTML = "";
+
+
+    if(
+        !items ||
+        items.length === 0
+    ){
+
+        container.innerHTML = `
+
+            <div class="case-items-loading">
+
+                這個箱子目前沒有內容物。
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    items.forEach(
+        item => {
+
+            const card =
+                createCaseItemCard(
+                    item
+                );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
