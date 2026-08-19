@@ -1022,674 +1022,680 @@ function startCaseWaitingAnimation() {
    API 回來後接管目前位置
 ======================================== */
 
-function playCasePreviewAnimation(
-    result
-) {
-
-    const track =
-        document.querySelector(
-            "#case-preview-track"
-        );
-
-    const status =
-        document.querySelector(
-            "#case-preview-status"
-        );
-
-    const pointer =
-        document.querySelector(
-            ".case-preview-pointer"
-        );
-
-
-    if (!track) {
-        return;
-    }
-
-
-    /*
-     * ====================================
-     * 停止等待動畫
-     * ====================================
-     */
-
-    caseWaitingActive =
-        false;
-
-
-    if (
-        caseWaitingAnimationFrame
-    ) {
-
-        cancelAnimationFrame(
-            caseWaitingAnimationFrame
-        );
-
-        caseWaitingAnimationFrame =
-            null;
-
-    }
-
-
-    /*
-     * ====================================
-     * 中獎物品
-     * ====================================
-     */
-
-    const winningItem =
-        result.item;
-
-
-    if (!winningItem) {
-
-        throw new Error(
-            "開箱結果缺少物品資料"
-        );
-
-    }
-
-
-    /*
-     * ====================================
-     * 取得目前視覺位置
-     * ====================================
-     */
-
-    const currentTransform =
-        window.getComputedStyle(
-            track
-        ).transform;
-
-
-    let currentX = 0;
-
-
-    if (
-        currentTransform &&
-        currentTransform !== "none"
-    ) {
-
-        const matrix =
-            new DOMMatrix(
-                currentTransform
-            );
-
-        currentX =
-            matrix.m41;
-
-    }
-
-
-    /*
-     * ====================================
-     * 固定目前位置
-     * ====================================
-     */
-
-    track.style.transition =
-        "none";
-
-
-    track.style.transform =
-        `translateX(${currentX}px)`;
-
-
-    /*
-     * ====================================
-     * 取得箱子內容物
-     * ====================================
-     */
-
-    const sourceItems =
-        window.currentCaseItems || [];
-
-
-    if (
-        sourceItems.length === 0
-    ) {
-
-        throw new Error(
-            "箱子沒有內容物"
-        );
-
-    }
-
-
-    /*
-     * ====================================
-     * 建立正式動畫物品
-     *
-     * 前面：
-     * 24 個隨機物品
-     *
-     * 中間：
-     * 真正中獎物品
-     *
-     * 後面：
-     * 6 個隨機物品
-     * ====================================
-     */
-
-    const animationItems = [];
-
-
-    for (
-        let i = 0;
-        i < 24;
-        i++
-    ) {
-
-        const randomItem =
-            sourceItems[
-                Math.floor(
-                    Math.random() *
-                    sourceItems.length
-                )
-            ];
-
-        animationItems.push(
-            randomItem
-        );
-
-    }
-
-
-    animationItems.push(
-        winningItem
-    );
-
-
-    for (
-        let i = 0;
-        i < 6;
-        i++
-    ) {
-
-        const randomItem =
-            sourceItems[
-                Math.floor(
-                    Math.random() *
-                    sourceItems.length
-                )
-            ];
-
-        animationItems.push(
-            randomItem
-        );
-
-    }
-
-
-    /*
-     * ====================================
-     * 建立正式動畫卡片
-     * ====================================
-     */
-
-    animationItems.forEach(
-        item => {
-
-            const element =
-                document.createElement(
-                    "div"
-                );
-
-
-            element.className =
-                "case-preview-item " +
-                getRarityClass(
-                    item.rarity
-                );
-
-
-            element.innerHTML = `
-
-                <div
-                    class="case-preview-item-image"
-                >
-
-                    ${
-                        item.image
-                            ? `
-
-                                <img
-                                    src="${escapeHtml(
-                                        item.image
-                                    )}"
-                                    alt=""
-                                    onerror="
-                                        this.style.display='none';
-                                    "
-                                >
-
-                            `
-                            : `
-
-                                <div
-                                    class="case-item-blur"
-                                >
-
-                                    <span>
-                                        ${escapeHtml(
-                                            item.name ||
-                                            "未知物品"
-                                        )}
-                                    </span>
-
-                                </div>
-
-                            `
-                    }
-
-                </div>
-
-
-                <div
-                    class="case-preview-item-name"
-                >
-
-                    ${escapeHtml(
-                        item.name ||
-                        "未命名物品"
-                    )}
-
-                </div>
-
-            `;
-
-
-            track.appendChild(
-                element
-            );
+function playCasePreviewAnimation(result) {
+
+    return new Promise(
+        resolve => {
+
+            const track =
+                 document.querySelector(
+                     "#case-preview-track"
+                 );
+         
+             const status =
+                 document.querySelector(
+                     "#case-preview-status"
+                 );
+         
+             const pointer =
+                 document.querySelector(
+                     ".case-preview-pointer"
+                 );
+         
+         
+             if (!track) {
+                 return;
+             }
+         
+         
+             /*
+              * ====================================
+              * 停止等待動畫
+              * ====================================
+              */
+         
+             caseWaitingActive =
+                 false;
+         
+         
+             if (
+                 caseWaitingAnimationFrame
+             ) {
+         
+                 cancelAnimationFrame(
+                     caseWaitingAnimationFrame
+                 );
+         
+                 caseWaitingAnimationFrame =
+                     null;
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 中獎物品
+              * ====================================
+              */
+         
+             const winningItem =
+                 result.item;
+         
+         
+             if (!winningItem) {
+         
+                 throw new Error(
+                     "開箱結果缺少物品資料"
+                 );
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 取得目前視覺位置
+              * ====================================
+              */
+         
+             const currentTransform =
+                 window.getComputedStyle(
+                     track
+                 ).transform;
+         
+         
+             let currentX = 0;
+         
+         
+             if (
+                 currentTransform &&
+                 currentTransform !== "none"
+             ) {
+         
+                 const matrix =
+                     new DOMMatrix(
+                         currentTransform
+                     );
+         
+                 currentX =
+                     matrix.m41;
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 固定目前位置
+              * ====================================
+              */
+         
+             track.style.transition =
+                 "none";
+         
+         
+             track.style.transform =
+                 `translateX(${currentX}px)`;
+         
+         
+             /*
+              * ====================================
+              * 取得箱子內容物
+              * ====================================
+              */
+         
+             const sourceItems =
+                 window.currentCaseItems || [];
+         
+         
+             if (
+                 sourceItems.length === 0
+             ) {
+         
+                 throw new Error(
+                     "箱子沒有內容物"
+                 );
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 建立正式動畫物品
+              *
+              * 前面：
+              * 24 個隨機物品
+              *
+              * 中間：
+              * 真正中獎物品
+              *
+              * 後面：
+              * 6 個隨機物品
+              * ====================================
+              */
+         
+             const animationItems = [];
+         
+         
+             for (
+                 let i = 0;
+                 i < 24;
+                 i++
+             ) {
+         
+                 const randomItem =
+                     sourceItems[
+                         Math.floor(
+                             Math.random() *
+                             sourceItems.length
+                         )
+                     ];
+         
+                 animationItems.push(
+                     randomItem
+                 );
+         
+             }
+         
+         
+             animationItems.push(
+                 winningItem
+             );
+         
+         
+             for (
+                 let i = 0;
+                 i < 6;
+                 i++
+             ) {
+         
+                 const randomItem =
+                     sourceItems[
+                         Math.floor(
+                             Math.random() *
+                             sourceItems.length
+                         )
+                     ];
+         
+                 animationItems.push(
+                     randomItem
+                 );
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 建立正式動畫卡片
+              * ====================================
+              */
+         
+             animationItems.forEach(
+                 item => {
+         
+                     const element =
+                         document.createElement(
+                             "div"
+                         );
+         
+         
+                     element.className =
+                         "case-preview-item " +
+                         getRarityClass(
+                             item.rarity
+                         );
+         
+         
+                     element.innerHTML = `
+         
+                         <div
+                             class="case-preview-item-image"
+                         >
+         
+                             ${
+                                 item.image
+                                     ? `
+         
+                                         <img
+                                             src="${escapeHtml(
+                                                 item.image
+                                             )}"
+                                             alt=""
+                                             onerror="
+                                                 this.style.display='none';
+                                             "
+                                         >
+         
+                                     `
+                                     : `
+         
+                                         <div
+                                             class="case-item-blur"
+                                         >
+         
+                                             <span>
+                                                 ${escapeHtml(
+                                                     item.name ||
+                                                     "未知物品"
+                                                 )}
+                                             </span>
+         
+                                         </div>
+         
+                                     `
+                             }
+         
+                         </div>
+         
+         
+                         <div
+                             class="case-preview-item-name"
+                         >
+         
+                             ${escapeHtml(
+                                 item.name ||
+                                 "未命名物品"
+                             )}
+         
+                         </div>
+         
+                     `;
+         
+         
+                     track.appendChild(
+                         element
+                     );
+         
+                 }
+             );
+         
+         
+             /*
+              * ====================================
+              * 找到中獎物品
+              * ====================================
+              */
+         
+             const itemElements =
+                 track.querySelectorAll(
+                     ".case-preview-item"
+                 );
+         
+         
+             const winningIndex =
+                 itemElements.length - 7;
+         
+         
+             const winningElement =
+                 itemElements[
+                     winningIndex
+                 ];
+         
+         
+             if (!winningElement) {
+         
+                 throw new Error(
+                     "無法定位中獎物品"
+                 );
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 計算目標位置
+              * ====================================
+              */
+         
+             const wrapper =
+                 document.querySelector(
+                     ".case-preview-wrapper"
+                 );
+         
+         
+             if (!wrapper) {
+         
+                 throw new Error(
+                     "找不到開箱預覽區"
+                 );
+         
+             }
+         
+         
+             const wrapperWidth =
+                 wrapper.offsetWidth;
+         
+         
+             const itemWidth =
+                 winningElement.offsetWidth;
+         
+         
+             const itemLeft =
+                 winningElement.offsetLeft;
+         
+         
+             const itemCenter =
+                 itemLeft +
+                 itemWidth / 2;
+         
+         
+             const targetX =
+                 (
+                     wrapperWidth / 2
+                 ) -
+                 itemCenter;
+         
+         
+             /*
+              * ====================================
+              * 起點
+              * ====================================
+              */
+         
+             const startX =
+                 currentX;
+         
+         
+             /*
+              * ====================================
+              * 剩餘距離
+              *
+              * ⚠️ 一定要先宣告 distance
+              * 再使用它
+              * ====================================
+              */
+         
+             const distance =
+                 targetX -
+                 startX;
+         
+         
+             /*
+              * ====================================
+              * 正式動畫時間
+              * ====================================
+              */
+         
+             const animationDuration =
+                3500;
+         
+         
+             /*
+              * ====================================
+              * Debug：動畫基本資料
+              * ====================================
+              */
+         
+             console.log(
+                 "🔥 正式動畫開始 X：",
+                 Math.round(startX)
+             );
+         
+         
+             console.log(
+                 "🔥 正式動畫目標 X：",
+                 Math.round(targetX)
+             );
+         
+         
+             console.log(
+                 "🔥 正式動畫距離：",
+                 Math.round(
+                     Math.abs(distance)
+                 ),
+                 "px"
+             );
+         
+         
+             console.log(
+                 "🔥 正式動畫時間：",
+                 animationDuration,
+                 "ms"
+             );
+         
+         
+             console.log(
+                 "🔥 正式動畫平均速度：",
+                 Math.round(
+                     Math.abs(distance) /
+                     (animationDuration / 1000)
+                 ),
+                 "px/s"
+             );
+         
+         
+             /*
+              * ====================================
+              * 狀態文字
+              * ====================================
+              */
+         
+             if (status) {
+         
+                 status.textContent =
+                     "正在開啟箱子...";
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 最高速度監測
+              *
+              * 只用來 Debug
+              * 不會影響動畫
+              * ====================================
+              */
+         
+             let lastX =
+                 startX;
+         
+             let lastTime =
+                 performance.now();
+         
+             let maxSpeed =
+                 0;
+         
+             let speedMonitorFrame =
+                 null;
+         
+         
+             function measureSpeed(
+                 now
+             ) {
+         
+                 const transform =
+                     window.getComputedStyle(
+                         track
+                     ).transform;
+         
+         
+                 if (
+                     transform &&
+                     transform !== "none"
+                 ) {
+         
+                     const matrix =
+                         new DOMMatrix(
+                             transform
+                         );
+         
+         
+                     const currentX =
+                         matrix.m41;
+         
+         
+                     const deltaTime =
+                         now -
+                         lastTime;
+         
+         
+                     if (
+                         deltaTime > 0
+                     ) {
+         
+                         const currentSpeed =
+                             Math.abs(
+                                 currentX -
+                                 lastX
+                             ) /
+                             (
+                                 deltaTime /
+                                 1000
+                             );
+         
+         
+                         maxSpeed =
+                             Math.max(
+                                 maxSpeed,
+                                 currentSpeed
+                             );
+         
+                     }
+         
+         
+                     lastX =
+                         currentX;
+         
+         
+                     lastTime =
+                         now;
+         
+                 }
+         
+         
+                 if (
+                     now -
+                     animationStartTime <
+                     animationDuration
+                 ) {
+         
+                     speedMonitorFrame =
+                         requestAnimationFrame(
+                             measureSpeed
+                         );
+         
+                 } else {
+         
+                     console.log(
+                         "🔥🔥 正式動畫最高速度：",
+                         Math.round(
+                             maxSpeed
+                         ),
+                         "px/s"
+                     );
+         
+                 }
+         
+             }
+         
+         
+             /*
+              * ====================================
+              * 動畫開始時間
+              * ====================================
+              */
+         
+             const animationStartTime =
+                 performance.now();
+         
+         
+             /*
+              * ====================================
+              * 啟動正式動畫
+              * ====================================
+              */
+         
+             requestAnimationFrame(
+                 () => {
+         
+                     track.style.transition =
+                         `
+                             transform
+                             ${animationDuration}ms
+                             cubic-bezier(
+                                 0.08,
+                                 0.72,
+                                 0.18,
+                                 1
+                             )
+                         `;
+         
+         
+                     track.style.transform =
+                         `translateX(${targetX}px)`;
+         
+         
+                     /*
+                      * 開始測速
+                      */
+         
+                     speedMonitorFrame =
+                         requestAnimationFrame(
+                             measureSpeed
+                         );
+         
+                 }
+             );
+         
+         
+             /*
+              * ====================================
+              * 動畫完成
+              * ====================================
+              */
+         
+             setTimeout(
+                 () => {
+         
+                     /*
+                      * 停止測速
+                      */
+         
+                     if (
+                         speedMonitorFrame
+                     ) {
+         
+                         cancelAnimationFrame(
+                             speedMonitorFrame
+                         );
+         
+                         speedMonitorFrame =
+                             null;
+         
+                     }
+         
+         
+                     /*
+                      * 中獎效果
+                      */
+         
+                     winningElement.classList.add(
+                         "winning-item"
+                     );
+         
+         
+                     if (status) {
+         
+                         status.textContent =
+                             `你獲得了 ${winningItem.name}`;
+         
+                     }
+         
+         
+                     if (pointer) {
+         
+                         pointer.classList.add(
+                             "winning"
+                         );
+         
+                     }
+
+                     resolve();
+         
+                 },
+                 animationDuration
+             );
 
         }
-    );
-
-
-    /*
-     * ====================================
-     * 找到中獎物品
-     * ====================================
-     */
-
-    const itemElements =
-        track.querySelectorAll(
-            ".case-preview-item"
-        );
-
-
-    const winningIndex =
-        itemElements.length - 7;
-
-
-    const winningElement =
-        itemElements[
-            winningIndex
-        ];
-
-
-    if (!winningElement) {
-
-        throw new Error(
-            "無法定位中獎物品"
-        );
-
-    }
-
-
-    /*
-     * ====================================
-     * 計算目標位置
-     * ====================================
-     */
-
-    const wrapper =
-        document.querySelector(
-            ".case-preview-wrapper"
-        );
-
-
-    if (!wrapper) {
-
-        throw new Error(
-            "找不到開箱預覽區"
-        );
-
-    }
-
-
-    const wrapperWidth =
-        wrapper.offsetWidth;
-
-
-    const itemWidth =
-        winningElement.offsetWidth;
-
-
-    const itemLeft =
-        winningElement.offsetLeft;
-
-
-    const itemCenter =
-        itemLeft +
-        itemWidth / 2;
-
-
-    const targetX =
-        (
-            wrapperWidth / 2
-        ) -
-        itemCenter;
-
-
-    /*
-     * ====================================
-     * 起點
-     * ====================================
-     */
-
-    const startX =
-        currentX;
-
-
-    /*
-     * ====================================
-     * 剩餘距離
-     *
-     * ⚠️ 一定要先宣告 distance
-     * 再使用它
-     * ====================================
-     */
-
-    const distance =
-        targetX -
-        startX;
-
-
-    /*
-     * ====================================
-     * 正式動畫時間
-     * ====================================
-     */
-
-    const animationDuration =
-       3500;
-
-
-    /*
-     * ====================================
-     * Debug：動畫基本資料
-     * ====================================
-     */
-
-    console.log(
-        "🔥 正式動畫開始 X：",
-        Math.round(startX)
-    );
-
-
-    console.log(
-        "🔥 正式動畫目標 X：",
-        Math.round(targetX)
-    );
-
-
-    console.log(
-        "🔥 正式動畫距離：",
-        Math.round(
-            Math.abs(distance)
-        ),
-        "px"
-    );
-
-
-    console.log(
-        "🔥 正式動畫時間：",
-        animationDuration,
-        "ms"
-    );
-
-
-    console.log(
-        "🔥 正式動畫平均速度：",
-        Math.round(
-            Math.abs(distance) /
-            (animationDuration / 1000)
-        ),
-        "px/s"
-    );
-
-
-    /*
-     * ====================================
-     * 狀態文字
-     * ====================================
-     */
-
-    if (status) {
-
-        status.textContent =
-            "正在開啟箱子...";
-
-    }
-
-
-    /*
-     * ====================================
-     * 最高速度監測
-     *
-     * 只用來 Debug
-     * 不會影響動畫
-     * ====================================
-     */
-
-    let lastX =
-        startX;
-
-    let lastTime =
-        performance.now();
-
-    let maxSpeed =
-        0;
-
-    let speedMonitorFrame =
-        null;
-
-
-    function measureSpeed(
-        now
-    ) {
-
-        const transform =
-            window.getComputedStyle(
-                track
-            ).transform;
-
-
-        if (
-            transform &&
-            transform !== "none"
-        ) {
-
-            const matrix =
-                new DOMMatrix(
-                    transform
-                );
-
-
-            const currentX =
-                matrix.m41;
-
-
-            const deltaTime =
-                now -
-                lastTime;
-
-
-            if (
-                deltaTime > 0
-            ) {
-
-                const currentSpeed =
-                    Math.abs(
-                        currentX -
-                        lastX
-                    ) /
-                    (
-                        deltaTime /
-                        1000
-                    );
-
-
-                maxSpeed =
-                    Math.max(
-                        maxSpeed,
-                        currentSpeed
-                    );
-
-            }
-
-
-            lastX =
-                currentX;
-
-
-            lastTime =
-                now;
-
-        }
-
-
-        if (
-            now -
-            animationStartTime <
-            animationDuration
-        ) {
-
-            speedMonitorFrame =
-                requestAnimationFrame(
-                    measureSpeed
-                );
-
-        } else {
-
-            console.log(
-                "🔥🔥 正式動畫最高速度：",
-                Math.round(
-                    maxSpeed
-                ),
-                "px/s"
-            );
-
-        }
-
-    }
-
-
-    /*
-     * ====================================
-     * 動畫開始時間
-     * ====================================
-     */
-
-    const animationStartTime =
-        performance.now();
-
-
-    /*
-     * ====================================
-     * 啟動正式動畫
-     * ====================================
-     */
-
-    requestAnimationFrame(
-        () => {
-
-            track.style.transition =
-                `
-                    transform
-                    ${animationDuration}ms
-                    cubic-bezier(
-                        0.08,
-                        0.72,
-                        0.18,
-                        1
-                    )
-                `;
-
-
-            track.style.transform =
-                `translateX(${targetX}px)`;
-
-
-            /*
-             * 開始測速
-             */
-
-            speedMonitorFrame =
-                requestAnimationFrame(
-                    measureSpeed
-                );
-
-        }
-    );
-
-
-    /*
-     * ====================================
-     * 動畫完成
-     * ====================================
-     */
-
-    setTimeout(
-        () => {
-
-            /*
-             * 停止測速
-             */
-
-            if (
-                speedMonitorFrame
-            ) {
-
-                cancelAnimationFrame(
-                    speedMonitorFrame
-                );
-
-                speedMonitorFrame =
-                    null;
-
-            }
-
-
-            /*
-             * 中獎效果
-             */
-
-            winningElement.classList.add(
-                "winning-item"
-            );
-
-
-            if (status) {
-
-                status.textContent =
-                    `你獲得了 ${winningItem.name}`;
-
-            }
-
-
-            if (pointer) {
-
-                pointer.classList.add(
-                    "winning"
-                );
-
-            }
-
-        },
-        animationDuration
     );
 
 }
@@ -1982,9 +1988,9 @@ function initializeOpenCaseButton() {
                
                }
                
-                playCasePreviewAnimation(
-                    result
-                );
+                await playCasePreviewAnimation(
+                   result
+               );
 
                if(
                    challengeData.mode === "challenge"
@@ -2539,11 +2545,6 @@ function createReturnChallengeButton(
     ){
         return;
     }
-
-
-    container.appendChild(
-       button
-   );
 
 
     const button =
