@@ -1,4 +1,21 @@
+/* ========================================
+ELOCase Challenge Result
+======================================== */
+
+
 let challengeId = null;
+
+let currentUser = null;
+
+let myPlayer = null;
+
+let opponentPlayer = null;
+
+
+
+/* ========================================
+初始化
+======================================== */
 
 
 document.addEventListener(
@@ -6,49 +23,37 @@ document.addEventListener(
 async()=>{
 
 
-const params =
-new URLSearchParams(
-location.search
-);
-
-
-challengeId =
-params.get("id");
+    currentUser =
+        await verifySession();
 
 
 
-if(!challengeId){
-
-alert(
-"缺少 Challenge ID"
-);
-
-return;
-
-}
+    const params =
+        new URLSearchParams(
+            location.search
+        );
 
 
-
-await loadResult();
+    challengeId =
+        params.get(
+            "id"
+        );
 
 
 
-const back =
-document.getElementById(
-"back-challenge-button"
-);
+    if(!challengeId){
+
+        alert(
+            "缺少 Challenge ID"
+        );
+
+        return;
+
+    }
 
 
-if(back){
 
-back.onclick=()=>{
-
-location.href =
-"challenge.html";
-
-};
-
-}
+    await loadChallengeResult();
 
 
 
@@ -58,185 +63,347 @@ location.href =
 
 
 
-async function loadResult(){
+
+/* ========================================
+載入結果
+======================================== */
+
+
+async function loadChallengeResult(){
+
 
 try{
 
 
-const result =
-await getChallenge(
-challengeId
-);
+    const result =
+        await getChallenge(
+            challengeId
+        );
 
 
 
-if(
-!result ||
-!result.players
-){
+    if(
+        !result ||
+        !result.players
+    ){
 
-return;
+        throw new Error(
+            "找不到挑戰資料"
+        );
 
-}
+    }
 
 
 
-renderResult(
-result.players
-);
+    processPlayers(
+        result.players
+    );
+
+
+
+    renderResult();
 
 
 
 }
 catch(error){
 
-console.error(
-"Result 載入失敗",
-error
-);
 
-}
-
-}
+    console.error(
+        "Result 載入失敗",
+        error
+    );
 
 
+    alert(
+        error.message
+    );
 
-
-
-
-
-function renderResult(players){
-
-
-if(players.length < 2){
-
-return;
 
 }
 
 
-const playerA =
-players[0];
-
-
-const playerB =
-players[1];
-
-
-
-const totalA =
-Number(playerA.challengeEC || 0)
-+
-Number(playerA.finalValue || 0);
-
-
-
-const totalB =
-Number(playerB.challengeEC || 0)
-+
-Number(playerB.finalValue || 0);
+}
 
 
 
 
-setText(
-"player-a-name",
-playerA.displayName || playerA.userId
-);
-
-
-setText(
-"player-b-name",
-playerB.displayName || playerB.userId
-);
-
-
-
-setText(
-"player-a-total",
-formatNumber(totalA)
-);
-
-
-setText(
-"player-b-total",
-formatNumber(totalB)
-);
-
-
-
-setText(
-"player-a-items",
-formatNumber(playerA.finalValue)
-);
-
-
-setText(
-"player-b-items",
-formatNumber(playerB.finalValue)
-);
-
-
-
-setText(
-"player-a-coin",
-formatNumber(playerA.challengeEC)
-);
-
-
-setText(
-"player-b-coin",
-formatNumber(playerB.challengeEC)
-);
 
 
 
 
-const winner =
-document.getElementById(
-"winner-text"
-);
+/* ========================================
+玩家判斷
+======================================== */
+
+
+function processPlayers(players){
+
+
+    myPlayer =
+        null;
+
+
+    opponentPlayer =
+        null;
 
 
 
-if(totalA > totalB){
+    players.forEach(
+        player=>{
 
-winner.innerText =
-"🎉 玩家 A 獲勝！";
+
+            if(
+
+                String(
+                    player.userId
+                )
+                ===
+                String(
+                    currentUser.userId
+                )
+
+            ){
+
+
+                myPlayer =
+                    player;
+
+
+            }
+            else{
+
+
+                opponentPlayer =
+                    player;
+
+
+            }
+
+
+        }
+    );
+
+
 
 }
-else if(totalB > totalA){
 
-winner.innerText =
-"🎉 玩家 B 獲勝！";
+
+
+
+
+
+
+/* ========================================
+渲染結果
+======================================== */
+
+
+function renderResult(){
+
+
+
+if(
+    !myPlayer ||
+    !opponentPlayer
+){
+
+    return;
+
+}
+
+
+
+
+const myValue =
+    Number(
+        myPlayer.finalValue
+    )
+    ||
+    0;
+
+
+
+const opponentValue =
+    Number(
+        opponentPlayer.finalValue
+    )
+    ||
+    0;
+
+
+
+let resultText =
+    "";
+
+
+
+
+if(
+    myValue >
+    opponentValue
+){
+
+    resultText =
+        "🎉 恭喜獲勝！";
+
+
+}
+else if(
+    myValue <
+    opponentValue
+){
+
+    resultText =
+        "😢 挑戰失敗";
+
 
 }
 else{
 
-winner.innerText =
-"🤝 平手！";
+
+    resultText =
+        "🤝 平局";
+
 
 }
 
 
+
+
+
+setText(
+    "result-title",
+    resultText
+);
+
+
+
+
+setText(
+    "result-my-name",
+    myPlayer.displayName ||
+    "玩家"
+);
+
+
+
+setText(
+    "result-opponent-name",
+    opponentPlayer.displayName ||
+    "對手"
+);
+
+
+
+
+
+setText(
+    "result-my-value",
+    formatNumber(
+        myValue
+    )
+);
+
+
+
+
+setText(
+    "result-opponent-value",
+    formatNumber(
+        opponentValue
+    )
+);
+
+
+
+
+
+const myCard =
+    document.querySelector(
+        ".player-a"
+    );
+
+
+const opponentCard =
+    document.querySelector(
+        ".player-b"
+    );
+
+
+
+
+
+if(
+    myValue >
+    opponentValue
+){
+
+    myCard?.classList.add(
+        "winner-player"
+    );
+
+    opponentCard?.classList.add(
+        "loser-player"
+    );
+
+}
+
+
+else if(
+    myValue <
+    opponentValue
+){
+
+
+    opponentCard?.classList.add(
+        "winner-player"
+    );
+
+
+    myCard?.classList.add(
+        "loser-player"
+    );
+
+
+}
+
+
+
 }
 
 
 
 
 
-function setText(id,value){
+
+
+
+
+/* ========================================
+工具
+======================================== */
+
+
+function setText(
+id,
+value
+){
+
 
 const el =
-document.getElementById(id);
+    document.getElementById(
+        id
+    );
 
 
 if(el){
 
-el.innerText =
-value;
+    el.innerText =
+        value;
 
 }
+
 
 }
 
@@ -244,14 +411,11 @@ value;
 
 function formatNumber(value){
 
+
 return Number(
-value || 0
+    value || 0
 )
-.toLocaleString(
-undefined,
-{
-maximumFractionDigits:2
-}
-);
+.toLocaleString();
+
 
 }
