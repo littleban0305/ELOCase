@@ -771,6 +771,11 @@ async function finishChallenge(){
 
             });
 
+       console.log(
+          "🔥 finishChallenge API 回傳：",
+          result
+      );
+
 
         /*
          * API 失敗
