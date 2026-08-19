@@ -1021,12 +1021,9 @@
 
 
 
-.challenge-actions button{
+.challenge-open-actions button{
 
-
-    width:
-    100%;
-
+    width:100%;
 
 }
 
@@ -1274,5 +1271,17 @@
 
     font-weight:
     700;
+
+}
+
+.challenge-open-actions {
+
+    margin-top:25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
 
 }
