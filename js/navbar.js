@@ -131,7 +131,7 @@ class="nav-link">
 
 <span class="balance-label">
 
-ELO
+ELOCoin
 
 </span>
 
