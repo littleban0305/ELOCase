@@ -637,3 +637,14 @@ Result Title
 
 
 }
+
+.loser-player{
+
+    opacity:
+    .45;
+
+
+    transform:
+    scale(.97);
+
+}
