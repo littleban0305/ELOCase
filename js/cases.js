@@ -616,3 +616,39 @@ async function refreshChallengeCasesNavbar(){
     }
 
 }
+
+/* ========================================
+通用文字更新
+======================================== */
+
+function setText(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.innerText =
+            value;
+
+    }
+
+}
+
+/* ========================================
+數字格式
+======================================== */
+
+function formatNumber(value){
+
+    return Number(
+        value || 0
+    ).toLocaleString();
+
+}
