@@ -260,7 +260,9 @@ function removeApiCache(
 
 async function sendApiRequest(
     action,
-    parameters = {}
+    parameters = {},
+    options = {}
+
 ) {
 
     const maxAttempts = 3;
@@ -275,13 +277,14 @@ async function sendApiRequest(
      */
 
     if (
+        !options.noLoading &&
         !window.ELOCaseOpening &&
         window.ELOLoading &&
         typeof window.ELOLoading.start === "function"
     ) {
-    
+
         window.ELOLoading.start();
-    
+
     }
 
 
@@ -460,6 +463,7 @@ async function sendApiRequest(
          */
 
         if (
+            !options.noLoading &&
             !window.ELOCaseOpening &&
             window.ELOLoading &&
             typeof window.ELOLoading.finish === "function"
@@ -1958,13 +1962,13 @@ async function getChallenge(
 ){
 
     return await sendApiRequest(
-
         "getChallenge",
-
         {
             challengeId
+        },
+        {
+            noLoading:true
         }
-
     );
 
 }
