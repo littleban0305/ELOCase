@@ -57,6 +57,8 @@ document.addEventListener(
 
             initChallengeBack();
 
+            startChallengeCasesRefresh();
+
 
             /*
              * ====================================
@@ -415,6 +417,203 @@ function initChallengeBack(){
 
         button.style.display =
             "inline-flex";
+
+    }
+
+}
+
+/* ========================================
+Challenge Cases Navbar 即時更新
+======================================== */
+
+let challengeCasesRefreshTimer = null;
+
+
+function startChallengeCasesRefresh(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const mode =
+        params.get(
+            "mode"
+        );
+
+
+    const challengeId =
+        params.get(
+            "challengeId"
+        );
+
+
+    if(
+        mode !== "challenge" ||
+        !challengeId
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        challengeCasesRefreshTimer
+    ){
+
+        clearInterval(
+            challengeCasesRefreshTimer
+        );
+
+    }
+
+
+
+    challengeCasesRefreshTimer =
+        setInterval(
+            refreshChallengeCasesNavbar,
+            3000
+        );
+
+
+}
+
+async function refreshChallengeCasesNavbar(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const challengeId =
+        params.get(
+            "challengeId"
+        );
+
+
+    if(!challengeId){
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        const result =
+            await getChallenge(
+                challengeId
+            );
+
+
+
+        if(
+            !result ||
+            !result.players
+        ){
+
+            return;
+
+        }
+
+
+
+        const user =
+            await verifySession();
+
+
+
+        let me = null;
+
+        let opponent = null;
+
+
+
+        result.players.forEach(
+            player=>{
+
+
+                if(
+                    String(
+                        player.userId
+                    )
+                    ===
+                    String(
+                        user.userId
+                    )
+                ){
+
+                    me =
+                        player;
+
+                }
+                else{
+
+                    opponent =
+                        player;
+
+                }
+
+
+            }
+        );
+
+
+
+        if(me){
+
+            setText(
+                "navbar-my-coin",
+                formatNumber(
+                    me.challengeEC
+                )
+            );
+
+
+            setText(
+                "navbar-my-value",
+                formatNumber(
+                    me.finalValue
+                )
+            );
+
+        }
+
+
+
+        if(opponent){
+
+            setText(
+                "navbar-opponent-coin",
+                formatNumber(
+                    opponent.challengeEC
+                )
+            );
+
+
+            setText(
+                "navbar-opponent-value",
+                formatNumber(
+                    opponent.finalValue
+                )
+            );
+
+        }
+
+
+
+    }
+    catch(error){
+
+        console.warn(
+            "Challenge Navbar 更新失敗",
+            error
+        );
 
     }
 
