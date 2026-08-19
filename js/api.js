@@ -2288,3 +2288,232 @@ async function openChallengeCase(
     return result.data;
 
 }
+
+/* ========================================
+ * Challenge Mode 即時狀態更新
+ * ======================================== */
+
+let challengeStatusTimer = null;
+
+async function startChallengeStatusRefresh(
+    challengeId
+){
+
+    if(!challengeId){
+
+        return;
+
+    }
+
+
+    /*
+     * 防止同一頁重複建立 Timer
+     */
+
+    stopChallengeStatusRefresh();
+
+
+    /*
+     * 立即更新一次
+     */
+
+    await refreshChallengeStatus(
+        challengeId
+    );
+
+
+    /*
+     * 每 3 秒更新
+     */
+
+    challengeStatusTimer =
+        setInterval(
+            ()=>{
+                
+                refreshChallengeStatus(
+                    challengeId
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+function stopChallengeStatusRefresh(){
+
+    if(
+        challengeStatusTimer
+    ){
+
+        clearInterval(
+            challengeStatusTimer
+        );
+
+        challengeStatusTimer =
+            null;
+
+    }
+
+}
+
+
+async function refreshChallengeStatus(
+    challengeId
+){
+
+    try{
+
+        const result =
+            await getChallenge(
+                challengeId
+            );
+
+
+        if(
+            !result ||
+            !result.players
+        ){
+
+            return;
+
+        }
+
+
+        /*
+         * 目前登入玩家
+         */
+
+        const user =
+            getSavedUser();
+
+
+        if(
+            !user ||
+            !user.userId
+        ){
+
+            return;
+
+        }
+
+
+        let myPlayer =
+            null;
+
+        let opponentPlayer =
+            null;
+
+
+        result.players.forEach(
+            player=>{
+
+                if(
+                    String(
+                        player.userId
+                    )
+                    ===
+                    String(
+                        user.userId
+                    )
+                ){
+
+                    myPlayer =
+                        player;
+
+                }
+                else{
+
+                    opponentPlayer =
+                        player;
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ====================================
+         * 我的資料
+         * ====================================
+         */
+
+        if(myPlayer){
+
+            setChallengeStatusText(
+                "navbar-my-coin",
+                formatCurrency(
+                    myPlayer.challengeEC
+                )
+            );
+
+
+            setChallengeStatusText(
+                "navbar-my-value",
+                formatCurrency(
+                    myPlayer.finalValue
+                )
+            );
+
+        }
+
+
+        /*
+         * ====================================
+         * 對手資料
+         * ====================================
+         */
+
+        if(opponentPlayer){
+
+            setChallengeStatusText(
+                "navbar-opponent-coin",
+                formatCurrency(
+                    opponentPlayer.challengeEC
+                )
+            );
+
+
+            setChallengeStatusText(
+                "navbar-opponent-value",
+                formatCurrency(
+                    opponentPlayer.finalValue
+                )
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "⚠️ Challenge Status 更新失敗：",
+            error.message
+        );
+
+    }
+
+}
+
+
+function setChallengeStatusText(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.textContent =
+            value;
+
+    }
+
+}
