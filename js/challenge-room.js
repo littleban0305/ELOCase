@@ -758,48 +758,32 @@ async function finishChallenge(){
          */
 
         const result =
-            await sendChallengePost({
-
-                action:
-                    "finishChallenge",
-
-                challengeId:
-                    challengeId,
-
-                sessionToken:
-                    getSessionToken()
-
-            });
-
-       console.log(
-          "🔥 finishChallenge API 回傳：",
-          result
-      );
-
-
-        /*
-         * API 失敗
-         */
-
-        if(
-            !result ||
-            !result.success
-        ){
-
-            throw new Error(
-                result?.error ||
-                "結束挑戰失敗"
-            );
-
-        }
-
-
-        /*
-         * 取得結果
-         */
-
-        const data =
-            result.data;
+             await sendChallengePost({
+         
+                 action:
+                     "finishChallenge",
+         
+                 challengeId:
+                     challengeId,
+         
+                 sessionToken:
+                     getSessionToken()
+         
+             });
+         
+         
+         console.log(
+             "🔥 finishChallenge API 回傳：",
+             result
+         );
+         
+         
+         /*
+          * 取得結果
+          */
+         
+         const data =
+             result;
 
 
         /*
