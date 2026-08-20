@@ -325,121 +325,115 @@ renderOpponentPlayer();
 
 function renderMyPlayer(){
 
-if(!myPlayer){
+    if(!myPlayer){
 
-    return;
+        return;
 
-}
-
-const finishButton =
-      document.getElementById(
-         "finish-challenge-button"
-      );
-   
-   
-if(finishButton){
-   
-      if(
-         String(
-            myPlayer.finished
-         ).toLowerCase()
-         ===
-         "true"
-      ){
-   
-         finishButton.disabled =
-            true;
-   
-         finishButton.innerText =
-            "已結束挑戰";
-   
-      }
-      else{
-   
-         finishButton.disabled =
-            false;
-   
-         finishButton.innerText =
-            "結束挑戰";
-   
-      }
-   
-}
+    }
 
 
-setText(
-"my-player-name",
-myPlayer.displayName ||
-"我的挑戰"
-);
+    const finishButton =
+        document.getElementById(
+            "finish-challenge-button"
+        );
 
 
+    if(finishButton){
 
-setText(
-"my-player-coin",
-formatNumber(
-myPlayer.challengeEC
-)
-);
+        if(
+            String(
+                myPlayer.finished
+            ).toLowerCase()
+            ===
+            "true"
+        ){
+
+            finishButton.disabled =
+                true;
+
+            finishButton.innerText =
+                "已結束挑戰";
+
+        }
+        else{
+
+            finishButton.disabled =
+                false;
+
+            finishButton.innerText =
+                "結束挑戰";
+
+        }
+
+    }
 
 
-
-setText(
-"my-player-value",
-formatNumber(
-myPlayer.finalValue
-)
-);
-
-
-
-
-
-setText(
-    "navbar-my-coin",
-    formatNumber(
-        myPlayer.challengeEC
-    )
-);
-
-
-const myItemValue =
-    Array.isArray(
-        myPlayer.items
-    )
-        ? myPlayer.items.reduce(
-            (
-                total,
-                item
-            ) => {
-
-                return total +
-                    (
-                        Number(
-                            item.value
-                        ) || 0
-                    );
-
-            },
-            0
+    const myItemValue =
+        Array.isArray(
+            myPlayer.items
         )
-        : 0;
+            ? myPlayer.items.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    return total +
+                        (
+                            Number(
+                                item.value
+                            ) || 0
+                        );
+
+                },
+                0
+            )
+            : 0;
 
 
-setText(
-    "navbar-my-value",
-    formatNumber(
-        myItemValue
-    )
-);
+    setText(
+        "my-player-name",
+        myPlayer.displayName ||
+        "我的挑戰"
+    );
 
 
+    setText(
+        "my-player-coin",
+        formatNumber(
+            myPlayer.challengeEC
+        )
+    );
 
-renderItems(
-"my-items",
-myPlayer.items
-);
 
+    setText(
+        "my-player-value",
+        formatNumber(
+            myItemValue
+        )
+    );
+
+
+    setText(
+        "navbar-my-coin",
+        formatNumber(
+            myPlayer.challengeEC
+        )
+    );
+
+
+    setText(
+        "navbar-my-value",
+        formatNumber(
+            myItemValue
+        )
+    );
+
+
+    renderItems(
+        "my-items",
+        myPlayer.items
+    );
 
 }
 
