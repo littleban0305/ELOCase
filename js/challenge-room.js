@@ -243,14 +243,6 @@ function processPlayers(players){
 
 }
 
-
-
-
-
-
-
-
-
 /* ========================================
    渲染
 ======================================== */
@@ -310,13 +302,6 @@ renderOpponentPlayer();
 
 
 }
-
-
-
-
-
-
-
 
 /* ========================================
    我的資料
@@ -437,14 +422,6 @@ function renderMyPlayer(){
 
 }
 
-
-
-
-
-
-
-
-
 /* ========================================
    對手資料
 ======================================== */
@@ -452,100 +429,81 @@ function renderMyPlayer(){
 
 function renderOpponentPlayer(){
 
+    if(!opponentPlayer){
 
-if(!opponentPlayer){
+        return;
 
-    return;
-
-}
-
+    }
 
 
-
-setText(
-"opponent-name",
-opponentPlayer.displayName ||
-"等待對手"
-);
-
-
-
-setText(
-"opponent-coin",
-formatNumber(
-opponentPlayer.challengeEC
-)
-);
-
-
-
-setText(
-"opponent-value",
-formatNumber(
-opponentPlayer.finalValue
-)
-);
-
-
-
-
-
-setText(
-    "navbar-opponent-coin",
-    formatNumber(
-        opponentPlayer.challengeEC
-    )
-);
-
-
-const opponentItemValue =
-    Array.isArray(
-        opponentPlayer.items
-    )
-        ? opponentPlayer.items.reduce(
-            (
-                total,
-                item
-            ) => {
-
-                return total +
-                    (
-                        Number(
-                            item.value
-                        ) || 0
-                    );
-
-            },
-            0
+    const opponentItemValue =
+        Array.isArray(
+            opponentPlayer.items
         )
-        : 0;
+            ? opponentPlayer.items.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    return total +
+                        (
+                            Number(
+                                item.value
+                            ) || 0
+                            );
+
+                },
+                0
+            )
+            : 0;
 
 
-setText(
-    "navbar-opponent-value",
-    formatNumber(
-        opponentItemValue
-    )
-);
+    setText(
+        "opponent-name",
+        opponentPlayer.displayName ||
+        "等待對手"
+    );
 
 
+    setText(
+        "opponent-coin",
+        formatNumber(
+            opponentPlayer.challengeEC
+        )
+    );
 
-renderItems(
-"opponent-items",
-opponentPlayer.items
-);
 
+    setText(
+        "opponent-value",
+        formatNumber(
+            opponentItemValue
+        )
+    );
+
+
+    setText(
+        "navbar-opponent-coin",
+        formatNumber(
+            opponentPlayer.challengeEC
+        )
+    );
+
+
+    setText(
+        "navbar-opponent-value",
+        formatNumber(
+            opponentItemValue
+        )
+    );
+
+
+    renderItems(
+        "opponent-items",
+        opponentPlayer.items
+    );
 
 }
-
-
-
-
-
-
-
-
-
 
 /* ========================================
    物品列表
