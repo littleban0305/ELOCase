@@ -391,6 +391,23 @@ function renderCaseItems(items) {
     window.currentCaseItems =
         items || [];
 
+    /*
+     * Challenge Mode：
+     * 記住目前內容物資料
+     * 避免第一次背景更新時誤判為「資料變更」
+     */
+    window.lastChallengeCaseItemsData =
+        JSON.stringify(
+            items || []
+        );
+
+    renderCasePreview(
+        window.currentCaseItems
+    );
+
+    window.currentCaseItems =
+        items || [];
+
 
     renderCasePreview(
         window.currentCaseItems
@@ -2695,33 +2712,91 @@ function startChallengeCaseRefresh(){
 
 async function refreshChallengeCase(){
 
+    /*
+     * ====================================
+     * 開箱中：
+     * 不執行背景更新
+     * ====================================
+     */
+
     if(window.ELOCaseOpening){
+
         return;
+
     }
 
-    const challengeData =
-        getChallengeDataFromUrl();
 
-    if(
-        challengeData.mode !== "challenge" ||
-        !challengeData.challengeId
-    ){
+    /*
+     * ====================================
+     * 防止背景更新重複執行
+     *
+     * 如果上一輪 API 還沒完成
+     * 下一輪直接跳過
+     * ====================================
+     */
+
+    if(challengeCaseRefreshRunning){
+
         return;
+
     }
 
-    const caseId =
-        getCaseIdFromUrl();
 
-    if(!caseId){
-        return;
-    }
+    /*
+     * ====================================
+     * 鎖定背景更新
+     * ====================================
+     */
+
+    challengeCaseRefreshRunning =
+        true;
+
 
     try{
 
         /*
          * ====================================
+         * Challenge Mode 判斷
+         * ====================================
+         */
+
+        const challengeData =
+            getChallengeDataFromUrl();
+
+
+        if(
+            challengeData.mode !== "challenge" ||
+            !challengeData.challengeId
+        ){
+
+            return;
+
+        }
+
+
+        /*
+         * ====================================
+         * 取得 Case ID
+         * ====================================
+         */
+
+        const caseId =
+            getCaseIdFromUrl();
+
+
+        if(!caseId){
+
+            return;
+
+        }
+
+
+        /*
+         * ====================================
          * 只在背景取得最新 Challenge
+         *
          * 不碰開箱動畫
+         * 不重設 Preview
          * ====================================
          */
 
@@ -2729,6 +2804,13 @@ async function refreshChallengeCase(){
             await getChallenge(
                 challengeData.challengeId
             );
+
+
+        /*
+         * ====================================
+         * 更新右上角雙方玩家資料
+         * ====================================
+         */
 
         if(
             challengeResult &&
@@ -2753,27 +2835,40 @@ async function refreshChallengeCase(){
                 caseId
             );
 
+
         if(caseData){
 
             /*
+             * ====================================
              * 只有資料真的變了才更新
+             * ====================================
              */
 
-            if(
-                JSON.stringify(
-                    window.currentChallengeCaseData
-                ) !==
+            const newCaseData =
                 JSON.stringify(
                     caseData
-                )
+                );
+
+
+            const oldCaseData =
+                JSON.stringify(
+                    window.currentChallengeCaseData
+                );
+
+
+            if(
+                newCaseData !==
+                oldCaseData
             ){
 
                 window.currentChallengeCaseData =
                     caseData;
 
+
                 renderCaseImage(
                     caseData
                 );
+
 
                 renderCaseInfo(
                     caseData
@@ -2796,6 +2891,17 @@ async function refreshChallengeCase(){
             );
 
 
+        /*
+         * ====================================
+         * 更新內容物
+         *
+         * updateChallengeCaseItems()
+         * 內部會自行判斷資料是否真的變更
+         *
+         * 不會重新建立 Preview
+         * ====================================
+         */
+
         updateChallengeCaseItems(
             items
         );
@@ -2808,6 +2914,21 @@ async function refreshChallengeCase(){
             "Challenge Case 背景更新失敗：",
             error
         );
+
+
+    }
+    finally{
+
+        /*
+         * ====================================
+         * 解鎖背景更新
+         *
+         * 不論成功或失敗都一定會執行
+         * ====================================
+         */
+
+        challengeCaseRefreshRunning =
+            false;
 
     }
 
