@@ -203,207 +203,467 @@ function processPlayers(players){
 
 function renderResult(){
 
+    if(
+        !myPlayer ||
+        !opponentPlayer
+    ){
+
+        return;
+
+    }
 
 
-if(
-    !myPlayer ||
-    !opponentPlayer
-){
-
-    return;
-
-}
+    const myValue =
+        Number(
+            myPlayer.finalValue
+        ) || 0;
 
 
+    const opponentValue =
+        Number(
+            opponentPlayer.finalValue
+        ) || 0;
 
 
-const myValue =
-    Number(
-        myPlayer.finalValue
-    )
-    ||
-    0;
+    /*
+     * ========================================
+     * 基本資料
+     * ========================================
+     */
 
-
-
-const opponentValue =
-    Number(
-        opponentPlayer.finalValue
-    )
-    ||
-    0;
-
-
-
-let resultText =
-    "";
-
-
-
-
-if(
-    myValue >
-    opponentValue
-){
-
-    resultText =
-        "🎉 恭喜獲勝！";
-
-
-}
-else if(
-    myValue <
-    opponentValue
-){
-
-    resultText =
-        "😢 挑戰失敗";
-
-
-}
-else{
-
-
-    resultText =
-        "🤝 平局";
-
-
-}
-
-
-
-
-
-setText(
-    "winner-text",
-    resultText
-);
-
-setText(
-    "result-title",
-    "挑戰結果"
-);
-
-
-setText(
-    "result-my-name",
-    myPlayer.displayName ||
-    "玩家"
-);
-
-
-
-setText(
-    "result-opponent-name",
-    opponentPlayer.displayName ||
-    "對手"
-);
-
-
-
-
-
-setText(
-    "result-my-value",
-    formatNumber(
-        myValue
-    )
-);
-
-
-
-
-setText(
-    "result-opponent-value",
-    formatNumber(
-        opponentValue
-    )
-);
-
-
-setText(
-    "player-a-items",
-    formatNumber(
-        myValue
-    )
-);
-
-
-setText(
-    "player-a-coin",
-    formatNumber(
-        myPlayer.challengeEC
-    )
-);
-
-
-
-setText(
-    "player-b-items",
-    formatNumber(
-        opponentValue
-    )
-);
-
-
-setText(
-    "player-b-coin",
-    formatNumber(
-        opponentPlayer.challengeEC
-    )
-);
-
-
-const myCard =
-    document.querySelector(
-        ".player-a"
+    setText(
+        "result-my-name",
+        myPlayer.displayName || "玩家"
     );
 
 
-const opponentCard =
-    document.querySelector(
-        ".player-b"
+    setText(
+        "result-opponent-name",
+        opponentPlayer.displayName || "對手"
     );
 
 
+    /*
+     * ========================================
+     * ELOCoin
+     * ========================================
+     */
 
-
-
-if(
-    myValue >
-    opponentValue
-){
-
-    myCard?.classList.add(
-        "winner-player"
-    );
-
-    opponentCard?.classList.add(
-        "loser-player"
-    );
-
-}
-
-
-else if(
-    myValue <
-    opponentValue
-){
-
-
-    opponentCard?.classList.add(
-        "winner-player"
+    setText(
+        "player-a-coin",
+        formatNumber(
+            myPlayer.challengeEC
+        )
     );
 
 
-    myCard?.classList.add(
+    setText(
+        "player-b-coin",
+        formatNumber(
+            opponentPlayer.challengeEC
+        )
+    );
+
+
+    /*
+     * ========================================
+     * 物品價值
+     * ========================================
+     */
+
+    const myItemValue =
+        Array.isArray(myPlayer.items)
+            ? myPlayer.items.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    return total +
+                        (
+                            Number(
+                                item.value
+                            ) || 0
+                        );
+
+                },
+                0
+            )
+            : 0;
+
+
+    const opponentItemValue =
+        Array.isArray(opponentPlayer.items)
+            ? opponentPlayer.items.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    return total +
+                        (
+                            Number(
+                                item.value
+                            ) || 0
+                        );
+
+                },
+                0
+            )
+            : 0;
+
+
+    setText(
+        "player-a-items",
+        formatNumber(
+            myItemValue
+        )
+    );
+
+
+    setText(
+        "player-b-items",
+        formatNumber(
+            opponentItemValue
+        )
+    );
+
+
+    /*
+     * ========================================
+     * 最終價值
+     * ========================================
+     */
+
+    setText(
+        "result-my-value",
+        formatNumber(
+            myValue
+        )
+    );
+
+
+    setText(
+        "result-opponent-value",
+        formatNumber(
+            opponentValue
+        )
+    );
+
+
+    /*
+     * ========================================
+     * 勝負
+     * ========================================
+     */
+
+    const myCard =
+        document.querySelector(
+            ".player-a"
+        );
+
+
+    const opponentCard =
+        document.querySelector(
+            ".player-b"
+        );
+
+
+    /*
+     * 清除舊狀態
+     */
+
+    myCard?.classList.remove(
+        "winner-player",
         "loser-player"
     );
 
 
+    opponentCard?.classList.remove(
+        "winner-player",
+        "loser-player"
+    );
+
+
+    let resultText = "";
+
+
+    if(
+        myValue >
+        opponentValue
+    ){
+
+        resultText =
+            "🎉 恭喜獲勝！";
+
+
+        myCard?.classList.add(
+            "winner-player"
+        );
+
+
+        opponentCard?.classList.add(
+            "loser-player"
+        );
+
+
+    }
+    else if(
+        myValue <
+        opponentValue
+    ){
+
+        resultText =
+            "😢 挑戰失敗";
+
+
+        opponentCard?.classList.add(
+            "winner-player"
+        );
+
+
+        myCard?.classList.add(
+            "loser-player"
+        );
+
+
+    }
+    else{
+
+        resultText =
+            "🤝 平局";
+
+    }
+
+
+    /*
+     * ========================================
+     * 結果標題
+     * ========================================
+     */
+
+    setText(
+        "result-title",
+        resultText
+    );
+
+
+    /*
+     * ========================================
+     * 播放結果動畫
+     * ========================================
+     */
+
+    playResultAnimation(
+        myValue,
+        opponentValue
+    );
+
 }
 
+function playResultAnimation(
+    myValue,
+    opponentValue
+){
 
+    const resultCard =
+        document.querySelector(
+            ".result-card"
+        );
+
+
+    if(!resultCard){
+
+        return;
+
+    }
+
+
+    /*
+     * 防止重新 render 時重播
+     */
+
+    if(
+        resultCard.dataset.animationPlayed
+        ===
+        "true"
+    ){
+
+        return;
+
+    }
+
+
+    resultCard.dataset.animationPlayed =
+        "true";
+
+
+    /*
+     * 初始狀態
+     */
+
+    resultCard.classList.add(
+        "result-animation-start"
+    );
+
+
+    /*
+     * 下一幀開始動畫
+     */
+
+    requestAnimationFrame(
+        ()=>{
+
+            resultCard.classList.add(
+                "result-animation-show"
+            );
+
+        }
+    );
+
+
+    /*
+     * 最終價值數字動畫
+     */
+
+    animateNumber(
+        "result-my-value",
+        myValue
+    );
+
+
+    animateNumber(
+        "result-opponent-value",
+        opponentValue
+    );
+
+
+    /*
+     * 勝者特效
+     */
+
+    if(
+        myValue >
+        opponentValue
+    ){
+
+        document.body.classList.add(
+            "challenge-win"
+        );
+
+    }
+    else if(
+        myValue <
+        opponentValue
+    ){
+
+        document.body.classList.add(
+            "challenge-lose"
+        );
+
+    }
+    else{
+
+        document.body.classList.add(
+            "challenge-draw"
+        );
+
+    }
+
+}
+
+function animateNumber(
+    id,
+    target
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+    const duration = 1000;
+
+    const startTime =
+        performance.now();
+
+
+    function update(
+        currentTime
+    ){
+
+        const progress =
+            Math.min(
+                (
+                    currentTime -
+                    startTime
+                )
+                /
+                duration,
+                1
+            );
+
+
+        /*
+         * easeOut
+         */
+
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
+
+
+        const current =
+            Math.floor(
+                target *
+                eased
+            );
+
+
+        element.innerText =
+            current.toLocaleString();
+
+
+        if(
+            progress <
+            1
+        ){
+
+            requestAnimationFrame(
+                update
+            );
+
+        }
+        else{
+
+            element.innerText =
+                Number(
+                    target
+                ).toLocaleString();
+
+        }
+
+    }
+
+
+    element.innerText =
+        "0";
+
+
+    requestAnimationFrame(
+        update
+    );
 
 }
 
