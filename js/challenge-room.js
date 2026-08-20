@@ -59,13 +59,16 @@ async()=>{
     initButtons();
 
 
-    loadChallengeRoom();
-
-
-
+    loadChallengeRoom(true);
+   
+   
     refreshTimer =
         setInterval(
-            loadChallengeRoom,
+            () => {
+   
+                loadChallengeRoom(false);
+   
+            },
             3000
         );
 
@@ -82,7 +85,20 @@ async()=>{
 ======================================== */
 
 
-async function loadChallengeRoom(){
+async function loadChallengeRoom(
+    showLoading = false
+){
+
+    if(
+        showLoading &&
+        window.ELOLoading &&
+        typeof window.ELOLoading.start === "function"
+    ){
+
+        window.ELOLoading.start();
+
+    }
+
 
     try{
 
@@ -102,12 +118,6 @@ async function loadChallengeRoom(){
         }
 
 
-        /*
-         * ========================================
-         * 更新玩家資料
-         * ========================================
-         */
-
         processPlayers(
             result.players
         );
@@ -117,12 +127,6 @@ async function loadChallengeRoom(){
             result
         );
 
-
-        /*
-         * ========================================
-         * 檢查雙方是否都已完成
-         * ========================================
-         */
 
         if(
             Array.isArray(result.players)
@@ -142,10 +146,6 @@ async function loadChallengeRoom(){
 
             if(allFinished){
 
-                /*
-                 * 停止輪詢
-                 */
-
                 if(refreshTimer){
 
                     clearInterval(
@@ -156,10 +156,6 @@ async function loadChallengeRoom(){
 
                 }
 
-
-                /*
-                 * 前往 Challenge Result
-                 */
 
                 location.href =
                     "challenge-result.html?id="
@@ -181,6 +177,19 @@ async function loadChallengeRoom(){
             "Challenge Room 載入失敗",
             error
         );
+
+    }
+    finally{
+
+        if(
+            showLoading &&
+            window.ELOLoading &&
+            typeof window.ELOLoading.finish === "function"
+        ){
+
+            window.ELOLoading.finish();
+
+        }
 
     }
 
