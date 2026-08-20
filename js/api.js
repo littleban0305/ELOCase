@@ -1965,9 +1965,6 @@ async function getChallenge(
         "getChallenge",
         {
             challengeId
-        },
-        {
-            noLoading:true
         }
     );
 
