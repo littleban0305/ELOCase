@@ -396,19 +396,41 @@ myPlayer.finalValue
 
 
 setText(
-"navbar-my-coin",
-formatNumber(
-myPlayer.challengeEC
-)
+    "navbar-my-coin",
+    formatNumber(
+        myPlayer.challengeEC
+    )
 );
 
 
+const myItemValue =
+    Array.isArray(
+        myPlayer.items
+    )
+        ? myPlayer.items.reduce(
+            (
+                total,
+                item
+            ) => {
+
+                return total +
+                    (
+                        Number(
+                            item.value
+                        ) || 0
+                    );
+
+            },
+            0
+        )
+        : 0;
+
 
 setText(
-"navbar-my-value",
-formatNumber(
-myPlayer.finalValue
-)
+    "navbar-my-value",
+    formatNumber(
+        myItemValue
+    )
 );
 
 
@@ -475,19 +497,41 @@ opponentPlayer.finalValue
 
 
 setText(
-"navbar-opponent-coin",
-formatNumber(
-opponentPlayer.challengeEC
-)
+    "navbar-opponent-coin",
+    formatNumber(
+        opponentPlayer.challengeEC
+    )
 );
 
 
+const opponentItemValue =
+    Array.isArray(
+        opponentPlayer.items
+    )
+        ? opponentPlayer.items.reduce(
+            (
+                total,
+                item
+            ) => {
+
+                return total +
+                    (
+                        Number(
+                            item.value
+                        ) || 0
+                    );
+
+            },
+            0
+        )
+        : 0;
+
 
 setText(
-"navbar-opponent-value",
-formatNumber(
-opponentPlayer.finalValue
-)
+    "navbar-opponent-value",
+    formatNumber(
+        opponentItemValue
+    )
 );
 
 
