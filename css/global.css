@@ -361,7 +361,39 @@ p {
 
 }
 
+/* ========================================
+   Challenge Loading Bar
+======================================== */
 
+.challenge-mode #elo-loading-bar {
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        #ff9f43,
+
+        #ffb866,
+
+        #ff9f43
+
+    );
+
+
+    box-shadow:
+
+    0 0 8px
+
+    rgba(
+        255,
+        159,
+        67,
+        .85
+    );
+
+}
 
 /* ========================================
    Challenge Theme
