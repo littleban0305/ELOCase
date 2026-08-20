@@ -3073,24 +3073,24 @@ function updateChallengeCasePlayers(players){
 
 
     /*
-     * ====================================
-     * 我的最終價值
-     * ====================================
-     */
-
-    if(myPlayer){
+    * ====================================
+    * 我的最終價值
+    * ====================================
+    */
+   
+   if (myPlayer) {
    
        const myValue =
            document.querySelector(
                "#navbar-my-value"
            );
    
-       if(
+       if (
            myValue &&
            myPlayer.finalValue !== undefined &&
            myPlayer.finalValue !== null &&
            myPlayer.finalValue !== ""
-       ){
+       ) {
    
            myValue.textContent =
                Number(
@@ -3106,27 +3106,27 @@ function updateChallengeCasePlayers(players){
        }
    
    }
-
-
-    /*
-     * ====================================
-     * 對手 EC
-     * ====================================
-     */
-
-    if(opponentPlayer){
+   
+   
+   /*
+    * ====================================
+    * 對手最終價值
+    * ====================================
+    */
+   
+   if (opponentPlayer) {
    
        const opponentValue =
            document.querySelector(
                "#navbar-opponent-value"
            );
    
-       if(
+       if (
            opponentValue &&
            opponentPlayer.finalValue !== undefined &&
            opponentPlayer.finalValue !== null &&
            opponentPlayer.finalValue !== ""
-       ){
+       ) {
    
            opponentValue.textContent =
                Number(
@@ -3142,32 +3142,5 @@ function updateChallengeCasePlayers(players){
        }
    
    }
-
-
-    /*
-     * ====================================
-     * 對手最終價值
-     * ====================================
-     */
-
-    if(opponentPlayer){
-
-        const opponentValue =
-            document.querySelector(
-                "#navbar-opponent-value"
-            );
-
-
-        if(opponentValue){
-
-            opponentValue.textContent =
-                Number(
-                    opponentPlayer.finalValue ??
-                    0
-                ).toLocaleString();
-
-        }
-
-    }
 
 }
