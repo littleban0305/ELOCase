@@ -103,9 +103,13 @@ async function loadChallengeRoom(
     try{
 
         const result =
-            await getChallenge(
-                challengeId
-            );
+             await getChallenge(
+                 challengeId,
+                 {
+                     noLoading:
+                         !showLoading
+                 }
+             );
 
 
         if(
