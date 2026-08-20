@@ -648,3 +648,237 @@ Result Title
     scale(.97);
 
 }
+
+/* ========================================
+   Challenge Result Animation
+======================================== */
+
+.result-card {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 0.6s ease,
+        opacity 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+
+/* 初始 */
+
+.result-animation-start {
+    opacity: 0;
+    transform:
+        translateY(25px)
+        scale(0.97);
+}
+
+
+/* 顯示 */
+
+.result-animation-show {
+    opacity: 1;
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* ========================================
+   玩家卡片
+======================================== */
+
+.result-player {
+    position: relative;
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+
+/* 勝者 */
+
+.winner-player {
+
+    transform:
+        translateY(-6px)
+        scale(1.02);
+
+    box-shadow:
+        0 0 0 1px rgba(255, 145, 0, 0.35),
+        0 0 30px rgba(255, 145, 0, 0.25);
+
+    animation:
+        winnerPulse 2s
+        ease-in-out
+        infinite;
+
+}
+
+
+/* 敗者 */
+
+.loser-player {
+
+    opacity: 0.55;
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* ========================================
+   勝者動畫
+======================================== */
+
+@keyframes winnerPulse {
+
+    0%,
+    100% {
+
+        box-shadow:
+            0 0 0 1px rgba(255, 145, 0, 0.25),
+            0 0 20px rgba(255, 145, 0, 0.15);
+
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 0 1px rgba(255, 145, 0, 0.55),
+            0 0 38px rgba(255, 145, 0, 0.35);
+
+    }
+
+}
+
+
+/* ========================================
+   Body 結果狀態
+======================================== */
+
+.challenge-win
+.result-card {
+
+    animation:
+        resultAppear 0.7s
+        ease-out;
+
+}
+
+
+.challenge-draw
+.result-card {
+
+    animation:
+        resultAppear 0.7s
+        ease-out;
+
+}
+
+
+@keyframes resultAppear {
+
+    from {
+
+        opacity: 0;
+        transform:
+            translateY(20px)
+            scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* ========================================
+   VS
+======================================== */
+
+.result-vs {
+
+    position: relative;
+
+    font-weight: 900;
+
+    transition:
+        transform 0.4s ease;
+
+}
+
+
+.challenge-win
+.result-vs,
+.challenge-lose
+.result-vs {
+
+    animation:
+        vsReveal 0.8s
+        ease-out;
+
+}
+
+
+@keyframes vsReveal {
+
+    from {
+
+        opacity: 0;
+        transform:
+            scale(0.5);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* ========================================
+   結果標題
+======================================== */
+
+#result-title {
+
+    animation:
+        titleReveal 0.8s
+        ease-out;
+
+}
+
+
+@keyframes titleReveal {
+
+    from {
+
+        opacity: 0;
+        transform:
+            translateY(-12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform:
+            translateY(0);
+
+    }
+
+}
