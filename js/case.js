@@ -2909,15 +2909,19 @@ function updateChallengeCaseItems(items){
 
 /* ========================================
  * Challenge Case
- * 更新雙方即時資料
+ * 更新右上角 Navbar 雙方即時資料
  * ======================================== */
 
 function updateChallengeCasePlayers(players){
 
     if(
-        !players ||
+        !Array.isArray(players) ||
         players.length === 0
     ){
+
+        console.log(
+            "⚠️ Challenge 沒有 players 資料"
+        );
 
         return;
 
@@ -2930,47 +2934,120 @@ function updateChallengeCasePlayers(players){
 
     if(!sessionUser){
 
+        console.log(
+            "⚠️ 找不到目前登入玩家"
+        );
+
         return;
 
     }
 
 
-    let myPlayer = null;
+    /*
+     * ====================================
+     * Debug
+     * ====================================
+     */
 
-    let opponentPlayer = null;
+    console.log(
+        "🔥 Challenge Players：",
+        players
+    );
 
-
-    players.forEach(
-        player => {
-
-            if(
-                String(
-                    player.userId
-                )
-                ===
-                String(
-                    sessionUser.userId
-                )
-            ){
-
-                myPlayer =
-                    player;
-
-            }
-            else{
-
-                opponentPlayer =
-                    player;
-
-            }
-
-        }
+    console.log(
+        "🔥 Session User：",
+        sessionUser
     );
 
 
     /*
      * ====================================
-     * 我的資料
+     * 取得自己的 userId
+     *
+     * 支援不同欄位名稱
+     * ====================================
+     */
+
+    const myUserId =
+        String(
+            sessionUser.userId ??
+            sessionUser.id ??
+            sessionUser.uid ??
+            ""
+        );
+
+
+    /*
+     * ====================================
+     * 找到自己
+     * ====================================
+     */
+
+    const myPlayer =
+        players.find(
+            player => {
+
+                const playerUserId =
+                    String(
+                        player.userId ??
+                        player.id ??
+                        player.uid ??
+                        ""
+                    );
+
+
+                return (
+                    playerUserId ===
+                    myUserId
+                );
+
+            }
+        );
+
+
+    /*
+     * ====================================
+     * 找到對手
+     * ====================================
+     */
+
+    const opponentPlayer =
+        players.find(
+            player => {
+
+                const playerUserId =
+                    String(
+                        player.userId ??
+                        player.id ??
+                        player.uid ??
+                        ""
+                    );
+
+
+                return (
+                    playerUserId !==
+                    myUserId
+                );
+
+            }
+        );
+
+
+    console.log(
+        "🔥 我的 Challenge 玩家：",
+        myPlayer
+    );
+
+
+    console.log(
+        "🔥 對手 Challenge 玩家：",
+        opponentPlayer
+    );
+
+
+    /*
+     * ====================================
+     * 我的 EC
      * ====================================
      */
 
@@ -2982,27 +3059,12 @@ function updateChallengeCasePlayers(players){
             );
 
 
-        const myValue =
-            document.querySelector(
-                "#navbar-my-value"
-            );
-
-
         if(myCoin){
 
             myCoin.textContent =
                 Number(
-                    myPlayer.challengeEC || 0
-                ).toLocaleString();
-
-        }
-
-
-        if(myValue){
-
-            myValue.textContent =
-                Number(
-                    myPlayer.finalValue || 0
+                    myPlayer.challengeEC ??
+                    0
                 ).toLocaleString();
 
         }
@@ -3012,7 +3074,34 @@ function updateChallengeCasePlayers(players){
 
     /*
      * ====================================
-     * 對手資料
+     * 我的最終價值
+     * ====================================
+     */
+
+    if(myPlayer){
+
+        const myValue =
+            document.querySelector(
+                "#navbar-my-value"
+            );
+
+
+        if(myValue){
+
+            myValue.textContent =
+                Number(
+                    myPlayer.finalValue ??
+                    0
+                ).toLocaleString();
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 對手 EC
      * ====================================
      */
 
@@ -3024,27 +3113,39 @@ function updateChallengeCasePlayers(players){
             );
 
 
+        if(opponentCoin){
+
+            opponentCoin.textContent =
+                Number(
+                    opponentPlayer.challengeEC ??
+                    0
+                ).toLocaleString();
+
+        }
+
+    }
+
+
+    /*
+     * ====================================
+     * 對手最終價值
+     * ====================================
+     */
+
+    if(opponentPlayer){
+
         const opponentValue =
             document.querySelector(
                 "#navbar-opponent-value"
             );
 
 
-        if(opponentCoin){
-
-            opponentCoin.textContent =
-                Number(
-                    opponentPlayer.challengeEC || 0
-                ).toLocaleString();
-
-        }
-
-
         if(opponentValue){
 
             opponentValue.textContent =
                 Number(
-                    opponentPlayer.finalValue || 0
+                    opponentPlayer.finalValue ??
+                    0
                 ).toLocaleString();
 
         }
