@@ -2695,49 +2695,33 @@ function startChallengeCaseRefresh(){
 
 async function refreshChallengeCase(){
 
-    /*
-     * 開箱動畫期間不要刷新
-     */
-
-    if(
-        window.ELOCaseOpening
-    ){
-
+    if(window.ELOCaseOpening){
         return;
-
     }
-
 
     const challengeData =
         getChallengeDataFromUrl();
-
 
     if(
         challengeData.mode !== "challenge" ||
         !challengeData.challengeId
     ){
-
         return;
-
     }
-
 
     const caseId =
         getCaseIdFromUrl();
 
-
     if(!caseId){
-
         return;
-
     }
-
 
     try{
 
         /*
          * ====================================
-         * 更新 Challenge 雙方即時資料
+         * 只在背景取得最新 Challenge
+         * 不碰開箱動畫
          * ====================================
          */
 
@@ -2745,7 +2729,6 @@ async function refreshChallengeCase(){
             await getChallenge(
                 challengeData.challengeId
             );
-
 
         if(
             challengeResult &&
@@ -2761,7 +2744,7 @@ async function refreshChallengeCase(){
 
         /*
          * ====================================
-         * 更新 Case 資料
+         * 取得最新 Case
          * ====================================
          */
 
@@ -2770,26 +2753,40 @@ async function refreshChallengeCase(){
                 caseId
             );
 
+        if(caseData){
 
-        if(
-            caseData
-        ){
+            /*
+             * 只有資料真的變了才更新
+             */
 
-            renderCaseImage(
-                caseData
-            );
+            if(
+                JSON.stringify(
+                    window.currentChallengeCaseData
+                ) !==
+                JSON.stringify(
+                    caseData
+                )
+            ){
 
+                window.currentChallengeCaseData =
+                    caseData;
 
-            renderCaseInfo(
-                caseData
-            );
+                renderCaseImage(
+                    caseData
+                );
+
+                renderCaseInfo(
+                    caseData
+                );
+
+            }
 
         }
 
 
         /*
          * ====================================
-         * 更新 Case 內容物
+         * 取得最新內容物
          * ====================================
          */
 
@@ -2808,7 +2805,7 @@ async function refreshChallengeCase(){
     catch(error){
 
         console.error(
-            "Challenge Case 即時更新失敗：",
+            "Challenge Case 背景更新失敗：",
             error
         );
 
@@ -2824,33 +2821,16 @@ Challenge Case
 
 function updateChallengeCaseItems(items){
 
-    window.currentCaseItems =
-        items || [];
-
-
-    const container =
-        document.querySelector(
-            "#case-items"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    /*
-     * 如果資料沒有變化
-     * 就不用重新建立 DOM
-     */
-
     const newData =
         JSON.stringify(
             items || []
         );
 
+
+    /*
+     * 資料完全沒變
+     * → 什麼都不要做
+     */
 
     if(
         window.lastChallengeCaseItemsData ===
@@ -2866,6 +2846,21 @@ function updateChallengeCaseItems(items){
         newData;
 
 
+    window.currentCaseItems =
+        items || [];
+
+
+    const container =
+        document.querySelector(
+            "#case-items"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
     container.innerHTML = "";
 
 
@@ -2875,13 +2870,9 @@ function updateChallengeCaseItems(items){
     ){
 
         container.innerHTML = `
-
             <div class="case-items-loading">
-
                 這個箱子目前沒有內容物。
-
             </div>
-
         `;
 
         return;
@@ -2896,7 +2887,6 @@ function updateChallengeCaseItems(items){
                 createCaseItemCard(
                     item
                 );
-
 
             container.appendChild(
                 card
