@@ -3085,23 +3085,36 @@ function updateChallengeCasePlayers(players){
                "#navbar-my-value"
            );
    
-       if (
-           myValue &&
-           myPlayer.finalValue !== undefined &&
-           myPlayer.finalValue !== null &&
-           myPlayer.finalValue !== ""
-       ) {
+   
+       const myItemValue =
+           Array.isArray(
+               myPlayer.items
+           )
+               ? myPlayer.items.reduce(
+                   (
+                       total,
+                       item
+                   ) => {
+   
+                       return total +
+                           (
+                               Number(
+                                   item.value
+                               ) || 0
+                           );
+   
+                   },
+                   0
+               )
+               : 0;
+   
+   
+       if (myValue) {
    
            myValue.textContent =
                Number(
-                   myPlayer.finalValue
-               ).toLocaleString(
-                   undefined,
-                   {
-                       minimumFractionDigits: 1,
-                       maximumFractionDigits: 1
-                   }
-               );
+                   myItemValue
+               ).toLocaleString();
    
        }
    
@@ -3121,23 +3134,36 @@ function updateChallengeCasePlayers(players){
                "#navbar-opponent-value"
            );
    
-       if (
-           opponentValue &&
-           opponentPlayer.finalValue !== undefined &&
-           opponentPlayer.finalValue !== null &&
-           opponentPlayer.finalValue !== ""
-       ) {
+   
+       const opponentItemValue =
+           Array.isArray(
+               opponentPlayer.items
+           )
+               ? opponentPlayer.items.reduce(
+                   (
+                       total,
+                       item
+                   ) => {
+   
+                       return total +
+                           (
+                               Number(
+                                   item.value
+                               ) || 0
+                           );
+   
+                   },
+                   0
+               )
+               : 0;
+   
+   
+       if (opponentValue) {
    
            opponentValue.textContent =
                Number(
-                   opponentPlayer.finalValue
-               ).toLocaleString(
-                   undefined,
-                   {
-                       minimumFractionDigits: 1,
-                       maximumFractionDigits: 1
-                   }
-               );
+                   opponentItemValue
+               ).toLocaleString();
    
        }
    
