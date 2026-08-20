@@ -328,6 +328,59 @@ function renderResult(){
         )
     );
 
+    /*
+     * ========================================
+     * Navbar 資料
+     * ========================================
+     */
+    
+    /*
+     * 我的 ELOCoin
+     */
+    
+    setText(
+        "navbar-my-coin",
+        formatNumber(
+            myPlayer.challengeEC
+        )
+    );
+    
+    
+    /*
+     * 我的物品價值
+     */
+    
+    setText(
+        "navbar-my-value",
+        formatNumber(
+            myItemValue
+        )
+    );
+    
+    
+    /*
+     * 對手 ELOCoin
+     */
+    
+    setText(
+        "navbar-opponent-coin",
+        formatNumber(
+            opponentPlayer.challengeEC
+        )
+    );
+    
+    
+    /*
+     * 對手物品價值
+     */
+    
+    setText(
+        "navbar-opponent-value",
+        formatNumber(
+            opponentItemValue
+        )
+    );
+
 
     /*
      * ========================================
