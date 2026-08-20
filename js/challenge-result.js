@@ -443,7 +443,7 @@ function renderResult(){
      */
 
     setText(
-        "result-title",
+        "winner-text",
         resultText
     );
 
