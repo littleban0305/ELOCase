@@ -3079,24 +3079,33 @@ function updateChallengeCasePlayers(players){
      */
 
     if(myPlayer){
-
-        const myValue =
-            document.querySelector(
-                "#navbar-my-value"
-            );
-
-
-        if(myValue){
-
-            myValue.textContent =
-                Number(
-                    myPlayer.finalValue ??
-                    0
-                ).toLocaleString();
-
-        }
-
-    }
+   
+       const myValue =
+           document.querySelector(
+               "#navbar-my-value"
+           );
+   
+       if(
+           myValue &&
+           myPlayer.finalValue !== undefined &&
+           myPlayer.finalValue !== null &&
+           myPlayer.finalValue !== ""
+       ){
+   
+           myValue.textContent =
+               Number(
+                   myPlayer.finalValue
+               ).toLocaleString(
+                   undefined,
+                   {
+                       minimumFractionDigits: 1,
+                       maximumFractionDigits: 1
+                   }
+               );
+   
+       }
+   
+   }
 
 
     /*
@@ -3106,24 +3115,33 @@ function updateChallengeCasePlayers(players){
      */
 
     if(opponentPlayer){
-
-        const opponentCoin =
-            document.querySelector(
-                "#navbar-opponent-coin"
-            );
-
-
-        if(opponentCoin){
-
-            opponentCoin.textContent =
-                Number(
-                    opponentPlayer.challengeEC ??
-                    0
-                ).toLocaleString();
-
-        }
-
-    }
+   
+       const opponentValue =
+           document.querySelector(
+               "#navbar-opponent-value"
+           );
+   
+       if(
+           opponentValue &&
+           opponentPlayer.finalValue !== undefined &&
+           opponentPlayer.finalValue !== null &&
+           opponentPlayer.finalValue !== ""
+       ){
+   
+           opponentValue.textContent =
+               Number(
+                   opponentPlayer.finalValue
+               ).toLocaleString(
+                   undefined,
+                   {
+                       minimumFractionDigits: 1,
+                       maximumFractionDigits: 1
+                   }
+               );
+   
+       }
+   
+   }
 
 
     /*
