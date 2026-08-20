@@ -564,43 +564,85 @@ async function refreshChallengeCasesNavbar(){
 
 
         if(me){
-
+        
             setText(
                 "navbar-my-coin",
                 formatNumber(
                     me.challengeEC
                 )
             );
-
-
+        
+        
+            const myItemValue =
+                Array.isArray(me.items)
+                    ? me.items.reduce(
+                        (
+                            total,
+                            item
+                        ) => {
+        
+                            return total +
+                                (
+                                    Number(
+                                        item.value
+                                    ) || 0
+                                );
+        
+                        },
+                        0
+                    )
+                    : 0;
+        
+        
             setText(
                 "navbar-my-value",
                 formatNumber(
-                    me.finalValue
+                    myItemValue
                 )
             );
-
+        
         }
 
 
 
         if(opponent){
-
+        
             setText(
                 "navbar-opponent-coin",
                 formatNumber(
                     opponent.challengeEC
                 )
             );
-
-
+        
+        
+            const opponentItemValue =
+                Array.isArray(opponent.items)
+                    ? opponent.items.reduce(
+                        (
+                            total,
+                            item
+                        ) => {
+        
+                            return total +
+                                (
+                                    Number(
+                                        item.value
+                                    ) || 0
+                                );
+        
+                        },
+                        0
+                    )
+                    : 0;
+        
+        
             setText(
                 "navbar-opponent-value",
                 formatNumber(
-                    opponent.finalValue
+                    opponentItemValue
                 )
             );
-
+        
         }
 
 
