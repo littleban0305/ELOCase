@@ -322,6 +322,11 @@ function renderMyPlayer(){
             "finish-challenge-button"
         );
 
+   const openButton =
+       document.getElementById(
+           "open-case-button"
+       );
+
 
     if(finishButton){
 
@@ -351,6 +356,35 @@ function renderMyPlayer(){
         }
 
     }
+
+   if(openButton){
+   
+       if(
+           String(
+               myPlayer.finished
+           ).toLowerCase()
+           ===
+           "true"
+       ){
+   
+           openButton.disabled =
+               true;
+   
+           openButton.innerText =
+               "挑戰已結束";
+   
+       }
+       else{
+   
+           openButton.disabled =
+               false;
+   
+           openButton.innerText =
+               "選擇箱子開啟";
+   
+       }
+   
+   }
 
 
     const myItemValue =
