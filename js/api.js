@@ -1958,7 +1958,8 @@ async function joinChallenge(
  * 取得 Challenge
  */
 async function getChallenge(
-    challengeId
+    challengeId,
+    options = {}
 ){
 
     return await sendApiRequest(
@@ -1966,9 +1967,7 @@ async function getChallenge(
         {
             challengeId
         },
-        {
-            noLoading: true
-        }
+        options
     );
 
 }
