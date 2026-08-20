@@ -685,9 +685,13 @@ async function refreshCasesInBackground() {
 
 
         const data =
-            await sendApiRequest(
-                "getCases"
-            );
+             await sendApiRequest(
+                 "getCases",
+                 {},
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         saveApiCache(
@@ -858,12 +862,15 @@ async function refreshCaseInBackground(
 
 
         const data =
-            await sendApiRequest(
-                "getCase",
-                {
-                    caseId
-                }
-            );
+             await sendApiRequest(
+                 "getCase",
+                 {
+                     caseId
+                 },
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         /*
@@ -1133,12 +1140,15 @@ async function refreshCaseItemsInBackground(
 
 
         const data =
-            await sendApiRequest(
-                "getCaseItems",
-                {
-                    caseId
-                }
-            );
+             await sendApiRequest(
+                 "getCaseItems",
+                 {
+                     caseId
+                 },
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         /*
@@ -2369,9 +2379,12 @@ async function refreshChallengeStatus(
     try{
 
         const result =
-            await getChallenge(
-                challengeId
-            );
+             await getChallenge(
+                 challengeId,
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         if(
