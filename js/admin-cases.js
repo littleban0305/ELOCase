@@ -4,7 +4,7 @@
 
 
 /* ========================================
-   全域資料
+   全域狀態
 ======================================== */
 
 let adminCases = [];
@@ -12,296 +12,361 @@ let adminCases = [];
 let editingCaseId = null;
 
 
-/* ========================================
-   初始化
-======================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        try {
-
-            const user =
-                await verifySession();
-
-
-            /*
-             * 必須登入
-             */
-
-            if (!user) {
-
-                window.location.href =
-                    "login.html";
-
-                return;
-
-            }
-
-
-            /*
-             * 必須是管理員
-             */
-
-            if (
-                String(
-                    user.role || ""
-                ).toLowerCase()
-                !==
-                "admin"
-            ) {
-
-                alert(
-                    "你沒有管理員權限。"
-                );
-
-
-                window.location.href =
-                    "index.html";
-
-                return;
-
-            }
-
-
-            /*
-             * 初始化
-             */
-
-            initializeAdminCases();
-
-
-            await loadAdminCases();
-
-
-        } catch (error) {
-
-            console.error(
-                "管理員頁面初始化失敗：",
-                error
-            );
-
-
-            alert(
-                error.message ||
-                "管理頁面載入失敗"
-            );
-
-        }
-
-    }
-
-);
-
 
 /* ========================================
-   初始化 UI
+   DOM
 ======================================== */
 
-function initializeAdminCases() {
+const casesContainer =
+    document.querySelector(
+        "#cases-container"
+    );
 
 
-    const createButton =
-        document.querySelector(
-            "#create-case-button"
-        );
+const casesLoading =
+    document.querySelector(
+        "#cases-loading"
+    );
 
 
-    const refreshButton =
-        document.querySelector(
-            "#refresh-cases-button"
-        );
+const adminMessage =
+    document.querySelector(
+        "#admin-message"
+    );
 
 
-    const closeButton =
-        document.querySelector(
-            "#close-modal-button"
-        );
+const caseModal =
+    document.querySelector(
+        "#case-modal"
+    );
 
 
-    const cancelButton =
-        document.querySelector(
-            "#cancel-case-button"
-        );
+const caseForm =
+    document.querySelector(
+        "#case-form"
+    );
 
 
-    const form =
-        document.querySelector(
-            "#case-form"
-        );
+const createCaseButton =
+    document.querySelector(
+        "#create-case-button"
+    );
 
 
-    const imageUrl =
-        document.querySelector(
-            "#case-image-url"
-        );
+const closeModalButton =
+    document.querySelector(
+        "#close-modal-button"
+    );
 
 
-    if (createButton) {
+const cancelModalButton =
+    document.querySelector(
+        "#cancel-modal-button"
+    );
 
-        createButton.addEventListener(
-            "click",
-            () => {
 
-                openCaseModal();
+const saveCaseButton =
+    document.querySelector(
+        "#save-case-button"
+    );
 
-            }
-        );
+
+const modalTitle =
+    document.querySelector(
+        "#modal-title"
+    );
+
+
+const modalLabel =
+    document.querySelector(
+        "#modal-label"
+    );
+
+
+const caseIdInput =
+    document.querySelector(
+        "#caseId"
+    );
+
+
+const caseNameInput =
+    document.querySelector(
+        "#case-name"
+    );
+
+
+const caseGameInput =
+    document.querySelector(
+        "#case-game"
+    );
+
+
+const casePriceInput =
+    document.querySelector(
+        "#case-price"
+    );
+
+
+const caseImageUrlInput =
+    document.querySelector(
+        "#case-image-url"
+    );
+
+
+const caseDescriptionInput =
+    document.querySelector(
+        "#case-description"
+    );
+
+
+const caseStatusInput =
+    document.querySelector(
+        "#case-status"
+    );
+
+
+const caseImagePreview =
+    document.querySelector(
+        "#case-image-preview"
+    );
+
+
+
+/* ========================================
+   顯示訊息
+======================================== */
+
+function showMessage(
+    message,
+    type = "info"
+) {
+
+    if (!adminMessage) {
+
+        return;
 
     }
 
 
-    if (refreshButton) {
-
-        refreshButton.addEventListener(
-            "click",
-            async () => {
-
-                await loadAdminCases();
-
-            }
-        );
-
-    }
+    adminMessage.textContent =
+        message;
 
 
-    if (closeButton) {
-
-        closeButton.addEventListener(
-            "click",
-            closeCaseModal
-        );
-
-    }
+    adminMessage.className =
+        "admin-message " +
+        type;
 
 
-    if (cancelButton) {
+    setTimeout(
+        () => {
 
-        cancelButton.addEventListener(
-            "click",
-            closeCaseModal
-        );
+            adminMessage.textContent =
+                "";
 
-    }
+            adminMessage.className =
+                "admin-message";
 
-
-    if (form) {
-
-        form.addEventListener(
-            "submit",
-            handleCaseSubmit
-        );
-
-    }
-
-
-    if (imageUrl) {
-
-        imageUrl.addEventListener(
-            "input",
-            updateImagePreview
-        );
-
-    }
-
-
-    const modal =
-        document.querySelector(
-            "#case-modal"
-        );
-
-
-    if (modal) {
-
-        modal
-        .querySelector(
-            ".case-modal-overlay"
-        )
-        ?.addEventListener(
-            "click",
-            closeCaseModal
-        );
-
-    }
+        },
+        3500
+    );
 
 }
 
 
+
 /* ========================================
-   載入箱子
+   取得 Session
 ======================================== */
 
-async function loadAdminCases() {
+function getAdminSessionToken() {
 
-    const wrapper =
-        document.querySelector(
-            "#case-table-wrapper"
+    return (
+        localStorage.getItem(
+            "elocaseSessionToken"
+        )
+        ||
+        localStorage.getItem(
+            "sessionToken"
+        )
+    );
+
+}
+
+
+
+/* ========================================
+   管理員驗證
+======================================== */
+
+async function checkAdmin() {
+
+    const sessionToken =
+        getAdminSessionToken();
+
+
+    if (!sessionToken) {
+
+        alert(
+            "請先登入管理員帳號"
         );
 
 
-    if (wrapper) {
+        location.href =
+            "login.html";
 
-        wrapper.innerHTML = `
 
-            <div class="admin-loading">
-
-                載入箱子資料中...
-
-            </div>
-
-        `;
+        return false;
 
     }
 
 
     try {
 
-        /*
-         * 管理頁不能使用一般 Cases Cache
-         *
-         * 因為管理員修改後必須立即看到最新資料。
-         */
-
-        const cases =
+        const result =
             await sendApiRequest(
-                "getAdminCases",
+                "getAdminInfo",
                 {
                     sessionToken:
-                        getSessionToken()
+                        sessionToken
                 }
             );
 
 
-        adminCases =
-            Array.isArray(cases)
-                ? cases
-                : [];
+        if (
+            !result ||
+            result.role !== "admin"
+        ) {
+
+            throw new Error(
+                "你沒有管理員權限"
+            );
+
+        }
 
 
-        renderAdminCases();
-
-        updateStatistics();
+        return true;
 
 
     } catch (error) {
 
         console.error(
-            "取得管理箱子失敗：",
+            "管理員驗證失敗：",
             error
         );
 
 
-        if (wrapper) {
+        alert(
+            error.message ||
+            "你沒有管理員權限"
+        );
 
-            wrapper.innerHTML = `
 
-                <div class="admin-empty">
+        location.href =
+            "index.html";
 
-                    ${escapeHtml(
-                        error.message ||
-                        "箱子資料載入失敗"
-                    )}
+
+        return false;
+
+    }
+
+}
+
+
+
+/* ========================================
+   取得箱子
+======================================== */
+
+async function loadCases() {
+
+    if (casesLoading) {
+
+        casesLoading.style.display =
+            "block";
+
+    }
+
+
+    if (casesContainer) {
+
+        casesContainer.innerHTML =
+            "";
+
+    }
+
+
+    try {
+
+        const sessionToken =
+            getAdminSessionToken();
+
+
+        const result =
+            await sendApiRequest(
+                "getAdminCases",
+                {
+                    sessionToken:
+                        sessionToken
+                }
+            );
+
+
+        /*
+         * API 可能直接回傳陣列
+         */
+
+        adminCases =
+            Array.isArray(result)
+                ? result
+                : (
+                    result.cases ||
+                    result.data ||
+                    []
+                );
+
+
+        renderCases();
+
+
+    } catch (error) {
+
+        console.error(
+            "取得箱子失敗：",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "取得箱子失敗",
+            "error"
+        );
+
+
+        if (casesContainer) {
+
+            casesContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h3>
+                        無法載入箱子
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(
+                            error.message ||
+                            "請稍後再試"
+                        )}
+                    </p>
+
+                    <button
+                        type="button"
+                        class="button button-secondary"
+                        onclick="loadCases()"
+                    >
+                        重新載入
+                    </button>
 
                 </div>
 
@@ -309,24 +374,28 @@ async function loadAdminCases() {
 
         }
 
+    } finally {
+
+        if (casesLoading) {
+
+            casesLoading.style.display =
+                "none";
+
+        }
+
     }
 
 }
 
 
+
 /* ========================================
-   Render
+   顯示箱子
 ======================================== */
 
-function renderAdminCases() {
+function renderCases() {
 
-    const wrapper =
-        document.querySelector(
-            "#case-table-wrapper"
-        );
-
-
-    if (!wrapper) {
+    if (!casesContainer) {
 
         return;
 
@@ -335,11 +404,29 @@ function renderAdminCases() {
 
     if (!adminCases.length) {
 
-        wrapper.innerHTML = `
+        casesContainer.innerHTML = `
 
-            <div class="admin-empty">
+            <div class="empty-state">
 
-                目前沒有任何箱子。
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    目前沒有箱子
+                </h3>
+
+                <p>
+                    建立第一個 ELOCase 箱子吧。
+                </p>
+
+                <button
+                    type="button"
+                    class="button button-primary"
+                    onclick="openCreateModal()"
+                >
+                    ＋ 新增箱子
+                </button>
 
             </div>
 
@@ -350,323 +437,315 @@ function renderAdminCases() {
     }
 
 
-    wrapper.innerHTML = `
-
-        <table class="case-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        圖片
-                    </th>
-
-                    <th>
-                        箱子
-                    </th>
-
-                    <th>
-                        遊戲
-                    </th>
-
-                    <th>
-                        價格
-                    </th>
-
-                    <th>
-                        狀態
-                    </th>
-
-                    <th>
-                        操作
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                ${adminCases
-                    .map(
-                        renderCaseRow
-                    )
-                    .join("")}
-
-            </tbody>
-
-        </table>
-
-    `;
-
-
-    /*
-     * 綁定操作按鈕
-     */
-
-    wrapper
-    .querySelectorAll(
-        "[data-edit-case]"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const caseId =
-                        button.dataset.editCase;
-
-                    editCase(
-                        caseId
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    wrapper
-    .querySelectorAll(
-        "[data-toggle-case]"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                async () => {
-
-                    const caseId =
-                        button.dataset.toggleCase;
-
-                    await toggleCase(
-                        caseId
-                    );
-
-                }
-            );
-
-        }
-    );
+    casesContainer.innerHTML =
+        adminCases
+            .map(
+                renderCaseCard
+            )
+            .join("");
 
 }
 
 
+
 /* ========================================
-   Row
+   箱子卡片
 ======================================== */
 
-function renderCaseRow(caseData) {
-
-    const imageUrl =
-        caseData.imageUrl ||
-        "assets/case/elocase-box.png";
-
+function renderCaseCard(caseData) {
 
     const status =
         String(
             caseData.status ||
-            "inactive"
-        ).toLowerCase();
+            "active"
+        );
 
 
-    const statusText =
-        status === "active"
-            ? "啟用"
-            : "停用";
+    const isActive =
+        status === "active";
+
+
+    const imageUrl =
+        String(
+            caseData.imageUrl ||
+            ""
+        );
 
 
     return `
 
-        <tr>
-
-            <td>
-
-                <img
-                    src="${escapeAttribute(
-                        imageUrl
-                    )}"
-                    class="case-image"
-                    alt=""
-                    onerror="
-                        this.src='assets/case/elocase-box.png'
-                    "
-                >
-
-            </td>
+        <article
+            class="admin-case-card ${
+                isActive
+                    ? ""
+                    : "inactive"
+            }"
+        >
 
 
-            <td>
+            <div class="admin-case-image">
 
-                <div class="case-name">
+                ${
+                    imageUrl
 
-                    ${escapeHtml(
-                        caseData.name ||
-                        "未命名箱子"
-                    )}
+                    ? `
+
+                        <img
+                            src="${escapeAttribute(
+                                imageUrl
+                            )}"
+                            alt="${escapeAttribute(
+                                caseData.name ||
+                                "箱子"
+                            )}"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                        >
+
+                        <div
+                            class="image-error"
+                            style="display:none;"
+                        >
+                            📦
+                        </div>
+
+                    `
+
+                    : `
+
+                        <div class="no-image">
+                            📦
+                        </div>
+
+                    `
+                }
+
+            </div>
+
+
+
+            <div class="admin-case-content">
+
+
+                <div class="admin-case-top">
+
+
+                    <div>
+
+                        <h2>
+                            ${escapeHtml(
+                                caseData.name ||
+                                "未命名箱子"
+                            )}
+                        </h2>
+
+
+                        <span class="case-id">
+
+                            ${
+                                escapeHtml(
+                                    caseData.caseId ||
+                                    ""
+                                )
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        class="case-status ${
+                            isActive
+                                ? "active"
+                                : "inactive"
+                        }"
+                    >
+
+                        ${
+                            isActive
+                                ? "啟用"
+                                : "停用"
+                        }
+
+                    </span>
+
 
                 </div>
 
 
-                <div class="case-id">
 
-                    ${escapeHtml(
-                        caseData.caseId ||
-                        "-"
-                    )}
+                <div class="admin-case-meta">
+
+
+                    <div>
+
+                        <span>
+                            遊戲
+                        </span>
+
+                        <strong>
+                            ${escapeHtml(
+                                caseData.game ||
+                                "-"
+                            )}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            價格
+                        </span>
+
+                        <strong>
+                            ${formatPrice(
+                                caseData.price
+                            )}
+                        </strong>
+
+                    </div>
+
 
                 </div>
 
-            </td>
 
 
-            <td>
+                <p class="admin-case-description">
 
-                ${escapeHtml(
-                    caseData.game ||
-                    "-"
-                )}
+                    ${
+                        escapeHtml(
+                            caseData.description ||
+                            "沒有設定描述"
+                        )
+                    }
 
-            </td>
-
-
-            <td>
-
-                <span class="case-price">
-
-                    ${formatAdminPrice(
-                        caseData.price
-                    )}
-
-                </span>
-
-            </td>
+                </p>
 
 
-            <td>
 
-                <span
-                    class="case-status ${status}"
-                >
+                <div class="admin-case-actions">
 
-                    ${statusText}
-
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <div class="case-actions">
 
                     <button
                         type="button"
-                        class="case-action-button"
-                        data-edit-case="${escapeAttribute(
+                        class="button button-secondary"
+                        onclick="openEditModal('${escapeAttribute(
                             caseData.caseId
-                        )}"
+                        )}')"
                     >
                         編輯
                     </button>
 
 
-                    <button
-                        type="button"
-                        class="case-action-button danger"
-                        data-toggle-case="${escapeAttribute(
-                            caseData.caseId
-                        )}"
-                    >
+                    ${
+                        isActive
 
-                        ${
-                            status === "active"
-                                ? "停用"
-                                : "啟用"
-                        }
+                        ? `
 
-                    </button>
+                            <button
+                                type="button"
+                                class="button button-danger"
+                                onclick="deleteCaseConfirm('${escapeAttribute(
+                                    caseData.caseId
+                                )}')"
+                            >
+                                停用
+                            </button>
+
+                        `
+
+                        : `
+
+                            <button
+                                type="button"
+                                class="button button-secondary"
+                                onclick="restoreCase('${escapeAttribute(
+                                    caseData.caseId
+                                )}')"
+                            >
+                                重新啟用
+                            </button>
+
+                        `
+                    }
+
 
                 </div>
 
-            </td>
 
-        </tr>
+            </div>
+
+
+        </article>
 
     `;
 
 }
 
 
+
 /* ========================================
-   新增箱子
+   新增 Modal
 ======================================== */
 
-function openCaseModal() {
+function openCreateModal() {
 
     editingCaseId =
         null;
 
 
-    document.querySelector(
-        "#modal-mode-label"
-    ).textContent =
-        "新增箱子";
+    caseForm.reset();
 
 
-    document.querySelector(
-        "#modal-title"
-    ).textContent =
-        "新增箱子";
+    caseIdInput.value =
+        "";
 
 
-    document.querySelector(
-        "#case-form"
-    ).reset();
-
-
-    document.querySelector(
-        "#case-game"
-    ).value =
-        "CS2";
-
-
-    document.querySelector(
-        "#case-status"
-    ).value =
+    caseStatusInput.value =
         "active";
 
 
-    document.querySelector(
-        "#caseId"
-    ).value =
-        "";
+    modalLabel.textContent =
+        "新增箱子";
 
 
-    document.querySelector(
-        "#case-form-message"
-    ).textContent =
-        "";
+    modalTitle.textContent =
+        "建立箱子";
+
+
+    saveCaseButton.textContent =
+        "建立箱子";
 
 
     updateImagePreview();
 
 
-    showCaseModal();
+    caseModal.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            caseNameInput.focus();
+
+        },
+        100
+    );
 
 }
 
 
+
 /* ========================================
-   編輯箱子
+   編輯 Modal
 ======================================== */
 
-function editCase(caseId) {
+function openEditModal(caseId) {
 
     const caseData =
         adminCases.find(
@@ -683,7 +762,7 @@ function editCase(caseId) {
     if (!caseData) {
 
         alert(
-            "找不到這個箱子。"
+            "找不到指定箱子"
         );
 
         return;
@@ -692,191 +771,246 @@ function editCase(caseId) {
 
 
     editingCaseId =
-        caseData.caseId;
+        caseId;
 
 
-    document.querySelector(
-        "#modal-mode-label"
-    ).textContent =
-        "編輯箱子";
-
-
-    document.querySelector(
-        "#modal-title"
-    ).textContent =
-        "編輯箱子";
-
-
-    document.querySelector(
-        "#caseId"
-    ).value =
-        caseData.caseId || "";
-
-
-    document.querySelector(
-        "#case-name"
-    ).value =
-        caseData.name || "";
-
-
-    document.querySelector(
-        "#case-game"
-    ).value =
-        caseData.game || "CS2";
-
-
-    document.querySelector(
-        "#case-price"
-    ).value =
-        Number(
-            caseData.price
-        ) || 0;
-
-
-    document.querySelector(
-        "#case-image-url"
-    ).value =
-        caseData.imageUrl || "";
-
-
-    document.querySelector(
-        "#case-description"
-    ).value =
-        caseData.description || "";
-
-
-    document.querySelector(
-        "#case-status"
-    ).value =
-        caseData.status || "active";
-
-
-    document.querySelector(
-        "#case-form-message"
-    ).textContent =
+    caseIdInput.value =
+        caseData.caseId ||
         "";
+
+
+    caseNameInput.value =
+        caseData.name ||
+        "";
+
+
+    caseGameInput.value =
+        caseData.game ||
+        "";
+
+
+    casePriceInput.value =
+        caseData.price ??
+        "";
+
+
+    caseImageUrlInput.value =
+        caseData.imageUrl ||
+        "";
+
+
+    caseDescriptionInput.value =
+        caseData.description ||
+        "";
+
+
+    caseStatusInput.value =
+        caseData.status ||
+        "active";
+
+
+    modalLabel.textContent =
+        "編輯箱子";
+
+
+    modalTitle.textContent =
+        "編輯箱子";
+
+
+    saveCaseButton.textContent =
+        "儲存修改";
 
 
     updateImagePreview();
 
 
-    showCaseModal();
+    caseModal.classList.add(
+        "show"
+    );
 
 }
+
+
+
+/* ========================================
+   關閉 Modal
+======================================== */
+
+function closeCaseModal() {
+
+    caseModal.classList.remove(
+        "show"
+    );
+
+
+    editingCaseId =
+        null;
+
+}
+
+
+
+/* ========================================
+   圖片預覽
+======================================== */
+
+function updateImagePreview() {
+
+    if (!caseImagePreview) {
+
+        return;
+
+    }
+
+
+    const url =
+        caseImageUrlInput.value.trim();
+
+
+    if (!url) {
+
+        caseImagePreview.innerHTML = `
+
+            <span>
+                尚未設定圖片
+            </span>
+
+        `;
+
+        return;
+
+    }
+
+
+    caseImagePreview.innerHTML = `
+
+        <img
+            src="${escapeAttribute(
+                url
+            )}"
+            alt="箱子圖片預覽"
+            onerror="showImagePreviewError()"
+        >
+
+    `;
+
+}
+
+
+
+/* ========================================
+   圖片預覽失敗
+======================================== */
+
+function showImagePreviewError() {
+
+    if (!caseImagePreview) {
+
+        return;
+
+    }
+
+
+    caseImagePreview.innerHTML = `
+
+        <span>
+            ⚠️ 圖片網址無法載入
+        </span>
+
+    `;
+
+}
+
 
 
 /* ========================================
    儲存箱子
 ======================================== */
 
-async function handleCaseSubmit(event) {
+async function saveCase(event) {
 
     event.preventDefault();
 
 
-    const saveButton =
-        document.querySelector(
-            "#save-case-button"
+    if (
+        !caseNameInput.value.trim() ||
+        !caseGameInput.value.trim()
+    ) {
+
+        alert(
+            "請填寫箱子名稱與遊戲"
         );
 
+        return;
 
-    const message =
-        document.querySelector(
-            "#case-form-message"
-        );
-
-
-    const caseId =
-        document.querySelector(
-            "#caseId"
-        ).value.trim();
-
-
-    const name =
-        document.querySelector(
-            "#case-name"
-        ).value.trim();
-
-
-    const game =
-        document.querySelector(
-            "#case-game"
-        ).value.trim();
+    }
 
 
     const price =
         Number(
-            document.querySelector(
-                "#case-price"
-            ).value
+            casePriceInput.value
         );
 
 
-    const imageUrl =
-        document.querySelector(
-            "#case-image-url"
-        ).value.trim();
-
-
-    const description =
-        document.querySelector(
-            "#case-description"
-        ).value.trim();
-
-
-    const status =
-        document.querySelector(
-            "#case-status"
-        ).value;
-
-
-    if (!name) {
-
-        message.textContent =
-            "請輸入箱子名稱。";
-
-        return;
-
-    }
-
-
-    if (!game) {
-
-        message.textContent =
-            "請輸入遊戲名稱。";
-
-        return;
-
-    }
-
-
     if (
-        !Number.isFinite(price) ||
+        isNaN(price) ||
         price < 0
     ) {
 
-        message.textContent =
-            "箱子價格不正確。";
+        alert(
+            "請輸入有效的箱子價格"
+        );
 
         return;
 
     }
+
+
+    const caseData = {
+
+        name:
+            caseNameInput.value.trim(),
+
+        game:
+            caseGameInput.value.trim(),
+
+        price:
+            price,
+
+        imageUrl:
+            caseImageUrlInput.value.trim(),
+
+        description:
+            caseDescriptionInput.value.trim(),
+
+        status:
+            caseStatusInput.value
+
+    };
+
+
+    if (editingCaseId) {
+
+        caseData.caseId =
+            editingCaseId;
+
+    }
+
+
+    saveCaseButton.disabled =
+        true;
+
+
+    saveCaseButton.textContent =
+        editingCaseId
+            ? "儲存中..."
+            : "建立中...";
 
 
     try {
 
-        saveButton.disabled =
-            true;
-
-
-        saveButton.textContent =
-            editingCaseId
-                ? "更新中..."
-                : "建立中...";
-
-
-        message.textContent =
-            "";
+        const sessionToken =
+            getAdminSessionToken();
 
 
         let result;
@@ -888,30 +1022,14 @@ async function handleCaseSubmit(event) {
                 await sendApiRequest(
                     "updateCase",
                     {
-
                         sessionToken:
-                            getSessionToken(),
+                            sessionToken,
 
-                        caseId:
-                            editingCaseId,
-
-                        name,
-
-                        game,
-
-                        price:
-                            String(
-                                price
-                            ),
-
-                        imageUrl,
-
-                        description,
-
-                        status
-
+                        caseData:
+                            caseData
                     }
                 );
+
 
         } else {
 
@@ -919,25 +1037,11 @@ async function handleCaseSubmit(event) {
                 await sendApiRequest(
                     "createCase",
                     {
-
                         sessionToken:
-                            getSessionToken(),
+                            sessionToken,
 
-                        name,
-
-                        game,
-
-                        price:
-                            String(
-                                price
-                            ),
-
-                        imageUrl,
-
-                        description,
-
-                        status
-
+                        caseData:
+                            caseData
                     }
                 );
 
@@ -945,31 +1049,23 @@ async function handleCaseSubmit(event) {
 
 
         console.log(
-            "箱子儲存成功：",
+            "箱子操作成功：",
             result
-        );
-
-
-        /*
-         * 清除一般 Cases Cache
-         */
-
-        removeApiCache(
-            "cases"
         );
 
 
         closeCaseModal();
 
 
-        await loadAdminCases();
-
-
-        alert(
+        showMessage(
             editingCaseId
-                ? "箱子更新成功！"
-                : "箱子建立成功！"
+                ? "箱子更新成功"
+                : "箱子建立成功",
+            "success"
         );
+
+
+        await loadCases();
 
 
     } catch (error) {
@@ -980,30 +1076,34 @@ async function handleCaseSubmit(event) {
         );
 
 
-        message.textContent =
+        alert(
             error.message ||
-            "儲存箱子失敗";
+            "儲存箱子失敗"
+        );
 
 
     } finally {
 
-        saveButton.disabled =
+        saveCaseButton.disabled =
             false;
 
 
-        saveButton.textContent =
-            "儲存箱子";
+        saveCaseButton.textContent =
+            editingCaseId
+                ? "儲存修改"
+                : "建立箱子";
 
     }
 
 }
 
 
+
 /* ========================================
-   啟用 / 停用
+   停用箱子
 ======================================== */
 
-async function toggleCase(caseId) {
+async function deleteCaseConfirm(caseId) {
 
     const caseData =
         adminCases.find(
@@ -1019,35 +1119,22 @@ async function toggleCase(caseId) {
 
     if (!caseData) {
 
+        alert(
+            "找不到指定箱子"
+        );
+
         return;
 
     }
 
 
-    const currentStatus =
-        String(
-            caseData.status ||
-            "inactive"
-        ).toLowerCase();
+    const confirmed =
+        confirm(
+            `確定要停用「${caseData.name}」嗎？\n\n箱子資料不會被直接刪除，只會改為停用。`
+        );
 
 
-    const nextStatus =
-        currentStatus === "active"
-            ? "inactive"
-            : "active";
-
-
-    const actionText =
-        nextStatus === "active"
-            ? "啟用"
-            : "停用";
-
-
-    if (
-        !confirm(
-            `確定要${actionText}「${caseData.name}」嗎？`
-        )
-    ) {
+    if (!confirmed) {
 
         return;
 
@@ -1056,244 +1143,178 @@ async function toggleCase(caseId) {
 
     try {
 
-        await sendApiRequest(
-            "updateCaseStatus",
-            {
+        const sessionToken =
+            getAdminSessionToken();
 
+
+        await sendApiRequest(
+            "deleteCase",
+            {
                 sessionToken:
-                    getSessionToken(),
+                    sessionToken,
 
                 caseId:
-                    caseId,
-
-                status:
-                    nextStatus
-
+                    caseId
             }
         );
 
 
-        removeApiCache(
-            "cases"
+        showMessage(
+            "箱子已停用",
+            "success"
         );
 
 
-        await loadAdminCases();
+        await loadCases();
 
 
     } catch (error) {
 
         console.error(
-            "更新箱子狀態失敗：",
+            "停用箱子失敗：",
             error
         );
 
 
         alert(
             error.message ||
-            "更新箱子狀態失敗"
+            "停用箱子失敗"
         );
 
     }
 
 }
+
 
 
 /* ========================================
-   Modal
+   重新啟用箱子
 ======================================== */
 
-function showCaseModal() {
+async function restoreCase(caseId) {
 
-    const modal =
-        document.querySelector(
-            "#case-modal"
-        );
-
-
-    if (modal) {
-
-        modal.classList.add(
-            "show"
-        );
-
-    }
-
-}
-
-
-function closeCaseModal() {
-
-    const modal =
-        document.querySelector(
-            "#case-modal"
-        );
-
-
-    if (modal) {
-
-        modal.classList.remove(
-            "show"
-        );
-
-    }
-
-
-    editingCaseId =
-        null;
-
-}
-
-
-/* ========================================
-   圖片預覽
-======================================== */
-
-function updateImagePreview() {
-
-    const input =
-        document.querySelector(
-            "#case-image-url"
-        );
-
-
-    const preview =
-        document.querySelector(
-            "#image-preview"
-        );
-
-
-    if (
-        !input ||
-        !preview
-    ) {
-
-        return;
-
-    }
-
-
-    const url =
-        input.value.trim();
-
-
-    if (!url) {
-
-        preview.innerHTML =
-            "";
-
-        return;
-
-    }
-
-
-    preview.innerHTML = `
-
-        <img
-            src="${escapeAttribute(
-                url
-            )}"
-            alt="圖片預覽"
-            onerror="
-                this.style.display='none'
-            "
-        >
-
-    `;
-
-}
-
-
-/* ========================================
-   統計
-======================================== */
-
-function updateStatistics() {
-
-    const total =
-        adminCases.length;
-
-
-    const active =
-        adminCases.filter(
+    const caseData =
+        adminCases.find(
             item =>
                 String(
-                    item.status
-                ).toLowerCase()
-                ===
-                "active"
-        ).length;
-
-
-    const inactive =
-        total -
-        active;
-
-
-    const totalElement =
-        document.querySelector(
-            "#total-case-count"
+                    item.caseId
+                ) ===
+                String(
+                    caseId
+                )
         );
 
 
-    const activeElement =
-        document.querySelector(
-            "#active-case-count"
+    if (!caseData) {
+
+        alert(
+            "找不到指定箱子"
         );
 
-
-    const inactiveElement =
-        document.querySelector(
-            "#inactive-case-count"
-        );
-
-
-    if (totalElement) {
-
-        totalElement.textContent =
-            total;
+        return;
 
     }
 
 
-    if (activeElement) {
+    const confirmed =
+        confirm(
+            `確定要重新啟用「${caseData.name}」嗎？`
+        );
 
-        activeElement.textContent =
-            active;
+
+    if (!confirmed) {
+
+        return;
 
     }
 
 
-    if (inactiveElement) {
+    try {
 
-        inactiveElement.textContent =
-            inactive;
+        const sessionToken =
+            getAdminSessionToken();
+
+
+        await sendApiRequest(
+            "updateCase",
+            {
+                sessionToken:
+                    sessionToken,
+
+                caseData: {
+
+                    caseId:
+                        caseId,
+
+                    status:
+                        "active"
+
+                }
+
+            }
+        );
+
+
+        showMessage(
+            "箱子已重新啟用",
+            "success"
+        );
+
+
+        await loadCases();
+
+
+    } catch (error) {
+
+        console.error(
+            "重新啟用失敗：",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "重新啟用失敗"
+        );
 
     }
 
 }
+
 
 
 /* ========================================
    格式化價格
 ======================================== */
 
-function formatAdminPrice(value) {
+function formatPrice(value) {
 
     const number =
         Number(
-            value || 0
+            value
         );
 
 
-    return `$ ${number.toLocaleString(
-        "en-US",
-        {
-            maximumFractionDigits: 2
-        }
-    )}`;
+    if (
+        isNaN(number)
+    ) {
+
+        return "$0";
+
+    }
+
+
+    return "$" +
+        number.toLocaleString(
+            "en-US",
+            {
+                maximumFractionDigits:
+                    2
+            }
+        );
 
 }
+
 
 
 /* ========================================
@@ -1336,3 +1357,134 @@ function escapeAttribute(value) {
     );
 
 }
+
+
+
+/* ========================================
+   事件
+======================================== */
+
+if (createCaseButton) {
+
+    createCaseButton.addEventListener(
+        "click",
+        openCreateModal
+    );
+
+}
+
+
+if (closeModalButton) {
+
+    closeModalButton.addEventListener(
+        "click",
+        closeCaseModal
+    );
+
+}
+
+
+if (cancelModalButton) {
+
+    cancelModalButton.addEventListener(
+        "click",
+        closeCaseModal
+    );
+
+}
+
+
+if (caseForm) {
+
+    caseForm.addEventListener(
+        "submit",
+        saveCase
+    );
+
+}
+
+
+if (caseImageUrlInput) {
+
+    caseImageUrlInput.addEventListener(
+        "input",
+        updateImagePreview
+    );
+
+}
+
+
+
+/* ========================================
+   點擊 Modal 外部關閉
+======================================== */
+
+if (caseModal) {
+
+    caseModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                caseModal
+            ) {
+
+                closeCaseModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* ========================================
+   ESC 關閉
+======================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            caseModal.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeCaseModal();
+
+        }
+
+    }
+);
+
+
+
+/* ========================================
+   初始化
+======================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        const isAdmin =
+            await checkAdmin();
+
+
+        if (!isAdmin) {
+
+            return;
+
+        }
+
+
+        await loadCases();
+
+    }
+);
