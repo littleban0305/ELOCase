@@ -48,8 +48,38 @@ document.addEventListener(
              * 第一次立即載入
              */
 
+            const isChallengePage =
+                mode === "challenge" &&
+                challengeId;
+            
+            
+            if(
+                isChallengePage &&
+                window.ELOChallengeLoading
+            ){
+            
+                ELOChallengeLoading.start();
+            
+            }
+            
+            
             const cases =
                 await getCases();
+            
+            
+            renderCases(
+                cases
+            );
+            
+            
+            if(
+                isChallengePage &&
+                window.ELOChallengeLoading
+            ){
+            
+                ELOChallengeLoading.finish();
+            
+            }
 
 
             renderCases(
