@@ -1956,6 +1956,30 @@ async function initializeCasePage() {
         );
 
 
+    /*
+     * ====================================
+     * Challenge Mode
+     *
+     * 啟動新的 Challenge Loading
+     *
+     * 舊版 Loading 不使用
+     * ====================================
+     */
+
+    const isChallenge =
+        isChallengeCasePage();
+
+
+    if (
+        isChallenge &&
+        window.ELOChallengeLoading
+    ) {
+
+        ELOChallengeLoading.start();
+
+    }
+
+
     if (!caseId) {
 
         if (caseName) {
@@ -1981,6 +2005,16 @@ async function initializeCasePage() {
         }
 
 
+        if (
+            isChallenge &&
+            window.ELOChallengeLoading
+        ) {
+
+            ELOChallengeLoading.finish();
+
+        }
+
+
         return;
 
     }
@@ -1988,9 +2022,20 @@ async function initializeCasePage() {
 
     try {
 
+        /*
+         * ====================================
+         * 取得 Case
+         * ====================================
+         */
+
         const caseData =
             await getCase(
-                caseId
+                caseId,
+                isChallenge
+                    ? {
+                        noLoading: true
+                    }
+                    : undefined
             );
 
 
@@ -2021,9 +2066,20 @@ async function initializeCasePage() {
         );
 
 
+        /*
+         * ====================================
+         * 取得內容物
+         * ====================================
+         */
+
         const items =
             await getCaseItems(
-                caseId
+                caseId,
+                isChallenge
+                    ? {
+                        noLoading: true
+                    }
+                    : undefined
             );
 
 
@@ -2041,11 +2097,72 @@ async function initializeCasePage() {
         /*
          * ====================================
          * Challenge Mode
+         *
+         * 初次載入時：
+         *
+         * 1. 取得 Challenge 最新資料
+         * 2. 更新右上角四張卡片
+         * 3. 等待 Navbar 完成
+         * 4. Loading 才消失
+         *
+         * 背景更新仍然由
+         * startChallengeCaseRefresh()
+         * 負責
          * ====================================
-         *
-         * 啟動背景同步。
-         *
-         * 不啟動任何舊 Loading。
+         */
+
+        if (isChallenge) {
+
+            const challengeData =
+                getChallengeDataFromUrl();
+
+
+            const challengeResult =
+                await getChallenge(
+                    challengeData.challengeId,
+                    {
+                        noLoading: true
+                    }
+                );
+
+
+            if (
+                challengeResult &&
+                challengeResult.players
+            ) {
+
+                updateChallengeCasePlayers(
+                    challengeResult.players
+                );
+
+            }
+
+
+            /*
+             * 等待右上角四張卡片
+             */
+
+            await waitForChallengeCaseNavbar();
+
+
+            /*
+             * Challenge 初次載入完成
+             */
+
+            if (
+                window.ELOChallengeLoading
+            ) {
+
+                ELOChallengeLoading.finish();
+
+            }
+
+        }
+
+
+        /*
+         * ====================================
+         * 啟動 Challenge 背景同步
          * ====================================
          */
 
@@ -2074,10 +2191,7 @@ async function initializeCasePage() {
 
                 <div class="case-items-loading">
 
-                    ${escapeHtml(
-                        error.message ||
-                        "無法載入箱子資料"
-                    )}
+                    箱子資料載入失敗。
 
                 </div>
 
@@ -2085,10 +2199,173 @@ async function initializeCasePage() {
 
         }
 
+
+        /*
+         * 防止 Challenge Loading
+         * 因錯誤而永久卡住
+         */
+
+        if (
+            isChallenge &&
+            window.ELOChallengeLoading
+        ) {
+
+            ELOChallengeLoading.stop();
+
+        }
+
     }
 
 }
 
+/* ========================================
+Challenge Case Navbar Loading 等待
+======================================== */
+
+async function waitForChallengeCaseNavbar() {
+
+    /*
+     * ====================================
+     * 只在 Challenge Mode 使用
+     * ====================================
+     */
+
+    if (
+        !isChallengeCasePage()
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * 最多等待 15 秒
+     *
+     * 避免 API 異常造成
+     * Loading 永遠卡住
+     */
+
+    const maxAttempts =
+        30;
+
+
+    const interval =
+        500;
+
+
+    /*
+     * ====================================
+     * 等待右上角四個數值
+     *
+     * 我的 EC
+     * 我的 Value
+     * 對手 EC
+     * 對手 Value
+     * ====================================
+     */
+
+    for (
+        let attempt = 0;
+        attempt < maxAttempts;
+        attempt++
+    ) {
+
+        const myCoin =
+            document.getElementById(
+                "navbar-my-coin"
+            );
+
+
+        const myValue =
+            document.getElementById(
+                "navbar-my-value"
+            );
+
+
+        const opponentCoin =
+            document.getElementById(
+                "navbar-opponent-coin"
+            );
+
+
+        const opponentValue =
+            document.getElementById(
+                "navbar-opponent-value"
+            );
+
+
+        if (
+            myCoin &&
+            myValue &&
+            opponentCoin &&
+            opponentValue
+        ) {
+
+            const values = [
+
+                myCoin.innerText,
+
+                myValue.innerText,
+
+                opponentCoin.innerText,
+
+                opponentValue.innerText
+
+            ];
+
+
+            /*
+             * 不接受空白或預設佔位文字
+             */
+
+            const ready =
+                values.every(
+                    value => {
+
+                        const text =
+                            String(
+                                value || ""
+                            ).trim();
+
+
+                        return (
+                            text !== "" &&
+                            text !== "-" &&
+                            text !== "--"
+                        );
+
+                    }
+                );
+
+
+            if (ready) {
+
+                return;
+
+            }
+
+        }
+
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    interval
+                )
+        );
+
+    }
+
+
+    /*
+     * 超過等待時間
+     *
+     * 不讓 Loading 永久卡住
+     */
+
+}
 
 /* ========================================
 HTML 防護
