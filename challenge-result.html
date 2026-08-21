@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
 <title>
 Challenge Result｜ELOCase
@@ -25,14 +28,21 @@ Challenge Result｜ELOCase
 <body class="challenge-mode">
 
 
+<!-- ========================================
+     Challenge Navbar
+======================================== -->
+
 <header class="challenge-navbar">
 
+
 <div class="challenge-navbar-container">
+
 
 <a
 href="challenge.html"
 class="challenge-brand"
 >
+
 <span>
 ELOCase
 </span>
@@ -44,13 +54,17 @@ Challenge Mode
 </a>
 
 
+
 <div class="challenge-navbar-status">
 
+
 <div class="challenge-user-box">
+
 
 <div class="challenge-box-title">
 我的 ELOCoin
 </div>
+
 
 <div
 id="navbar-my-coin"
@@ -59,15 +73,18 @@ class="challenge-box-value"
 0
 </div>
 
+
 </div>
 
 
 
 <div class="challenge-user-box">
 
+
 <div class="challenge-box-title">
 我的物品價值
 </div>
+
 
 <div
 id="navbar-my-value"
@@ -76,16 +93,18 @@ class="challenge-box-value"
 0
 </div>
 
-</div>
 
+</div>
 
 
 
 <div class="challenge-user-box opponent">
 
+
 <div class="challenge-box-title">
 對手 ELOCoin
 </div>
+
 
 <div
 id="navbar-opponent-coin"
@@ -94,15 +113,18 @@ class="challenge-box-value"
 0
 </div>
 
+
 </div>
 
 
 
 <div class="challenge-user-box opponent">
 
+
 <div class="challenge-box-title">
 對手物品價值
 </div>
+
 
 <div
 id="navbar-opponent-value"
@@ -111,17 +133,25 @@ class="challenge-box-value"
 0
 </div>
 
+
+</div>
+
+
 </div>
 
 
 </div>
 
-</div>
 
 </header>
 
 
 
+
+
+<!-- ========================================
+     Main
+======================================== -->
 
 <main class="challenge-result-page">
 
@@ -129,7 +159,9 @@ class="challenge-box-value"
 <div class="section-container">
 
 
+
 <div class="section-header">
+
 
 <span class="section-label">
 Challenge Result
@@ -147,6 +179,10 @@ Challenge Result
 
 
 
+<!-- ========================================
+     Result Card
+======================================== -->
+
 <section class="result-card">
 
 
@@ -158,8 +194,10 @@ Challenge Result
 
 
 
-<div id="winner-text"
-class="winner-text">
+<div
+id="winner-text"
+class="winner-text"
+>
 
 計算中...
 
@@ -169,8 +207,11 @@ class="winner-text">
 
 
 
-<div class="vs-result">
+<!-- ========================================
+     VS Result
+======================================== -->
 
+<div class="vs-result">
 
 
 <div class="result-player player-a">
@@ -193,7 +234,9 @@ class="winner-text">
 
 
 <div>
+
 物品價值：
+
 <span id="player-a-items">
 0
 </span>
@@ -202,7 +245,9 @@ class="winner-text">
 
 
 <div>
+
 ELOCoin：
+
 <span id="player-a-coin">
 0
 </span>
@@ -246,7 +291,9 @@ VS
 
 
 <div>
+
 物品價值：
+
 <span id="player-b-items">
 0
 </span>
@@ -255,7 +302,9 @@ VS
 
 
 <div>
+
 ELOCoin：
+
 <span id="player-b-coin">
 0
 </span>
@@ -266,20 +315,135 @@ ELOCoin：
 </div>
 
 
-
 </div>
 
 
 
 
 
-<button id="back-challenge-button"
-class="button button-primary">
+<!-- ========================================
+     Challenge Record
+======================================== -->
+
+<section class="challenge-result-record">
+
+
+<div class="challenge-result-record-title">
+
+Challenge Record
+
+</div>
+
+
+
+<div class="challenge-result-record-grid">
+
+
+<div class="challenge-result-record-item">
+
+
+<span>
+Challenge Code
+</span>
+
+
+<strong id="result-challenge-code">
+-
+</strong>
+
+
+</div>
+
+
+
+<div class="challenge-result-record-item">
+
+
+<span>
+Challenge 狀態
+</span>
+
+
+<strong id="result-challenge-status">
+已完成
+</strong>
+
+
+</div>
+
+
+
+<div class="challenge-result-record-item">
+
+
+<span>
+初始 Challenge EC
+</span>
+
+
+<strong id="result-initial-ec">
+0
+</strong>
+
+
+</div>
+
+
+
+<div class="challenge-result-record-item">
+
+
+<span>
+建立時間
+</span>
+
+
+<strong id="result-created-at">
+-
+</strong>
+
+
+</div>
+
+
+
+<div class="challenge-result-record-item">
+
+
+<span>
+最後更新
+</span>
+
+
+<strong id="result-updated-at">
+-
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ========================================
+     Back Button
+======================================== -->
+
+<button
+id="back-challenge-button"
+class="button button-primary"
+>
 
 返回 Challenge
 
 </button>
-
 
 
 </section>
@@ -293,10 +457,53 @@ class="button button-primary">
 
 
 
+
+<!-- ========================================
+     Footer
+======================================== -->
+
+<footer class="footer">
+
+
+<div class="footer-container">
+
+
+<div class="footer-brand">
+ELOCase
+</div>
+
+
+<p>
+CS2 虛擬物品平台
+</p>
+
+
+<span>
+© 2026 ELOCase
+</span>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+<!-- ========================================
+     Scripts
+======================================== -->
+
 <script src="js/challenge-loading.js"></script>
+
 <script src="js/config.js"></script>
+
 <script src="js/api.js"></script>
+
 <script src="js/auth.js"></script>
+
 <script src="js/challenge-result.js"></script>
 
 
