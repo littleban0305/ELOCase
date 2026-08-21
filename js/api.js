@@ -2539,3 +2539,221 @@ function setChallengeStatusText(
     }
 
 }
+
+/* ========================================
+   ELOCase POST API
+======================================== */
+
+async function sendApiPostRequest(
+    action,
+    parameters = {},
+    options = {}
+) {
+
+    const maxAttempts = 3;
+
+    let lastError = null;
+
+
+    /*
+     * ====================================
+     * Loading 開始
+     * ====================================
+     */
+
+    if (
+        !options.noLoading &&
+        !window.ELOCaseOpening &&
+        window.ELOLoading &&
+        typeof window.ELOLoading.start === "function"
+    ) {
+
+        window.ELOLoading.start();
+
+    }
+
+
+    try {
+
+        for (
+            let attempt = 1;
+            attempt <= maxAttempts;
+            attempt++
+        ) {
+
+            try {
+
+                /*
+                 * ====================================
+                 * 建立 POST Body
+                 * ====================================
+                 */
+
+                const requestData = {
+
+                    action:
+                        action,
+
+                    ...parameters
+
+                };
+
+
+                console.log(
+                    `POST API 請求 ${attempt}/${maxAttempts}:`,
+                    action,
+                    requestData
+                );
+
+
+                /*
+                 * ====================================
+                 * 發送 POST
+                 * ====================================
+                 */
+
+                const response =
+                    await fetch(
+                        CONFIG.API_URL,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    requestData
+                                ),
+
+                            redirect:
+                                "follow",
+
+                            cache:
+                                "no-store"
+
+                        }
+                    );
+
+
+                /*
+                 * ====================================
+                 * HTTP 錯誤
+                 * ====================================
+                 */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `API 請求失敗（${response.status}）`
+                    );
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 解析 JSON
+                 * ====================================
+                 */
+
+                const text =
+                    await response.text();
+
+
+                console.log(
+                    "GAS POST RAW RESPONSE:",
+                    text
+                );
+
+
+                const result =
+                    JSON.parse(text);
+
+
+                /*
+                 * ====================================
+                 * API 錯誤
+                 * ====================================
+                 */
+
+                if (!result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "發生未知錯誤"
+                    );
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 成功
+                 * ====================================
+                 */
+
+                return result.data;
+
+
+            } catch (error) {
+
+                lastError =
+                    error;
+
+
+                console.warn(
+                    `POST API 第 ${attempt} 次請求失敗：`,
+                    error.message
+                );
+
+
+                if (
+                    attempt >= maxAttempts
+                ) {
+
+                    throw lastError;
+
+                }
+
+
+                await new Promise(
+                    resolve =>
+                        setTimeout(
+                            resolve,
+                            500 * attempt
+                        )
+                );
+
+            }
+
+        }
+
+    } finally {
+
+        /*
+         * ====================================
+         * Loading 結束
+         * ====================================
+         */
+
+        if (
+            !options.noLoading &&
+            !window.ELOCaseOpening &&
+            window.ELOLoading &&
+            typeof window.ELOLoading.finish === "function"
+        ) {
+
+            window.ELOLoading.finish();
+
+        }
+
+    }
+
+}
