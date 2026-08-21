@@ -2183,9 +2183,12 @@ async function initializeCasePage() {
          */
 
         const caseData =
-            await getCase(
-                caseId
-            );
+             await getCase(
+                 caseId,
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         if (!caseData) {
@@ -2213,7 +2216,10 @@ async function initializeCasePage() {
 
         const items =
              await getCaseItems(
-                 caseId
+                 caseId,
+                 {
+                     noLoading: true
+                 }
              );
          
          
@@ -2831,9 +2837,12 @@ async function refreshChallengeCase(){
          */
 
         const caseData =
-            await getCase(
-                caseId
-            );
+             await getCase(
+                 caseId,
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         if(caseData){
@@ -2886,9 +2895,12 @@ async function refreshChallengeCase(){
          */
 
         const items =
-            await getCaseItems(
-                caseId
-            );
+             await getCaseItems(
+                 caseId,
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         /*
