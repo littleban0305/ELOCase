@@ -12,7 +12,6 @@ let adminCases = [];
 let editingCaseId = null;
 
 
-
 /* ========================================
    DOM
 ======================================== */
@@ -131,7 +130,6 @@ const caseImagePreview =
     );
 
 
-
 /* ========================================
    顯示訊息
 ======================================== */
@@ -173,7 +171,6 @@ function showMessage(
 }
 
 
-
 /* ========================================
    取得 Session
 ======================================== */
@@ -191,7 +188,6 @@ function getAdminSessionToken() {
     );
 
 }
-
 
 
 /* ========================================
@@ -270,7 +266,6 @@ async function checkAdmin() {
     }
 
 }
-
 
 
 /* ========================================
@@ -388,7 +383,6 @@ async function loadCases() {
 }
 
 
-
 /* ========================================
    顯示箱子
 ======================================== */
@@ -447,7 +441,6 @@ function renderCases() {
 }
 
 
-
 /* ========================================
    箱子卡片
 ======================================== */
@@ -481,7 +474,6 @@ function renderCaseCard(caseData) {
                     : "inactive"
             }"
         >
-
 
             <div class="admin-case-image">
 
@@ -523,12 +515,9 @@ function renderCaseCard(caseData) {
             </div>
 
 
-
             <div class="admin-case-content">
 
-
                 <div class="admin-case-top">
-
 
                     <div>
 
@@ -538,7 +527,6 @@ function renderCaseCard(caseData) {
                                 "未命名箱子"
                             )}
                         </h2>
-
 
                         <span class="case-id">
 
@@ -570,13 +558,10 @@ function renderCaseCard(caseData) {
 
                     </span>
 
-
                 </div>
 
 
-
                 <div class="admin-case-meta">
-
 
                     <div>
 
@@ -608,9 +593,7 @@ function renderCaseCard(caseData) {
 
                     </div>
 
-
                 </div>
-
 
 
                 <p class="admin-case-description">
@@ -625,9 +608,7 @@ function renderCaseCard(caseData) {
                 </p>
 
 
-
                 <div class="admin-case-actions">
-
 
                     <button
                         type="button"
@@ -672,19 +653,15 @@ function renderCaseCard(caseData) {
                         `
                     }
 
-
                 </div>
 
-
             </div>
-
 
         </article>
 
     `;
 
 }
-
 
 
 /* ========================================
@@ -738,7 +715,6 @@ function openCreateModal() {
     );
 
 }
-
 
 
 /* ========================================
@@ -831,7 +807,6 @@ function openEditModal(caseId) {
 }
 
 
-
 /* ========================================
    關閉 Modal
 ======================================== */
@@ -847,7 +822,6 @@ function closeCaseModal() {
         null;
 
 }
-
 
 
 /* ========================================
@@ -897,7 +871,6 @@ function updateImagePreview() {
 }
 
 
-
 /* ========================================
    圖片預覽失敗
 ======================================== */
@@ -922,7 +895,6 @@ function showImagePreviewError() {
 }
 
 
-
 /* ========================================
    儲存箱子
 ======================================== */
@@ -931,9 +903,18 @@ async function saveCase(event) {
 
     event.preventDefault();
 
-    console.log("====================================");
-    console.log("🛠️ [Admin] saveCase 開始");
-    console.log("====================================");
+
+    console.log(
+        "===================================="
+    );
+
+    console.log(
+        "🛠️ [Admin] saveCase 開始"
+    );
+
+    console.log(
+        "===================================="
+    );
 
 
     /*
@@ -963,14 +944,17 @@ async function saveCase(event) {
         caseStatusInput.value;
 
 
-    console.log("📦 表單資料：", {
-        name,
-        game,
-        price,
-        imageUrl,
-        description,
-        status
-    });
+    console.log(
+        "📦 表單資料：",
+        {
+            name,
+            game,
+            price,
+            imageUrl,
+            description,
+            status
+        }
+    );
 
 
     if (
@@ -1061,7 +1045,7 @@ async function saveCase(event) {
 
 
     /*
-     * 編輯模式才加入 caseId
+     * 編輯模式加入 caseId
      */
 
     if (
@@ -1139,10 +1123,7 @@ async function saveCase(event) {
                 : "createCase";
 
 
-        const payload = {
-
-            action:
-                action,
+        const parameters = {
 
             sessionToken:
                 sessionToken,
@@ -1154,7 +1135,7 @@ async function saveCase(event) {
 
 
         console.log(
-            "🚀 準備送出 API："
+            "🚀 準備送出 POST API："
         );
 
 
@@ -1165,35 +1146,36 @@ async function saveCase(event) {
 
 
         console.log(
-            "➡️ payload：",
-            payload
+            "➡️ parameters：",
+            parameters
         );
 
 
         console.log(
-            "➡️ payload JSON：",
-            JSON.stringify(
-                payload
-            )
+            "➡️ POST JSON：",
+            JSON.stringify({
+
+                action:
+                    action,
+
+                ...parameters
+
+            })
         );
 
 
         /*
          * ====================================
-         * 呼叫 API
+         * ⭐ 重要：
+         * createCase / updateCase
+         * 必須使用 POST
          * ====================================
          */
 
         const result =
-            await sendApiRequest(
+            await sendApiPostRequest(
                 action,
-                {
-                    sessionToken:
-                        sessionToken,
-
-                    caseData:
-                        caseData
-                }
+                parameters
             );
 
 
@@ -1283,7 +1265,6 @@ async function saveCase(event) {
 }
 
 
-
 /* ========================================
    停用箱子
 ======================================== */
@@ -1332,14 +1313,29 @@ async function deleteCaseConfirm(caseId) {
             getAdminSessionToken();
 
 
-        await sendApiRequest(
+        if (!sessionToken) {
+
+            throw new Error(
+                "登入 Session 已不存在，請重新登入"
+            );
+
+        }
+
+
+        /*
+         * ⭐ deleteCase 必須使用 POST
+         */
+
+        await sendApiPostRequest(
             "deleteCase",
             {
+
                 sessionToken:
                     sessionToken,
 
                 caseId:
                     caseId
+
             }
         );
 
@@ -1369,7 +1365,6 @@ async function deleteCaseConfirm(caseId) {
     }
 
 }
-
 
 
 /* ========================================
@@ -1420,9 +1415,24 @@ async function restoreCase(caseId) {
             getAdminSessionToken();
 
 
-        await sendApiRequest(
+        if (!sessionToken) {
+
+            throw new Error(
+                "登入 Session 已不存在，請重新登入"
+            );
+
+        }
+
+
+        /*
+         * ⭐ restoreCase 實際上也是 updateCase
+         * 所以必須使用 POST
+         */
+
+        await sendApiPostRequest(
             "updateCase",
             {
+
                 sessionToken:
                     sessionToken,
 
@@ -1467,7 +1477,6 @@ async function restoreCase(caseId) {
 }
 
 
-
 /* ========================================
    格式化價格
 ======================================== */
@@ -1499,7 +1508,6 @@ function formatPrice(value) {
         );
 
 }
-
 
 
 /* ========================================
@@ -1542,7 +1550,6 @@ function escapeAttribute(value) {
     );
 
 }
-
 
 
 /* ========================================
@@ -1599,7 +1606,6 @@ if (caseImageUrlInput) {
 }
 
 
-
 /* ========================================
    點擊 Modal 外部關閉
 ======================================== */
@@ -1625,7 +1631,6 @@ if (caseModal) {
 }
 
 
-
 /* ========================================
    ESC 關閉
 ======================================== */
@@ -1647,7 +1652,6 @@ document.addEventListener(
 
     }
 );
-
 
 
 /* ========================================
