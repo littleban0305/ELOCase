@@ -19,70 +19,72 @@ let opponentPlayer = null;
 
 
 document.addEventListener(
-"DOMContentLoaded",
-async()=>{
+    "DOMContentLoaded",
+    async () => {
+
+        currentUser =
+            await verifySession();
 
 
-    currentUser =
-        await verifySession();
+        if (!currentUser) {
+
+            return;
+
+        }
 
 
-
-    const params =
-        new URLSearchParams(
-            location.search
-        );
-
-
-    challengeId =
-        params.get(
-            "id"
-        );
+        const params =
+            new URLSearchParams(
+                location.search
+            );
 
 
-
-    if(!challengeId){
-
-        alert(
-            "缺少 Challenge ID"
-        );
-
-        return;
-
-    }
+        challengeId =
+            params.get(
+                "id"
+            );
 
 
+        if (!challengeId) {
 
-    if(
-        window.ELOChallengeLoading
-    ){
-    
-        ELOChallengeLoading.start();
-    
-    }
-    
-    
-    await loadChallengeResult()
-        .finally(
-            () => {
-    
-                if(
-                    window.ELOChallengeLoading
-                ){
-    
-                    ELOChallengeLoading.finish();
-    
+            alert(
+                "缺少 Challenge ID"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            window.ELOChallengeLoading
+        ) {
+
+            ELOChallengeLoading.start();
+
+        }
+
+
+        await loadChallengeResult()
+            .finally(
+                () => {
+
+                    if (
+                        window.ELOChallengeLoading
+                    ) {
+
+                        ELOChallengeLoading.finish();
+
+                    }
+
                 }
-    
-            }
-        );
-
-    initButtons();
+            );
 
 
+        initButtons();
 
-});
-
+    }
+);
 
 
 
@@ -93,65 +95,165 @@ async()=>{
 ======================================== */
 
 
-async function loadChallengeResult(){
+async function loadChallengeResult() {
+
+    try {
+
+        const result =
+            await getChallenge(
+                challengeId,
+                {
+                    noLoading: true
+                }
+            );
 
 
-try{
+        if (
+            !result ||
+            !Array.isArray(
+                result.players
+            )
+        ) {
+
+            throw new Error(
+                "找不到挑戰資料"
+            );
+
+        }
 
 
-    const result =
-        await getChallenge(
-            challengeId,
-            {
-                noLoading: true
-            }
+        /*
+         * ========================================
+         * 必須有兩位玩家
+         * ========================================
+         */
+
+        if (
+            result.players.length < 2
+        ) {
+
+            throw new Error(
+                "此 Challenge 尚未完成"
+            );
+
+        }
+
+
+        /*
+         * ========================================
+         * 檢查 Challenge 是否正式結束
+         * ========================================
+         *
+         * Challenge Result 只能在雙方
+         * 都完成後顯示。
+         *
+         */
+
+
+        const allPlayersFinished =
+            result.players.every(
+                player =>
+                    String(
+                        player.finished
+                    ).toLowerCase()
+                    ===
+                    "true"
+            );
+
+
+        const challengeFinished =
+            String(
+                result.challenge?.status
+            ).toLowerCase()
+            ===
+            "finished";
+
+
+        /*
+         * 必須同時滿足：
+         *
+         * 1. 雙方 finished
+         * 2. Challenge status = finished
+         *
+         */
+
+
+        if (
+            !allPlayersFinished ||
+            !challengeFinished
+        ) {
+
+            alert(
+                "此 Challenge 尚未正式結束"
+            );
+
+
+            location.href =
+                "challenge-room.html?id=" +
+                encodeURIComponent(
+                    challengeId
+                );
+
+
+            return;
+
+        }
+
+
+        /*
+         * ========================================
+         * 判斷玩家
+         * ========================================
+         */
+
+        processPlayers(
+            result.players
         );
 
 
+        /*
+         * ========================================
+         * 確認自己確實在 Challenge 中
+         * ========================================
+         */
 
-    if(
-        !result ||
-        !result.players
-    ){
+        if (
+            !myPlayer ||
+            !opponentPlayer
+        ) {
 
-        throw new Error(
-            "找不到挑戰資料"
+            throw new Error(
+                "無法取得雙方玩家資料"
+            );
+
+        }
+
+
+        /*
+         * ========================================
+         * 渲染結果
+         * ========================================
+         */
+
+        renderResult();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Result 載入失敗",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Result 載入失敗"
         );
 
     }
 
-
-
-    processPlayers(
-        result.players
-    );
-
-
-
-    renderResult();
-
-
-
 }
-catch(error){
-
-
-    console.error(
-        "Result 載入失敗",
-        error
-    );
-
-
-    alert(
-        error.message
-    );
-
-
-}
-
-
-}
-
 
 
 
@@ -164,8 +266,9 @@ catch(error){
 ======================================== */
 
 
-function processPlayers(players){
-
+function processPlayers(
+    players
+) {
 
     myPlayer =
         null;
@@ -175,13 +278,10 @@ function processPlayers(players){
         null;
 
 
-
     players.forEach(
-        player=>{
+        player => {
 
-
-            if(
-
+            if (
                 String(
                     player.userId
                 )
@@ -189,29 +289,23 @@ function processPlayers(players){
                 String(
                     currentUser.userId
                 )
-
-            ){
-
+            ) {
 
                 myPlayer =
                     player;
 
-
             }
-            else{
-
+            else if (
+                !opponentPlayer
+            ) {
 
                 opponentPlayer =
                     player;
 
-
             }
-
 
         }
     );
-
-
 
 }
 
@@ -226,12 +320,12 @@ function processPlayers(players){
 ======================================== */
 
 
-function renderResult(){
+function renderResult() {
 
-    if(
+    if (
         !myPlayer ||
         !opponentPlayer
-    ){
+    ) {
 
         return;
 
@@ -250,6 +344,7 @@ function renderResult(){
         ) || 0;
 
 
+
     /*
      * ========================================
      * 基本資料
@@ -258,14 +353,17 @@ function renderResult(){
 
     setText(
         "result-my-name",
-        myPlayer.displayName || "玩家"
+        myPlayer.displayName ||
+        "玩家"
     );
 
 
     setText(
         "result-opponent-name",
-        opponentPlayer.displayName || "對手"
+        opponentPlayer.displayName ||
+        "對手"
     );
+
 
 
     /*
@@ -290,6 +388,7 @@ function renderResult(){
     );
 
 
+
     /*
      * ========================================
      * 物品價值
@@ -297,7 +396,9 @@ function renderResult(){
      */
 
     const myItemValue =
-        Array.isArray(myPlayer.items)
+        Array.isArray(
+            myPlayer.items
+        )
             ? myPlayer.items.reduce(
                 (
                     total,
@@ -318,7 +419,9 @@ function renderResult(){
 
 
     const opponentItemValue =
-        Array.isArray(opponentPlayer.items)
+        Array.isArray(
+            opponentPlayer.items
+        )
             ? opponentPlayer.items.reduce(
                 (
                     total,
@@ -338,6 +441,7 @@ function renderResult(){
             : 0;
 
 
+
     setText(
         "player-a-items",
         formatNumber(
@@ -353,58 +457,45 @@ function renderResult(){
         )
     );
 
+
+
     /*
      * ========================================
      * Navbar 資料
      * ========================================
      */
-    
-    /*
-     * 我的 ELOCoin
-     */
-    
+
     setText(
         "navbar-my-coin",
         formatNumber(
             myPlayer.challengeEC
         )
     );
-    
-    
-    /*
-     * 我的物品價值
-     */
-    
+
+
     setText(
         "navbar-my-value",
         formatNumber(
             myItemValue
         )
     );
-    
-    
-    /*
-     * 對手 ELOCoin
-     */
-    
+
+
     setText(
         "navbar-opponent-coin",
         formatNumber(
             opponentPlayer.challengeEC
         )
     );
-    
-    
-    /*
-     * 對手物品價值
-     */
-    
+
+
     setText(
         "navbar-opponent-value",
         formatNumber(
             opponentItemValue
         )
     );
+
 
 
     /*
@@ -427,6 +518,7 @@ function renderResult(){
             opponentValue
         )
     );
+
 
 
     /*
@@ -466,10 +558,10 @@ function renderResult(){
     let resultText = "";
 
 
-    if(
+    if (
         myValue >
         opponentValue
-    ){
+    ) {
 
         resultText =
             "🎉 恭喜獲勝！";
@@ -484,12 +576,11 @@ function renderResult(){
             "loser-player"
         );
 
-
     }
-    else if(
+    else if (
         myValue <
         opponentValue
-    ){
+    ) {
 
         resultText =
             "😢 挑戰失敗";
@@ -504,14 +595,14 @@ function renderResult(){
             "loser-player"
         );
 
-
     }
-    else{
+    else {
 
         resultText =
             "🤝 平局";
 
     }
+
 
 
     /*
@@ -524,6 +615,7 @@ function renderResult(){
         "winner-text",
         resultText
     );
+
 
 
     /*
@@ -539,10 +631,21 @@ function renderResult(){
 
 }
 
+
+
+
+
+
+
+/* ========================================
+結果動畫
+======================================== */
+
+
 function playResultAnimation(
     myValue,
     opponentValue
-){
+) {
 
     const resultCard =
         document.querySelector(
@@ -550,7 +653,7 @@ function playResultAnimation(
         );
 
 
-    if(!resultCard){
+    if (!resultCard) {
 
         return;
 
@@ -561,11 +664,11 @@ function playResultAnimation(
      * 防止重新 render 時重播
      */
 
-    if(
+    if (
         resultCard.dataset.animationPlayed
         ===
         "true"
-    ){
+    ) {
 
         return;
 
@@ -590,7 +693,7 @@ function playResultAnimation(
      */
 
     requestAnimationFrame(
-        ()=>{
+        () => {
 
             resultCard.classList.add(
                 "result-animation-show"
@@ -620,27 +723,27 @@ function playResultAnimation(
      * 勝者特效
      */
 
-    if(
+    if (
         myValue >
         opponentValue
-    ){
+    ) {
 
         document.body.classList.add(
             "challenge-win"
         );
 
     }
-    else if(
+    else if (
         myValue <
         opponentValue
-    ){
+    ) {
 
         document.body.classList.add(
             "challenge-lose"
         );
 
     }
-    else{
+    else {
 
         document.body.classList.add(
             "challenge-draw"
@@ -650,10 +753,21 @@ function playResultAnimation(
 
 }
 
+
+
+
+
+
+
+/* ========================================
+數字動畫
+======================================== */
+
+
 function animateNumber(
     id,
     target
-){
+) {
 
     const element =
         document.getElementById(
@@ -661,14 +775,16 @@ function animateNumber(
         );
 
 
-    if(!element){
+    if (!element) {
 
         return;
 
     }
 
 
-    const duration = 1000;
+    const duration =
+        1000;
+
 
     const startTime =
         performance.now();
@@ -676,7 +792,7 @@ function animateNumber(
 
     function update(
         currentTime
-    ){
+    ) {
 
         const progress =
             Math.min(
@@ -713,17 +829,17 @@ function animateNumber(
             current.toLocaleString();
 
 
-        if(
+        if (
             progress <
             1
-        ){
+        ) {
 
             requestAnimationFrame(
                 update
             );
 
         }
-        else{
+        else {
 
             element.innerText =
                 Number(
@@ -751,66 +867,73 @@ function animateNumber(
 
 
 
-
-
 /* ========================================
 工具
 ======================================== */
 
 
 function setText(
-id,
-value
-){
+    id,
+    value
+) {
+
+    const el =
+        document.getElementById(
+            id
+        );
 
 
-const el =
-    document.getElementById(
-        id
-    );
+    if (el) {
 
+        el.innerText =
+            value;
 
-if(el){
-
-    el.innerText =
-        value;
-
-}
-
+    }
 
 }
 
 
 
-function formatNumber(value){
+function formatNumber(
+    value
+) {
 
-
-return Number(
-    value || 0
-)
-.toLocaleString();
-
-
-}
-
-function initButtons(){
-
-const button =
-document.getElementById(
-    "back-challenge-button"
-);
-
-
-if(button){
-
-button.onclick =
-()=>{
-
-location.href =
-"challenge.html";
-
-};
+    return Number(
+        value || 0
+    )
+    .toLocaleString();
 
 }
+
+
+
+
+
+
+
+/* ========================================
+按鈕
+======================================== */
+
+
+function initButtons() {
+
+    const button =
+        document.getElementById(
+            "back-challenge-button"
+        );
+
+
+    if (button) {
+
+        button.onclick =
+            () => {
+
+                location.href =
+                    "challenge.html";
+
+            };
+
+    }
 
 }
