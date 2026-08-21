@@ -1,736 +1,542 @@
 /* ========================================
-ELOCase Challenge Result
+   ELOCase Challenge Result
+   Challenge Mode V1
 ======================================== */
 
 
 /* ========================================
-Page
+   Page
 ======================================== */
 
 .challenge-result-page {
 
     padding:
-    70px 0 100px;
+        70px 0 100px;
 
 }
-
-
-
-.result-card {
-
-    padding:
-    45px;
-
-
-    background:
-    var(--color-surface);
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    24px;
-
-
-    text-align:
-    center;
-
-
-    overflow:
-    hidden;
-
-}
-
 
 
 /* ========================================
-Title
+   Section Header
 ======================================== */
-
-
-.challenge-result-title {
-
-    font-size:
-    2.2rem;
-
-
-    font-weight:
-    900;
-
-
-    color:
-    #ff9f43;
-
-
-    margin-bottom:
-    25px;
-
-
-    letter-spacing:
-    .08em;
-
-}
-
-
-
-.winner-text {
-
-    margin-bottom:
-    45px;
-
-
-    font-size:
-    1.8rem;
-
-
-    font-weight:
-    900;
-
-
-    color:
-    var(--color-text);
-
-}
-
-
-
-
-
-
-/* ========================================
-VS Area
-======================================== */
-
-
-.vs-result {
-
-    display:
-    flex;
-
-
-    align-items:
-    center;
-
-
-    justify-content:
-    center;
-
-
-    gap:
-    35px;
-
-}
-
-
-
-
-/* ========================================
-Player Card
-======================================== */
-
-
-.result-player {
-
-
-    flex:
-    1;
-
-
-    padding:
-    35px;
-
-
-    min-height:
-    320px;
-
-
-    background:
-    var(--color-background);
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    20px;
-
-
-    transition:
-    .3s;
-
-}
-
-
-
-.result-player:hover {
-
-
-    transform:
-    translateY(-5px);
-
-
-}
-
-
-
-.result-player h2 {
-
-
-    font-size:
-    1.5rem;
-
-
-    margin-bottom:
-    25px;
-
-
-}
-
-
-
-
-/* 玩家 A */
-
-.player-a {
-
-
-    border-color:
-    rgba(
-        124,
-        92,
-        255,
-        .5
-    );
-
-}
-
-
-
-/* 玩家 B */
-
-.player-b {
-
-
-    border-color:
-    rgba(
-        255,
-        159,
-        67,
-        .5
-    );
-
-}
-
-
-
-
-
-/* ========================================
-Value
-======================================== */
-
-
-.result-value {
-
-
-    margin-bottom:
-    25px;
-
-
-    padding:
-    20px;
-
-
-    background:
-    rgba(
-        255,
-        159,
-        67,
-        .08
-    );
-
-
-    border-radius:
-    15px;
-
-}
-
-
-
-.result-value strong {
-
-
-    display:
-    block;
-
-
-    margin-top:
-    10px;
-
-
-    font-size:
-    2.5rem;
-
-
-    color:
-    #ff9f43;
-
-
-}
-
-
-
-
-
-
-.result-player span {
-
-
-    color:
-    var(--color-text-muted);
-
-
-}
-
-
-
-.result-player div:not(.result-value){
-
-    margin-top:
-    12px;
-
-}
-
-
-
-
-
-/* ========================================
-VS
-======================================== */
-
-
-.result-vs {
-
-
-    font-size:
-    3rem;
-
-
-    font-weight:
-    1000;
-
-
-    color:
-    #ff9f43;
-
-
-    text-shadow:
-    0 0 20px
-    rgba(
-        255,
-        159,
-        67,
-        .5
-    );
-
-}
-
-
-
-
-
-/* ========================================
-Button
-======================================== */
-
-
-#back-challenge-button {
-
-
-    margin-top:
-    45px;
-
-
-    min-width:
-    220px;
-
-
-}
-
-
-
-
-
-
-/* ========================================
-Winner Highlight
-======================================== */
-
-
-.winner-player {
-
-
-    animation:
-    winnerGlow
-    1.5s
-    infinite
-    alternate;
-
-}
-
-
-
-@keyframes winnerGlow {
-
-
-from {
-
-    box-shadow:
-    0 0 10px
-    rgba(
-        255,
-        159,
-        67,
-        .2
-    );
-
-}
-
-
-
-to {
-
-    box-shadow:
-    0 0 35px
-    rgba(
-        255,
-        159,
-        67,
-        .8
-    );
-
-}
-
-
-}
-
-
-
-
-
-
-
-/* ========================================
-Mobile
-======================================== */
-
-
-@media(max-width:900px){
-
-
-.vs-result {
-
-
-    flex-direction:
-    column;
-
-
-}
-
-
-
-.result-vs {
-
-
-    transform:
-    rotate(
-        90deg
-    );
-
-
-}
-
-
-
-.result-player {
-
-
-    width:
-    100%;
-
-
-}
-
-
-
-}
-
-
-
-
-
-@media(max-width:600px){
-
-
-.result-card {
-
-
-    padding:
-    25px;
-
-
-}
-
-
-
-.challenge-result-title {
-
-
-    font-size:
-    1.6rem;
-
-
-}
-
-
-
-.winner-text {
-
-
-    font-size:
-    1.4rem;
-
-
-}
-
-
-
-.result-value strong {
-
-
-    font-size:
-    2rem;
-
-
-}
-
-
-}
-
-/* ========================================
-Challenge Result Navbar Spacing
-======================================== */
-
-
-.challenge-result-page {
-
-    padding-top:
-    70px;
-
-}
-
-
-
-/*
-Navbar 與 Result 標題距離
-*/
 
 .challenge-result-page .section-header {
 
-
     margin-top:
-    35px;
-
+        35px;
 
     margin-bottom:
-    45px;
-
+        45px;
 
 }
-
-
-
-
-/*
-Result 標籤
-*/
 
 
 .challenge-result-page .section-label {
 
-
     display:
-    inline-flex;
-
+        inline-flex;
 
     padding:
-    8px 16px;
-
+        8px 16px;
 
     border-radius:
-    999px;
-
+        999px;
 
     background:
-    rgba(
-        255,
-        159,
-        67,
-        .12
-    );
-
+        rgba(
+            255,
+            159,
+            67,
+            .12
+        );
 
     border:
-    1px solid
-    rgba(
-        255,
-        159,
-        67,
-        .35
-    );
-
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .35
+        );
 
     color:
-    #ff9f43;
-
+        #ff9f43;
 
     font-size:
-    .85rem;
-
+        .85rem;
 
     font-weight:
-    800;
-
+        800;
 
     letter-spacing:
-    .08em;
-
+        .08em;
 
 }
-
-
-
-/*
-Result Title
-*/
 
 
 .challenge-result-page h1 {
 
-
     margin-top:
-    18px;
-
+        18px;
 
     font-size:
-    2.5rem;
-
+        2.5rem;
 
     font-weight:
-    900;
-
-
-}
-
-.loser-player{
-
-    opacity:
-    .45;
-
-
-    transform:
-    scale(.97);
+        900;
 
 }
+
 
 /* ========================================
-   Challenge Result Animation
+   Result Card
 ======================================== */
 
 .result-card {
-    position: relative;
-    overflow: hidden;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    padding:
+        45px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(
+                255,
+                159,
+                67,
+                .035
+            ),
+            var(--color-surface)
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .2
+        );
+
+    border-radius:
+        24px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            .25
+        );
+
     transition:
-        transform 0.6s ease,
-        opacity 0.6s ease,
-        box-shadow 0.6s ease;
-}
+        transform .6s ease,
+        opacity .6s ease,
+        box-shadow .6s ease;
 
-
-/* 初始 */
-
-.result-animation-start {
-    opacity: 0;
-    transform:
-        translateY(25px)
-        scale(0.97);
-}
-
-
-/* 顯示 */
-
-.result-animation-show {
-    opacity: 1;
-    transform:
-        translateY(0)
-        scale(1);
 }
 
 
 /* ========================================
-   玩家卡片
+   Result Title
 ======================================== */
 
-.result-player {
-    position: relative;
-    transition:
-        transform 0.5s ease,
-        opacity 0.5s ease,
-        box-shadow 0.5s ease;
+.challenge-result-title {
+
+    margin-bottom:
+        25px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        2.2rem;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .08em;
+
+    text-shadow:
+        0 0 24px
+        rgba(
+            255,
+            159,
+            67,
+            .25
+        );
+
 }
 
 
-/* 勝者 */
+#winner-text {
+
+    min-height:
+        44px;
+
+    margin-bottom:
+        45px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1.8rem;
+
+    font-weight:
+        900;
+
+}
+
+
+/* ========================================
+   Result Animation
+======================================== */
+
+.result-animation-start {
+
+    opacity:
+        0;
+
+    transform:
+        translateY(25px)
+        scale(.97);
+
+}
+
+
+.result-animation-show {
+
+    opacity:
+        1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+#result-title {
+
+    animation:
+        titleReveal
+        .8s
+        ease-out;
+
+}
+
+
+@keyframes titleReveal {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(-12px);
+
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ========================================
+   VS Result
+======================================== */
+
+.vs-result {
+
+    display:
+        flex;
+
+    align-items:
+        stretch;
+
+    justify-content:
+        center;
+
+    gap:
+        35px;
+
+}
+
+
+.result-vs {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-width:
+        70px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        3rem;
+
+    font-weight:
+        900;
+
+    text-shadow:
+        0 0 20px
+        rgba(
+            255,
+            159,
+            67,
+            .5
+        );
+
+}
+
+
+/* ========================================
+   Player Card
+======================================== */
+
+.result-player {
+
+    position:
+        relative;
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    min-height:
+        320px;
+
+    padding:
+        35px;
+
+    background:
+        var(--color-background);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        20px;
+
+    transition:
+        transform .5s ease,
+        opacity .5s ease,
+        box-shadow .5s ease,
+        border-color .5s ease;
+
+}
+
+
+.result-player:hover {
+
+    transform:
+        translateY(-4px);
+
+}
+
+
+.result-player h2 {
+
+    margin-bottom:
+        25px;
+
+    font-size:
+        1.5rem;
+
+    font-weight:
+        800;
+
+}
+
+
+/* ========================================
+   Player A
+======================================== */
+
+.player-a {
+
+    border-color:
+        rgba(
+            124,
+            92,
+            255,
+            .45
+        );
+
+}
+
+
+/* ========================================
+   Player B
+======================================== */
+
+.player-b {
+
+    border-color:
+        rgba(
+            255,
+            159,
+            67,
+            .45
+        );
+
+}
+
+
+/* ========================================
+   Final Value
+======================================== */
+
+.result-value {
+
+    margin-bottom:
+        25px;
+
+    padding:
+        22px;
+
+    background:
+        rgba(
+            255,
+            159,
+            67,
+            .08
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .12
+        );
+
+    border-radius:
+        15px;
+
+}
+
+
+.result-value strong {
+
+    display:
+        block;
+
+    margin-top:
+        10px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        2.5rem;
+
+    font-weight:
+        900;
+
+    line-height:
+        1.15;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+.result-player span {
+
+    color:
+        var(--color-text-muted);
+
+}
+
+
+.result-player div:not(.result-value) {
+
+    margin-top:
+        12px;
+
+}
+
+
+/* ========================================
+   Winner
+======================================== */
 
 .winner-player {
 
     transform:
-        translateY(-6px)
+        translateY(-7px)
         scale(1.02);
 
+    border-color:
+        rgba(
+            255,
+            159,
+            67,
+            .7
+        );
+
     box-shadow:
-        0 0 0 1px rgba(255, 145, 0, 0.35),
-        0 0 30px rgba(255, 145, 0, 0.25);
+        0 0 0 1px
+        rgba(
+            255,
+            159,
+            67,
+            .3
+        ),
+        0 0 35px
+        rgba(
+            255,
+            159,
+            67,
+            .25
+        );
 
     animation:
-        winnerPulse 2s
+        winnerPulse
+        2s
         ease-in-out
         infinite;
 
 }
 
-
-/* 敗者 */
-
-.loser-player {
-
-    opacity: 0.55;
-
-    transform:
-        scale(0.98);
-
-}
-
-
-/* ========================================
-   勝者動畫
-======================================== */
 
 @keyframes winnerPulse {
 
@@ -738,16 +544,40 @@ Result Title
     100% {
 
         box-shadow:
-            0 0 0 1px rgba(255, 145, 0, 0.25),
-            0 0 20px rgba(255, 145, 0, 0.15);
+            0 0 0 1px
+            rgba(
+                255,
+                159,
+                67,
+                .25
+            ),
+            0 0 20px
+            rgba(
+                255,
+                159,
+                67,
+                .15
+            );
 
     }
 
     50% {
 
         box-shadow:
-            0 0 0 1px rgba(255, 145, 0, 0.55),
-            0 0 38px rgba(255, 145, 0, 0.35);
+            0 0 0 1px
+            rgba(
+                255,
+                159,
+                67,
+                .6
+            ),
+            0 0 40px
+            rgba(
+                255,
+                159,
+                67,
+                .35
+            );
 
     }
 
@@ -755,24 +585,82 @@ Result Title
 
 
 /* ========================================
-   Body 結果狀態
+   Loser
+======================================== */
+
+.loser-player {
+
+    opacity:
+        .5;
+
+    transform:
+        scale(.98);
+
+}
+
+
+/* ========================================
+   VS Animation
 ======================================== */
 
 .challenge-win
-.result-card {
+.result-vs,
+
+.challenge-lose
+.result-vs,
+
+.challenge-draw
+.result-vs {
 
     animation:
-        resultAppear 0.7s
+        vsReveal
+        .8s
         ease-out;
 
 }
 
 
+@keyframes vsReveal {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            scale(.5);
+
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* ========================================
+   Result Card Animation
+======================================== */
+
+.challenge-win
+.result-card,
+
+.challenge-lose
+.result-card,
+
 .challenge-draw
 .result-card {
 
     animation:
-        resultAppear 0.7s
+        resultAppear
+        .7s
         ease-out;
 
 }
@@ -782,16 +670,20 @@ Result Title
 
     from {
 
-        opacity: 0;
+        opacity:
+            0;
+
         transform:
             translateY(20px)
-            scale(0.96);
+            scale(.96);
 
     }
 
     to {
 
-        opacity: 1;
+        opacity:
+            1;
+
         transform:
             translateY(0)
             scale(1);
@@ -802,48 +694,360 @@ Result Title
 
 
 /* ========================================
-   VS
+   Challenge Record
 ======================================== */
 
-.result-vs {
+.challenge-result-record {
 
-    position: relative;
+    margin-top:
+        50px;
 
-    font-weight: 900;
+    padding:
+        25px;
 
-    transition:
-        transform 0.4s ease;
+    text-align:
+        left;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        18px;
 
 }
 
 
-.challenge-win
-.result-vs,
-.challenge-lose
-.result-vs {
+.challenge-result-record-title {
 
-    animation:
-        vsReveal 0.8s
-        ease-out;
+    margin-bottom:
+        20px;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .04em;
 
 }
 
 
-@keyframes vsReveal {
+.challenge-result-record-grid {
 
-    from {
+    display:
+        grid;
 
-        opacity: 0;
-        transform:
-            scale(0.5);
+    grid-template-columns:
+        repeat(
+            5,
+            1fr
+        );
+
+    gap:
+        12px;
+
+}
+
+
+.challenge-result-record-item {
+
+    min-width:
+        0;
+
+    padding:
+        16px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        12px;
+
+}
+
+
+.challenge-result-record-item span {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        .72rem;
+
+}
+
+
+.challenge-result-record-item strong {
+
+    display:
+        block;
+
+    overflow:
+        hidden;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        .9rem;
+
+    font-weight:
+        800;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+/* ========================================
+   Back Button
+======================================== */
+
+#back-challenge-button {
+
+    margin-top:
+        45px;
+
+    min-width:
+        220px;
+
+}
+
+
+/* ========================================
+   Challenge State
+======================================== */
+
+.challenge-win #winner-text {
+
+    color:
+        #ff9f43;
+
+}
+
+
+.challenge-lose #winner-text {
+
+    color:
+        var(--color-text-secondary);
+
+}
+
+
+.challenge-draw #winner-text {
+
+    color:
+        #ffb866;
+
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media(max-width:1000px) {
+
+    .challenge-result-record-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
 
     }
 
-    to {
+}
 
-        opacity: 1;
-        transform:
-            scale(1);
+
+@media(max-width:900px) {
+
+    .vs-result {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .result-vs {
+
+        min-height:
+            45px;
+
+        font-size:
+            1.8rem;
+
+    }
+
+
+    .result-player {
+
+        width:
+            100%;
+
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .challenge-result-page {
+
+        padding:
+            45px 0 70px;
+
+    }
+
+
+    .challenge-result-page .section-header {
+
+        margin-top:
+            20px;
+
+        margin-bottom:
+            30px;
+
+    }
+
+
+    .challenge-result-page h1 {
+
+        font-size:
+            2rem;
+
+    }
+
+
+    .result-card {
+
+        padding:
+            25px 18px;
+
+        border-radius:
+            18px;
+
+    }
+
+
+    .challenge-result-title {
+
+        font-size:
+            1.6rem;
+
+    }
+
+
+    #winner-text {
+
+        margin-bottom:
+            30px;
+
+        font-size:
+            1.35rem;
+
+    }
+
+
+    .result-player {
+
+        min-height:
+            auto;
+
+        padding:
+            25px 18px;
+
+    }
+
+
+    .result-player h2 {
+
+        font-size:
+            1.3rem;
+
+    }
+
+
+    .result-value {
+
+        padding:
+            18px;
+
+    }
+
+
+    .result-value strong {
+
+        font-size:
+            2rem;
+
+    }
+
+
+    .challenge-result-record {
+
+        margin-top:
+            35px;
+
+        padding:
+            18px;
+
+    }
+
+
+    .challenge-result-record-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    #back-challenge-button {
+
+        width:
+            100%;
+
+        min-width:
+            0;
 
     }
 
@@ -851,33 +1055,21 @@ Result Title
 
 
 /* ========================================
-   結果標題
+   Reduced Motion
 ======================================== */
 
-#result-title {
+@media(prefers-reduced-motion:reduce) {
 
-    animation:
-        titleReveal 0.8s
-        ease-out;
+    .result-card,
+    .result-player,
+    .result-vs,
+    #result-title {
 
-}
+        animation:
+            none !important;
 
-
-@keyframes titleReveal {
-
-    from {
-
-        opacity: 0;
-        transform:
-            translateY(-12px);
-
-    }
-
-    to {
-
-        opacity: 1;
-        transform:
-            translateY(0);
+        transition:
+            none !important;
 
     }
 
