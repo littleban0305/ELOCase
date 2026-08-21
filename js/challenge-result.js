@@ -79,7 +79,10 @@ try{
 
     const result =
         await getChallenge(
-            challengeId
+            challengeId,
+            {
+                noLoading: true
+            }
         );
 
 
