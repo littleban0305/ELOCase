@@ -109,42 +109,60 @@ document.addEventListener(
              * ====================================
              * ⭐ 等待 Case 圖片真正載入
              *
-             * API 回來不代表頁面已經準備好。
-             *
-             * 這裡會等待：
+             * Challenge Mode：
              *
              * API
              * ↓
              * Case Card
              * ↓
-             * 圖片載入
+             * Case 圖片
+             * ↓
+             * Challenge Navbar 資料
              * ↓
              * Loading 才結束
              * ====================================
              */
-
+            
             if(
                 isChallengePage
             ){
-
+            
                 await waitForCaseImages();
-
+            
+            
+                /*
+                 * ====================================
+                 * ⭐ 等待 Challenge Navbar 完成
+                 *
+                 * 右上角四個數值必須先更新完成：
+                 *
+                 * 我的 EC
+                 * 我的價值
+                 * 對手 EC
+                 * 對手價值
+                 *
+                 * 才允許 Loading Bar 消失。
+                 * ====================================
+                 */
+            
+                await waitForChallengeNavbar();
+            
             }
-
-
+            
+            
             /*
              * ====================================
              * ⭐ 第一次真正載入完成
              * ====================================
              */
-
+            
             if(
                 isChallengePage &&
                 window.ELOChallengeLoading
             ){
-
+            
                 ELOChallengeLoading.finish();
-
+            
             }
 
 
@@ -667,6 +685,370 @@ function waitForCaseImages(){
             );
 
         }
+    );
+
+}
+
+/*
+========================================
+等待 Challenge Navbar 完成
+========================================
+
+Challenge Cases 首次載入時：
+
+Loading Bar 不只等待箱子。
+
+還必須等待右上角：
+
+1. 我的 EC
+2. 我的物品價值
+3. 對手 EC
+4. 對手物品價值
+
+全部完成後才結束 Loading。
+========================================
+*/
+
+async function waitForChallengeNavbar(){
+
+    /*
+     * ====================================
+     * 只在 Challenge Mode 使用
+     * ====================================
+     */
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const mode =
+        params.get(
+            "mode"
+        );
+
+
+    const challengeId =
+        params.get(
+            "challengeId"
+        );
+
+
+    if(
+        mode !== "challenge" ||
+        !challengeId
+    ){
+
+        return;
+
+    }
+
+
+    /*
+     * ====================================
+     * 最多等待 15 秒
+     *
+     * 避免 API 異常時 Loading 永遠卡住
+     * ====================================
+     */
+
+    const maxAttempts =
+        30;
+
+
+    const interval =
+        500;
+
+
+    /*
+     * ====================================
+     * 等待 Navbar DOM
+     * ====================================
+     */
+
+    for(
+        let attempt = 0;
+        attempt < maxAttempts;
+        attempt++
+    ){
+
+        /*
+         * Challenge Navbar 是否已經建立
+         */
+
+        const myCoin =
+            document.querySelector(
+                "#navbar-my-coin"
+            );
+
+
+        const myValue =
+            document.querySelector(
+                "#navbar-my-value"
+            );
+
+
+        const opponentCoin =
+            document.querySelector(
+                "#navbar-opponent-coin"
+            );
+
+
+        const opponentValue =
+            document.querySelector(
+                "#navbar-opponent-value"
+            );
+
+
+        /*
+         * Navbar 還沒建立
+         *
+         * 等下一次
+         */
+
+        if(
+            !myCoin ||
+            !myValue ||
+            !opponentCoin ||
+            !opponentValue
+        ){
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        interval
+                    )
+            );
+
+
+            continue;
+
+        }
+
+
+        /*
+         * ====================================
+         * 嘗試立即取得 Challenge 最新資料
+         * ====================================
+         */
+
+        try{
+
+            const result =
+                await getChallenge(
+                    challengeId,
+                    {
+                        noLoading: true
+                    }
+                );
+
+
+            if(
+                result &&
+                Array.isArray(
+                    result.players
+                )
+            ){
+
+                const user =
+                    await verifySession();
+
+
+                if(user){
+
+                    let me = null;
+
+                    let opponent = null;
+
+
+                    result.players.forEach(
+                        player => {
+
+                            if(
+                                String(
+                                    player.userId
+                                )
+                                ===
+                                String(
+                                    user.userId
+                                )
+                            ){
+
+                                me =
+                                    player;
+
+                            }
+                            else{
+
+                                opponent =
+                                    player;
+
+                            }
+
+                        }
+                    );
+
+
+                    /*
+                     * ====================================
+                     * 找到雙方玩家
+                     * ====================================
+                     */
+
+                    if(
+                        me &&
+                        opponent
+                    ){
+
+                        /*
+                         * 我的 EC
+                         */
+
+                        setText(
+                            "navbar-my-coin",
+                            formatNumber(
+                                me.challengeEC
+                            )
+                        );
+
+
+                        /*
+                         * 我的物品價值
+                         */
+
+                        const myItemValue =
+                            Array.isArray(
+                                me.items
+                            )
+                                ? me.items.reduce(
+                                    (
+                                        total,
+                                        item
+                                    ) => {
+
+                                        return total +
+                                            (
+                                                Number(
+                                                    item.value
+                                                ) || 0
+                                            );
+
+                                    },
+                                    0
+                                )
+                                : 0;
+
+
+                        setText(
+                            "navbar-my-value",
+                            formatNumber(
+                                myItemValue
+                            )
+                        );
+
+
+                        /*
+                         * 對手 EC
+                         */
+
+                        setText(
+                            "navbar-opponent-coin",
+                            formatNumber(
+                                opponent.challengeEC
+                            )
+                        );
+
+
+                        /*
+                         * 對手物品價值
+                         */
+
+                        const opponentItemValue =
+                            Array.isArray(
+                                opponent.items
+                            )
+                                ? opponent.items.reduce(
+                                    (
+                                        total,
+                                        item
+                                    ) => {
+
+                                        return total +
+                                            (
+                                                Number(
+                                                    item.value
+                                                ) || 0
+                                            );
+
+                                    },
+                                    0
+                                )
+                                : 0;
+
+
+                        setText(
+                            "navbar-opponent-value",
+                            formatNumber(
+                                opponentItemValue
+                            )
+                        );
+
+
+                        /*
+                         * ====================================
+                         * ⭐ 四張資料卡已完成
+                         * ====================================
+                         */
+
+                        return;
+
+                    }
+
+                }
+
+            }
+
+        }
+        catch(error){
+
+            console.warn(
+                "等待 Challenge Navbar 更新失敗：",
+                error
+            );
+
+        }
+
+
+        /*
+         * ====================================
+         * 尚未完成
+         * 等待下一次
+         * ====================================
+         */
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    interval
+                )
+        );
+
+    }
+
+
+    /*
+     * ====================================
+     * 超過最大等待時間
+     *
+     * 不讓整個頁面永久卡住
+     * ====================================
+     */
+
+    console.warn(
+        "⚠️ Challenge Navbar 等待逾時，繼續載入頁面"
     );
 
 }
