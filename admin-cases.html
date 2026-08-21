@@ -12,9 +12,20 @@
 
     <title>箱子管理｜ELOCase</title>
 
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/admin-cases.css">
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-cases.css"
+    >
 
 </head>
 
@@ -36,7 +47,7 @@
 
         <div class="admin-navbar-title">
 
-            箱子管理
+            管理後台
 
         </div>
 
@@ -45,7 +56,7 @@
             href="index.html"
             class="button button-secondary"
         >
-            返回首頁
+            返回網站
         </a>
 
     </div>
@@ -54,163 +65,97 @@
 
 
 
-<main>
-
-    <section class="admin-cases-page">
-
-        <div class="container">
+<main class="admin-page">
 
 
-            <!-- ====================================
-                 頁面標題
-            ==================================== -->
-
-            <div class="admin-page-header">
-
-                <div>
-
-                    <span class="section-label">
-                        ADMIN
-                    </span>
-
-                    <h1>
-                        箱子管理
-                    </h1>
-
-                    <p>
-                        管理 ELOCase 平台上的所有箱子。
-                    </p>
-
-                </div>
+    <div class="admin-container">
 
 
-                <button
-                    id="create-case-button"
-                    class="button button-primary"
-                >
-                    ＋ 新增箱子
-                </button>
+        <!-- ====================================
+             Header
+        ==================================== -->
+
+        <section class="admin-header">
+
+            <div>
+
+                <span class="section-label">
+                    ADMIN
+                </span>
+
+                <h1>
+                    箱子管理
+                </h1>
+
+                <p>
+                    管理 ELOCase 的開箱箱子
+                </p>
 
             </div>
 
 
+            <button
+                id="create-case-button"
+                class="button button-primary"
+                type="button"
+            >
+                ＋ 新增箱子
+            </button>
 
-            <!-- ====================================
-                 統計
-            ==================================== -->
-
-            <div class="admin-stats">
-
-                <div class="admin-stat-card">
-
-                    <span>
-                        全部箱子
-                    </span>
-
-                    <strong id="total-case-count">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="admin-stat-card">
-
-                    <span>
-                        啟用中
-                    </span>
-
-                    <strong id="active-case-count">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="admin-stat-card">
-
-                    <span>
-                        已停用
-                    </span>
-
-                    <strong id="inactive-case-count">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
+        </section>
 
 
 
-            <!-- ====================================
-                 箱子列表
-            ==================================== -->
+        <!-- ====================================
+             Message
+        ==================================== -->
 
-            <section class="admin-panel">
-
-                <div class="admin-panel-header">
-
-                    <div>
-
-                        <h2>
-                            箱子列表
-                        </h2>
-
-                        <span>
-                            管理目前 Cases Sheet 中的資料
-                        </span>
-
-                    </div>
+        <div
+            id="admin-message"
+            class="admin-message"
+        ></div>
 
 
-                    <button
-                        id="refresh-cases-button"
-                        class="button button-secondary"
-                    >
-                        重新整理
-                    </button>
 
-                </div>
+        <!-- ====================================
+             Loading
+        ==================================== -->
 
-
-                <div
-                    id="case-table-wrapper"
-                    class="case-table-wrapper"
-                >
-
-                    <div class="admin-loading">
-
-                        載入箱子資料中...
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
+        <div
+            id="cases-loading"
+            class="cases-loading"
+        >
+            載入箱子中...
         </div>
 
-    </section>
+
+
+        <!-- ====================================
+             Cases
+        ==================================== -->
+
+        <section
+            id="cases-container"
+            class="cases-container"
+        ></section>
+
+
+    </div>
 
 </main>
 
 
 
-<!-- ========================================
-     Modal
-======================================== -->
+<!-- =========================================
+     Case Modal
+========================================= -->
 
 <div
     id="case-modal"
-    class="case-modal"
+    class="modal-overlay"
 >
 
-    <div class="case-modal-overlay"></div>
-
-
-    <div class="case-modal-card">
+    <div class="case-modal">
 
 
         <div class="case-modal-header">
@@ -218,14 +163,16 @@
             <div>
 
                 <span
-                    id="modal-mode-label"
+                    id="modal-label"
                     class="section-label"
                 >
                     新增箱子
                 </span>
 
-                <h2 id="modal-title">
-                    新增箱子
+                <h2
+                    id="modal-title"
+                >
+                    建立箱子
                 </h2>
 
             </div>
@@ -233,7 +180,7 @@
 
             <button
                 id="close-modal-button"
-                class="modal-close-button"
+                class="modal-close"
                 type="button"
             >
                 ×
@@ -252,84 +199,66 @@
             >
 
 
-            <div class="form-grid">
+            <!-- 名稱 -->
 
+            <div class="form-group">
 
-                <div class="form-group">
+                <label for="case-name">
+                    箱子名稱
+                </label>
 
-                    <label for="case-name">
-                        箱子名稱
-                    </label>
-
-                    <input
-                        id="case-name"
-                        type="text"
-                        placeholder="例如：系列收集箱"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="case-game">
-                        遊戲
-                    </label>
-
-                    <input
-                        id="case-game"
-                        type="text"
-                        placeholder="CS2"
-                        value="CS2"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="case-price">
-                        箱子價格
-                    </label>
-
-                    <input
-                        id="case-price"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        placeholder="40"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="case-status">
-                        狀態
-                    </label>
-
-                    <select id="case-status">
-
-                        <option value="active">
-                            啟用
-                        </option>
-
-                        <option value="inactive">
-                            停用
-                        </option>
-
-                    </select>
-
-                </div>
-
+                <input
+                    id="case-name"
+                    type="text"
+                    placeholder="例如：系列收集箱"
+                    required
+                >
 
             </div>
 
 
+
+            <!-- 遊戲 -->
+
+            <div class="form-group">
+
+                <label for="case-game">
+                    遊戲
+                </label>
+
+                <input
+                    id="case-game"
+                    type="text"
+                    placeholder="例如：CS2"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- 價格 -->
+
+            <div class="form-group">
+
+                <label for="case-price">
+                    箱子價格
+                </label>
+
+                <input
+                    id="case-price"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="40"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- 圖片 URL -->
 
             <div class="form-group">
 
@@ -343,14 +272,30 @@
                     placeholder="https://..."
                 >
 
-                <div
-                    id="image-preview"
-                    class="image-preview"
-                ></div>
+                <small>
+                    貼上箱子圖片的網址即可
+                </small>
 
             </div>
 
 
+
+            <!-- 圖片預覽 -->
+
+            <div
+                id="case-image-preview"
+                class="case-image-preview"
+            >
+
+                <span>
+                    尚未設定圖片
+                </span>
+
+            </div>
+
+
+
+            <!-- 描述 -->
 
             <div class="form-group">
 
@@ -360,26 +305,45 @@
 
                 <textarea
                     id="case-description"
-                    rows="5"
-                    placeholder="輸入箱子描述..."
+                    rows="4"
+                    placeholder="輸入箱子介紹..."
                 ></textarea>
 
             </div>
 
 
 
-            <div
-                id="case-form-message"
-                class="case-form-message"
-            ></div>
+            <!-- 狀態 -->
+
+            <div class="form-group">
+
+                <label for="case-status">
+                    狀態
+                </label>
+
+                <select id="case-status">
+
+                    <option value="active">
+                        啟用
+                    </option>
+
+                    <option value="inactive">
+                        停用
+                    </option>
+
+                </select>
+
+            </div>
 
 
 
-            <div class="case-modal-actions">
+            <!-- Buttons -->
+
+            <div class="modal-actions">
 
                 <button
+                    id="cancel-modal-button"
                     type="button"
-                    id="cancel-case-button"
                     class="button button-secondary"
                 >
                     取消
@@ -387,8 +351,8 @@
 
 
                 <button
-                    type="submit"
                     id="save-case-button"
+                    type="submit"
                     class="button button-primary"
                 >
                     儲存箱子
@@ -399,6 +363,7 @@
 
         </form>
 
+
     </div>
 
 </div>
@@ -406,9 +371,13 @@
 
 
 <script src="js/config.js"></script>
+
 <script src="js/api.js"></script>
+
 <script src="js/auth.js"></script>
+
 <script src="js/admin-cases.js"></script>
+
 
 </body>
 
