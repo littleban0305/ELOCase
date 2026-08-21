@@ -2826,9 +2826,12 @@ async function refreshChallengeCase(){
          */
 
         const challengeResult =
-            await getChallenge(
-                challengeData.challengeId
-            );
+             await getChallenge(
+                 challengeData.challengeId,
+                 {
+                     noLoading: true
+                 }
+             );
 
 
         /*
