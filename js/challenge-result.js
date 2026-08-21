@@ -7,6 +7,8 @@ let challengeId = null;
 
 let currentUser = null;
 
+let currentChallenge = null;
+
 let myPlayer = null;
 
 let opponentPlayer = null;
@@ -106,6 +108,10 @@ async function loadChallengeResult() {
                     noLoading: true
                 }
             );
+
+        currentChallenge =
+            result?.challenge ||
+            null;
 
 
         if (
@@ -330,6 +336,57 @@ function renderResult() {
         return;
 
     }
+
+        /*
+         * ========================================
+         * Challenge Record
+         * ========================================
+         */
+    
+        if (currentChallenge) {
+    
+            setText(
+                "result-challenge-code",
+                currentChallenge.challengeCode ||
+                "-"
+            );
+    
+    
+            setText(
+                "result-challenge-status",
+                currentChallenge.status === "finished"
+                    ? "已完成"
+                    : (
+                        currentChallenge.status ||
+                        "-"
+                    )
+            );
+    
+    
+            setText(
+                "result-initial-ec",
+                formatNumber(
+                    currentChallenge.initialEC
+                )
+            );
+    
+    
+            setText(
+                "result-created-at",
+                formatChallengeDate(
+                    currentChallenge.createdAt
+                )
+            );
+    
+    
+            setText(
+                "result-updated-at",
+                formatChallengeDate(
+                    currentChallenge.updatedAt
+                )
+            );
+    
+        }
 
 
     const myValue =
@@ -906,7 +963,52 @@ function formatNumber(
 }
 
 
+/* ========================================
+Challenge 日期格式
+======================================== */
 
+function formatChallengeDate(
+    value
+) {
+
+    if (!value) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "zh-TW",
+        {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+}
 
 
 
