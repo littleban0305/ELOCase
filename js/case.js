@@ -1,10 +1,10 @@
 /* ========================================
-   ELOCase - Case Detail
+ELOCase - Case Detail
 ======================================== */
 
 
 /* ========================================
-   取得網址中的 caseId
+取得網址中的 caseId
 ======================================== */
 
 function getCaseIdFromUrl() {
@@ -21,11 +21,12 @@ function getCaseIdFromUrl() {
 
 }
 
+
 /* ========================================
-   Challenge Mode 判斷
+Challenge Mode 判斷
 ======================================== */
 
-function getChallengeDataFromUrl(){
+function getChallengeDataFromUrl() {
 
     const params =
         new URLSearchParams(
@@ -52,13 +53,15 @@ function getChallengeDataFromUrl(){
 
 
 /* ========================================
-   稀有度 CSS
+稀有度 CSS
 ======================================== */
 
 function getRarityClass(rarity) {
 
     const value =
-        String(rarity || "")
+        String(
+            rarity || ""
+        )
         .trim()
         .toLowerCase();
 
@@ -66,49 +69,64 @@ function getRarityClass(rarity) {
     if (
         value.includes("consumer")
     ) {
+
         return "rarity-white";
+
     }
 
 
     if (
         value.includes("industrial")
     ) {
+
         return "rarity-light-blue";
+
     }
 
 
     if (
         value.includes("mil-spec")
     ) {
+
         return "rarity-blue";
+
     }
 
 
     if (
         value.includes("restricted")
     ) {
+
         return "rarity-purple";
+
     }
 
 
     if (
-       value.includes("classified")
-   ) {
-       return "rarity-pink";
-   }
-   
-   
-   if (
-       value.includes("covert")
-   ) {
-       return "rarity-red";
-   }
+        value.includes("classified")
+    ) {
 
-   if (
-       value.includes("contraband")
-   ) {
-       return "rarity-gold";
-   }
+        return "rarity-pink";
+
+    }
+
+
+    if (
+        value.includes("covert")
+    ) {
+
+        return "rarity-red";
+
+    }
+
+
+    if (
+        value.includes("contraband")
+    ) {
+
+        return "rarity-gold";
+
+    }
 
 
     return "";
@@ -117,7 +135,7 @@ function getRarityClass(rarity) {
 
 
 /* ========================================
-   更新玩家餘額
+更新玩家餘額
 ======================================== */
 
 function updateBalance(eloCoin) {
@@ -129,7 +147,9 @@ function updateBalance(eloCoin) {
 
 
     if (!balanceElement) {
+
         return;
+
     }
 
 
@@ -142,7 +162,7 @@ function updateBalance(eloCoin) {
 
 
 /* ========================================
-   更新箱子圖片
+更新箱子圖片
 ======================================== */
 
 function renderCaseImage(caseData) {
@@ -154,7 +174,9 @@ function renderCaseImage(caseData) {
 
 
     if (!imageElement) {
+
         return;
+
     }
 
 
@@ -195,7 +217,7 @@ function renderCaseImage(caseData) {
 
 
 /* ========================================
-   更新箱子資訊
+更新箱子資訊
 ======================================== */
 
 function renderCaseInfo(caseData) {
@@ -253,7 +275,7 @@ function renderCaseInfo(caseData) {
 
 
 /* ========================================
-   建立物品卡片
+建立物品卡片
 ======================================== */
 
 function createCaseItemCard(item) {
@@ -265,10 +287,10 @@ function createCaseItemCard(item) {
 
 
     card.className =
-       "case-item-card " +
-       getRarityClass(
-           item.rarity
-       );
+        "case-item-card " +
+        getRarityClass(
+            item.rarity
+        );
 
 
     const imageContent =
@@ -317,14 +339,18 @@ function createCaseItemCard(item) {
     card.innerHTML = `
 
         <div class="case-item-image">
-         
-             ${imageContent}
-         
-             <span class="case-item-probability">
-                 ${Number(item.probability || 0).toFixed(2)}%
-             </span>
-         
-         </div>
+
+            ${imageContent}
+
+            <span class="case-item-probability">
+
+                ${Number(
+                    item.probability || 0
+                ).toFixed(2)}%
+
+            </span>
+
+        </div>
 
 
         <div class="case-item-info">
@@ -351,10 +377,6 @@ function createCaseItemCard(item) {
 
     `;
 
-
-    /*
-     * 圖片載入失敗
-     */
 
     const image =
         card.querySelector(
@@ -383,27 +405,10 @@ function createCaseItemCard(item) {
 
 
 /* ========================================
-   顯示箱子內容物
+顯示箱子內容物
 ======================================== */
 
 function renderCaseItems(items) {
-
-    window.currentCaseItems =
-        items || [];
-
-    /*
-     * Challenge Mode：
-     * 記住目前內容物資料
-     * 避免第一次背景更新時誤判為「資料變更」
-     */
-    window.lastChallengeCaseItemsData =
-        JSON.stringify(
-            items || []
-        );
-
-    renderCasePreview(
-        window.currentCaseItems
-    );
 
     window.currentCaseItems =
         items || [];
@@ -421,7 +426,9 @@ function renderCaseItems(items) {
 
 
     if (!container) {
+
         return;
+
     }
 
 
@@ -466,6 +473,11 @@ function renderCaseItems(items) {
 
 }
 
+
+/* ========================================
+Case Preview
+======================================== */
+
 function renderCasePreview(items) {
 
     const track =
@@ -475,7 +487,9 @@ function renderCasePreview(items) {
 
 
     if (!track) {
+
         return;
+
     }
 
 
@@ -491,10 +505,6 @@ function renderCasePreview(items) {
 
     }
 
-
-    /*
-     * 建立預覽物品
-     */
 
     const previewItems = [];
 
@@ -520,10 +530,6 @@ function renderCasePreview(items) {
 
     }
 
-
-    /*
-     * 建立畫面上的卡片
-     */
 
     previewItems.forEach(
         item => {
@@ -606,6 +612,11 @@ function renderCasePreview(items) {
 
 }
 
+
+/* ========================================
+舊版普通模式等待動畫
+======================================== */
+
 let caseWaitingAnimationFrame = null;
 
 let caseWaitingX = 0;
@@ -616,45 +627,83 @@ let caseWaitingLastTime = 0;
 
 let caseWaitingActive = false;
 
+
 /* ========================================
-   開箱等待動畫
-   快 → 快 → 慢 → 超慢
-   API 回來前持續運作
+判斷目前是不是 Challenge Mode
+======================================== */
+
+function isChallengeCasePage() {
+
+    const challengeData =
+        getChallengeDataFromUrl();
+
+
+    return (
+        challengeData.mode ===
+            "challenge"
+        &&
+        !!challengeData.challengeId
+    );
+
+}
+
+
+/* ========================================
+開箱等待動畫
+========================================
+
+注意：
+
+Challenge Mode
+不再使用這個舊版等待動畫。
+
+普通模式
+仍然正常使用。
+
 ======================================== */
 
 function startCaseWaitingAnimation() {
 
+    /*
+     * ====================================
+     * Challenge Mode 禁止使用舊 Loading
+     * ====================================
+     */
+
+    if (
+        isChallengeCasePage()
+    ) {
+
+        return;
+
+    }
+
+
     const track =
-       document.querySelector(
-           "#case-preview-track"
-       );
-   
-   const status =
-       document.querySelector(
-           "#case-preview-status"
-       );
-   
-   
-   /*
-    * ====================================
-    * ⭐ 顯示現有跑馬滑動條
-    *
-    * Intro 結束後才會執行這裡
-    * ====================================
-    */
-   
-   const previewContainer =
-       document.querySelector(
-           "#case-preview-container"
-       );
-   
-   if (previewContainer) {
-   
-       previewContainer.classList.add(
-           "show"
-       );
-   
-   }
+        document.querySelector(
+            "#case-preview-track"
+        );
+
+
+    const status =
+        document.querySelector(
+            "#case-preview-status"
+        );
+
+
+    const previewContainer =
+        document.querySelector(
+            "#case-preview-container"
+        );
+
+
+    if (previewContainer) {
+
+        previewContainer.classList.add(
+            "show"
+        );
+
+    }
 
 
     if (!track) {
@@ -663,12 +712,6 @@ function startCaseWaitingAnimation() {
 
     }
 
-
-    /*
-     * ====================================
-     * 停止上一個等待動畫
-     * ====================================
-     */
 
     if (
         caseWaitingAnimationFrame
@@ -681,13 +724,8 @@ function startCaseWaitingAnimation() {
     }
 
 
-    /*
-     * ====================================
-     * 初始化
-     * ====================================
-     */
-
-    caseWaitingX = 0;
+    caseWaitingX =
+        0;
 
 
     caseWaitingStartTime =
@@ -707,12 +745,6 @@ function startCaseWaitingAnimation() {
     );
 
 
-    /*
-     * ====================================
-     * 清除 CSS 動畫
-     * ====================================
-     */
-
     track.style.transition =
         "none";
 
@@ -720,12 +752,6 @@ function startCaseWaitingAnimation() {
     track.style.transform =
         "translateX(0px)";
 
-
-    /*
-     * ====================================
-     * 取得內容物
-     * ====================================
-     */
 
     const sourceItems =
         window.currentCaseItems || [];
@@ -739,14 +765,6 @@ function startCaseWaitingAnimation() {
 
     }
 
-
-    /*
-     * ====================================
-     * 建立等待用物品
-     *
-     * 160 個
-     * ====================================
-     */
 
     track.innerHTML = "";
 
@@ -775,12 +793,6 @@ function startCaseWaitingAnimation() {
 
     }
 
-
-    /*
-     * ====================================
-     * 建立卡片
-     * ====================================
-     */
 
     waitingItems.forEach(
         item => {
@@ -862,12 +874,6 @@ function startCaseWaitingAnimation() {
     );
 
 
-    /*
-     * ====================================
-     * 狀態
-     * ====================================
-     */
-
     if (status) {
 
         status.textContent =
@@ -876,30 +882,8 @@ function startCaseWaitingAnimation() {
     }
 
 
-    /*
-     * 強制瀏覽器完成排版
-     */
-
     track.offsetHeight;
 
-
-    /*
-     * ====================================
-     * 等待動畫
-     *
-     * 核心：
-     *
-     * 快
-     * ↓
-     * 快
-     * ↓
-     * 慢
-     * ↓
-     * 超慢
-     *
-     * 不會突然重新加速
-     * ====================================
-     */
 
     function animateWaiting(
         currentTime
@@ -923,43 +907,15 @@ function startCaseWaitingAnimation() {
             currentTime;
 
 
-         /*
-          * ====================================
-          * 等待 API 時保持超高速
-          *
-          * API 沒回來：
-          * 永遠保持高速
-          *
-          * API 回來：
-          * caseWaitingActive 會變成 false
-          * 然後由正式動畫接管
-          * ====================================
-          */
-         
-         const speed =
+        const speed =
             18000;
 
-
-        /*
-         * ====================================
-         * 移動
-         * ====================================
-         */
 
         caseWaitingX -=
             speed *
             deltaTime /
             1000;
 
-
-        /*
-         * ====================================
-         * 無限循環
-         *
-         * 使用「完整卡片區段」
-         * 來避免突然跳動
-         * ====================================
-         */
 
         const trackWidth =
             track.scrollWidth;
@@ -978,40 +934,25 @@ function startCaseWaitingAnimation() {
 
 
         if (
-            Math.abs(caseWaitingX) >
+            Math.abs(
+                caseWaitingX
+            ) >
             resetPoint
         ) {
 
-            /*
-             * 不再一次跳 45%
-             *
-             * 改成只補一小段
-             */
-
             const resetDistance =
                 trackWidth * 0.75;
-            
+
+
             caseWaitingX +=
                 resetDistance;
 
         }
 
 
-        /*
-         * ====================================
-         * 套用位置
-         * ====================================
-         */
-
         track.style.transform =
             `translateX(${caseWaitingX}px)`;
 
-
-        /*
-         * ====================================
-         * 下一幀
-         * ====================================
-         */
 
         caseWaitingAnimationFrame =
             requestAnimationFrame(
@@ -1021,12 +962,6 @@ function startCaseWaitingAnimation() {
     }
 
 
-    /*
-     * ====================================
-     * 開始
-     * ====================================
-     */
-
     caseWaitingAnimationFrame =
         requestAnimationFrame(
             animateWaiting
@@ -1034,9 +969,9 @@ function startCaseWaitingAnimation() {
 
 }
 
+
 /* ========================================
-   正式開箱動畫
-   API 回來後接管目前位置
+正式開箱動畫
 ======================================== */
 
 function playCasePreviewAnimation(result) {
@@ -1045,680 +980,574 @@ function playCasePreviewAnimation(result) {
         resolve => {
 
             const track =
-                 document.querySelector(
-                     "#case-preview-track"
-                 );
-         
-             const status =
-                 document.querySelector(
-                     "#case-preview-status"
-                 );
-         
-             const pointer =
-                 document.querySelector(
-                     ".case-preview-pointer"
-                 );
-         
-         
-             if (!track) {
-                 return;
-             }
-         
-         
-             /*
-              * ====================================
-              * 停止等待動畫
-              * ====================================
-              */
-         
-             caseWaitingActive =
-                 false;
-         
-         
-             if (
-                 caseWaitingAnimationFrame
-             ) {
-         
-                 cancelAnimationFrame(
-                     caseWaitingAnimationFrame
-                 );
-         
-                 caseWaitingAnimationFrame =
-                     null;
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 中獎物品
-              * ====================================
-              */
-         
-             const winningItem =
-                 result.item;
-         
-         
-             if (!winningItem) {
-         
-                 throw new Error(
-                     "開箱結果缺少物品資料"
-                 );
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 取得目前視覺位置
-              * ====================================
-              */
-         
-             const currentTransform =
-                 window.getComputedStyle(
-                     track
-                 ).transform;
-         
-         
-             let currentX = 0;
-         
-         
-             if (
-                 currentTransform &&
-                 currentTransform !== "none"
-             ) {
-         
-                 const matrix =
-                     new DOMMatrix(
-                         currentTransform
-                     );
-         
-                 currentX =
-                     matrix.m41;
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 固定目前位置
-              * ====================================
-              */
-         
-             track.style.transition =
-                 "none";
-         
-         
-             track.style.transform =
-                 `translateX(${currentX}px)`;
-         
-         
-             /*
-              * ====================================
-              * 取得箱子內容物
-              * ====================================
-              */
-         
-             const sourceItems =
-                 window.currentCaseItems || [];
-         
-         
-             if (
-                 sourceItems.length === 0
-             ) {
-         
-                 throw new Error(
-                     "箱子沒有內容物"
-                 );
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 建立正式動畫物品
-              *
-              * 前面：
-              * 24 個隨機物品
-              *
-              * 中間：
-              * 真正中獎物品
-              *
-              * 後面：
-              * 6 個隨機物品
-              * ====================================
-              */
-         
-             const animationItems = [];
-         
-         
-             for (
-                 let i = 0;
-                 i < 24;
-                 i++
-             ) {
-         
-                 const randomItem =
-                     sourceItems[
-                         Math.floor(
-                             Math.random() *
-                             sourceItems.length
-                         )
-                     ];
-         
-                 animationItems.push(
-                     randomItem
-                 );
-         
-             }
-         
-         
-             animationItems.push(
-                 winningItem
-             );
-         
-         
-             for (
-                 let i = 0;
-                 i < 6;
-                 i++
-             ) {
-         
-                 const randomItem =
-                     sourceItems[
-                         Math.floor(
-                             Math.random() *
-                             sourceItems.length
-                         )
-                     ];
-         
-                 animationItems.push(
-                     randomItem
-                 );
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 建立正式動畫卡片
-              * ====================================
-              */
-         
-             animationItems.forEach(
-                 item => {
-         
-                     const element =
-                         document.createElement(
-                             "div"
-                         );
-         
-         
-                     element.className =
-                         "case-preview-item " +
-                         getRarityClass(
-                             item.rarity
-                         );
-         
-         
-                     element.innerHTML = `
-         
-                         <div
-                             class="case-preview-item-image"
-                         >
-         
-                             ${
-                                 item.image
-                                     ? `
-         
-                                         <img
-                                             src="${escapeHtml(
-                                                 item.image
-                                             )}"
-                                             alt=""
-                                             onerror="
-                                                 this.style.display='none';
-                                             "
-                                         >
-         
-                                     `
-                                     : `
-         
-                                         <div
-                                             class="case-item-blur"
-                                         >
-         
-                                             <span>
-                                                 ${escapeHtml(
-                                                     item.name ||
-                                                     "未知物品"
-                                                 )}
-                                             </span>
-         
-                                         </div>
-         
-                                     `
-                             }
-         
-                         </div>
-         
-         
-                         <div
-                             class="case-preview-item-name"
-                         >
-         
-                             ${escapeHtml(
-                                 item.name ||
-                                 "未命名物品"
-                             )}
-         
-                         </div>
-         
-                     `;
-         
-         
-                     track.appendChild(
-                         element
-                     );
-         
-                 }
-             );
-         
-         
-             /*
-              * ====================================
-              * 找到中獎物品
-              * ====================================
-              */
-         
-             const itemElements =
-                 track.querySelectorAll(
-                     ".case-preview-item"
-                 );
-         
-         
-             const winningIndex =
-                 itemElements.length - 7;
-         
-         
-             const winningElement =
-                 itemElements[
-                     winningIndex
-                 ];
-         
-         
-             if (!winningElement) {
-         
-                 throw new Error(
-                     "無法定位中獎物品"
-                 );
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 計算目標位置
-              * ====================================
-              */
-         
-             const wrapper =
-                 document.querySelector(
-                     ".case-preview-wrapper"
-                 );
-         
-         
-             if (!wrapper) {
-         
-                 throw new Error(
-                     "找不到開箱預覽區"
-                 );
-         
-             }
-         
-         
-             const wrapperWidth =
-                 wrapper.offsetWidth;
-         
-         
-             const itemWidth =
-                 winningElement.offsetWidth;
-         
-         
-             const itemLeft =
-                 winningElement.offsetLeft;
-         
-         
-             const itemCenter =
-                 itemLeft +
-                 itemWidth / 2;
-         
-         
-             const targetX =
-                 (
-                     wrapperWidth / 2
-                 ) -
-                 itemCenter;
-         
-         
-             /*
-              * ====================================
-              * 起點
-              * ====================================
-              */
-         
-             const startX =
-                 currentX;
-         
-         
-             /*
-              * ====================================
-              * 剩餘距離
-              *
-              * ⚠️ 一定要先宣告 distance
-              * 再使用它
-              * ====================================
-              */
-         
-             const distance =
-                 targetX -
-                 startX;
-         
-         
-             /*
-              * ====================================
-              * 正式動畫時間
-              * ====================================
-              */
-         
-             const animationDuration =
-                3500;
-         
-         
-             /*
-              * ====================================
-              * Debug：動畫基本資料
-              * ====================================
-              */
-         
-             console.log(
-                 "🔥 正式動畫開始 X：",
-                 Math.round(startX)
-             );
-         
-         
-             console.log(
-                 "🔥 正式動畫目標 X：",
-                 Math.round(targetX)
-             );
-         
-         
-             console.log(
-                 "🔥 正式動畫距離：",
-                 Math.round(
-                     Math.abs(distance)
-                 ),
-                 "px"
-             );
-         
-         
-             console.log(
-                 "🔥 正式動畫時間：",
-                 animationDuration,
-                 "ms"
-             );
-         
-         
-             console.log(
-                 "🔥 正式動畫平均速度：",
-                 Math.round(
-                     Math.abs(distance) /
-                     (animationDuration / 1000)
-                 ),
-                 "px/s"
-             );
-         
-         
-             /*
-              * ====================================
-              * 狀態文字
-              * ====================================
-              */
-         
-             if (status) {
-         
-                 status.textContent =
-                     "正在開啟箱子...";
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 最高速度監測
-              *
-              * 只用來 Debug
-              * 不會影響動畫
-              * ====================================
-              */
-         
-             let lastX =
-                 startX;
-         
-             let lastTime =
-                 performance.now();
-         
-             let maxSpeed =
-                 0;
-         
-             let speedMonitorFrame =
-                 null;
-         
-         
-             function measureSpeed(
-                 now
-             ) {
-         
-                 const transform =
-                     window.getComputedStyle(
-                         track
-                     ).transform;
-         
-         
-                 if (
-                     transform &&
-                     transform !== "none"
-                 ) {
-         
-                     const matrix =
-                         new DOMMatrix(
-                             transform
-                         );
-         
-         
-                     const currentX =
-                         matrix.m41;
-         
-         
-                     const deltaTime =
-                         now -
-                         lastTime;
-         
-         
-                     if (
-                         deltaTime > 0
-                     ) {
-         
-                         const currentSpeed =
-                             Math.abs(
-                                 currentX -
-                                 lastX
-                             ) /
-                             (
-                                 deltaTime /
-                                 1000
-                             );
-         
-         
-                         maxSpeed =
-                             Math.max(
-                                 maxSpeed,
-                                 currentSpeed
-                             );
-         
-                     }
-         
-         
-                     lastX =
-                         currentX;
-         
-         
-                     lastTime =
-                         now;
-         
-                 }
-         
-         
-                 if (
-                     now -
-                     animationStartTime <
-                     animationDuration
-                 ) {
-         
-                     speedMonitorFrame =
-                         requestAnimationFrame(
-                             measureSpeed
-                         );
-         
-                 } else {
-         
-                     console.log(
-                         "🔥🔥 正式動畫最高速度：",
-                         Math.round(
-                             maxSpeed
-                         ),
-                         "px/s"
-                     );
-         
-                 }
-         
-             }
-         
-         
-             /*
-              * ====================================
-              * 動畫開始時間
-              * ====================================
-              */
-         
-             const animationStartTime =
-                 performance.now();
-         
-         
-             /*
-              * ====================================
-              * 啟動正式動畫
-              * ====================================
-              */
-         
-             requestAnimationFrame(
-                 () => {
-         
-                     track.style.transition =
-                         `
-                             transform
-                             ${animationDuration}ms
-                             cubic-bezier(
-                                 0.08,
-                                 0.72,
-                                 0.18,
-                                 1
-                             )
-                         `;
-         
-         
-                     track.style.transform =
-                         `translateX(${targetX}px)`;
-         
-         
-                     /*
-                      * 開始測速
-                      */
-         
-                     speedMonitorFrame =
-                         requestAnimationFrame(
-                             measureSpeed
-                         );
-         
-                 }
-             );
-         
-         
-             /*
-              * ====================================
-              * 動畫完成
-              * ====================================
-              */
-         
-             setTimeout(
-                 () => {
-         
-                     /*
-                      * 停止測速
-                      */
-         
-                     if (
-                         speedMonitorFrame
-                     ) {
-         
-                         cancelAnimationFrame(
-                             speedMonitorFrame
-                         );
-         
-                         speedMonitorFrame =
-                             null;
-         
-                     }
-         
-         
-                     /*
-                      * 中獎效果
-                      */
-         
-                     winningElement.classList.add(
-                         "winning-item"
-                     );
-         
-         
-                     if (status) {
-         
-                         status.textContent =
-                             `你獲得了 ${winningItem.name}`;
-         
-                     }
-         
-         
-                     if (pointer) {
-         
-                         pointer.classList.add(
-                             "winning"
-                         );
-         
-                     }
+                document.querySelector(
+                    "#case-preview-track"
+                );
 
-                     resolve();
-         
-                 },
-                 animationDuration
-             );
+
+            const status =
+                document.querySelector(
+                    "#case-preview-status"
+                );
+
+
+            const pointer =
+                document.querySelector(
+                    ".case-preview-pointer"
+                );
+
+
+            if (!track) {
+
+                resolve();
+
+                return;
+
+            }
+
+
+            caseWaitingActive =
+                false;
+
+
+            if (
+                caseWaitingAnimationFrame
+            ) {
+
+                cancelAnimationFrame(
+                    caseWaitingAnimationFrame
+                );
+
+
+                caseWaitingAnimationFrame =
+                    null;
+
+            }
+
+
+            const winningItem =
+                result.item;
+
+
+            if (!winningItem) {
+
+                throw new Error(
+                    "開箱結果缺少物品資料"
+                );
+
+            }
+
+
+            const currentTransform =
+                window.getComputedStyle(
+                    track
+                ).transform;
+
+
+            let currentX =
+                0;
+
+
+            if (
+                currentTransform &&
+                currentTransform !== "none"
+            ) {
+
+                const matrix =
+                    new DOMMatrix(
+                        currentTransform
+                    );
+
+
+                currentX =
+                    matrix.m41;
+
+            }
+
+
+            track.style.transition =
+                "none";
+
+
+            track.style.transform =
+                `translateX(${currentX}px)`;
+
+
+            const sourceItems =
+                window.currentCaseItems || [];
+
+
+            if (
+                sourceItems.length === 0
+            ) {
+
+                throw new Error(
+                    "箱子沒有內容物"
+                );
+
+            }
+
+
+            const animationItems = [];
+
+
+            for (
+                let i = 0;
+                i < 24;
+                i++
+            ) {
+
+                const randomItem =
+                    sourceItems[
+                        Math.floor(
+                            Math.random() *
+                            sourceItems.length
+                        )
+                    ];
+
+
+                animationItems.push(
+                    randomItem
+                );
+
+            }
+
+
+            animationItems.push(
+                winningItem
+            );
+
+
+            for (
+                let i = 0;
+                i < 6;
+                i++
+            ) {
+
+                const randomItem =
+                    sourceItems[
+                        Math.floor(
+                            Math.random() *
+                            sourceItems.length
+                        )
+                    ];
+
+
+                animationItems.push(
+                    randomItem
+                );
+
+            }
+
+
+            animationItems.forEach(
+                item => {
+
+                    const element =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    element.className =
+                        "case-preview-item " +
+                        getRarityClass(
+                            item.rarity
+                        );
+
+
+                    element.innerHTML = `
+
+                        <div
+                            class="case-preview-item-image"
+                        >
+
+                            ${
+                                item.image
+                                    ? `
+
+                                        <img
+                                            src="${escapeHtml(
+                                                item.image
+                                            )}"
+                                            alt=""
+                                            onerror="
+                                                this.style.display='none';
+                                            "
+                                        >
+
+                                    `
+                                    : `
+
+                                        <div
+                                            class="case-item-blur"
+                                        >
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    item.name ||
+                                                    "未知物品"
+                                                )}
+                                            </span>
+
+                                        </div>
+
+                                    `
+                            }
+
+                        </div>
+
+
+                        <div
+                            class="case-preview-item-name"
+                        >
+
+                            ${escapeHtml(
+                                item.name ||
+                                "未命名物品"
+                            )}
+
+                        </div>
+
+                    `;
+
+
+                    track.appendChild(
+                        element
+                    );
+
+                }
+            );
+
+
+            const itemElements =
+                track.querySelectorAll(
+                    ".case-preview-item"
+                );
+
+
+            const winningIndex =
+                itemElements.length - 7;
+
+
+            const winningElement =
+                itemElements[
+                    winningIndex
+                ];
+
+
+            if (!winningElement) {
+
+                throw new Error(
+                    "無法定位中獎物品"
+                );
+
+            }
+
+
+            const wrapper =
+                document.querySelector(
+                    ".case-preview-wrapper"
+                );
+
+
+            if (!wrapper) {
+
+                throw new Error(
+                    "找不到開箱預覽區"
+                );
+
+            }
+
+
+            const wrapperWidth =
+                wrapper.offsetWidth;
+
+
+            const itemWidth =
+                winningElement.offsetWidth;
+
+
+            const itemLeft =
+                winningElement.offsetLeft;
+
+
+            const itemCenter =
+                itemLeft +
+                itemWidth / 2;
+
+
+            const targetX =
+                (
+                    wrapperWidth / 2
+                ) -
+                itemCenter;
+
+
+            const startX =
+                currentX;
+
+
+            const distance =
+                targetX -
+                startX;
+
+
+            const animationDuration =
+                3500;
+
+
+            console.log(
+                "🔥 正式動畫開始 X：",
+                Math.round(
+                    startX
+                )
+            );
+
+
+            console.log(
+                "🔥 正式動畫目標 X：",
+                Math.round(
+                    targetX
+                )
+            );
+
+
+            console.log(
+                "🔥 正式動畫距離：",
+                Math.round(
+                    Math.abs(
+                        distance
+                    )
+                ),
+                "px"
+            );
+
+
+            console.log(
+                "🔥 正式動畫時間：",
+                animationDuration,
+                "ms"
+            );
+
+
+            console.log(
+                "🔥 正式動畫平均速度：",
+                Math.round(
+                    Math.abs(
+                        distance
+                    ) /
+                    (
+                        animationDuration /
+                        1000
+                    )
+                ),
+                "px/s"
+            );
+
+
+            if (status) {
+
+                status.textContent =
+                    "正在開啟箱子...";
+
+            }
+
+
+            let lastX =
+                startX;
+
+
+            let lastTime =
+                performance.now();
+
+
+            let maxSpeed =
+                0;
+
+
+            let speedMonitorFrame =
+                null;
+
+
+            const animationStartTime =
+                performance.now();
+
+
+            function measureSpeed(
+                now
+            ) {
+
+                const transform =
+                    window.getComputedStyle(
+                        track
+                    ).transform;
+
+
+                if (
+                    transform &&
+                    transform !== "none"
+                ) {
+
+                    const matrix =
+                        new DOMMatrix(
+                            transform
+                        );
+
+
+                    const currentX =
+                        matrix.m41;
+
+
+                    const deltaTime =
+                        now -
+                        lastTime;
+
+
+                    if (
+                        deltaTime > 0
+                    ) {
+
+                        const currentSpeed =
+                            Math.abs(
+                                currentX -
+                                lastX
+                            ) /
+                            (
+                                deltaTime /
+                                1000
+                            );
+
+
+                        maxSpeed =
+                            Math.max(
+                                maxSpeed,
+                                currentSpeed
+                            );
+
+                    }
+
+
+                    lastX =
+                        currentX;
+
+
+                    lastTime =
+                        now;
+
+                }
+
+
+                if (
+                    now -
+                    animationStartTime <
+                    animationDuration
+                ) {
+
+                    speedMonitorFrame =
+                        requestAnimationFrame(
+                            measureSpeed
+                        );
+
+                }
+                else {
+
+                    console.log(
+                        "🔥🔥 正式動畫最高速度：",
+                        Math.round(
+                            maxSpeed
+                        ),
+                        "px/s"
+                    );
+
+                }
+
+            }
+
+
+            requestAnimationFrame(
+                () => {
+
+                    track.style.transition =
+                        `
+                            transform
+                            ${animationDuration}ms
+                            cubic-bezier(
+                                0.08,
+                                0.72,
+                                0.18,
+                                1
+                            )
+                        `;
+
+
+                    track.style.transform =
+                        `translateX(${targetX}px)`;
+
+
+                    speedMonitorFrame =
+                        requestAnimationFrame(
+                            measureSpeed
+                        );
+
+                }
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        speedMonitorFrame
+                    ) {
+
+                        cancelAnimationFrame(
+                            speedMonitorFrame
+                        );
+
+
+                        speedMonitorFrame =
+                            null;
+
+                    }
+
+
+                    winningElement.classList.add(
+                        "winning-item"
+                    );
+
+
+                    if (status) {
+
+                        status.textContent =
+                            `你獲得了 ${winningItem.name}`;
+
+                    }
+
+
+                    if (pointer) {
+
+                        pointer.classList.add(
+                            "winning"
+                        );
+
+                    }
+
+
+                    resolve();
+
+                },
+                animationDuration
+            );
 
         }
     );
 
 }
 
+
 /* ========================================
-   初始化開箱按鈕
+初始化開箱按鈕
 ======================================== */
 
 function initializeOpenCaseButton() {
@@ -1730,19 +1559,15 @@ function initializeOpenCaseButton() {
 
 
     if (!button) {
+
         return;
+
     }
 
 
     button.addEventListener(
         "click",
         async () => {
-
-            /*
-             * ====================================
-             * 防止連點
-             * ====================================
-             */
 
             if (
                 button.disabled
@@ -1756,12 +1581,6 @@ function initializeOpenCaseButton() {
             const caseId =
                 getCaseIdFromUrl();
 
-            const challengeData =
-                getChallengeDataFromUrl();
-            
-            const noLoading =
-                challengeData.mode === "challenge";
-
 
             if (!caseId) {
 
@@ -1773,12 +1592,6 @@ function initializeOpenCaseButton() {
 
             }
 
-
-            /*
-             * ====================================
-             * 確認登入
-             * ====================================
-             */
 
             const sessionToken =
                 getSessionToken();
@@ -1794,13 +1607,18 @@ function initializeOpenCaseButton() {
             }
 
 
-            try {
+            const challengeData =
+                getChallengeDataFromUrl();
 
-                /*
-                 * ====================================
-                 * 鎖定按鈕
-                 * ====================================
-                 */
+
+            const isChallenge =
+                challengeData.mode ===
+                    "challenge"
+                &&
+                !!challengeData.challengeId;
+
+
+            try {
 
                 button.disabled =
                     true;
@@ -1814,81 +1632,65 @@ function initializeOpenCaseButton() {
                     true;
 
 
+                let apiPromise;
+
+
                 /*
                  * ====================================
-                 * ⭐ API 立即開始
-                 *
-                 * 不等待開箱動畫。
-                 *
-                 * 鑰匙動畫播放的同時，
-                 * Google Apps Script 已經開始處理。
+                 * Challenge Mode
                  * ====================================
                  */
 
-                let apiPromise;
-               
-               
-               /*
-                * ====================================
-                * Challenge Mode
-                * ====================================
-                */
-               
-               const challengeData =
-                   getChallengeDataFromUrl();
-               
-               
-               
-               if(
-                   challengeData.mode === "challenge"
-               ){
-               
-                   if(
-                       !challengeData.challengeId
-                   ){
-               
-                       throw new Error(
-                           "缺少 Challenge ID"
-                       );
-               
-                   }
-               
-               
-                   apiPromise =
-                       openChallengeCase({
-               
-                           sessionToken,
-               
-                           challengeId:
-                               challengeData.challengeId,
-               
-                           caseId
-               
-                       });
-               
-               
-               }
-               else{
-               
-               
-                   /*
-                    * 普通開箱
-                    */
-               
-                   apiPromise =
-                       openCase(
-                           caseId
-                       );
-               
-               
-               }
+                if (
+                    isChallenge
+                ) {
+
+                    if (
+                        !challengeData.challengeId
+                    ) {
+
+                        throw new Error(
+                            "缺少 Challenge ID"
+                        );
+
+                    }
+
+
+                    apiPromise =
+                        openChallengeCase(
+                            {
+                                sessionToken,
+
+                                challengeId:
+                                    challengeData.challengeId,
+
+                                caseId
+
+                            }
+                        );
+
+                }
+                else {
+
+                    /*
+                     * ====================================
+                     * 普通模式
+                     * ====================================
+                     */
+
+                    apiPromise =
+                        openCase(
+                            caseId
+                        );
+
+                }
 
 
                 /*
                  * ====================================
-                 * ⭐ 播放開箱 Intro
+                 * Intro
                  *
-                 * API 與動畫並行。
+                 * Challenge / 普通模式都保留
                  * ====================================
                  */
 
@@ -1896,156 +1698,137 @@ function initializeOpenCaseButton() {
 
 
                 /*
-                * ====================================
-                * ⭐ Intro 完成
-                *
-                * 鑰匙 → 黃光 → 箱子
-                * 已經播放完畢
-                *
-                * 現在才讓現有滑動條出現
-                * ====================================
-                */
-               
-               
-               /*
-                * ====================================
-                * ⭐ 等待 API
-                *
-                * 滑動條已經在畫面上高速運轉
-                * API 回來後再交給正式動畫
-                * ====================================
-                */
-               
-               const result =
-                   await apiPromise;
+                 * ====================================
+                 * API 結果
+                 * ====================================
+                 */
+
+                const result =
+                    await apiPromise;
 
 
                 /*
                  * ====================================
-                 * 更新玩家餘額
+                 * 更新餘額
                  * ====================================
                  */
 
-               if(
-                   challengeData.mode === "challenge"
-               ){
-               
-                   updateChallengeBalance(
-                       result.remainingEC
-                   );
-               
-               
-                   /*
-                    * ====================================
-                    * Challenge Mode
-                    *
-                    * 新增獲得物品
-                    * ====================================
-                    */
-               
-                   await addChallengeItem(
-                       {
-                           challengeId:
-                               challengeData.challengeId,
-               
-                           item:
-                               result.item
-                       }
-                   );
-               
-               }
-               else{
-               
-                   updateBalance(
-                       result.remainingEloCoin
-                   );
-               
-                   const savedUser =
-                       getSavedUser();
-               
-               
-                   if(savedUser){
-               
-                       savedUser.eloCoin =
-                           result.remainingEloCoin;
-               
-               
-                       localStorage.setItem(
-                           "elocaseUser",
-                           JSON.stringify(
-                               savedUser
-                           )
-                       );
-               
-                   }
-               
-               }
+                if (
+                    isChallenge
+                ) {
+
+                    updateChallengeBalance(
+                        result.remainingEC
+                    );
+
+
+                    await addChallengeItem(
+                        {
+                            challengeId:
+                                challengeData.challengeId,
+
+                            item:
+                                result.item
+                        }
+                    );
+
+                }
+                else {
+
+                    updateBalance(
+                        result.remainingEloCoin
+                    );
+
+
+                    const savedUser =
+                        getSavedUser();
+
+
+                    if (
+                        savedUser
+                    ) {
+
+                        savedUser.eloCoin =
+                            result.remainingEloCoin;
+
+
+                        localStorage.setItem(
+                            "elocaseUser",
+                            JSON.stringify(
+                                savedUser
+                            )
+                        );
+
+                    }
+
+                }
 
 
                 /*
                  * ====================================
-                 * ⭐ API 成功
-                 *
-                 * 如果滑動條已經開始：
-                 *
-                 *     高速等待
-                 *          ↓
-                 *     正式減速動畫
-                 *
-                 * 如果 API 在 Intro 期間
-                 * 就完成：
-                 *
-                 *     Intro
-                 *       ↓
-                 *     直接正式動畫
+                 * 普通模式才儲存開箱紀錄
                  * ====================================
                  */
 
-               if(
-                   challengeData.mode !== "challenge"
-               ){
-               
-                   await saveOpenHistory(
-                       result
-                   );
-               
-               }
-               
+                if (
+                    !isChallenge
+                ) {
+
+                    await saveOpenHistory(
+                        result
+                    );
+
+                }
+
+
+                /*
+                 * ====================================
+                 * 正式動畫
+                 *
+                 * Challenge Mode
+                 * 也直接進正式動畫。
+                 *
+                 * 不使用舊橘色等待條。
+                 * ====================================
+                 */
+
                 await playCasePreviewAnimation(
-                   result
-               );
-
-               if(
-                   challengeData.mode === "challenge"
-               ){
-               
-                   setTimeout(
-                       ()=>{
-               
-                           createReturnChallengeButton(
-                               challengeData.challengeId
-                           );
-               
-                       },
-                       4000
-                   );
-               
-               }
+                    result
+                );
 
 
-            } catch (error) {
+                /*
+                 * ====================================
+                 * Challenge 完成後
+                 * ====================================
+                 */
+
+                if (
+                    isChallenge
+                ) {
+
+                    setTimeout(
+                        () => {
+
+                            createReturnChallengeButton(
+                                challengeData.challengeId
+                            );
+
+                        },
+                        4000
+                    );
+
+                }
+
+
+            }
+            catch (error) {
 
                 console.error(
                     "開箱失敗：",
                     error
                 );
 
-
-                /*
-                 * ====================================
-                 * 停止等待動畫
-                 * ====================================
-                 */
 
                 caseWaitingActive =
                     false;
@@ -2066,12 +1849,6 @@ function initializeOpenCaseButton() {
                 }
 
 
-                /*
-                 * ====================================
-                 * 停止滑動條 Transition
-                 * ====================================
-                 */
-
                 const track =
                     document.querySelector(
                         "#case-preview-track"
@@ -2086,25 +1863,13 @@ function initializeOpenCaseButton() {
                 }
 
 
-                /*
-                 * ====================================
-                 * 顯示錯誤
-                 * ====================================
-                 */
-
                 alert(
                     error.message ||
                     "開箱失敗"
                 );
 
-
-            } finally {
-
-                /*
-                 * ====================================
-                 * 結束開箱狀態
-                 * ====================================
-                 */
+            }
+            finally {
 
                 window.ELOCaseOpening =
                     false;
@@ -2131,19 +1896,13 @@ function initializeOpenCaseButton() {
 
 
 /* ========================================
-   載入箱子
+載入箱子
 ======================================== */
 
 async function initializeCasePage() {
 
     const caseId =
         getCaseIdFromUrl();
-
-   const challengeData =
-         getChallengeDataFromUrl();
-            
-   const noLoading =
-         challengeData.mode === "challenge";
 
 
     const caseName =
@@ -2190,17 +1949,10 @@ async function initializeCasePage() {
 
     try {
 
-        /*
-         * 取得箱子
-         */
-
         const caseData =
-             await getCase(
-                 caseId,
-                 {
-                     noLoading
-                 }
-             );
+            await getCase(
+                caseId
+            );
 
 
         if (!caseData) {
@@ -2210,6 +1962,14 @@ async function initializeCasePage() {
             );
 
         }
+
+
+        /*
+         * 初始化 Challenge Case 快取
+         */
+
+        window.currentChallengeCaseData =
+            caseData;
 
 
         renderCaseImage(
@@ -2222,33 +1982,38 @@ async function initializeCasePage() {
         );
 
 
+        const items =
+            await getCaseItems(
+                caseId
+            );
+
+
+        window.lastChallengeCaseItemsData =
+            JSON.stringify(
+                items || []
+            );
+
+
+        renderCaseItems(
+            items
+        );
+
+
         /*
-         * 取得內容物
+         * ====================================
+         * Challenge Mode
+         * ====================================
+         *
+         * 啟動背景同步。
+         *
+         * 不啟動任何舊 Loading。
+         * ====================================
          */
 
-        const items =
-             await getCaseItems(
-                 caseId,
-                 {
-                     noLoading
-                 }
-             );
-         
-         
-         renderCaseItems(
-             items
-         );
-         
-         
-         /*
-          * Challenge Mode
-          * 每 3 秒更新
-          */
-         
-         startChallengeCaseRefresh();
+        startChallengeCaseRefresh();
 
-
-    } catch (error) {
+    }
+    catch (error) {
 
         console.error(
             "箱子資料載入失敗：",
@@ -2287,7 +2052,7 @@ async function initializeCasePage() {
 
 
 /* ========================================
-   HTML 防護
+HTML 防護
 ======================================== */
 
 function escapeHtml(value) {
@@ -2295,32 +2060,32 @@ function escapeHtml(value) {
     return String(
         value ?? ""
     )
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
 
 }
 
 
 /* ========================================
-   初始化
+初始化
 ======================================== */
 
 document.addEventListener(
@@ -2328,13 +2093,18 @@ document.addEventListener(
     () => {
 
         initCaseBack();
-       
+
         initializeCasePage();
 
         initializeOpenCaseButton();
 
     }
 );
+
+
+/* ========================================
+開箱 Intro
+======================================== */
 
 function playCaseOpeningIntro() {
 
@@ -2356,21 +2126,9 @@ function playCaseOpeningIntro() {
             }
 
 
-            /*
-             * ====================================
-             * 重置動畫
-             * ====================================
-             */
-
             animation.className =
                 "case-opening-animation";
 
-
-            /*
-             * ====================================
-             * 顯示動畫
-             * ====================================
-             */
 
             requestAnimationFrame(
                 () => {
@@ -2382,14 +2140,6 @@ function playCaseOpeningIntro() {
                 }
             );
 
-
-            /*
-             * ====================================
-             * 0.2 秒
-             *
-             * 鑰匙開始飛入
-             * ====================================
-             */
 
             setTimeout(
                 () => {
@@ -2403,14 +2153,6 @@ function playCaseOpeningIntro() {
             );
 
 
-            /*
-             * ====================================
-             * 1.15 秒
-             *
-             * 鑰匙抵達鎖孔
-             * ====================================
-             */
-
             setTimeout(
                 () => {
 
@@ -2422,13 +2164,6 @@ function playCaseOpeningIntro() {
                 1150
             );
 
-            /*
-             * ====================================
-             * 2.15 秒
-             *
-             * 黃光開始爆發
-             * ====================================
-             */
 
             setTimeout(
                 () => {
@@ -2442,14 +2177,6 @@ function playCaseOpeningIntro() {
             );
 
 
-            /*
-             * ====================================
-             * 2.45 秒
-             *
-             * 黃光覆蓋箱子
-             * ====================================
-             */
-
             setTimeout(
                 () => {
 
@@ -2461,25 +2188,45 @@ function playCaseOpeningIntro() {
                 2450
             );
 
-           setTimeout(
-             () => {
-         
-                 startCaseWaitingAnimation();
-         
-             },
-             2450
-         );
-
 
             /*
              * ====================================
-             * 2.9 秒
+             * ⭐ 這裡是本次最重要的修改
+             * ====================================
              *
-             * Intro 完成
+             * 以前：
              *
-             * 接下來交給現在的滑動條
+             * 2450ms
+             * ↓
+             * startCaseWaitingAnimation()
+             *
+             * 現在：
+             *
+             * Challenge Mode
+             * ↓
+             * 不啟動舊橘色 Loading
+             *
+             * 普通模式
+             * ↓
+             * 照舊啟動
              * ====================================
              */
+
+            setTimeout(
+                () => {
+
+                    if (
+                        !isChallengeCasePage()
+                    ) {
+
+                        startCaseWaitingAnimation();
+
+                    }
+
+                },
+                2450
+            );
+
 
             setTimeout(
                 () => {
@@ -2504,8 +2251,12 @@ function playCaseOpeningIntro() {
 
 }
 
-function initCaseBack(){
 
+/* ========================================
+返回箱子列表
+======================================== */
+
+function initCaseBack() {
 
     const button =
         document.querySelector(
@@ -2513,8 +2264,10 @@ function initCaseBack(){
         );
 
 
-    if(!button){
+    if (!button) {
+
         return;
+
     }
 
 
@@ -2525,42 +2278,45 @@ function initCaseBack(){
 
 
     const mode =
-        params.get("mode");
+        params.get(
+            "mode"
+        );
 
 
     const challengeId =
-        params.get("challengeId");
+        params.get(
+            "challengeId"
+        );
 
 
-
-    if(
-        mode === "challenge"
-        &&
+    if (
+        mode === "challenge" &&
         challengeId
-    ){
+    ) {
 
         button.href =
-        "cases.html?mode=challenge&challengeId="
-        +
-        challengeId;
-
+            "cases.html?mode=challenge&challengeId="
+            +
+            challengeId;
 
     }
-    else{
-
+    else {
 
         button.href =
-        "cases.html";
-
+            "cases.html";
 
     }
-
 
 }
 
+
+/* ========================================
+建立回到 Challenge 按鈕
+======================================== */
+
 function createReturnChallengeButton(
     challengeId
-){
+) {
 
     const container =
         document.querySelector(
@@ -2568,17 +2324,21 @@ function createReturnChallengeButton(
         );
 
 
-    if(!container){
+    if (!container) {
+
         return;
+
     }
 
 
-    if(
+    if (
         container.querySelector(
             ".return-challenge-button"
         )
-    ){
+    ) {
+
         return;
+
     }
 
 
@@ -2608,7 +2368,12 @@ function createReturnChallengeButton(
 
 }
 
-function updateChallengeBalance(ec){
+
+/* ========================================
+更新 Challenge EC
+======================================== */
+
+function updateChallengeBalance(ec) {
 
     const balanceElement =
         document.querySelector(
@@ -2616,8 +2381,10 @@ function updateChallengeBalance(ec){
         );
 
 
-    if(!balanceElement){
+    if (!balanceElement) {
+
         return;
+
     }
 
 
@@ -2628,44 +2395,38 @@ function updateChallengeBalance(ec){
 
 }
 
+
 /* ========================================
-   Challenge 新增物品
+Challenge 新增物品
 ======================================== */
 
-async function addChallengeItem(data){
+async function addChallengeItem(data) {
 
-
-    try{
-
+    try {
 
         const response =
-            await sendChallengePost({
+            await sendChallengePost(
+                {
+                    action:
+                        "addChallengeItem",
 
-                action:
-                    "addChallengeItem",
+                    challengeId:
+                        data.challengeId,
 
+                    sessionToken:
+                        getSessionToken(),
 
-                challengeId:
-                    data.challengeId,
+                    item:
+                        data.item
 
-
-                sessionToken:
-                    getSessionToken(),
-
-
-                item:
-                    data.item
-
-            });
-
+                }
+            );
 
 
         return response;
 
-
     }
-    catch(error){
-
+    catch (error) {
 
         console.error(
             "新增 Challenge 物品失敗",
@@ -2675,42 +2436,53 @@ async function addChallengeItem(data){
 
         throw error;
 
-
     }
 
-
 }
+
 
 /* ========================================
 Challenge Case 即時更新
 ======================================== */
 
-let challengeCaseRefreshTimer = null;
+let challengeCaseRefreshTimer =
+    null;
 
 
-function startChallengeCaseRefresh(){
+/*
+ * ⭐ 新增：
+ * 防止背景更新重疊
+ */
+
+let challengeCaseRefreshRunning =
+    false;
+
+
+/* ========================================
+啟動 Challenge Case 背景更新
+======================================== */
+
+function startChallengeCaseRefresh() {
 
     const challengeData =
         getChallengeDataFromUrl();
 
 
-    if(
-        challengeData.mode !== "challenge" ||
+    if (
+        challengeData.mode !==
+            "challenge"
+        ||
         !challengeData.challengeId
-    ){
+    ) {
 
         return;
 
     }
 
 
-    /*
-     * 避免重複建立 Timer
-     */
-
-    if(
+    if (
         challengeCaseRefreshTimer
-    ){
+    ) {
 
         clearInterval(
             challengeCaseRefreshTimer
@@ -2718,6 +2490,17 @@ function startChallengeCaseRefresh(){
 
     }
 
+
+    /*
+     * 立即更新一次
+     */
+
+    refreshChallengeCase();
+
+
+    /*
+     * 每 3 秒背景更新
+     */
 
     challengeCaseRefreshTimer =
         setInterval(
@@ -2728,32 +2511,23 @@ function startChallengeCaseRefresh(){
 }
 
 
-async function refreshChallengeCase(){
+/* ========================================
+Challenge Case 背景更新
+======================================== */
+
+async function refreshChallengeCase() {
 
     /*
      * ====================================
-     * 開箱中：
-     * 不執行背景更新
-     * ====================================
-     */
-
-    if(window.ELOCaseOpening){
-
-        return;
-
-    }
-
-
-    /*
-     * ====================================
-     * 防止背景更新重複執行
+     * 正在開箱
      *
-     * 如果上一輪 API 還沒完成
-     * 下一輪直接跳過
+     * 不更新
      * ====================================
      */
 
-    if(challengeCaseRefreshRunning){
+    if (
+        window.ELOCaseOpening
+    ) {
 
         return;
 
@@ -2762,88 +2536,74 @@ async function refreshChallengeCase(){
 
     /*
      * ====================================
-     * 鎖定背景更新
+     * ⭐ 防止 API 重疊
      * ====================================
      */
+
+    if (
+        challengeCaseRefreshRunning
+    ) {
+
+        return;
+
+    }
+
+
+    const challengeData =
+        getChallengeDataFromUrl();
+
+
+    if (
+        challengeData.mode !==
+            "challenge"
+        ||
+        !challengeData.challengeId
+    ) {
+
+        return;
+
+    }
+
+
+    const caseId =
+        getCaseIdFromUrl();
+
+
+    if (!caseId) {
+
+        return;
+
+    }
+
 
     challengeCaseRefreshRunning =
         true;
 
 
-    try{
+    try {
 
         /*
          * ====================================
-         * Challenge Mode 判斷
-         * ====================================
-         */
-
-        const challengeData =
-            getChallengeDataFromUrl();
-
-
-        if(
-            challengeData.mode !== "challenge" ||
-            !challengeData.challengeId
-        ){
-
-            return;
-
-        }
-
-
-        /*
-         * ====================================
-         * 取得 Case ID
-         * ====================================
-         */
-
-        const caseId =
-            getCaseIdFromUrl();
-
-         const challengeData =
-               getChallengeDataFromUrl();
-                     
-         const noLoading =
-               challengeData.mode === "challenge";
-
-
-
-        if(!caseId){
-
-            return;
-
-        }
-
-
-        /*
-         * ====================================
-         * 只在背景取得最新 Challenge
+         * Challenge 最新資料
          *
-         * 不碰開箱動畫
-         * 不重設 Preview
+         * 明確要求：
+         * 不顯示 Loading
          * ====================================
          */
 
         const challengeResult =
-             await getChallenge(
-                 challengeData.challengeId,
-                 {
-                     noLoading: true
-                 }
-             );
+            await getChallenge(
+                challengeData.challengeId,
+                {
+                    noLoading: true
+                }
+            );
 
 
-        /*
-         * ====================================
-         * 更新右上角雙方玩家資料
-         * ====================================
-         */
-
-        if(
+        if (
             challengeResult &&
             challengeResult.players
-        ){
+        ) {
 
             updateChallengeCasePlayers(
                 challengeResult.players
@@ -2854,26 +2614,30 @@ async function refreshChallengeCase(){
 
         /*
          * ====================================
-         * 取得最新 Case
+         * Case 最新資料
+         *
+         * 背景更新不應該重新觸發
+         * Challenge Loading
          * ====================================
          */
 
         const caseData =
-             await getCase(
-                 caseId,
-                 {
-                     noLoading
-                 }
-             );
+            await getCase(
+                caseId,
+                {
+                    noLoading: true
+                }
+            );
 
 
-        if(caseData){
+        if (caseData) {
 
-            /*
-             * ====================================
-             * 只有資料真的變了才更新
-             * ====================================
-             */
+            const oldCaseData =
+                JSON.stringify(
+                    window.currentChallengeCaseData ||
+                    null
+                );
+
 
             const newCaseData =
                 JSON.stringify(
@@ -2881,16 +2645,10 @@ async function refreshChallengeCase(){
                 );
 
 
-            const oldCaseData =
-                JSON.stringify(
-                    window.currentChallengeCaseData
-                );
-
-
-            if(
-                newCaseData !==
-                oldCaseData
-            ){
+            if (
+                oldCaseData !==
+                newCaseData
+            ) {
 
                 window.currentChallengeCaseData =
                     caseData;
@@ -2912,54 +2670,33 @@ async function refreshChallengeCase(){
 
         /*
          * ====================================
-         * 取得最新內容物
+         * 最新內容物
          * ====================================
          */
 
         const items =
-             await getCaseItems(
-                 caseId,
-                 {
-                     noLoading
-                 }
-             );
+            await getCaseItems(
+                caseId,
+                {
+                    noLoading: true
+                }
+            );
 
-
-        /*
-         * ====================================
-         * 更新內容物
-         *
-         * updateChallengeCaseItems()
-         * 內部會自行判斷資料是否真的變更
-         *
-         * 不會重新建立 Preview
-         * ====================================
-         */
 
         updateChallengeCaseItems(
             items
         );
 
-
     }
-    catch(error){
+    catch (error) {
 
         console.error(
             "Challenge Case 背景更新失敗：",
             error
         );
 
-
     }
-    finally{
-
-        /*
-         * ====================================
-         * 解鎖背景更新
-         *
-         * 不論成功或失敗都一定會執行
-         * ====================================
-         */
+    finally {
 
         challengeCaseRefreshRunning =
             false;
@@ -2968,13 +2705,16 @@ async function refreshChallengeCase(){
 
 }
 
+
 /* ========================================
 Challenge Case
 只更新內容物卡片
 不重建 Preview
 ======================================== */
 
-function updateChallengeCaseItems(items){
+function updateChallengeCaseItems(
+    items
+) {
 
     const newData =
         JSON.stringify(
@@ -2983,14 +2723,15 @@ function updateChallengeCaseItems(items){
 
 
     /*
+     * ====================================
      * 資料完全沒變
-     * → 什麼都不要做
+     * ====================================
      */
 
-    if(
+    if (
         window.lastChallengeCaseItemsData ===
         newData
-    ){
+    ) {
 
         return;
 
@@ -3011,23 +2752,29 @@ function updateChallengeCaseItems(items){
         );
 
 
-    if(!container){
+    if (!container) {
+
         return;
+
     }
 
 
     container.innerHTML = "";
 
 
-    if(
+    if (
         !items ||
         items.length === 0
-    ){
+    ) {
 
         container.innerHTML = `
+
             <div class="case-items-loading">
+
                 這個箱子目前沒有內容物。
+
             </div>
+
         `;
 
         return;
@@ -3043,6 +2790,7 @@ function updateChallengeCaseItems(items){
                     item
                 );
 
+
             container.appendChild(
                 card
             );
@@ -3052,17 +2800,22 @@ function updateChallengeCaseItems(items){
 
 }
 
+
 /* ========================================
- * Challenge Case
- * 更新右上角 Navbar 雙方即時資料
- * ======================================== */
+Challenge Case
+更新右上角 Navbar 雙方即時資料
+======================================== */
 
-function updateChallengeCasePlayers(players){
+function updateChallengeCasePlayers(
+    players
+) {
 
-    if(
-        !Array.isArray(players) ||
+    if (
+        !Array.isArray(
+            players
+        ) ||
         players.length === 0
-    ){
+    ) {
 
         console.log(
             "⚠️ Challenge 沒有 players 資料"
@@ -3077,7 +2830,7 @@ function updateChallengeCasePlayers(players){
         getSavedUser();
 
 
-    if(!sessionUser){
+    if (!sessionUser) {
 
         console.log(
             "⚠️ 找不到目前登入玩家"
@@ -3088,31 +2841,6 @@ function updateChallengeCasePlayers(players){
     }
 
 
-    /*
-     * ====================================
-     * Debug
-     * ====================================
-     */
-
-    console.log(
-        "🔥 Challenge Players：",
-        players
-    );
-
-    console.log(
-        "🔥 Session User：",
-        sessionUser
-    );
-
-
-    /*
-     * ====================================
-     * 取得自己的 userId
-     *
-     * 支援不同欄位名稱
-     * ====================================
-     */
-
     const myUserId =
         String(
             sessionUser.userId ??
@@ -3121,12 +2849,6 @@ function updateChallengeCasePlayers(players){
             ""
         );
 
-
-    /*
-     * ====================================
-     * 找到自己
-     * ====================================
-     */
 
     const myPlayer =
         players.find(
@@ -3150,12 +2872,6 @@ function updateChallengeCasePlayers(players){
         );
 
 
-    /*
-     * ====================================
-     * 找到對手
-     * ====================================
-     */
-
     const opponentPlayer =
         players.find(
             player => {
@@ -3178,25 +2894,13 @@ function updateChallengeCasePlayers(players){
         );
 
 
-    console.log(
-        "🔥 我的 Challenge 玩家：",
-        myPlayer
-    );
-
-
-    console.log(
-        "🔥 對手 Challenge 玩家：",
-        opponentPlayer
-    );
-
-
     /*
      * ====================================
      * 我的 EC
      * ====================================
      */
 
-    if(myPlayer){
+    if (myPlayer) {
 
         const myCoin =
             document.querySelector(
@@ -3204,7 +2908,7 @@ function updateChallengeCasePlayers(players){
             );
 
 
-        if(myCoin){
+        if (myCoin) {
 
             myCoin.textContent =
                 Number(
@@ -3214,104 +2918,117 @@ function updateChallengeCasePlayers(players){
 
         }
 
+
+        /*
+         * ====================================
+         * 我的物品總價值
+         * ====================================
+         */
+
+        const myValue =
+            document.querySelector(
+                "#navbar-my-value"
+            );
+
+
+        const myItemValue =
+            Array.isArray(
+                myPlayer.items
+            )
+                ? myPlayer.items.reduce(
+                    (
+                        total,
+                        item
+                    ) => {
+
+                        return total +
+                            (
+                                Number(
+                                    item.value
+                                ) || 0
+                            );
+
+                    },
+                    0
+                )
+                : 0;
+
+
+        if (myValue) {
+
+            myValue.textContent =
+                Number(
+                    myItemValue
+                ).toLocaleString();
+
+        }
+
     }
 
 
     /*
-    * ====================================
-    * 我的最終價值
-    * ====================================
-    */
-   
-   if (myPlayer) {
-   
-       const myValue =
-           document.querySelector(
-               "#navbar-my-value"
-           );
-   
-   
-       const myItemValue =
-           Array.isArray(
-               myPlayer.items
-           )
-               ? myPlayer.items.reduce(
-                   (
-                       total,
-                       item
-                   ) => {
-   
-                       return total +
-                           (
-                               Number(
-                                   item.value
-                               ) || 0
-                           );
-   
-                   },
-                   0
-               )
-               : 0;
-   
-   
-       if (myValue) {
-   
-           myValue.textContent =
-               Number(
-                   myItemValue
-               ).toLocaleString();
-   
-       }
-   
-   }
-   
-   
-   /*
-    * ====================================
-    * 對手最終價值
-    * ====================================
-    */
-   
-   if (opponentPlayer) {
-   
-       const opponentValue =
-           document.querySelector(
-               "#navbar-opponent-value"
-           );
-   
-   
-       const opponentItemValue =
-           Array.isArray(
-               opponentPlayer.items
-           )
-               ? opponentPlayer.items.reduce(
-                   (
-                       total,
-                       item
-                   ) => {
-   
-                       return total +
-                           (
-                               Number(
-                                   item.value
-                               ) || 0
-                           );
-   
-                   },
-                   0
-               )
-               : 0;
-   
-   
-       if (opponentValue) {
-   
-           opponentValue.textContent =
-               Number(
-                   opponentItemValue
-               ).toLocaleString();
-   
-       }
-   
-   }
+     * ====================================
+     * 對手資料
+     * ====================================
+     */
+
+    if (opponentPlayer) {
+
+        const opponentCoin =
+            document.querySelector(
+                "#navbar-opponent-coin"
+            );
+
+
+        if (opponentCoin) {
+
+            opponentCoin.textContent =
+                Number(
+                    opponentPlayer.challengeEC ??
+                    0
+                ).toLocaleString();
+
+        }
+
+
+        const opponentValue =
+            document.querySelector(
+                "#navbar-opponent-value"
+            );
+
+
+        const opponentItemValue =
+            Array.isArray(
+                opponentPlayer.items
+            )
+                ? opponentPlayer.items.reduce(
+                    (
+                        total,
+                        item
+                    ) => {
+
+                        return total +
+                            (
+                                Number(
+                                    item.value
+                                ) || 0
+                            );
+
+                    },
+                    0
+                )
+                : 0;
+
+
+        if (opponentValue) {
+
+            opponentValue.textContent =
+                Number(
+                    opponentItemValue
+                ).toLocaleString();
+
+        }
+
+    }
 
 }
