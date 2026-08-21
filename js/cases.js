@@ -15,10 +15,65 @@ document.addEventListener(
     "DOMContentLoaded",
     async () => {
 
-        let isChallengePage = false;
+        /*
+         * ====================================
+         * 先判斷 Challenge Mode
+         *
+         * ⚠️ Loading 必須比 API / Session
+         * 更早開始
+         * ====================================
+         */
+
+        const params =
+            new URLSearchParams(
+                location.search
+            );
+
+
+        const mode =
+            params.get(
+                "mode"
+            );
+
+
+        const challengeId =
+            params.get(
+                "challengeId"
+            );
+
+
+        const isChallengePage =
+            mode === "challenge" &&
+            !!challengeId;
+
+
+        /*
+         * ====================================
+         * Challenge 專屬 Loading
+         *
+         * 第一次進入頁面立即開始
+         *
+         * 後面的背景更新不會觸發
+         * ====================================
+         */
+
+        if(
+            isChallengePage &&
+            window.ELOChallengeLoading
+        ){
+
+            ELOChallengeLoading.start();
+
+        }
 
 
         try {
+
+            /*
+             * ====================================
+             * 驗證登入
+             * ====================================
+             */
 
             const user =
                 await verifySession();
@@ -27,55 +82,6 @@ document.addEventListener(
             updateLoginUI(
                 user
             );
-
-
-            const params =
-                new URLSearchParams(
-                    location.search
-                );
-
-
-            const mode =
-                params.get(
-                    "mode"
-                );
-
-
-            const challengeId =
-                params.get(
-                    "challengeId"
-                );
-
-
-            /*
-             * ====================================
-             * 判斷 Challenge Mode
-             * ====================================
-             */
-
-            isChallengePage =
-                mode === "challenge" &&
-                !!challengeId;
-
-
-            /*
-             * ====================================
-             * Challenge 專屬 Loading
-             *
-             * 只用於第一次載入
-             *
-             * 後面的背景更新不會觸發
-             * ====================================
-             */
-
-            if(
-                isChallengePage &&
-                window.ELOChallengeLoading
-            ){
-
-                ELOChallengeLoading.start();
-
-            }
 
 
             /*
@@ -88,6 +94,12 @@ document.addEventListener(
                 await getCases();
 
 
+            /*
+             * ====================================
+             * 建立箱子卡片
+             * ====================================
+             */
+
             renderCases(
                 cases
             );
@@ -95,7 +107,34 @@ document.addEventListener(
 
             /*
              * ====================================
-             * 第一次載入完成
+             * ⭐ 等待 Case 圖片真正載入
+             *
+             * API 回來不代表頁面已經準備好。
+             *
+             * 這裡會等待：
+             *
+             * API
+             * ↓
+             * Case Card
+             * ↓
+             * 圖片載入
+             * ↓
+             * Loading 才結束
+             * ====================================
+             */
+
+            if(
+                isChallengePage
+            ){
+
+                await waitForCaseImages();
+
+            }
+
+
+            /*
+             * ====================================
+             * ⭐ 第一次真正載入完成
              * ====================================
              */
 
@@ -424,6 +463,213 @@ function renderCases(cases){
 
 }
 
+/* ========================================
+等待 Case 圖片載入
+======================================== */
+
+function waitForCaseImages(){
+
+    return new Promise(
+        resolve => {
+
+            const grid =
+                document.querySelector(
+                    "#case-grid"
+                );
+
+
+            /*
+             * 沒有 Grid
+             * 直接完成
+             */
+
+            if(!grid){
+
+                resolve();
+
+                return;
+
+            }
+
+
+            const images =
+                Array.from(
+                    grid.querySelectorAll(
+                        "img"
+                    )
+                );
+
+
+            /*
+             * 沒有圖片
+             * 直接完成
+             */
+
+            if(
+                images.length === 0
+            ){
+
+                /*
+                 * 至少等一幀
+                 * 讓瀏覽器完成排版
+                 */
+
+                requestAnimationFrame(
+                    () => {
+
+                        resolve();
+
+                    }
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ====================================
+             * 等待所有圖片
+             *
+             * load  → 完成
+             * error → 也算完成
+             * ====================================
+             */
+
+            let finishedCount = 0;
+
+            let resolved = false;
+
+
+            const finishOne =
+                () => {
+
+                    if(resolved){
+
+                        return;
+
+                    }
+
+
+                    finishedCount++;
+
+
+                    if(
+                        finishedCount >=
+                        images.length
+                    ){
+
+                        resolved =
+                            true;
+
+
+                        /*
+                         * 再等一幀
+                         *
+                         * 確保圖片載入後
+                         * DOM / Layout 已經更新
+                         */
+
+                        requestAnimationFrame(
+                            () => {
+
+                                resolve();
+
+                            }
+                        );
+
+                    }
+
+                };
+
+
+            images.forEach(
+                image => {
+
+                    /*
+                     * 圖片早已載入完成
+                     */
+
+                    if(
+                        image.complete
+                    ){
+
+                        finishOne();
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * 圖片正常載入
+                     */
+
+                    image.addEventListener(
+                        "load",
+                        finishOne,
+                        {
+                            once: true
+                        }
+                    );
+
+
+                    /*
+                     * 圖片載入失敗
+                     *
+                     * 不應該讓 Loading 永遠卡住
+                     */
+
+                    image.addEventListener(
+                        "error",
+                        finishOne,
+                        {
+                            once: true
+                        }
+                    );
+
+                }
+            );
+
+
+            /*
+             * ====================================
+             * 最長等待時間
+             *
+             * 避免某一張圖片伺服器卡死，
+             * 導致整個 Loading 永遠不消失。
+             * ====================================
+             */
+
+            setTimeout(
+                () => {
+
+                    if(resolved){
+
+                        return;
+
+                    }
+
+
+                    resolved =
+                        true;
+
+
+                    console.warn(
+                        "⚠️ 部分 Case 圖片載入逾時，繼續完成 Loading"
+                    );
+
+
+                    resolve();
+
+                },
+                10000
+            );
+
+        }
+    );
+
+}
 
 /* ========================================
 HTML 防護
