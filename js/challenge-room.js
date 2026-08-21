@@ -85,31 +85,42 @@ async()=>{
 ======================================== */
 
 
+/* ========================================
+   載入 Challenge 房間
+======================================== */
+
 async function loadChallengeRoom(
     showLoading = false
 ){
 
-    if(
-        showLoading &&
-        window.ELOLoading &&
-        typeof window.ELOLoading.start === "function"
-    ){
-
-        window.ELOLoading.start();
-
-    }
-
+    /*
+     * ====================================
+     * Challenge Room
+     *
+     * 🚫 不使用舊 ELOLoading
+     *
+     * Challenge Room 現在直接背景載入
+     * 不顯示原本橘色 Loading Bar。
+     *
+     * showLoading 參數先保留，
+     * 避免影響其他地方呼叫這個函式。
+     * ====================================
+     */
 
     try{
 
         const result =
-             await getChallenge(
-                 challengeId,
-                 {
-                     noLoading:
-                         !showLoading
-                 }
-             );
+            await getChallenge(
+                challengeId,
+                {
+                    /*
+                     * Challenge Room
+                     * 永遠不使用 API Loading
+                     */
+                    noLoading:
+                        true
+                }
+            );
 
 
         if(
@@ -122,18 +133,38 @@ async function loadChallengeRoom(
         }
 
 
+        /*
+         * ====================================
+         * 更新玩家資料
+         * ====================================
+         */
+
         processPlayers(
             result.players
         );
 
+
+        /*
+         * ====================================
+         * 更新 Challenge Room UI
+         * ====================================
+         */
 
         renderChallenge(
             result
         );
 
 
+        /*
+         * ====================================
+         * 判斷是否雙方都完成
+         * ====================================
+         */
+
         if(
-            Array.isArray(result.players)
+            Array.isArray(
+                result.players
+            )
         ){
 
             const allFinished =
@@ -142,24 +173,38 @@ async function loadChallengeRoom(
                     player =>
                         String(
                             player.finished
-                        ).toLowerCase()
+                        )
+                        .toLowerCase()
                         ===
                         "true"
                 );
 
 
-            if(allFinished){
+            if(
+                allFinished
+            ){
 
-                if(refreshTimer){
+                /*
+                 * 停止 3 秒背景更新
+                 */
+
+                if(
+                    refreshTimer
+                ){
 
                     clearInterval(
                         refreshTimer
                     );
 
-                    refreshTimer = null;
+                    refreshTimer =
+                        null;
 
                 }
 
+
+                /*
+                 * 前往結果頁
+                 */
 
                 location.href =
                     "challenge-result.html?id="
@@ -167,6 +212,7 @@ async function loadChallengeRoom(
                     encodeURIComponent(
                         challengeId
                     );
+
 
                 return;
 
@@ -181,19 +227,6 @@ async function loadChallengeRoom(
             "Challenge Room 載入失敗",
             error
         );
-
-    }
-    finally{
-
-        if(
-            showLoading &&
-            window.ELOLoading &&
-            typeof window.ELOLoading.finish === "function"
-        ){
-
-            window.ELOLoading.finish();
-
-        }
 
     }
 
