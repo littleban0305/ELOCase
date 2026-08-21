@@ -15,6 +15,9 @@ document.addEventListener(
     "DOMContentLoaded",
     async () => {
 
+        let isChallengePage = false;
+
+
         try {
 
             const user =
@@ -45,67 +48,98 @@ document.addEventListener(
 
 
             /*
-             * 第一次立即載入
+             * ====================================
+             * 判斷 Challenge Mode
+             * ====================================
              */
 
-            const isChallengePage =
+            isChallengePage =
                 mode === "challenge" &&
-                challengeId;
-            
-            
+                !!challengeId;
+
+
+            /*
+             * ====================================
+             * Challenge 專屬 Loading
+             *
+             * 只用於第一次載入
+             *
+             * 後面的背景更新不會觸發
+             * ====================================
+             */
+
             if(
                 isChallengePage &&
                 window.ELOChallengeLoading
             ){
-            
+
                 ELOChallengeLoading.start();
-            
+
             }
-            
-            
+
+
+            /*
+             * ====================================
+             * 第一次立即載入箱子
+             * ====================================
+             */
+
             const cases =
                 await getCases();
-            
-            
+
+
             renderCases(
                 cases
             );
-            
-            
+
+
+            /*
+             * ====================================
+             * 第一次載入完成
+             * ====================================
+             */
+
             if(
                 isChallengePage &&
                 window.ELOChallengeLoading
             ){
-            
+
                 ELOChallengeLoading.finish();
-            
+
             }
 
 
-            renderCases(
-                cases
-            );
-
+            /*
+             * ====================================
+             * Challenge 返回按鈕
+             * ====================================
+             */
 
             initChallengeBack();
+
+
+            /*
+             * ====================================
+             * Challenge Navbar 即時更新
+             * ====================================
+             */
 
             startChallengeCasesRefresh();
 
 
             /*
              * ====================================
-             * Challenge Mode
+             * Challenge 箱子列表背景更新
              *
-             * 每 3 秒更新箱子列表
+             * 每 3 秒更新一次
              *
-             * 不重新整理頁面
+             * ⚠️ 絕對不觸發 Loading
              * ====================================
              */
 
-            if (
-                mode === "challenge" &&
-                challengeId
-            ) {
+            if(
+                isChallengePage
+            ){
 
                 challengeCasesListTimer =
                     setInterval(
@@ -117,13 +151,19 @@ document.addEventListener(
                                     await getCases();
 
 
+                                /*
+                                 * 只更新列表
+                                 *
+                                 * 不觸發任何 Loading
+                                 */
+
                                 renderCases(
                                     updatedCases
                                 );
 
 
                             }
-                            catch (error) {
+                            catch(error){
 
                                 console.error(
                                     "Challenge 箱子列表更新失敗：",
@@ -140,12 +180,28 @@ document.addEventListener(
 
 
         }
-        catch (error) {
+        catch(error){
 
             console.error(
                 "開箱列表載入失敗：",
                 error
             );
+
+
+            /*
+             * ====================================
+             * 確保 Challenge Loading 停止
+             * ====================================
+             */
+
+            if(
+                isChallengePage &&
+                window.ELOChallengeLoading
+            ){
+
+                ELOChallengeLoading.stop();
+
+            }
 
 
             const grid =
@@ -154,9 +210,10 @@ document.addEventListener(
                 );
 
 
-            if (grid) {
+            if(grid){
 
                 grid.innerHTML =
+
                 `
                 <div class="case-loading">
 
@@ -171,14 +228,13 @@ document.addEventListener(
 
     }
 );
-/*
-========================================
+
+
+/* ========================================
 渲染箱子列表
-========================================
-*/
+======================================== */
 
-
-function renderCases(cases) {
+function renderCases(cases){
 
     const grid =
         document.querySelector(
@@ -187,7 +243,9 @@ function renderCases(cases) {
 
 
     if(!grid){
+
         return;
+
     }
 
 
@@ -199,10 +257,14 @@ function renderCases(cases) {
         cases.length === 0
     ){
 
-        grid.innerHTML = `
-            <div class="case-empty">
-                目前沒有箱子
-            </div>
+        grid.innerHTML =
+
+        `
+        <div class="case-empty">
+
+            目前沒有箱子
+
+        </div>
         `;
 
         return;
@@ -210,10 +272,8 @@ function renderCases(cases) {
     }
 
 
-
     cases.forEach(
-        item=>{
-
+        item => {
 
             const card =
                 document.createElement(
@@ -225,12 +285,11 @@ function renderCases(cases) {
                 "case-card";
 
 
+            card.innerHTML =
 
-            card.innerHTML = `
-
+            `
 
                 <div class="case-image">
-
 
                     ${
                         item.imageUrl
@@ -251,16 +310,12 @@ function renderCases(cases) {
                         `
                         ELOCase
                         `
-
                     }
-
 
                 </div>
 
 
-
                 <div class="case-info">
-
 
                     <h3>
 
@@ -272,9 +327,7 @@ function renderCases(cases) {
                     </h3>
 
 
-
                     <div class="case-bottom">
-
 
                         <span class="case-price">
 
@@ -285,62 +338,65 @@ function renderCases(cases) {
                         </span>
 
 
-
                         <span class="case-action">
 
                             開啟 →
 
                         </span>
 
-
                     </div>
 
-
                 </div>
-
-
 
             `;
 
 
+            /*
+             * ====================================
+             * 點擊箱子
+             * ====================================
+             */
 
             card.onclick =
-            ()=>{
-            
-            
+            () => {
+
                 const params =
                     new URLSearchParams(
                         location.search
                     );
-            
-            
+
+
                 const mode =
                     params.get(
                         "mode"
                     );
-            
-            
+
+
                 const challengeId =
                     params.get(
                         "challengeId"
                     );
-            
-            
-            
+
+
                 let url =
                     "case.html?caseId="
                     +
                     encodeURIComponent(
                         item.caseId
                     );
-            
-            
-            
+
+
+                /*
+                 * Challenge Mode
+                 *
+                 * 保留 Challenge 資訊
+                 */
+
                 if(
                     mode === "challenge" &&
                     challengeId
                 ){
-            
+
                     url +=
                         "&mode=challenge"
                         +
@@ -349,15 +405,13 @@ function renderCases(cases) {
                         encodeURIComponent(
                             challengeId
                         );
-            
+
                 }
-            
-            
-            
+
+
                 location.href =
                     url;
-            
-            
+
             };
 
 
@@ -365,27 +419,19 @@ function renderCases(cases) {
                 card
             );
 
-
         }
     );
 
 }
 
 
-
-
-
-/*
-========================================
+/* ========================================
 HTML 防護
-========================================
-*/
-
+======================================== */
 
 function escapeHtml(
     value
 ){
-
 
     return String(
         value ?? ""
@@ -411,8 +457,12 @@ function escapeHtml(
         "&#039;"
     );
 
-
 }
+
+
+/* ========================================
+Challenge 返回
+======================================== */
 
 function initChallengeBack(){
 
@@ -423,7 +473,9 @@ function initChallengeBack(){
 
 
     if(!button){
+
         return;
+
     }
 
 
@@ -444,7 +496,9 @@ function initChallengeBack(){
         button.href =
             "challenge-room.html?id="
             +
-            challengeId;
+            encodeURIComponent(
+                challengeId
+            );
 
 
         button.style.display =
@@ -453,6 +507,7 @@ function initChallengeBack(){
     }
 
 }
+
 
 /* ========================================
 Challenge Cases Navbar 即時更新
@@ -488,25 +543,33 @@ function startChallengeCasesRefresh(){
     }
 
 
+    /*
+     * 避免重複建立 Timer
+     */
+
     if(
         challengeCasesNavbarTimer
     ){
-    
+
         clearInterval(
             challengeCasesNavbarTimer
         );
-    
+
     }
-    
-    
+
+
     challengeCasesNavbarTimer =
         setInterval(
             refreshChallengeCasesNavbar,
             3000
         );
 
-
 }
+
+
+/* ========================================
+Challenge Navbar 背景更新
+======================================== */
 
 async function refreshChallengeCasesNavbar(){
 
@@ -529,9 +592,15 @@ async function refreshChallengeCasesNavbar(){
     }
 
 
-
     try{
 
+        /*
+         * ====================================
+         * 背景取得 Challenge
+         *
+         * 不觸發 Loading
+         * ====================================
+         */
 
         const result =
             await getChallenge(
@@ -540,7 +609,6 @@ async function refreshChallengeCasesNavbar(){
                     noLoading: true
                 }
             );
-
 
 
         if(
@@ -553,10 +621,15 @@ async function refreshChallengeCasesNavbar(){
         }
 
 
-
         const user =
             await verifySession();
 
+
+        if(!user){
+
+            return;
+
+        }
 
 
         let me = null;
@@ -564,10 +637,8 @@ async function refreshChallengeCasesNavbar(){
         let opponent = null;
 
 
-
         result.players.forEach(
-            player=>{
-
+            player => {
 
                 if(
                     String(
@@ -590,94 +661,110 @@ async function refreshChallengeCasesNavbar(){
 
                 }
 
-
             }
         );
 
 
+        /*
+         * ====================================
+         * 自己
+         * ====================================
+         */
 
         if(me){
-        
+
             setText(
                 "navbar-my-coin",
                 formatNumber(
                     me.challengeEC
                 )
             );
-        
-        
+
+
             const myItemValue =
-                Array.isArray(me.items)
-                    ? me.items.reduce(
-                        (
-                            total,
-                            item
-                        ) => {
-        
-                            return total +
-                                (
-                                    Number(
-                                        item.value
-                                    ) || 0
-                                );
-        
-                        },
-                        0
-                    )
-                    : 0;
-        
-        
+                Array.isArray(
+                    me.items
+                )
+                ?
+                me.items.reduce(
+                    (
+                        total,
+                        item
+                    ) => {
+
+                        return total +
+                            (
+                                Number(
+                                    item.value
+                                ) || 0
+                            );
+
+                    },
+                    0
+                )
+                :
+                0;
+
+
             setText(
                 "navbar-my-value",
                 formatNumber(
                     myItemValue
                 )
             );
-        
+
         }
 
 
+        /*
+         * ====================================
+         * 對手
+         * ====================================
+         */
 
         if(opponent){
-        
+
             setText(
                 "navbar-opponent-coin",
                 formatNumber(
                     opponent.challengeEC
                 )
             );
-        
-        
+
+
             const opponentItemValue =
-                Array.isArray(opponent.items)
-                    ? opponent.items.reduce(
-                        (
-                            total,
-                            item
-                        ) => {
-        
-                            return total +
-                                (
-                                    Number(
-                                        item.value
-                                    ) || 0
-                                );
-        
-                        },
-                        0
-                    )
-                    : 0;
-        
-        
+                Array.isArray(
+                    opponent.items
+                )
+                ?
+                opponent.items.reduce(
+                    (
+                        total,
+                        item
+                    ) => {
+
+                        return total +
+                            (
+                                Number(
+                                    item.value
+                                ) || 0
+                            );
+
+                    },
+                    0
+                )
+                :
+                0;
+
+
             setText(
                 "navbar-opponent-value",
                 formatNumber(
                     opponentItemValue
                 )
             );
-        
-        }
 
+        }
 
 
     }
@@ -691,6 +778,7 @@ async function refreshChallengeCasesNavbar(){
     }
 
 }
+
 
 /* ========================================
 通用文字更新
@@ -715,6 +803,7 @@ function setText(
     }
 
 }
+
 
 /* ========================================
 數字格式
