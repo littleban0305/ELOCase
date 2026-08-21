@@ -53,7 +53,29 @@ async()=>{
 
 
 
-    await loadChallengeResult();
+    if(
+        window.ELOChallengeLoading
+    ){
+    
+        ELOChallengeLoading.start();
+    
+    }
+    
+    
+    await loadChallengeResult()
+        .finally(
+            () => {
+    
+                if(
+                    window.ELOChallengeLoading
+                ){
+    
+                    ELOChallengeLoading.finish();
+    
+                }
+    
+            }
+        );
 
     initButtons();
 
