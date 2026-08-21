@@ -1756,6 +1756,12 @@ function initializeOpenCaseButton() {
             const caseId =
                 getCaseIdFromUrl();
 
+            const challengeData =
+                getChallengeDataFromUrl();
+            
+            const noLoading =
+                challengeData.mode === "challenge";
+
 
             if (!caseId) {
 
@@ -2133,6 +2139,12 @@ async function initializeCasePage() {
     const caseId =
         getCaseIdFromUrl();
 
+   const challengeData =
+         getChallengeDataFromUrl();
+            
+   const noLoading =
+         challengeData.mode === "challenge";
+
 
     const caseName =
         document.querySelector(
@@ -2186,7 +2198,7 @@ async function initializeCasePage() {
              await getCase(
                  caseId,
                  {
-                     noLoading: true
+                     noLoading
                  }
              );
 
@@ -2218,7 +2230,7 @@ async function initializeCasePage() {
              await getCaseItems(
                  caseId,
                  {
-                     noLoading: true
+                     noLoading
                  }
              );
          
@@ -2789,6 +2801,13 @@ async function refreshChallengeCase(){
         const caseId =
             getCaseIdFromUrl();
 
+         const challengeData =
+               getChallengeDataFromUrl();
+                     
+         const noLoading =
+               challengeData.mode === "challenge";
+
+
 
         if(!caseId){
 
@@ -2840,7 +2859,7 @@ async function refreshChallengeCase(){
              await getCase(
                  caseId,
                  {
-                     noLoading: true
+                     noLoading
                  }
              );
 
@@ -2898,7 +2917,7 @@ async function refreshChallengeCase(){
              await getCaseItems(
                  caseId,
                  {
-                     noLoading: true
+                     noLoading
                  }
              );
 
