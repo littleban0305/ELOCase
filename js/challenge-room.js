@@ -59,7 +59,29 @@ async()=>{
     initButtons();
 
 
-    loadChallengeRoom(true);
+    if(
+          window.ELOChallengeLoading
+      ){
+      
+          ELOChallengeLoading.start();
+      
+      }
+      
+      
+      loadChallengeRoom(false)
+          .finally(
+              () => {
+      
+                  if(
+                      window.ELOChallengeLoading
+                  ){
+      
+                      ELOChallengeLoading.finish();
+      
+                  }
+      
+              }
+          );
    
    
     refreshTimer =
