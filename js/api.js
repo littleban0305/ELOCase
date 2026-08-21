@@ -732,7 +732,10 @@ async function refreshCasesInBackground() {
 }
 
 
-async function getCase(caseId) {
+async function getCase(
+    caseId,
+    options = {}
+) {
 
     const cacheKey =
         `case_${caseId}`;
@@ -817,12 +820,13 @@ async function getCase(caseId) {
 
 
     const data =
-        await sendApiRequest(
-            "getCase",
-            {
-                caseId
-            }
-        );
+          await sendApiRequest(
+              "getCase",
+              {
+                  caseId
+              },
+              options
+          );
 
 
     /*
@@ -1010,7 +1014,8 @@ async function getInventory(userId) {
 }
 
 async function getCaseItems(
-    caseId
+    caseId,
+    options = {}
 ) {
 
     const cacheKey =
@@ -1095,12 +1100,13 @@ async function getCaseItems(
 
 
     const data =
-        await sendApiRequest(
-            "getCaseItems",
-            {
-                caseId
-            }
-        );
+          await sendApiRequest(
+              "getCaseItems",
+              {
+                  caseId
+              },
+              options
+          );
 
 
     /*
