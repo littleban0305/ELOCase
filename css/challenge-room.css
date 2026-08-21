@@ -1,1311 +1,226 @@
 /* ========================================
    ELOCase Challenge Room
+   Challenge Mode V1
 ======================================== */
-
-
-
-/* ========================================
-   Challenge Navbar
-======================================== */
-
-
-.challenge-navbar {
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 100;
-
-
-    background:
-    var(--color-surface);
-
-
-    border-bottom:
-    1px solid
-    var(--color-border);
-
-}
-
-
-
-.challenge-navbar-container {
-
-    max-width:
-    1200px;
-
-
-    margin:
-    auto;
-
-
-    padding:
-    18px 24px;
-
-
-    min-height:
-    92px;
-
-
-    display:
-    flex;
-
-
-    align-items:center;
-
-
-    justify-content:
-    space-between;
-
-
-    gap:
-    20px;
-
-}
-
-
-
-.challenge-brand {
-
-
-    display:
-    flex;
-
-
-    align-items:center;
-
-
-    gap:
-    10px;
-
-
-    text-decoration:none;
-
-
-    color:
-    var(--color-text);
-
-
-    font-size:
-    1.2rem;
-
-
-    font-weight:
-    800;
-
-
-}
-
-
-
-.challenge-brand strong {
-
-
-    color:
-    #ff9f43;
-
-
-    font-size:
-    .85rem;
-
-
-    letter-spacing:
-    .05em;
-
-}
-
-
-
-
-
-/* ========================================
-   Navbar Status
-======================================== */
-
-
-.challenge-navbar-status {
-
-
-    display:flex;
-
-
-    gap:
-    12px;
-
-
-}
-
-
-
-.challenge-user-box {
-
-
-    min-width:
-    120px;
-
-
-    padding:
-    14px 18px;
-
-
-    margin:
-    4px 0;
-
-
-    background:
-    rgba(
-        124,
-        92,
-        255,
-        .08
-    );
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-.challenge-user-box.opponent {
-
-
-    background:
-    rgba(
-        255,
-        159,
-        67,
-        .08
-    );
-
-
-}
-
-
-
-.challenge-box-title {
-
-
-    color:
-    var(--color-text-muted);
-
-
-    font-size:
-    .7rem;
-
-
-}
-
-
-
-.challenge-box-value {
-
-
-    margin-top:
-    5px;
-
-
-    color:
-    var(--color-text);
-
-
-    font-weight:
-    800;
-
-
-    font-size:
-    .95rem;
-
-
-}
-
-
-
-
-
 
 
 /* ========================================
    Page
 ======================================== */
 
-
 .challenge-room-page {
 
-
     padding:
-    60px 0 90px;
-
+        55px 0 90px;
 
 }
 
 
+.challenge-room-page .section-header {
+
+    margin-bottom:
+        40px;
+
+}
 
 
+.challenge-room-page .section-header h1 {
 
+    margin-bottom:
+        10px;
+
+}
+
+
+.challenge-room-page .section-header p {
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        1rem;
+
+}
+
+
+/* ========================================
+   Main Room Card
+======================================== */
 
 .room-card {
 
+    position:
+        relative;
+
+    overflow:
+        hidden;
 
     padding:
-    35px;
-
+        42px;
 
     background:
-    var(--color-surface);
-
+        linear-gradient(
+            180deg,
+            rgba(
+                255,
+                159,
+                67,
+                .025
+            ),
+            var(--color-surface)
+        );
 
     border:
-    1px solid
-    var(--color-border);
-
+        1px solid
+        var(--color-border);
 
     border-radius:
-    20px;
+        22px;
 
+    box-shadow:
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            .2
+        );
 
 }
-
-
-
-
 
 
 /* ========================================
    Challenge Code
 ======================================== */
 
-
 .challenge-code-section {
 
-
     margin-bottom:
-    30px;
-
+        35px;
 
 }
-
 
 
 .challenge-code-section h3 {
 
-
     margin-bottom:
-    12px;
+        15px;
 
+    font-size:
+        1rem;
+
+    font-weight:
+        800;
 
 }
-
-
 
 
 .challenge-code-box {
 
+    display:
+        flex;
 
-    display:flex;
-
+    align-items:
+        center;
 
     justify-content:
-    space-between;
+        space-between;
 
+    gap:
+        18px;
 
-    align-items:center;
-
+    min-height:
+        78px;
 
     padding:
-    16px;
-
+        18px 22px;
 
     background:
-    rgba(
-        255,
-        255,
-        255,
-        .03
-    );
-
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
 
     border:
-    1px solid
-    var(--color-border);
-
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .2
+        );
 
     border-radius:
-    12px;
-
+        14px;
 
 }
-
 
 
 #challenge-code {
 
+    min-width:
+        0;
 
-    font-family:
-    monospace;
-
-
-    font-size:
-    1.4rem;
-
-
-    font-weight:
-    900;
-
+    overflow:
+        hidden;
 
     color:
-    #ff9f43;
+        #ff9f43;
 
+    font-family:
+        monospace;
+
+    font-size:
+        1.35rem;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .08em;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
 
 }
 
 
+#copy-code-button {
+
+    flex-shrink:
+        0;
+
+}
 
 
+/* ========================================
+   Copy Message
+======================================== */
 
 .copy-message {
 
-
     margin-top:
-    10px;
-
+        10px;
 
     color:
-    var(--color-success);
+        var(--color-success);
 
+    font-size:
+        .8rem;
 
 }
 
 
-
-
-
-
-
-
 /* ========================================
-   Status
+   Room Status
 ======================================== */
-
 
 .room-status {
-
-
-    padding:
-    14px;
-
-
-    margin-bottom:
-    30px;
-
-
-    background:
-    rgba(
-        124,
-        92,
-        255,
-        .08
-    );
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-
-.room-status span {
-
-
-    color:
-    #ff9f43;
-
-
-    font-weight:
-    800;
-
-
-}
-
-
-
-
-
-
-
-
-/* ========================================
-   VS Area
-======================================== */
-
-
-.vs-area {
-
-
-    display:flex;
-
-    align-items:flex-start;
-
-
-    justify-content:center;
-
-
-    gap:
-    35px;
-
-
-}
-
-
-
-
-
-
-.room-player {
-
-
-    flex:
-    1;
-
-
-    padding:
-    30px;
-
-
-    text-align:center;
-
-
-    background:
-    var(--color-background);
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    18px;
-
-
-}
-
-
-
-
-.room-player h2 {
-
-
-    margin-bottom:
-    20px;
-
-
-}
-
-
-
-
-
-.my-player {
-
-
-    border-color:
-    rgba(
-        124,
-        92,
-        255,
-        .5
-    );
-
-
-}
-
-
-
-
-
-.opponent-player {
-
-
-    border-color:
-    rgba(
-        255,
-        159,
-        67,
-        .4
-    );
-
-
-}
-
-
-
-
-
-
-
-/* ========================================
-   Coin / Value
-======================================== */
-
-
-.ec-box {
-
-
-    padding:
-    18px;
-
-
-    margin-bottom:
-    15px;
-
-
-    background:
-    rgba(
-        124,
-        92,
-        255,
-        .12
-    );
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-.ec-box strong {
-
-
-    display:block;
-
-
-    margin-top:
-    8px;
-
-
-    font-size:
-    2rem;
-
-
-    color:
-    var(--color-text);
-
-
-}
-
-
-
-
-
-
-
-.value-box {
-
-
-    padding:
-    14px;
-
-
-    margin-bottom:
-    20px;
-
-
-    background:
-    rgba(
-        255,
-        159,
-        67,
-        .08
-    );
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-.value-box strong {
-
-
-    display:block;
-
-
-    margin-top:
-    6px;
-
-
-    color:
-    #ff9f43;
-
-
-    font-size:
-    1.3rem;
-
-
-}
-
-
-
-
-
-
-
-/* ========================================
-   VS
-======================================== */
-
-
-.vs-text {
-
-
-    font-size:
-    2.5rem;
-
-
-    font-weight:
-    900;
-
-
-    color:
-    #ff9f43;
-
-
-}
-
-
-
-
-
-
-
-
-/* ========================================
-   Inventory
-======================================== */
-
-
-.player-inventory {
-
-
-    margin-top:
-    25px;
-
-
-}
-
-
-
-.challenge-items {
-
-
-    margin-top:
-    15px;
-
-
-    display:grid;
-
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-
-    gap:
-    10px;
-
-
-}
-
-
-
-
-.challenge-item {
-
-
-    padding:
-    12px;
-
-
-    min-height:
-    80px;
-
-
-    display:flex;
-
-
-    flex-direction:
-    column;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-    background:
-    var(--color-surface);
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-.challenge-item-value {
-
-
-    margin-top:
-    6px;
-
-
-    color:
-    #ff9f43;
-
-
-    font-weight:
-    700;
-
-
-}
-
-
-
-.empty-item {
-
-
-    grid-column:
-    1/-1;
-
-
-    padding:
-    30px;
-
-
-    color:
-    var(--color-text-muted);
-
-
-    border:
-    1px dashed
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-
-
-/* ========================================
-   Opponent Lock
-======================================== */
-
-
-.opponent-lock {
-
-
-    margin:
-    20px 0;
-
-
-    padding:
-    20px;
-
-
-    color:
-    var(--color-text-muted);
-
-
-    background:
-    rgba(
-        255,
-        255,
-        255,
-        .03
-    );
-
-
-    border-radius:
-    12px;
-
-
-}
-
-
-
-
-
-/* ========================================
-   Actions
-======================================== */
-
-
-.challenge-actions {
-
-
-    margin-top:
-    35px;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:
-    15px;
-
-
-}
-
-
-
-
-
-
-
-.button-danger {
-
-
-    background:
-    #e05b68;
-
-
-    color:white;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ========================================
-   Mobile
-======================================== */
-
-
-@media(max-width:900px){
-
-
-.challenge-navbar-container{
-
-
-    flex-direction:
-    column;
-
-
-}
-
-
-
-.challenge-navbar-status{
-
-
-    width:
-    100%;
-
-
-    overflow-x:auto;
-
-
-}
-
-
-
-.vs-area{
-
-
-    flex-direction:
-    column;
-
-
-}
-
-
-
-.vs-text{
-
-
-    font-size:
-    1.8rem;
-
-
-}
-
-
-
-.room-player{
-
-
-    width:
-    100%;
-
-
-}
-
-
-
-}
-
-
-
-
-@media(max-width:600px){
-
-
-.room-card{
-
-
-    padding:
-    20px;
-
-
-}
-
-
-
-.challenge-actions{
-
-
-    flex-direction:
-    column;
-
-
-}
-
-
-
-.challenge-open-actions button{
-
-    width:100%;
-
-}
-
-
-
-}
-
-/* ========================================
-   Challenge Room Layout Spacing Fix
-======================================== */
-
-
-
-.challenge-room-page .section-header p {
-
-    font-size:
-    1.05rem;
-
-}
-
-
-
-
-
-
-/* 主房間卡 */
-
-.room-card {
-
-    padding:
-    45px;
-
-}
-
-
-
-
-/* 挑戰代碼區 */
-
-.challenge-code-section {
-
-    margin-bottom:
-    35px;
-
-}
-
-
-
-.challenge-code-section h3 {
-
-    margin-bottom:
-    18px;
-
-}
-
-
-
-
-.challenge-code-box {
-
-    min-height:
-    90px;
-
-    padding:
-    20px 24px;
-
-}
-
-
-
-
-
-
-/* 狀態 */
-
-.room-status {
-
-    margin-top:
-    25px;
-
-    margin-bottom:
-    45px;
-
-    padding:
-    20px 24px;
-
-}
-
-
-
-
-
-/* VS 區 */
-
-.vs-area {
-
-    margin-top:
-    30px;
-
-    gap:
-    50px;
-
-}
-
-
-
-
-
-
-/* 玩家卡 */
-
-.room-player {
-
-
-    padding:
-    35px;
-
-
-}
-
-
-
-
-
-
-.room-player h2 {
-
-
-    margin-bottom:
-    25px;
-
-
-}
-
-
-
-
-
-
-/* ELOCoin / Value */
-
-.ec-box,
-.value-box {
-
-
-    margin-bottom:
-    20px;
-
-
-    padding:
-    22px;
-
-
-}
-
-
-
-
-
-/* 物品庫 */
-
-.player-inventory {
-
-
-    margin-top:
-    35px;
-
-
-}
-
-
-
-
-.player-inventory h3 {
-
-
-    margin-bottom:
-    20px;
-
-
-}
-
-
-
-
-/* 下方按鈕 */
-
-.challenge-actions {
-
-
-    margin-top:
-    45px;
-
-
-    padding-top:
-    25px;
-
-
-}
-
-.challenge-item-image {
-
-    width:
-    70px;
-
-    height:
-    70px;
-
-    display:
-    flex;
-
-    align-items:
-    center;
-
-    justify-content:
-    center;
-
-}
-
-
-.challenge-item-image img {
-
-    width:
-    100%;
-
-    height:
-    100%;
-
-    object-fit:
-    contain;
-
-}
-
-
-.challenge-item-name {
-
-    margin-top:
-    8px;
-
-    color:
-    var(--color-text);
-
-    font-size:
-    .8rem;
-
-    font-weight:
-    700;
-
-}
-
-.challenge-open-actions {
-
-    margin-top:25px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-/* ========================================
-   Footer
-======================================== */
-
-.footer {
-
-    border-top:
-        1px solid
-        var(--color-border);
-
-    background:
-        var(--color-surface);
-
-}
-
-
-.footer-container {
-
-    min-height:
-        100px;
 
     display:
         flex;
@@ -1314,31 +229,1002 @@
         center;
 
     gap:
-        18px;
+        10px;
 
-    color:
-        var(--color-text-muted);
+    min-height:
+        58px;
 
-    font-size:
-        0.8rem;
+    margin:
+        25px 0 45px;
+
+    padding:
+        16px 20px;
+
+    background:
+        rgba(
+            255,
+            159,
+            67,
+            .06
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .16
+        );
+
+    border-radius:
+        14px;
 
 }
 
 
-.footer-brand {
+.room-status span {
+
+    color:
+        #ff9f43;
+
+    font-weight:
+        800;
+
+}
+
+
+/* ========================================
+   VS Area
+======================================== */
+
+.vs-area {
+
+    display:
+        flex;
+
+    align-items:
+        stretch;
+
+    justify-content:
+        center;
+
+    gap:
+        35px;
+
+}
+
+
+/* ========================================
+   Player Card
+======================================== */
+
+.room-player {
+
+    position:
+        relative;
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    padding:
+        32px;
+
+    background:
+        var(--color-background);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        20px;
+
+    text-align:
+        center;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+
+}
+
+
+.room-player:hover {
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+.room-player h2 {
+
+    margin-bottom:
+        24px;
+
+    font-size:
+        1.45rem;
+
+    font-weight:
+        900;
+
+}
+
+
+/* ========================================
+   My Player
+======================================== */
+
+.my-player {
+
+    border-color:
+        rgba(
+            124,
+            92,
+            255,
+            .45
+        );
+
+    box-shadow:
+        0 10px 35px
+        rgba(
+            124,
+            92,
+            255,
+            .08
+        );
+
+}
+
+
+/* ========================================
+   Opponent
+======================================== */
+
+.opponent-player {
+
+    border-color:
+        rgba(
+            255,
+            159,
+            67,
+            .4
+        );
+
+    box-shadow:
+        0 10px 35px
+        rgba(
+            255,
+            159,
+            67,
+            .06
+        );
+
+}
+
+
+/* ========================================
+   EC Box
+======================================== */
+
+.ec-box {
+
+    margin-bottom:
+        15px;
+
+    padding:
+        20px;
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            .1
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            92,
+            255,
+            .15
+        );
+
+    border-radius:
+        14px;
+
+}
+
+
+.opponent-player .ec-box {
+
+    background:
+        rgba(
+            255,
+            159,
+            67,
+            .07
+        );
+
+    border-color:
+        rgba(
+            255,
+            159,
+            67,
+            .14
+        );
+
+}
+
+
+.ec-box strong {
+
+    display:
+        block;
+
+    margin-top:
+        8px;
 
     color:
         var(--color-text);
 
+    font-size:
+        2rem;
+
     font-weight:
-        700;
+        900;
+
+    line-height:
+        1.1;
+
+    font-variant-numeric:
+        tabular-nums;
 
 }
 
 
-.footer-container span {
+/* ========================================
+   Total Value
+======================================== */
 
-    margin-left:
-        auto;
+.value-box {
+
+    margin-bottom:
+        25px;
+
+    padding:
+        17px;
+
+    background:
+        rgba(
+            255,
+            159,
+            67,
+            .06
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            159,
+            67,
+            .12
+        );
+
+    border-radius:
+        13px;
+
+}
+
+
+.value-box strong {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        1.4rem;
+
+    font-weight:
+        900;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* ========================================
+   VS
+======================================== */
+
+.vs-text {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    width:
+        70px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        2.4rem;
+
+    font-weight:
+        900;
+
+    text-shadow:
+        0 0 20px
+        rgba(
+            255,
+            159,
+            67,
+            .3
+        );
+
+}
+
+
+/* ========================================
+   Inventory
+======================================== */
+
+.player-inventory {
+
+    margin-top:
+        32px;
+
+}
+
+
+.player-inventory h3 {
+
+    margin-bottom:
+        18px;
+
+    font-size:
+        1rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.challenge-items {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        12px;
+
+}
+
+
+/* ========================================
+   Challenge Item
+======================================== */
+
+.challenge-item {
+
+    min-width:
+        0;
+
+    min-height:
+        135px;
+
+    padding:
+        14px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        var(--color-surface);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        14px;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+
+}
+
+
+.challenge-item:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(
+            255,
+            159,
+            67,
+            .35
+        );
+
+    background:
+        rgba(
+            255,
+            159,
+            67,
+            .035
+        );
+
+}
+
+
+/* ========================================
+   Item Image
+======================================== */
+
+.challenge-item-image {
+
+    width:
+        70px;
+
+    height:
+        70px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.challenge-item-image img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        contain;
+
+}
+
+
+/* ========================================
+   Item Name
+======================================== */
+
+.challenge-item-name {
+
+    max-width:
+        100%;
+
+    margin-top:
+        8px;
+
+    overflow:
+        hidden;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        700;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+/* ========================================
+   Item Value
+======================================== */
+
+.challenge-item-value {
+
+    margin-top:
+        5px;
+
+    color:
+        #ff9f43;
+
+    font-size:
+        .8rem;
+
+    font-weight:
+        800;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* ========================================
+   Empty Inventory
+======================================== */
+
+.empty-item {
+
+    grid-column:
+        1 / -1;
+
+    min-height:
+        120px;
+
+    padding:
+        30px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--color-text-muted);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .02
+        );
+
+    border:
+        1px dashed
+        var(--color-border);
+
+    border-radius:
+        14px;
+
+}
+
+
+/* ========================================
+   Opponent Lock
+======================================== */
+
+.opponent-lock {
+
+    margin:
+        22px 0;
+
+    padding:
+        20px;
+
+    color:
+        var(--color-text-muted);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+
+    border:
+        1px dashed
+        var(--color-border);
+
+    border-radius:
+        14px;
+
+}
+
+
+/* ========================================
+   Open Case Actions
+======================================== */
+
+.challenge-open-actions {
+
+    margin-top:
+        25px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        12px;
+
+}
+
+
+.challenge-open-actions button {
+
+    width:
+        100%;
+
+}
+
+
+/* ========================================
+   Bottom Actions
+======================================== */
+
+.challenge-actions {
+
+    margin-top:
+        45px;
+
+    padding-top:
+        28px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        15px;
+
+    border-top:
+        1px solid
+        var(--color-border);
+
+}
+
+
+.button-danger {
+
+    background:
+        #e05b68;
+
+    color:
+        #fff;
+
+    border:
+        1px solid
+        rgba(
+            224,
+            91,
+            104,
+            .35
+        );
+
+}
+
+
+.button-danger:hover {
+
+    background:
+        #d94d5b;
+
+}
+
+
+/* ========================================
+   Footer
+======================================== */
+
+.challenge-room-page + .footer {
+
+    border-top:
+        1px solid
+        var(--color-border);
+
+}
+
+
+/* ========================================
+   Responsive
+======================================== */
+
+@media(max-width:1000px) {
+
+    .room-card {
+
+        padding:
+            32px;
+
+    }
+
+
+    .vs-area {
+
+        gap:
+            22px;
+
+    }
+
+
+    .room-player {
+
+        padding:
+            25px;
+
+    }
+
+
+    .challenge-item {
+
+        min-height:
+            125px;
+
+    }
+
+}
+
+
+@media(max-width:900px) {
+
+    .vs-area {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .vs-text {
+
+        width:
+            100%;
+
+        min-height:
+            45px;
+
+        font-size:
+            1.8rem;
+
+    }
+
+
+    .room-player {
+
+        width:
+            100%;
+
+    }
+
+
+    .challenge-items {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+    }
+
+}
+
+
+@media(max-width:650px) {
+
+    .challenge-room-page {
+
+        padding:
+            40px 0 65px;
+
+    }
+
+
+    .room-card {
+
+        padding:
+            20px;
+
+        border-radius:
+            18px;
+
+    }
+
+
+    .challenge-code-box {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    #challenge-code {
+
+        text-align:
+            center;
+
+        font-size:
+            1.1rem;
+
+    }
+
+
+    #copy-code-button {
+
+        width:
+            100%;
+
+    }
+
+
+    .room-status {
+
+        margin-bottom:
+            30px;
+
+    }
+
+
+    .room-player {
+
+        padding:
+            20px 16px;
+
+    }
+
+
+    .room-player h2 {
+
+        font-size:
+            1.25rem;
+
+    }
+
+
+    .ec-box strong {
+
+        font-size:
+            1.7rem;
+
+    }
+
+
+    .challenge-items {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+    }
+
+
+    .challenge-item {
+
+        min-height:
+            120px;
+
+    }
+
+
+    .challenge-actions {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .challenge-actions button {
+
+        width:
+            100%;
+
+    }
+
+}
+
+
+@media(max-width:380px) {
+
+    .challenge-items {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .challenge-item {
+
+        min-height:
+            110px;
+
+    }
+
+}
+
+
+/* ========================================
+   Reduced Motion
+======================================== */
+
+@media(prefers-reduced-motion:reduce) {
+
+    .room-player,
+    .challenge-item {
+
+        transition:
+            none;
+
+    }
 
 }
