@@ -1173,10 +1173,16 @@ async function saveCase(event) {
          */
 
         const result =
-            await sendApiPostRequest(
-                action,
-                parameters
-            );
+             await sendApiPostRequest(
+                 action,
+                 {
+                     sessionToken:
+                         sessionToken,
+         
+                     caseData:
+                         caseData
+                 }
+             );
 
 
         /*
@@ -1430,24 +1436,23 @@ async function restoreCase(caseId) {
          */
 
         await sendApiPostRequest(
-            "updateCase",
-            {
-
-                sessionToken:
-                    sessionToken,
-
-                caseData: {
-
-                    caseId:
-                        caseId,
-
-                    status:
-                        "active"
-
-                }
-
-            }
-        );
+             "updateCase",
+             {
+                 sessionToken:
+                     sessionToken,
+         
+                 caseData: {
+         
+                     caseId:
+                         caseId,
+         
+                     status:
+                         "active"
+         
+                 }
+         
+             }
+         );
 
 
         showMessage(
