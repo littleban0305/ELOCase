@@ -1716,22 +1716,61 @@ function initializeOpenCaseButton() {
                 if (
                     isChallenge
                 ) {
-
+                
+                    /*
+                     * ====================================
+                     * Challenge Mode
+                     *
+                     * openChallengeCase() 已經在 GAS
+                     * 完成以下操作：
+                     *
+                     * 1. 扣除 Challenge EC
+                     * 2. 新增 ChallengeInventory
+                     * 3. 更新 ChallengePlayers.finalValue
+                     *
+                     * 因此前端不再重複呼叫
+                     * addChallengeItem()
+                     *
+                     * 避免：
+                     * - 未知 API
+                     * - 重複新增物品
+                     * - finalValue 重複計算
+                     * ====================================
+                     */
+                
                     updateChallengeBalance(
                         result.remainingEC
                     );
-
-
-                    await addChallengeItem(
-                        {
-                            challengeId:
-                                challengeData.challengeId,
-
-                            item:
-                                result.item
-                        }
+                
+                }
+                else {
+                
+                    updateBalance(
+                        result.remainingEloCoin
                     );
-
+                
+                
+                    const savedUser =
+                        getSavedUser();
+                
+                
+                    if (
+                        savedUser
+                    ) {
+                
+                        savedUser.eloCoin =
+                            result.remainingEloCoin;
+                
+                
+                        localStorage.setItem(
+                            "elocaseUser",
+                            JSON.stringify(
+                                savedUser
+                            )
+                        );
+                
+                    }
+                
                 }
                 else {
 
