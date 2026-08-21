@@ -56,7 +56,23 @@
       開始載入
    ======================================== */
    
+   function isChallengeMode() {
+   
+       const params =
+           new URLSearchParams(
+               window.location.search
+           );
+   
+       return params.get("mode") === "challenge";
+   }
+
+
    function startLoading() {
+   
+       /* Challenge Mode 暫停原本的 Loading Bar，普通模式不受影響。 */
+       if (isChallengeMode()) {
+           return;
+       }
    
        createLoadingBar();
    
@@ -189,6 +205,11 @@
     ======================================== */
 
     function finishLoading() {
+
+         /* Challenge Mode 沒有啟動原本的 Loading Bar。 */
+         if (isChallengeMode()) {
+             return;
+         }
 
         /*
          * 防止計數器變成負數
