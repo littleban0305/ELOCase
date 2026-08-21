@@ -505,7 +505,10 @@ async function refreshChallengeCasesNavbar(){
 
         const result =
             await getChallenge(
-                challengeId
+                challengeId,
+                {
+                    noLoading: true
+                }
             );
 
 
