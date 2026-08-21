@@ -1,0 +1,148 @@
+/* ========================================
+   ELOCase - Challenge Loading Bar
+   全新 Challenge 專用 Loading Bar
+
+   注意：
+   不使用 #elo-loading-bar
+   不依賴 ELOLoading
+======================================== */
+
+
+/* ========================================
+   Challenge Loading Bar
+======================================== */
+
+#elo-challenge-loading-bar {
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:0;
+
+    height:3px;
+
+    z-index:100000;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ff8a3d,
+            #ffb866,
+            #fff0c2,
+            #ff9f43,
+            #ff8a3d
+        );
+
+    background-size:
+        240% 100%;
+
+    box-shadow:
+
+        0 0 6px
+        rgba(
+            255,
+            159,
+            67,
+            .65
+        ),
+
+        0 0 16px
+        rgba(
+            255,
+            159,
+            67,
+            .35
+        );
+
+    transition:
+
+        width
+        .25s
+        ease,
+
+        opacity
+        .2s
+        ease;
+
+}
+
+
+/* ========================================
+   執行中
+======================================== */
+
+#elo-challenge-loading-bar.challenge-loading-active {
+
+    opacity:1;
+
+    animation:
+        challengeLoadingGlow
+        1.2s
+        linear
+        infinite;
+
+}
+
+
+/* ========================================
+   完成
+======================================== */
+
+#elo-challenge-loading-bar.challenge-loading-complete {
+
+    opacity:1;
+
+    transition:
+
+        width
+        .18s
+        ease,
+
+        opacity
+        .25s
+        ease;
+
+}
+
+
+/* ========================================
+   光線移動
+======================================== */
+
+@keyframes challengeLoadingGlow {
+
+    0% {
+
+        background-position:
+            100% 0;
+
+    }
+
+    100% {
+
+        background-position:
+            -100% 0;
+
+    }
+
+}
+
+
+/* ========================================
+   Challenge Mode 防止一般頁面顯示
+======================================== */
+
+body:not(.challenge-mode)
+#elo-challenge-loading-bar {
+
+    display:none;
+
+}
