@@ -931,10 +931,51 @@ async function saveCase(event) {
 
     event.preventDefault();
 
+    console.log("====================================");
+    console.log("🛠️ [Admin] saveCase 開始");
+    console.log("====================================");
+
+
+    /*
+     * ====================================
+     * 基本資料驗證
+     * ====================================
+     */
+
+    const name =
+        caseNameInput.value.trim();
+
+    const game =
+        caseGameInput.value.trim();
+
+    const price =
+        Number(
+            casePriceInput.value
+        );
+
+    const imageUrl =
+        caseImageUrlInput.value.trim();
+
+    const description =
+        caseDescriptionInput.value.trim();
+
+    const status =
+        caseStatusInput.value;
+
+
+    console.log("📦 表單資料：", {
+        name,
+        game,
+        price,
+        imageUrl,
+        description,
+        status
+    });
+
 
     if (
-        !caseNameInput.value.trim() ||
-        !caseGameInput.value.trim()
+        !name ||
+        !game
     ) {
 
         alert(
@@ -944,12 +985,6 @@ async function saveCase(event) {
         return;
 
     }
-
-
-    const price =
-        Number(
-            casePriceInput.value
-        );
 
 
     if (
@@ -966,99 +1001,225 @@ async function saveCase(event) {
     }
 
 
+    /*
+     * ====================================
+     * 記錄目前模式
+     * ====================================
+     */
+
+    const isEditing =
+        Boolean(
+            editingCaseId
+        );
+
+
+    const currentCaseId =
+        editingCaseId;
+
+
+    console.log(
+        "🔧 模式：",
+        isEditing
+            ? "編輯"
+            : "新增"
+    );
+
+
+    console.log(
+        "🆔 caseId：",
+        currentCaseId
+    );
+
+
+    /*
+     * ====================================
+     * 建立 caseData
+     * ====================================
+     */
+
     const caseData = {
 
         name:
-            caseNameInput.value.trim(),
+            name,
 
         game:
-            caseGameInput.value.trim(),
+            game,
 
         price:
             price,
 
         imageUrl:
-            caseImageUrlInput.value.trim(),
+            imageUrl,
 
         description:
-            caseDescriptionInput.value.trim(),
+            description,
 
         status:
-            caseStatusInput.value
+            status
 
     };
 
 
-    if (editingCaseId) {
+    /*
+     * 編輯模式才加入 caseId
+     */
+
+    if (
+        isEditing
+    ) {
 
         caseData.caseId =
-            editingCaseId;
+            currentCaseId;
 
     }
 
+
+    console.log(
+        "📤 最終 caseData：",
+        caseData
+    );
+
+
+    /*
+     * ====================================
+     * Session
+     * ====================================
+     */
+
+    const sessionToken =
+        getAdminSessionToken();
+
+
+    console.log(
+        "🔐 Session Token：",
+        sessionToken
+            ? "存在"
+            : "不存在"
+    );
+
+
+    if (!sessionToken) {
+
+        alert(
+            "登入 Session 已不存在，請重新登入"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * ====================================
+     * 禁用按鈕
+     * ====================================
+     */
 
     saveCaseButton.disabled =
         true;
 
 
     saveCaseButton.textContent =
-        editingCaseId
+        isEditing
             ? "儲存中..."
             : "建立中...";
 
 
     try {
 
-        const sessionToken =
-            getAdminSessionToken();
+        /*
+         * ====================================
+         * API Action
+         * ====================================
+         */
+
+        const action =
+            isEditing
+                ? "updateCase"
+                : "createCase";
 
 
-        let result;
+        const payload = {
 
+            action:
+                action,
 
-        if (editingCaseId) {
+            sessionToken:
+                sessionToken,
 
-            result =
-                await sendApiRequest(
-                    "updateCase",
-                    {
-                        sessionToken:
-                            sessionToken,
+            caseData:
+                caseData
 
-                        caseData:
-                            caseData
-                    }
-                );
-
-
-        } else {
-
-            result =
-                await sendApiRequest(
-                    "createCase",
-                    {
-                        sessionToken:
-                            sessionToken,
-
-                        caseData:
-                            caseData
-                    }
-                );
-
-        }
+        };
 
 
         console.log(
-            "箱子操作成功：",
+            "🚀 準備送出 API："
+        );
+
+
+        console.log(
+            "➡️ action：",
+            action
+        );
+
+
+        console.log(
+            "➡️ payload：",
+            payload
+        );
+
+
+        console.log(
+            "➡️ payload JSON：",
+            JSON.stringify(
+                payload
+            )
+        );
+
+
+        /*
+         * ====================================
+         * 呼叫 API
+         * ====================================
+         */
+
+        const result =
+            await sendApiRequest(
+                action,
+                {
+                    sessionToken:
+                        sessionToken,
+
+                    caseData:
+                        caseData
+                }
+            );
+
+
+        /*
+         * ====================================
+         * API 回應
+         * ====================================
+         */
+
+        console.log(
+            "✅ API 回應：",
             result
         );
 
+
+        /*
+         * ====================================
+         * 成功
+         * ====================================
+         */
 
         closeCaseModal();
 
 
         showMessage(
-            editingCaseId
+            isEditing
                 ? "箱子更新成功"
                 : "箱子建立成功",
             "success"
@@ -1070,9 +1231,27 @@ async function saveCase(event) {
 
     } catch (error) {
 
+        /*
+         * ====================================
+         * 錯誤
+         * ====================================
+         */
+
         console.error(
-            "儲存箱子失敗：",
+            "❌ 儲存箱子失敗：",
             error
+        );
+
+
+        console.error(
+            "❌ Error message：",
+            error.message
+        );
+
+
+        console.error(
+            "❌ Error stack：",
+            error.stack
         );
 
 
@@ -1084,12 +1263,18 @@ async function saveCase(event) {
 
     } finally {
 
+        /*
+         * ====================================
+         * 恢復按鈕
+         * ====================================
+         */
+
         saveCaseButton.disabled =
             false;
 
 
         saveCaseButton.textContent =
-            editingCaseId
+            isEditing
                 ? "儲存修改"
                 : "建立箱子";
 
