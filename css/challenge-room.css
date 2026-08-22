@@ -1228,3 +1228,24 @@
     }
 
 }
+
+
+/* ========================================
+   Challenge Design System Override
+======================================== */
+
+.challenge-room-page {
+    width: min(calc(100% - 40px), var(--content-width));
+    margin: 0 auto;
+    padding: var(--admin-page-top) 0 var(--admin-page-bottom);
+}
+
+.room-card {
+    border-radius: var(--admin-card-radius);
+}
+
+.room-player,
+.challenge-item,
+.ec-box {
+    border-radius: var(--admin-small-radius);
+}
