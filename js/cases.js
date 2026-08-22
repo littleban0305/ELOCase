@@ -6,6 +6,80 @@ let challengeCasesNavbarTimer = null;
 
 let challengeCasesListTimer = null;
 
+let casesPageSource = [];
+let casesPageGame = "ALL";
+let casesPageCategory = "ALL";
+
+function getCasesPageGames(cases) {
+    return Array.from(new Set(cases.map(item => String(item.game || "").trim()).filter(Boolean)));
+}
+
+function getCasesPageCategories(cases, game) {
+    const filtered = game === "ALL" ? cases : cases.filter(item => String(item.game || "").trim() === game);
+    return Array.from(new Set(filtered.map(item => String(item.category || "").trim()).filter(Boolean)));
+}
+
+function renderCasesPageFilters(cases) {
+    const container = document.querySelector("#case-filters");
+    if (!container) return;
+
+    const games = getCasesPageGames(cases);
+    if (casesPageGame !== "ALL" && !games.includes(casesPageGame)) {
+        casesPageGame = "ALL";
+        casesPageCategory = "ALL";
+    }
+
+    const categories = getCasesPageCategories(cases, casesPageGame);
+    if (casesPageCategory !== "ALL" && !categories.includes(casesPageCategory)) {
+        casesPageCategory = "ALL";
+    }
+
+    container.innerHTML = `
+        <div class="case-filter-row">
+            <span class="case-filter-title">遊戲</span>
+            <div class="case-filter-options">
+                <button type="button" class="case-filter-button ${casesPageGame === "ALL" ? "active" : ""}" data-page-game="ALL">全部</button>
+                ${games.map(game => `
+                    <button type="button" class="case-filter-button ${casesPageGame === game ? "active" : ""}" data-page-game="${escapeHtml(game)}">${escapeHtml(game)}</button>
+                `).join("")}
+            </div>
+        </div>
+        <div class="case-filter-row">
+            <span class="case-filter-title">分類</span>
+            <div class="case-filter-options">
+                <button type="button" class="case-filter-button ${casesPageCategory === "ALL" ? "active" : ""}" data-page-category="ALL">全部</button>
+                ${categories.map(category => `
+                    <button type="button" class="case-filter-button ${casesPageCategory === category ? "active" : ""}" data-page-category="${escapeHtml(category)}">${escapeHtml(category)}</button>
+                `).join("")}
+            </div>
+        </div>
+    `;
+
+    container.querySelectorAll("[data-page-game]").forEach(button => {
+        button.addEventListener("click", () => {
+            casesPageGame = button.dataset.pageGame || "ALL";
+            casesPageCategory = "ALL";
+            renderCases(casesPageSource);
+        });
+    });
+
+    container.querySelectorAll("[data-page-category]").forEach(button => {
+        button.addEventListener("click", () => {
+            casesPageCategory = button.dataset.pageCategory || "ALL";
+            renderCases(casesPageSource);
+        });
+    });
+}
+
+function getVisibleCasesPage(cases) {
+    return cases.filter(item => {
+        const game = String(item.game || "").trim();
+        const category = String(item.category || "").trim();
+        return (casesPageGame === "ALL" || game === casesPageGame)
+            && (casesPageCategory === "ALL" || category === casesPageCategory);
+    });
+}
+
 
 /* ========================================
 初始化
@@ -293,6 +367,12 @@ document.addEventListener(
 
 function renderCases(cases){
 
+    casesPageSource = Array.isArray(cases) ? cases : [];
+
+    renderCasesPageFilters(casesPageSource);
+
+    const visibleCases = getVisibleCasesPage(casesPageSource);
+
     const grid =
         document.querySelector(
             "#case-grid"
@@ -310,8 +390,8 @@ function renderCases(cases){
 
 
     if(
-        !cases ||
-        cases.length === 0
+        !visibleCases ||
+        visibleCases.length === 0
     ){
 
         grid.innerHTML =
@@ -329,7 +409,7 @@ function renderCases(cases){
     }
 
 
-    cases.forEach(
+    visibleCases.forEach(
         item => {
 
             const card =
@@ -373,6 +453,17 @@ function renderCases(cases){
 
 
                 <div class="case-info">
+
+                    <div class="case-card-tags">
+                        <span class="case-card-game">
+                            ${escapeHtml(item.game || "-")}
+                        </span>
+                        ${item.category ? `
+                            <span class="case-card-category">
+                                ${escapeHtml(item.category)}
+                            </span>
+                        ` : ""}
+                    </div>
 
                     <h3>
 
