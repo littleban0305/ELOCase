@@ -1,0 +1,275 @@
+/* ========================================
+   ELOCase - Unified Design System
+   v1
+   Shared sizing / spacing / surfaces.
+   Intentional rarity and Challenge battle colors
+   remain page-specific.
+======================================== */
+
+:root {
+    --ui-page-top: 48px;
+    --ui-page-bottom: 80px;
+    --ui-card-radius: 16px;
+    --ui-control-radius: 8px;
+    --ui-control-height: 42px;
+    --ui-small-height: 38px;
+    --ui-gap: 18px;
+    --ui-card-padding: 22px;
+    --ui-border: var(--color-border);
+    --ui-surface: var(--color-surface);
+    --ui-surface-light: var(--color-surface-light);
+}
+
+/* ---------- Shared page width ---------- */
+
+.cases-page,
+.case-page,
+.inventory-page,
+.profile-page,
+.admin-page,
+.ai-page,
+.challenge-page,
+.challenge-room-page,
+.challenge-result-page {
+    width: min(calc(100% - 40px), var(--content-width));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------- Normal page rhythm ---------- */
+
+.cases-page,
+.case-page,
+.inventory-page,
+.profile-page {
+    padding-top: var(--ui-page-top);
+    padding-bottom: var(--ui-page-bottom);
+}
+
+.cases-page .section-header,
+.case-page .section-header,
+.inventory-page .section-header,
+.profile-page .section-header {
+    margin-bottom: 28px;
+}
+
+/* ---------- Shared section labels ---------- */
+
+.section-label {
+    line-height: 1.2;
+}
+
+/* ---------- Shared surface language ---------- */
+
+.case-card,
+.case-preview,
+.case-contents,
+.inventory-card,
+.profile-header,
+.profile-section,
+.profile-account,
+.challenge-card,
+.room-card,
+.result-card,
+.ai-card,
+.ai-panel,
+.admin-case-card {
+    border-color: var(--ui-border);
+}
+
+/* Keep normal cards on one visual level. */
+.case-card,
+.inventory-card,
+.profile-header,
+.profile-section,
+.profile-account,
+.challenge-card,
+.room-card,
+.result-card,
+.ai-card,
+.ai-panel,
+.admin-case-card {
+    border-radius: var(--ui-card-radius);
+}
+
+/* ---------- Shared form controls ---------- */
+
+.inventory-search input,
+.challenge-card input,
+.ai-page input,
+.ai-page textarea,
+.ai-page select,
+#case-form input,
+#case-form textarea,
+#case-form select,
+.case-editor-field input,
+.case-editor-field select,
+.profile-form-group input {
+    min-height: var(--ui-control-height);
+    border-radius: var(--ui-control-radius);
+}
+
+/* ---------- Shared action buttons ---------- */
+
+.case-action,
+.inventory-action,
+.profile-nav-button,
+.profile-edit-button,
+.profile-logout-button,
+.ai-page button:not(.ai-analysis-refresh),
+.admin-case-actions .button,
+.modal-actions .button {
+    border-radius: var(--ui-control-radius);
+}
+
+/* ---------- Admin ---------- */
+
+.admin-page,
+.ai-page {
+    padding-top: var(--ui-page-top);
+    padding-bottom: var(--ui-page-bottom);
+}
+
+.admin-header,
+.ai-header {
+    margin-bottom: 28px;
+}
+
+.admin-header h1,
+.ai-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    letter-spacing: -0.03em;
+}
+
+.admin-case-card,
+.ai-card,
+.ai-panel {
+    box-shadow: 0 14px 40px rgba(0,0,0,.16);
+}
+
+.admin-case-actions .button {
+    min-height: var(--ui-small-height);
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+#case-form input,
+#case-form textarea,
+#case-form select {
+    min-height: var(--ui-control-height);
+}
+
+/* ---------- AI ---------- */
+
+.ai-layout {
+    gap: var(--ui-gap);
+}
+
+.ai-panel {
+    padding: var(--ui-card-padding);
+}
+
+/* ---------- Cases ---------- */
+
+.case-grid {
+    gap: var(--ui-gap);
+}
+
+.case-card {
+    overflow: hidden;
+}
+
+.case-info {
+    padding: 18px;
+}
+
+/* ---------- Inventory ---------- */
+
+.inventory-grid {
+    gap: var(--ui-gap);
+}
+
+.inventory-info {
+    padding: 16px 18px;
+}
+
+/* ---------- Profile ---------- */
+
+.profile-container {
+    width: 100%;
+}
+
+/* ---------- Case detail ---------- */
+
+.case-hero,
+.case-contents {
+    border-radius: var(--ui-card-radius);
+}
+
+/* ---------- Challenge entry ----------
+   Entry page intentionally stays purple.
+   Room / result keep the orange battle accent.
+---------------------------------------- */
+
+.challenge-entry {
+    --challenge-accent: var(--color-primary);
+    --challenge-accent-hover: var(--color-primary-hover);
+}
+
+.challenge-entry .section-label {
+    color: var(--color-primary);
+    background: rgba(124,92,255,.12);
+    border-color: rgba(124,92,255,.35);
+}
+
+.challenge-entry .challenge-card {
+    border-radius: var(--ui-card-radius);
+}
+
+.challenge-entry .challenge-card input {
+    min-height: var(--ui-control-height);
+}
+
+/* ---------- Challenge room / result ----------
+   Same dimensions as the normal system,
+   but preserve orange battle identity.
+---------------------------------------- */
+
+.challenge-mode:not(.challenge-entry) .room-card,
+.challenge-mode:not(.challenge-entry) .result-card,
+.challenge-mode:not(.challenge-entry) .room-player,
+.challenge-mode:not(.challenge-entry) .result-player,
+.challenge-mode:not(.challenge-entry) .challenge-item {
+    border-radius: var(--ui-card-radius);
+}
+
+.challenge-mode:not(.challenge-entry) .room-card,
+.challenge-mode:not(.challenge-entry) .result-card {
+    border-color: var(--ui-border);
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 500px) {
+    .cases-page,
+    .case-page,
+    .inventory-page,
+    .profile-page,
+    .admin-page,
+    .ai-page,
+    .challenge-page,
+    .challenge-room-page,
+    .challenge-result-page {
+        width: min(calc(100% - 24px), var(--content-width));
+    }
+
+    .cases-page,
+    .case-page,
+    .inventory-page,
+    .profile-page,
+    .admin-page,
+    .ai-page {
+        padding-top: 32px;
+        padding-bottom: 56px;
+    }
+}
