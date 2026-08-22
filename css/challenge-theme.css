@@ -177,3 +177,12 @@
 }
 
 /* Keep Challenge loading visually separate from normal loading. */
+
+/* ========================================
+   Challenge Entry Navbar
+   ELOCoin 保持與普通模式一致
+======================================== */
+
+.challenge-entry .balance-value {
+    color: var(--color-text) !important;
+}
