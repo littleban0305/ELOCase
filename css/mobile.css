@@ -1,0 +1,673 @@
+/* ========================================
+   ELOCase Mobile Responsive
+   手機版統一樣式
+======================================== */
+
+@media (max-width: 768px) {
+
+    /* ========================================
+       全域
+    ======================================== */
+
+    html,
+    body {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+
+    /* ========================================
+       Navbar
+    ======================================== */
+
+    .navbar,
+    .site-navbar,
+    header.navbar {
+        min-height: 60px;
+        height: 60px;
+        padding: 0 14px;
+    }
+
+    .navbar-logo,
+    .logo {
+        font-size: 22px;
+    }
+
+    .navbar-links,
+    .nav-links {
+        gap: 14px;
+    }
+
+    .navbar-links a,
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    .navbar-right {
+        gap: 8px;
+    }
+
+    .navbar-coin,
+    #navbar-coin,
+    .elo-coin-value {
+        font-size: 13px;
+    }
+
+    .navbar-user {
+        padding: 7px 9px;
+    }
+
+
+    /* ========================================
+       共用 Container
+    ======================================== */
+
+    .container,
+    .page-container,
+    .main-container {
+        width: calc(100% - 28px);
+        max-width: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    /* ========================================
+       Page Header
+    ======================================== */
+
+    .page-header {
+        padding: 30px 0 20px;
+    }
+
+    .page-title {
+        font-size: 30px;
+        line-height: 1.25;
+    }
+
+    .page-description {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .section-label {
+        font-size: 12px;
+        padding: 4px 9px;
+    }
+
+
+    /* ========================================
+       Cards
+    ======================================== */
+
+    .card,
+    .panel,
+    .admin-card {
+        border-radius: 16px;
+    }
+
+
+    /* ========================================
+       Buttons
+    ======================================== */
+
+    .button,
+    button {
+        min-height: 42px;
+        padding: 9px 15px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+
+    /* ========================================
+       Input
+    ======================================== */
+
+    input,
+    select,
+    textarea {
+        font-size: 15px;
+        min-height: 44px;
+        border-radius: 10px;
+    }
+
+
+    /* ========================================
+       Cases
+    ======================================== */
+
+    .cases-grid,
+    .case-grid,
+    #cases-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .case-card {
+        border-radius: 14px;
+    }
+
+    .case-card-image {
+        aspect-ratio: 1 / 1;
+    }
+
+    .case-card-content {
+        padding: 11px;
+    }
+
+    .case-card-title {
+        font-size: 15px;
+    }
+
+    .case-card-price {
+        font-size: 13px;
+    }
+
+
+    /* ========================================
+       Case 詳細頁
+    ======================================== */
+
+    .case-detail,
+    .case-page,
+    .case-container {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .case-detail-header {
+        padding: 22px 0;
+    }
+
+    .case-detail-title {
+        font-size: 28px;
+    }
+
+    .case-detail-description {
+        font-size: 14px;
+    }
+
+
+    /* ========================================
+       Case Items
+    ======================================== */
+
+    .case-items-grid,
+    .items-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .case-item-card {
+        border-radius: 12px;
+        padding: 9px;
+    }
+
+    .case-item-card img {
+        max-width: 100%;
+    }
+
+    .case-item-name {
+        font-size: 12px;
+    }
+
+    .case-item-value {
+        font-size: 12px;
+    }
+
+
+    /* ========================================
+       開箱動畫區域
+    ======================================== */
+
+    .case-opening,
+    .case-opening-container {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .case-opening-animation {
+        width: 100%;
+        max-width: 360px;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+
+
+    /* 箱子 */
+
+    .case-opening-box {
+        position: absolute;
+        width: 320px;
+        height: auto;
+        max-width: 85%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -42%);
+        object-fit: contain;
+    }
+
+
+    /*
+     * 鑰匙
+     *
+     * 這裡不讓 key 跟著 box 縮放，
+     * 避免手機版鑰匙變得太小。
+     */
+
+    .case-opening-key {
+        position: absolute;
+        width: 112px;
+        height: auto;
+        max-width: none;
+
+        left: 50%;
+        top: 50%;
+
+        transform:
+            translate(-100px, -25px)
+            rotate(-5deg);
+
+        transform-origin: center center;
+
+        z-index: 5;
+    }
+
+
+    /*
+     * 鑰匙飛向箱子
+     */
+
+    .case-opening-animation.key-fly
+    .case-opening-key {
+        transform:
+            translate(-100px, -25px)
+            rotate(-5deg);
+    }
+
+
+    /*
+     * 鑰匙插入鎖孔
+     *
+     * 這裡是手機版主要校正位置。
+     */
+
+    .case-opening-animation.key-lock
+    .case-opening-key {
+
+        transform:
+            translate(-20px, -70px)
+            rotate(-3deg);
+
+    }
+
+
+    /*
+     * 開箱動畫中的箱子
+     */
+
+    .case-opening-animation
+    .case-opening-box {
+        max-width: 85%;
+    }
+
+
+    /* ========================================
+       開箱結果
+    ======================================== */
+
+    .opening-result,
+    .case-opening-result {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .opening-result-title {
+        font-size: 24px;
+    }
+
+
+    /* ========================================
+       Inventory
+    ======================================== */
+
+    .inventory-grid,
+    .inventory-items,
+    #inventory-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .inventory-card {
+        border-radius: 12px;
+        padding: 9px;
+    }
+
+    .inventory-card-name {
+        font-size: 12px;
+    }
+
+
+    /* ========================================
+       Profile
+    ======================================== */
+
+    .profile-container {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+
+    /* ========================================
+       Challenge 入口
+       保留紫色風格
+    ======================================== */
+
+    .challenge-entry {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .challenge-entry .page-title,
+    .challenge-entry h1 {
+        font-size: 30px;
+    }
+
+    .challenge-entry .section-label {
+        background: transparent;
+        color: var(--primary-color);
+        border-color: rgba(124, 92, 255, .35);
+    }
+
+    .challenge-entry .challenge-cards,
+    .challenge-entry .challenge-grid,
+    .challenge-entry .entry-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .challenge-entry .challenge-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .challenge-entry .challenge-card h2 {
+        font-size: 24px;
+    }
+
+    .challenge-entry .challenge-card p {
+        font-size: 14px;
+    }
+
+
+    /* ========================================
+       Challenge Room
+    ======================================== */
+
+    .challenge-room {
+        width: calc(100% - 24px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .challenge-room-header {
+        padding: 18px 0;
+    }
+
+    .challenge-room-title {
+        font-size: 24px;
+    }
+
+    .challenge-players {
+        gap: 10px;
+    }
+
+    .challenge-player-card {
+        padding: 13px;
+        border-radius: 14px;
+    }
+
+    .challenge-player-name {
+        font-size: 15px;
+    }
+
+    .challenge-player-value {
+        font-size: 18px;
+    }
+
+
+    /* ========================================
+       Challenge Room 箱子
+    ======================================== */
+
+    .challenge-cases,
+    .challenge-case-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+
+    /* ========================================
+       Challenge Result
+    ======================================== */
+
+    .challenge-result {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .challenge-result-title {
+        font-size: 28px;
+    }
+
+    .challenge-result-players {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .challenge-result-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+
+    /* ========================================
+       Login / Register
+    ======================================== */
+
+    .auth-container,
+    .login-container,
+    .register-container {
+        width: calc(100% - 28px);
+        max-width: 430px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .auth-card,
+    .login-card,
+    .register-card {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .auth-title,
+    .login-title,
+    .register-title {
+        font-size: 26px;
+    }
+
+
+    /* ========================================
+       Admin
+    ======================================== */
+
+    .admin-container {
+        width: calc(100% - 28px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .admin-cases-grid,
+    .admin-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .admin-case-card {
+        border-radius: 14px;
+    }
+
+    .admin-case-content {
+        padding: 14px;
+    }
+
+    .admin-case-top h2 {
+        font-size: 18px;
+    }
+
+    .admin-case-actions {
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+    .admin-case-actions .button {
+        flex: 1;
+        min-width: 90px;
+    }
+
+
+    /* ========================================
+       Modal
+    ======================================== */
+
+    .modal,
+    .modal-overlay {
+        padding: 12px;
+    }
+
+    .modal-content,
+    .modal-box {
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+        border-radius: 16px;
+    }
+
+    .modal-header {
+        padding: 15px 16px;
+    }
+
+    .modal-body {
+        padding: 16px;
+    }
+
+    .modal-footer {
+        padding: 12px 16px;
+    }
+
+
+    /* ========================================
+       Footer
+    ======================================== */
+
+    footer {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+}
+
+
+/* ========================================
+   超小螢幕
+   375px 以下
+======================================== */
+
+@media (max-width: 380px) {
+
+    .container,
+    .page-container,
+    .main-container {
+        width: calc(100% - 22px);
+    }
+
+    .navbar,
+    .site-navbar,
+    header.navbar {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .navbar-logo,
+    .logo {
+        font-size: 20px;
+    }
+
+    .navbar-links,
+    .nav-links {
+        gap: 9px;
+    }
+
+    .navbar-links a,
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .page-title {
+        font-size: 27px;
+    }
+
+    .case-opening-animation {
+        height: 270px;
+    }
+
+    .case-opening-box {
+        width: 290px;
+    }
+
+    .case-opening-key {
+        width: 100px;
+    }
+
+    .case-opening-animation.key-fly
+    .case-opening-key {
+        transform:
+            translate(-88px, -22px)
+            rotate(-5deg);
+    }
+
+    .case-opening-animation.key-lock
+    .case-opening-key {
+        transform:
+            translate(-18px, -63px)
+            rotate(-3deg);
+    }
+
+    .button,
+    button {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+}
