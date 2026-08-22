@@ -1772,35 +1772,6 @@ function initializeOpenCaseButton() {
                     }
                 
                 }
-                else {
-
-                    updateBalance(
-                        result.remainingEloCoin
-                    );
-
-
-                    const savedUser =
-                        getSavedUser();
-
-
-                    if (
-                        savedUser
-                    ) {
-
-                        savedUser.eloCoin =
-                            result.remainingEloCoin;
-
-
-                        localStorage.setItem(
-                            "elocaseUser",
-                            JSON.stringify(
-                                savedUser
-                            )
-                        );
-
-                    }
-
-                }
 
 
                 /*
