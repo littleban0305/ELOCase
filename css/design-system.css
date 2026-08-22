@@ -217,8 +217,8 @@
 }
 
 .challenge-entry .section-label {
-    color: var(--color-primary);
-    background: rgba(124,92,255,.12);
+    background: transparent;
+    color: var(--primary-color);
     border-color: rgba(124,92,255,.35);
 }
 
