@@ -2066,3 +2066,94 @@ strong {
         grid-column: auto;
     }
 }
+
+
+/* ========================================
+   Admin Design System Override
+   ELOCase - Cases
+======================================== */
+
+.admin-cases-page,
+.admin-container {
+    width: min(calc(100% - 40px), var(--content-width));
+}
+
+.admin-cases-page {
+    padding: var(--admin-page-top) 0 var(--admin-page-bottom);
+}
+
+.admin-header {
+    margin-bottom: 28px;
+}
+
+.admin-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    letter-spacing: -0.03em;
+}
+
+.admin-case-card {
+    background: var(--color-surface);
+    border-radius: var(--admin-card-radius);
+    box-shadow: 0 14px 40px rgba(0,0,0,.16);
+}
+
+.admin-case-card:hover {
+    background: var(--color-surface-light);
+}
+
+.admin-case-image {
+    border-radius: var(--admin-small-radius);
+}
+
+.admin-case-actions .button {
+    min-height: var(--admin-small-control-height);
+    padding: 0 14px;
+    border-radius: var(--admin-small-radius);
+    font-size: .8rem;
+}
+
+.admin-case-form input,
+.admin-case-form textarea,
+.admin-case-form select,
+#case-form input,
+#case-form textarea,
+#case-form select {
+    min-height: var(--admin-control-height);
+    border-radius: var(--admin-small-radius);
+}
+
+.case-items-editor {
+    gap: var(--admin-gap);
+}
+
+.case-editor-item {
+    border-radius: var(--admin-card-radius);
+}
+
+.case-editor-item-image {
+    border-radius: var(--admin-small-radius);
+}
+
+.case-editor-field input,
+.case-editor-field select {
+    min-height: var(--admin-control-height);
+    border-radius: var(--admin-small-radius);
+}
+
+.case-add-item-button {
+    min-height: var(--admin-control-height);
+    border-radius: var(--admin-small-radius);
+}
+
+.empty-state {
+    border-radius: var(--admin-card-radius);
+}
+
+.modal-content {
+    border-radius: var(--admin-card-radius);
+}
+
+.modal-actions .button {
+    min-height: var(--admin-small-control-height);
+    border-radius: var(--admin-small-radius);
+}
