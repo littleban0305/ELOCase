@@ -1119,3 +1119,23 @@
     margin-left: auto;
 
 }
+
+
+/* ========================================
+   Challenge Design System Override
+======================================== */
+
+.challenge-result-page {
+    width: min(calc(100% - 40px), var(--content-width));
+    margin: 0 auto;
+    padding: var(--admin-page-top) 0 90px;
+}
+
+.result-card {
+    border-radius: var(--admin-card-radius);
+}
+
+.result-player,
+.challenge-result-record-item {
+    border-radius: var(--admin-small-radius);
+}
