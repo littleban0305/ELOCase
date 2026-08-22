@@ -1,585 +1,179 @@
 /* ========================================
-   ELOCase Challenge Theme
+   ELOCase - Challenge Theme
+   Shared visual theme for Challenge Mode
 ======================================== */
 
-/* Logo */
-
-.challenge-brand strong {
-
-    color:#ff9f43;
-
+.challenge-mode {
+    --challenge-accent: #ff9f43;
+    --challenge-accent-hover: #ffb866;
+    --challenge-opponent: var(--color-danger);
 }
 
-
-
-
-/* Section Label */
-
-.challenge-mode .section-label {
-
-
-    color:#ff9f43;
-
-
-    background:none;
-
-
-    border:none;
-
-
-    padding:0;
-
-
+/* Challenge navbar */
+.challenge-mode #navbar,
+.challenge-mode .challenge-navbar {
+    background: rgba(9, 11, 15, .92);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(16px);
 }
 
-
-
-/* 標題 */
-
-
-.challenge-mode h1 {
-
-    color:#fff;
-
+.challenge-mode .challenge-navbar-container {
+    width: min(calc(100% - 40px), var(--content-width));
+    margin: 0 auto;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
-
-
-
-
-/* Navbar spacing */
-
-
-.challenge-mode main {
-
-    padding-top:30px;
-
-}
-
-
-
-
-
-/* Navbar box */
-
-
-.challenge-user-box {
-
-
-    background:
-
-    rgba(
-        255,
-        255,
-        255,
-        .04
-    );
-
-
-    border:
-
-    1px solid
-
-    rgba(
-        255,
-        255,
-        255,
-        .1
-    );
-
-
-}
-
-
-
-
-.challenge-box-value {
-
-
-    color:#ff9f43;
-
-}
-
-
-
-.challenge-user-box.opponent
-.challenge-box-value {
-
-
-    color:#e05b68;
-
-}
-
-/* ========================================
-   Final Override
-======================================== */
-
-
-.challenge-mode .section-label {
-
-    color:#ff9f43 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    padding:0 !important;
-
-}
-
-
-
-.challenge-mode .challenge-user-box {
-
-    background:
-
-    rgba(
-        255,
-        255,
-        255,
-        .04
-    ) !important;
-
-}
-
-
-
-.challenge-mode main {
-
-    padding-top:0;
-
-}
-
-
-
-.challenge-mode .challenge-room-page {
-
-    padding-top:40px;
-
-}
-
-/* ========================================
-   Challenge Navbar Status Spacing Fix
-======================================== */
-
-
-.challenge-navbar-container {
-
-    min-height:96px;
-
-    padding:
-    18px 24px;
-
-}
-
-
-
-.challenge-navbar-status {
-
-    height:100%;
-
-    align-items:center;
-
-}
-
-
-
-.challenge-user-box {
-
-    padding:
-    14px 18px;
-
-    margin:
-    6px 0;
-
-    min-height:
-    72px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-}
-
-/* ========================================
-   Fix Challenge Navbar Overflow
-======================================== */
-
-
-.challenge-navbar {
-
-    height:
-    104px;
-
-}
-
-
-.challenge-navbar-container {
-
-    height:
-    104px;
-
-    padding:
-    0 24px;
-
-    display:flex;
-
-    align-items:center;
-
-}
-
-
-
-.challenge-user-box {
-
-    height:
-    72px;
-
-    padding:
-    12px 18px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-}
-
-/* ========================================
-   Final Challenge Navbar Fix
-======================================== */
-
-
-
-.challenge-navbar-status {
-
-    height:100%;
-
-    display:flex;
-
-    align-items:center;
-
-}
-
-
-
-.challenge-user-box {
-
-    height:82px;
-
-    padding:
-    12px 20px;
-
-    display:flex;
-
-    justify-content:center;
-
-    flex-direction:column;
-
-}
-
-/* ========================================
-   Challenge Navbar
-   Same as Challenge Room
-======================================== */
-
-
-.challenge-navbar {
-
-    position: sticky;
-
-    top:0;
-
-    z-index:100;
-
-    background:
-    var(--color-surface);
-
-    border-bottom:
-    1px solid
-    var(--color-border);
-
-}
-
-
-
-.challenge-navbar-container {
-
-
-    max-width:
-    1200px;
-
-
-    margin:
-    auto;
-
-
-    padding:
-    14px 24px;
-
-
-    display:
-    flex;
-
-
-    align-items:center;
-
-
-    justify-content:
-    space-between;
-
-
-    gap:
-    20px;
-
-
-}
-
-
-
-/* Logo */
 
 .challenge-brand {
-
-
-    display:
-    flex;
-
-
-    align-items:center;
-
-
-    gap:
-    10px;
-
-
-    text-decoration:none;
-
-
-    color:
-    var(--color-text);
-
-
-    font-size:
-    1.2rem;
-
-
-    font-weight:
-    800;
-
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    font-size: 1.15rem;
+    font-weight: 800;
 }
 
-
-
-.challenge-brand strong {
-
-
-    color:
-    #ff9f43;
-
-
-    font-size:
-    .85rem;
-
-
-    letter-spacing:
-    .05em;
-
-
+.challenge-brand span {
+    color: var(--color-text);
 }
 
+.challenge-brand strong,
+.challenge-brand-text {
+    color: var(--challenge-accent);
+    font-size: .85rem;
+    font-weight: 800;
+}
 
+.challenge-brand-text {
+    margin-left: 8px;
+}
 
 /* Status */
-
 .challenge-navbar-status {
-
-
-    display:flex;
-
-
-    gap:
-    12px;
-
-
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
-
 
 .challenge-user-box {
-
-
-    min-width:
-    110px;
-
-
-    padding:
-    10px 14px;
-
-
-    background:
-    rgba(
-        124,
-        92,
-        255,
-        .08
-    );
-
-
-    border:
-    1px solid
-    var(--color-border);
-
-
-    border-radius:
-    12px;
-
-
+    min-width: 110px;
+    min-height: 72px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius-medium);
+    text-align: center;
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
 }
 
-
+.challenge-user-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,159,67,.35);
+}
 
 .challenge-user-box.opponent {
-
-
-    background:
-    rgba(
-        255,
-        159,
-        67,
-        .08
-    );
-
-
+    border-color: rgba(224,91,104,.2);
 }
-
-
 
 .challenge-box-title {
-
-
-    color:
-    var(--color-text-muted);
-
-
-    font-size:
-    .7rem;
-
-
+    color: var(--color-text-muted);
+    font-size: .7rem;
 }
-
-
 
 .challenge-box-value {
-
-
-    margin-top:
-    5px;
-
-
-    color:
-    var(--color-text);
-
-
-    font-weight:
-    800;
-
-
-    font-size:
-    .95rem;
-
-
+    margin-top: 5px;
+    color: var(--challenge-accent);
+    font-size: .95rem;
+    font-weight: 800;
 }
 
-/* ========================================
-   Challenge Navbar Height Fix
-======================================== */
-
-
-.challenge-navbar {
-
-    min-height:
-    104px;
-
+.challenge-user-box.opponent .challenge-box-value {
+    color: var(--challenge-opponent);
 }
 
-
-
-.challenge-navbar-container {
-
-    min-height:
-    104px;
-
-    padding-top:
-    18px;
-
-    padding-bottom:
-    18px;
-
+/* Shared challenge typography */
+.challenge-mode h1 {
+    color: var(--color-text);
 }
 
-
-
-.challenge-user-box {
-
-    margin-top:
-    6px;
-
-    margin-bottom:
-    6px;
-
+.challenge-mode .section-label {
+    color: var(--challenge-accent);
+    background: rgba(255,159,67,.12);
+    border-color: rgba(255,159,67,.35);
 }
 
-/* ========================================
-   Challenge Navbar Global Fix
-======================================== */
-
-
-body.challenge-mode .navbar {
-
-    position: sticky;
-
-    top:0;
-
-    z-index:100;
-
-    min-height:104px;
-
-    background:
-    rgba(
-        9,
-        11,
-        15,
-        .92
-    );
-
-    backdrop-filter:
-    blur(16px);
-
+.challenge-mode main {
+    padding-top: 0;
 }
 
-
-
-body.challenge-mode .challenge-navbar-container {
-
-    min-height:104px;
-
-    padding:
-    18px 24px;
-
-    display:flex;
-
-    align-items:center;
-
+/* Challenge-specific cards */
+.challenge-mode .room-card {
+    border-color: rgba(255,159,67,.25);
 }
 
-
-
-body.challenge-mode main {
-
-    padding-top:0 !important;
-
+.challenge-mode .vs-text,
+.challenge-mode .vs-result {
+    color: var(--challenge-accent);
 }
+
+.challenge-mode .challenge-code {
+    color: var(--challenge-accent);
+}
+
+.challenge-mode .case-detail-game,
+.challenge-mode .case-preview-status,
+.challenge-mode .balance-value,
+.challenge-mode .challenge-coin {
+    color: var(--challenge-accent);
+}
+
+.challenge-mode .case-preview-pointer {
+    background: var(--challenge-accent);
+    box-shadow: 0 0 16px rgba(255,159,67,.9);
+}
+
+.challenge-mode .case-preview-pointer::before {
+    border-top-color: var(--challenge-accent);
+}
+
+.challenge-mode .case-preview-pointer::after {
+    border-bottom-color: var(--challenge-accent);
+}
+
+.challenge-mode #open-case-button {
+    background: var(--challenge-accent);
+    border-color: var(--challenge-accent);
+    color: #111;
+}
+
+.challenge-mode #open-case-button:hover {
+    background: var(--challenge-accent-hover);
+}
+
+.challenge-mode .case-card:hover {
+    border-color: rgba(255,159,67,.5);
+}
+
+.challenge-mode .case-card:hover .case-action {
+    color: var(--challenge-accent-hover);
+}
+
+/* Result states */
+.challenge-lose #winner-text {
+    color: var(--color-text-secondary);
+}
+
+.challenge-draw #winner-text {
+    color: var(--challenge-accent-hover);
+}
+
+/* Keep Challenge loading visually separate from normal loading. */
