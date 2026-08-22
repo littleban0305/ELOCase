@@ -95,6 +95,17 @@ function createCaseCard(caseData) {
 
         <div class="case-info">
 
+            <div class="case-card-tags">
+                <span class="case-card-game">
+                    ${escapeHtml(caseData.game || "-")}
+                </span>
+                ${caseData.category ? `
+                    <span class="case-card-category">
+                        ${escapeHtml(caseData.category)}
+                    </span>
+                ` : ""}
+            </div>
+
             <h3>
                 ${escapeHtml(
                     caseData.name ||
@@ -133,10 +144,113 @@ function createCaseCard(caseData) {
 
 
 /* ========================================
+   箱子分類篩選
+======================================== */
+
+let homeCasesSource = [];
+let selectedCaseGame = "ALL";
+let selectedCaseCategory = "ALL";
+
+function getCaseFilterGames(cases) {
+    return Array.from(
+        new Set(
+            cases.map(item => String(item.game || "").trim()).filter(Boolean)
+        )
+    );
+}
+
+function getCaseFilterCategories(cases, game) {
+    const filtered = game === "ALL"
+        ? cases
+        : cases.filter(item => String(item.game || "").trim() === game);
+
+    return Array.from(
+        new Set(
+            filtered.map(item => String(item.category || "").trim()).filter(Boolean)
+        )
+    );
+}
+
+function renderCaseFilters(cases) {
+    const container = document.querySelector("#case-filters");
+    if (!container) return;
+
+    const games = getCaseFilterGames(cases);
+
+    if (selectedCaseGame !== "ALL" && !games.includes(selectedCaseGame)) {
+        selectedCaseGame = "ALL";
+        selectedCaseCategory = "ALL";
+    }
+
+    const categories = getCaseFilterCategories(cases, selectedCaseGame);
+
+    if (selectedCaseCategory !== "ALL" && !categories.includes(selectedCaseCategory)) {
+        selectedCaseCategory = "ALL";
+    }
+
+    container.innerHTML = `
+        <div class="case-filter-row">
+            <span class="case-filter-title">遊戲</span>
+            <div class="case-filter-options">
+                <button type="button" class="case-filter-button ${selectedCaseGame === "ALL" ? "active" : ""}" data-case-game="ALL">全部</button>
+                ${games.map(game => `
+                    <button type="button" class="case-filter-button ${selectedCaseGame === game ? "active" : ""}" data-case-game="${escapeHtml(game)}">
+                        ${escapeHtml(game)}
+                    </button>
+                `).join("")}
+            </div>
+        </div>
+
+        <div class="case-filter-row">
+            <span class="case-filter-title">分類</span>
+            <div class="case-filter-options">
+                <button type="button" class="case-filter-button ${selectedCaseCategory === "ALL" ? "active" : ""}" data-case-category="ALL">全部</button>
+                ${categories.map(category => `
+                    <button type="button" class="case-filter-button ${selectedCaseCategory === category ? "active" : ""}" data-case-category="${escapeHtml(category)}">
+                        ${escapeHtml(category)}
+                    </button>
+                `).join("")}
+            </div>
+        </div>
+    `;
+
+    container.querySelectorAll("[data-case-game]").forEach(button => {
+        button.addEventListener("click", () => {
+            selectedCaseGame = button.dataset.caseGame || "ALL";
+            selectedCaseCategory = "ALL";
+            renderCases(homeCasesSource);
+        });
+    });
+
+    container.querySelectorAll("[data-case-category]").forEach(button => {
+        button.addEventListener("click", () => {
+            selectedCaseCategory = button.dataset.caseCategory || "ALL";
+            renderCases(homeCasesSource);
+        });
+    });
+}
+
+function getVisibleCases(cases) {
+    return cases.filter(item => {
+        const game = String(item.game || "").trim();
+        const category = String(item.category || "").trim();
+        return (selectedCaseGame === "ALL" || game === selectedCaseGame)
+            && (selectedCaseCategory === "ALL" || category === selectedCaseCategory);
+    });
+}
+
+
+/* ========================================
    箱子列表
 ======================================== */
 
 function renderCases(cases) {
+
+    homeCasesSource = Array.isArray(cases) ? cases : [];
+
+    renderCaseFilters(homeCasesSource);
+
+    const visibleCases = getVisibleCases(homeCasesSource);
 
     const container =
         document.querySelector(
@@ -153,8 +267,8 @@ function renderCases(cases) {
 
 
     if (
-        !cases ||
-        cases.length === 0
+        !visibleCases ||
+        visibleCases.length === 0
     ) {
 
         container.innerHTML = `
@@ -172,7 +286,7 @@ function renderCases(cases) {
     }
 
 
-    cases.forEach(
+    visibleCases.forEach(
         caseData => {
 
             const card =
