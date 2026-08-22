@@ -1,127 +1,309 @@
 /* ========================================
-   ELOCase Mobile Responsive
-   手機版統一樣式
+   ELOCase - Mobile
+   手機版縮小 / Navbar 修正版
+======================================== */
+
+
+/* ========================================
+   768px 以下
 ======================================== */
 
 @media (max-width: 768px) {
 
     /* ========================================
-       全域
+       全域縮小
     ======================================== */
 
-    html,
-    body {
-        width: 100%;
-        min-width: 0;
-        overflow-x: hidden;
+    html {
+        font-size: 14px;
     }
 
     body {
         font-size: 14px;
+        line-height: 1.5;
+        overflow-x: hidden;
+    }
+
+
+    /*
+     * 所有圖片不要超出螢幕
+     */
+
+    img {
+        max-width: 100%;
     }
 
 
     /* ========================================
        Navbar
+       
+       重點：
+       components.css 原本在 800px 以下
+       把 .nav-links 設成 display:none。
+       
+       這裡直接恢復顯示。
     ======================================== */
 
-    .navbar,
-    .site-navbar,
-    header.navbar {
-        min-height: 60px;
-        height: 60px;
-        padding: 0 14px;
+    .navbar {
+        height: 58px;
+        min-height: 58px;
     }
 
-    .navbar-logo,
-    .logo {
-        font-size: 22px;
-    }
 
-    .navbar-links,
-    .nav-links {
-        gap: 14px;
-    }
+    .navbar-container {
+        width: calc(100% - 20px);
+        height: 58px;
 
-    .navbar-links a,
-    .nav-links a {
-        font-size: 13px;
-    }
-
-    .navbar-right {
         gap: 8px;
+
+        display: flex;
+        align-items: center;
+
+        overflow: hidden;
     }
 
-    .navbar-coin,
-    #navbar-coin,
-    .elo-coin-value {
-        font-size: 13px;
-    }
 
-    .navbar-user {
-        padding: 7px 9px;
+    /* ELOCase Logo */
+
+    .brand {
+        flex-shrink: 0;
+
+        font-size: 1.08rem;
+        line-height: 1;
+
+        letter-spacing: -0.04em;
     }
 
 
     /* ========================================
-       共用 Container
+       Navbar 中間導覽
     ======================================== */
 
-    .container,
-    .page-container,
-    .main-container {
-        width: calc(100% - 28px);
-        max-width: none;
+    .nav-links {
+
+        display: flex !important;
+
+        flex: 1 1 auto;
+
+        min-width: 0;
+
+        margin-right: 0;
+
+        gap: 1px;
+
+        align-items: center;
+
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+
+    .nav-link {
+
+        flex-shrink: 1;
+
+        padding: 6px 5px;
+
+        border-radius: 6px;
+
+        font-size: 0.72rem;
+
+        line-height: 1;
+
+        white-space: nowrap;
+    }
+
+
+    /* ========================================
+       Navbar 右側
+    ======================================== */
+
+    .navbar-actions {
+
+        flex-shrink: 0;
+
+        gap: 4px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+    }
+
+
+    /*
+     * 手機版隱藏 ELOCoin 大框
+     *
+     * 不是刪掉 ELOCoin，
+     * 是避免 Navbar 被擠爆。
+     */
+
+    .balance {
+        display: none !important;
+    }
+
+
+    /* ========================================
+       玩家按鈕
+    ======================================== */
+
+    .player-menu-button {
+
+        height: 34px;
+
+        min-height: 34px;
+
+        padding: 0 7px;
+
+        gap: 5px;
+
+        border-radius: 8px;
+
+        font-size: 0.72rem;
+
+        white-space: nowrap;
+    }
+
+
+    .player-avatar {
+
+        width: 22px;
+        height: 22px;
+
+        font-size: 11px;
+    }
+
+
+    .player-menu-name {
+
+        max-width: 58px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+    }
+
+
+    .player-menu-arrow {
+        font-size: 9px;
+    }
+
+
+    /* ========================================
+       所有主要頁面
+    ======================================== */
+
+    .section-container,
+    .navbar-container,
+    .footer-container {
+
+        width: calc(100% - 20px);
+
+        max-width: var(--content-width);
+    }
+
+
+    /*
+     * Design System 裡各頁面的 container
+     */
+
+    .cases-page,
+    .case-page,
+    .inventory-page,
+    .profile-page,
+    .admin-page,
+    .ai-page,
+    .challenge-page,
+    .challenge-room-page,
+    .challenge-result-page {
+
+        width: calc(100% - 20px);
+
+        max-width: var(--content-width);
+
         margin-left: auto;
         margin-right: auto;
     }
 
 
     /* ========================================
-       Page Header
+       頁面上下距離
     ======================================== */
 
-    .page-header {
-        padding: 30px 0 20px;
+    .cases-page,
+    .case-page,
+    .inventory-page,
+    .profile-page,
+    .admin-page,
+    .ai-page,
+    .challenge-page,
+    .challenge-room-page,
+    .challenge-result-page {
+
+        padding-top: 26px;
+        padding-bottom: 44px;
     }
 
-    .page-title {
-        font-size: 30px;
-        line-height: 1.25;
+
+    /* ========================================
+       標題整體縮小
+    ======================================== */
+
+    h1 {
+        font-size: 2rem;
     }
 
-    .page-description {
-        font-size: 14px;
-        line-height: 1.7;
+    h2 {
+        font-size: 1.4rem;
     }
+
+    h3 {
+        font-size: 1.05rem;
+    }
+
+
+    /* ========================================
+       Section Label
+    ======================================== */
 
     .section-label {
-        font-size: 12px;
-        padding: 4px 9px;
+
+        padding: 3px 8px;
+
+        font-size: 0.7rem;
+
+        line-height: 1.4;
+
+        border-radius: 5px;
     }
 
 
     /* ========================================
-       Cards
+       按鈕
     ======================================== */
 
-    .card,
-    .panel,
-    .admin-card {
-        border-radius: 16px;
+    .button {
+
+        min-height: 38px;
+
+        padding: 0 14px;
+
+        font-size: 0.8rem;
+
+        border-radius: 8px;
     }
 
 
-    /* ========================================
-       Buttons
-    ======================================== */
+    .button-large {
 
-    .button,
-    button {
         min-height: 42px;
-        padding: 9px 15px;
-        font-size: 14px;
-        border-radius: 10px;
+
+        padding: 0 18px;
+
+        font-size: 0.85rem;
     }
 
 
@@ -132,66 +314,115 @@
     input,
     select,
     textarea {
-        font-size: 15px;
-        min-height: 44px;
-        border-radius: 10px;
+
+        min-height: 40px;
+
+        padding: 8px 11px;
+
+        font-size: 14px;
+
+        border-radius: 8px;
     }
 
 
     /* ========================================
-       Cases
+       首頁
     ======================================== */
 
-    .cases-grid,
-    .case-grid,
-    #cases-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+    .hero {
+
+        padding-top: 32px;
+        padding-bottom: 32px;
     }
+
+
+    .hero h1 {
+
+        font-size: 2rem;
+    }
+
+
+    .hero p {
+
+        font-size: 0.85rem;
+
+        line-height: 1.65;
+    }
+
+
+    /* ========================================
+       Lucky Players
+    ======================================== */
+
+    .lucky-section {
+
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+
+    .lucky-showcase {
+
+        transform: scale(.94);
+
+        transform-origin: center center;
+    }
+
+
+    /* ========================================
+       箱子列表
+    ======================================== */
+
+    .cases-grid {
+
+        gap: 10px;
+    }
+
 
     .case-card {
-        border-radius: 14px;
+
+        border-radius: 12px;
     }
 
-    .case-card-image {
-        aspect-ratio: 1 / 1;
-    }
 
     .case-card-content {
-        padding: 11px;
+
+        padding: 9px;
     }
+
 
     .case-card-title {
-        font-size: 15px;
+
+        font-size: 0.88rem;
     }
 
+
     .case-card-price {
-        font-size: 13px;
+
+        font-size: 0.75rem;
     }
 
 
     /* ========================================
-       Case 詳細頁
+       Case Detail
     ======================================== */
 
-    .case-detail,
-    .case-page,
-    .case-container {
-        width: calc(100% - 28px);
-        margin-left: auto;
-        margin-right: auto;
+    .case-hero,
+    .case-contents {
+
+        border-radius: 13px;
     }
 
-    .case-detail-header {
-        padding: 22px 0;
-    }
 
     .case-detail-title {
-        font-size: 28px;
+
+        font-size: 1.8rem;
     }
 
+
     .case-detail-description {
-        font-size: 14px;
+
+        font-size: 0.82rem;
     }
 
 
@@ -201,81 +432,91 @@
 
     .case-items-grid,
     .items-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+
+        gap: 8px;
     }
+
 
     .case-item-card {
-        border-radius: 12px;
-        padding: 9px;
+
+        padding: 8px;
+
+        border-radius: 10px;
     }
 
-    .case-item-card img {
-        max-width: 100%;
-    }
 
     .case-item-name {
-        font-size: 12px;
+
+        font-size: 0.72rem;
     }
 
+
     .case-item-value {
-        font-size: 12px;
+
+        font-size: 0.72rem;
     }
 
 
     /* ========================================
-       開箱動畫區域
+       開箱動畫
     ======================================== */
 
-    .case-opening,
-    .case-opening-container {
-        width: 100%;
-        max-width: 100%;
-        overflow: hidden;
-    }
-
     .case-opening-animation {
+
         width: 100%;
-        max-width: 360px;
-        height: 300px;
+
+        max-width: 340px;
+
+        height: 270px;
+
         margin-left: auto;
         margin-right: auto;
+
         position: relative;
+
+        overflow: visible;
     }
 
 
-    /* 箱子 */
+    /*
+     * 箱子
+     */
 
     .case-opening-box {
-        position: absolute;
-        width: 320px;
+
+        width: 300px;
+
+        max-width: 82%;
+
         height: auto;
-        max-width: 85%;
+
         left: 50%;
+
         top: 50%;
-        transform: translate(-50%, -42%);
+
+        transform:
+            translate(-50%, -42%);
+
         object-fit: contain;
     }
 
 
     /*
      * 鑰匙
-     *
-     * 這裡不讓 key 跟著 box 縮放，
-     * 避免手機版鑰匙變得太小。
      */
 
     .case-opening-key {
-        position: absolute;
-        width: 112px;
+
+        width: 105px;
+
         height: auto;
-        max-width: none;
 
         left: 50%;
+
         top: 50%;
 
         transform:
-            translate(-100px, -25px)
+            translate(-94px, -22px)
             rotate(-5deg);
 
         transform-origin: center center;
@@ -285,56 +526,28 @@
 
 
     /*
-     * 鑰匙飛向箱子
+     * 鑰匙飛行
      */
 
     .case-opening-animation.key-fly
     .case-opening-key {
+
         transform:
-            translate(-100px, -25px)
+            translate(-94px, -22px)
             rotate(-5deg);
     }
 
 
     /*
-     * 鑰匙插入鎖孔
-     *
-     * 這裡是手機版主要校正位置。
+     * 鑰匙對準鎖孔
      */
 
     .case-opening-animation.key-lock
     .case-opening-key {
 
         transform:
-            translate(-20px, -70px)
+            translate(-19px, -64px)
             rotate(-3deg);
-
-    }
-
-
-    /*
-     * 開箱動畫中的箱子
-     */
-
-    .case-opening-animation
-    .case-opening-box {
-        max-width: 85%;
-    }
-
-
-    /* ========================================
-       開箱結果
-    ======================================== */
-
-    .opening-result,
-    .case-opening-result {
-        width: calc(100% - 28px);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .opening-result-title {
-        font-size: 24px;
     }
 
 
@@ -343,78 +556,76 @@
     ======================================== */
 
     .inventory-grid,
-    .inventory-items,
-    #inventory-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+    .inventory-items {
+
+        gap: 8px;
     }
+
 
     .inventory-card {
-        border-radius: 12px;
-        padding: 9px;
-    }
 
-    .inventory-card-name {
-        font-size: 12px;
-    }
+        padding: 8px;
 
-
-    /* ========================================
-       Profile
-    ======================================== */
-
-    .profile-container {
-        width: calc(100% - 28px);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .profile-card {
-        padding: 18px;
-        border-radius: 16px;
+        border-radius: 10px;
     }
 
 
     /* ========================================
-       Challenge 入口
-       保留紫色風格
+       Challenge Entry
+       
+       保留紫色
+       但整體縮小
     ======================================== */
 
     .challenge-entry {
-        width: calc(100% - 28px);
+
+        width: calc(100% - 20px);
+
+        max-width: var(--content-width);
+
         margin-left: auto;
         margin-right: auto;
     }
 
-    .challenge-entry .page-title,
+
     .challenge-entry h1 {
-        font-size: 30px;
+
+        font-size: 2rem;
     }
 
-    .challenge-entry .section-label {
-        background: transparent;
-        color: var(--primary-color);
-        border-color: rgba(124, 92, 255, .35);
-    }
-
-    .challenge-entry .challenge-cards,
-    .challenge-entry .challenge-grid,
-    .challenge-entry .entry-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-    }
 
     .challenge-entry .challenge-card {
-        padding: 18px;
-        border-radius: 16px;
+
+        padding: 16px;
+
+        border-radius: 14px;
     }
+
 
     .challenge-entry .challenge-card h2 {
-        font-size: 24px;
+
+        font-size: 1.4rem;
     }
 
+
     .challenge-entry .challenge-card p {
-        font-size: 14px;
+
+        font-size: 0.82rem;
+    }
+
+
+    /*
+     * 建立挑戰 / 加入挑戰
+     * 手機上下排列
+     */
+
+    .challenge-entry .challenge-grid,
+    .challenge-entry .challenge-cards,
+    .challenge-entry .entry-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
     }
 
 
@@ -422,46 +633,35 @@
        Challenge Room
     ======================================== */
 
-    .challenge-room {
-        width: calc(100% - 24px);
-        margin-left: auto;
-        margin-right: auto;
+    .challenge-room-page {
+
+        width: calc(100% - 20px);
     }
 
-    .challenge-room-header {
-        padding: 18px 0;
-    }
 
     .challenge-room-title {
-        font-size: 24px;
+
+        font-size: 1.6rem;
     }
 
-    .challenge-players {
-        gap: 10px;
-    }
 
     .challenge-player-card {
-        padding: 13px;
-        border-radius: 14px;
+
+        padding: 11px;
+
+        border-radius: 12px;
     }
+
 
     .challenge-player-name {
-        font-size: 15px;
+
+        font-size: 0.82rem;
     }
+
 
     .challenge-player-value {
-        font-size: 18px;
-    }
 
-
-    /* ========================================
-       Challenge Room 箱子
-    ======================================== */
-
-    .challenge-cases,
-    .challenge-case-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        font-size: 1rem;
     }
 
 
@@ -469,24 +669,23 @@
        Challenge Result
     ======================================== */
 
-    .challenge-result {
-        width: calc(100% - 28px);
-        margin-left: auto;
-        margin-right: auto;
+    .challenge-result-page {
+
+        width: calc(100% - 20px);
     }
+
 
     .challenge-result-title {
-        font-size: 28px;
+
+        font-size: 1.8rem;
     }
 
-    .challenge-result-players {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
 
     .challenge-result-card {
-        padding: 16px;
-        border-radius: 16px;
+
+        padding: 13px;
+
+        border-radius: 13px;
     }
 
 
@@ -497,23 +696,31 @@
     .auth-container,
     .login-container,
     .register-container {
-        width: calc(100% - 28px);
+
+        width: calc(100% - 24px);
+
         max-width: 430px;
+
         margin-left: auto;
         margin-right: auto;
     }
 
+
     .auth-card,
     .login-card,
     .register-card {
-        padding: 20px;
-        border-radius: 16px;
+
+        padding: 18px;
+
+        border-radius: 14px;
     }
+
 
     .auth-title,
     .login-title,
     .register-title {
-        font-size: 26px;
+
+        font-size: 1.7rem;
     }
 
 
@@ -522,37 +729,48 @@
     ======================================== */
 
     .admin-container {
-        width: calc(100% - 28px);
-        margin-left: auto;
-        margin-right: auto;
+
+        width: calc(100% - 20px);
     }
 
-    .admin-cases-grid,
-    .admin-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
 
     .admin-case-card {
-        border-radius: 14px;
+
+        border-radius: 12px;
     }
+
 
     .admin-case-content {
-        padding: 14px;
+
+        padding: 12px;
     }
+
 
     .admin-case-top h2 {
-        font-size: 18px;
+
+        font-size: 1rem;
     }
+
+
+    .admin-case-description {
+
+        font-size: 0.78rem;
+    }
+
 
     .admin-case-actions {
-        flex-wrap: wrap;
-        gap: 7px;
+
+        gap: 6px;
     }
 
+
     .admin-case-actions .button {
-        flex: 1;
-        min-width: 90px;
+
+        min-height: 36px;
+
+        padding: 0 10px;
+
+        font-size: 0.75rem;
     }
 
 
@@ -560,30 +778,14 @@
        Modal
     ======================================== */
 
-    .modal,
-    .modal-overlay {
-        padding: 12px;
-    }
-
     .modal-content,
     .modal-box {
-        width: 100%;
-        max-width: 100%;
-        max-height: calc(100vh - 24px);
-        overflow-y: auto;
-        border-radius: 16px;
-    }
 
-    .modal-header {
-        padding: 15px 16px;
-    }
+        width: calc(100% - 20px);
 
-    .modal-body {
-        padding: 16px;
-    }
+        max-height: calc(100vh - 20px);
 
-    .modal-footer {
-        padding: 12px 16px;
+        border-radius: 14px;
     }
 
 
@@ -592,82 +794,175 @@
     ======================================== */
 
     footer {
-        padding-left: 14px;
-        padding-right: 14px;
+
+        font-size: 0.75rem;
     }
 
 }
 
 
 /* ========================================
-   超小螢幕
-   375px 以下
+   390px 以下
 ======================================== */
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
 
-    .container,
-    .page-container,
-    .main-container {
-        width: calc(100% - 22px);
+    .navbar-container {
+
+        width: calc(100% - 14px);
+
+        gap: 5px;
     }
 
-    .navbar,
-    .site-navbar,
-    header.navbar {
-        padding-left: 10px;
-        padding-right: 10px;
+
+    .brand {
+
+        font-size: 1rem;
     }
 
-    .navbar-logo,
-    .logo {
-        font-size: 20px;
-    }
 
-    .navbar-links,
     .nav-links {
-        gap: 9px;
+
+        gap: 0;
     }
 
-    .navbar-links a,
-    .nav-links a {
-        font-size: 12px;
+
+    .nav-link {
+
+        padding-left: 4px;
+        padding-right: 4px;
+
+        font-size: 0.67rem;
     }
 
-    .page-title {
-        font-size: 27px;
+
+    .player-menu-button {
+
+        padding-left: 5px;
+        padding-right: 5px;
+
+        gap: 3px;
+
+        font-size: 0.67rem;
     }
+
+
+    .player-menu-name {
+
+        max-width: 48px;
+    }
+
+
+    .player-avatar {
+
+        width: 20px;
+        height: 20px;
+    }
+
+
+    /*
+     * 頁面再縮一點
+     */
+
+    .cases-page,
+    .case-page,
+    .inventory-page,
+    .profile-page,
+    .admin-page,
+    .ai-page,
+    .challenge-page,
+    .challenge-room-page,
+    .challenge-result-page {
+
+        width: calc(100% - 16px);
+
+        padding-top: 22px;
+        padding-bottom: 38px;
+    }
+
+
+    h1 {
+
+        font-size: 1.8rem;
+    }
+
+
+    h2 {
+
+        font-size: 1.3rem;
+    }
+
 
     .case-opening-animation {
-        height: 270px;
+
+        max-width: 320px;
+
+        height: 250px;
     }
+
 
     .case-opening-box {
-        width: 290px;
+
+        width: 280px;
     }
 
+
     .case-opening-key {
-        width: 100px;
+
+        width: 98px;
     }
+
 
     .case-opening-animation.key-fly
     .case-opening-key {
+
         transform:
-            translate(-88px, -22px)
+            translate(-87px, -20px)
             rotate(-5deg);
     }
 
+
     .case-opening-animation.key-lock
     .case-opening-key {
+
         transform:
-            translate(-18px, -63px)
+            translate(-18px, -59px)
             rotate(-3deg);
     }
 
-    .button,
-    button {
-        padding-left: 12px;
-        padding-right: 12px;
+}
+
+
+/* ========================================
+   360px 以下
+======================================== */
+
+@media (max-width: 360px) {
+
+    .brand {
+
+        font-size: .94rem;
+    }
+
+
+    .nav-link {
+
+        padding-left: 3px;
+        padding-right: 3px;
+
+        font-size: .62rem;
+    }
+
+
+    .player-menu-name {
+
+        max-width: 42px;
+    }
+
+
+    .navbar-container {
+
+        width: calc(100% - 10px);
     }
 
 }
