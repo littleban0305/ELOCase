@@ -1,6 +1,14 @@
 /* ========================================
-   ELOCase - Mobile
-   手機版縮小 / Navbar 修正版
+   ELOCase - Mobile UI
+   v3
+
+   原則：
+   1. 保留桌面版視覺語言
+   2. 手機只縮小尺寸與重新排版
+   3. Navbar 不隱藏主要導覽
+   4. 卡片維持桌面版質感
+   5. Challenge Entry 保留紫色
+   6. Challenge Room / Result 保留專屬風格
 ======================================== */
 
 
@@ -11,23 +19,19 @@
 @media (max-width: 768px) {
 
     /* ========================================
-       全域縮小
+       基礎
     ======================================== */
 
     html {
         font-size: 14px;
     }
 
+
     body {
-        font-size: 14px;
-        line-height: 1.5;
         overflow-x: hidden;
+        font-size: 0.86rem;
     }
 
-
-    /*
-     * 所有圖片不要超出螢幕
-     */
 
     img {
         max-width: 100%;
@@ -36,201 +40,304 @@
 
     /* ========================================
        Navbar
-       
-       重點：
-       components.css 原本在 800px 以下
-       把 .nav-links 設成 display:none。
-       
-       這裡直接恢復顯示。
     ======================================== */
 
     .navbar {
+
         height: 58px;
+
         min-height: 58px;
+
     }
 
 
     .navbar-container {
-        width: calc(100% - 20px);
-        height: 58px;
 
-        gap: 8px;
+        width:
+            calc(100% - 16px) !important;
 
-        display: flex;
-        align-items: center;
+        max-width:
+            none !important;
 
-        overflow: hidden;
+        height:
+            100%;
+
+        gap:
+            7px !important;
+
     }
 
 
-    /* ELOCase Logo */
+    /* ------------------------------
+       Logo
+    ------------------------------ */
 
     .brand {
-        flex-shrink: 0;
 
-        font-size: 1.08rem;
-        line-height: 1;
+        flex:
+            0 0 auto;
 
-        letter-spacing: -0.04em;
+        font-size:
+            1.08rem;
+
+        letter-spacing:
+            -0.04em;
+
+        white-space:
+            nowrap;
+
     }
 
 
-    /* ========================================
-       Navbar 中間導覽
-    ======================================== */
+    /* ------------------------------
+       導覽列
+       
+       components.css 原本會在
+       800px 以下 display:none。
+       這裡重新開啟。
+    ------------------------------ */
 
     .nav-links {
 
-        display: flex !important;
+        display:
+            flex !important;
 
-        flex: 1 1 auto;
+        flex:
+            1 1 auto;
 
-        min-width: 0;
+        min-width:
+            0;
 
-        margin-right: 0;
+        margin-right:
+            0 !important;
 
-        gap: 1px;
+        justify-content:
+            center;
 
-        align-items: center;
+        gap:
+            0 !important;
 
-        justify-content: center;
+        overflow:
+            hidden;
 
-        overflow: hidden;
     }
 
 
     .nav-link {
 
-        flex-shrink: 1;
+        flex:
+            0 1 auto;
 
-        padding: 6px 5px;
+        min-width:
+            0;
 
-        border-radius: 6px;
+        padding:
+            6px 5px !important;
 
-        font-size: 0.72rem;
+        border-radius:
+            6px;
 
-        line-height: 1;
+        font-size:
+            0.67rem !important;
 
-        white-space: nowrap;
+        line-height:
+            1.1;
+
+        white-space:
+            nowrap;
+
     }
 
 
-    /* ========================================
+    /* ------------------------------
        Navbar 右側
-    ======================================== */
+    ------------------------------ */
 
     .navbar-actions {
 
-        flex-shrink: 0;
+        flex:
+            0 0 auto;
 
-        gap: 4px !important;
+        display:
+            flex !important;
 
-        display: flex !important;
-
-        align-items: center !important;
+        gap:
+            5px !important;
 
     }
 
 
-    /*
-     * 手機版隱藏 ELOCoin 大框
-     *
-     * 不是刪掉 ELOCoin，
-     * 是避免 Navbar 被擠爆。
-     */
+    /* ------------------------------
+       ELOCoin
+       
+       不消失，只縮小。
+    ------------------------------ */
 
     .balance {
-        display: none !important;
+
+        min-width:
+            0 !important;
+
+        width:
+            auto !important;
+
+        height:
+            32px !important;
+
+        padding:
+            0 7px !important;
+
+        column-gap:
+            4px !important;
+
+        border-radius:
+            8px !important;
+
     }
 
 
-    /* ========================================
+    .balance-label {
+
+        display:
+            none !important;
+
+    }
+
+
+    .balance-value {
+
+        display:
+            block !important;
+
+        font-size:
+            0.68rem !important;
+
+        line-height:
+            1 !important;
+
+    }
+
+
+    /* Challenge Entry
+       ELOCoin 保持普通模式白色 */
+
+    .challenge-entry .balance-value {
+
+        color:
+            var(--color-text) !important;
+
+    }
+
+
+    /* ------------------------------
        玩家按鈕
-    ======================================== */
+    ------------------------------ */
 
     .player-menu-button {
 
-        height: 34px;
+        height:
+            32px !important;
 
-        min-height: 34px;
+        min-height:
+            32px !important;
 
-        padding: 0 7px;
+        padding:
+            0 6px !important;
 
-        gap: 5px;
+        gap:
+            4px !important;
 
-        border-radius: 8px;
+        border-radius:
+            8px !important;
 
-        font-size: 0.72rem;
+        font-size:
+            0.68rem !important;
 
-        white-space: nowrap;
+        white-space:
+            nowrap;
+
     }
 
 
     .player-avatar {
 
-        width: 22px;
-        height: 22px;
+        width:
+            20px !important;
 
-        font-size: 11px;
+        height:
+            20px !important;
+
+        font-size:
+            10px !important;
+
     }
 
 
     .player-menu-name {
 
-        max-width: 58px;
+        max-width:
+            48px;
 
-        overflow: hidden;
+        overflow:
+            hidden;
 
-        text-overflow: ellipsis;
+        text-overflow:
+            ellipsis;
 
-        white-space: nowrap;
+        white-space:
+            nowrap;
+
     }
 
 
     .player-menu-arrow {
-        font-size: 9px;
+
+        font-size:
+            8px;
+
     }
 
 
     /* ========================================
-       所有主要頁面
+       共用 Container
     ======================================== */
 
-    .section-container,
-    .navbar-container,
+    .section-container {
+
+        width:
+            calc(100% - 24px) !important;
+
+        max-width:
+            none !important;
+
+        margin-left:
+            auto !important;
+
+        margin-right:
+            auto !important;
+
+    }
+
+
     .footer-container {
 
-        width: calc(100% - 20px);
+        width:
+            calc(100% - 24px) !important;
 
-        max-width: var(--content-width);
-    }
+        max-width:
+            none !important;
 
+        margin-left:
+            auto !important;
 
-    /*
-     * Design System 裡各頁面的 container
-     */
+        margin-right:
+            auto !important;
 
-    .cases-page,
-    .case-page,
-    .inventory-page,
-    .profile-page,
-    .admin-page,
-    .ai-page,
-    .challenge-page,
-    .challenge-room-page,
-    .challenge-result-page {
-
-        width: calc(100% - 20px);
-
-        max-width: var(--content-width);
-
-        margin-left: auto;
-        margin-right: auto;
     }
 
 
     /* ========================================
-       頁面上下距離
+       共用 Page Spacing
     ======================================== */
 
     .cases-page,
@@ -243,85 +350,123 @@
     .challenge-room-page,
     .challenge-result-page {
 
-        padding-top: 26px;
-        padding-bottom: 44px;
+        padding-top:
+            30px !important;
+
+        padding-bottom:
+            56px !important;
+
     }
 
 
     /* ========================================
-       標題整體縮小
+       Section Header
     ======================================== */
 
-    h1 {
-        font-size: 2rem;
-    }
+    .section-header {
 
-    h2 {
-        font-size: 1.4rem;
-    }
+        margin-bottom:
+            22px !important;
 
-    h3 {
-        font-size: 1.05rem;
     }
 
 
-    /* ========================================
-       Section Label
-    ======================================== */
+    .section-header h1 {
+
+        font-size:
+            2rem !important;
+
+        line-height:
+            1.2;
+
+    }
+
+
+    .section-header h2 {
+
+        font-size:
+            1.3rem;
+
+    }
+
+
+    .section-header p {
+
+        margin-top:
+            7px;
+
+        font-size:
+            0.78rem;
+
+        line-height:
+            1.65;
+
+    }
+
 
     .section-label {
 
-        padding: 3px 8px;
+        padding:
+            3px 8px !important;
 
-        font-size: 0.7rem;
+        font-size:
+            0.67rem !important;
 
-        line-height: 1.4;
+        border-radius:
+            5px;
 
-        border-radius: 5px;
     }
 
 
     /* ========================================
-       按鈕
+       共用 Button
     ======================================== */
 
     .button {
 
-        min-height: 38px;
+        min-height:
+            38px !important;
 
-        padding: 0 14px;
+        height:
+            38px;
 
-        font-size: 0.8rem;
+        padding:
+            0 13px !important;
 
-        border-radius: 8px;
+        border-radius:
+            9px !important;
+
+        font-size:
+            0.78rem !important;
+
     }
 
 
     .button-large {
 
-        min-height: 42px;
+        min-height:
+            42px !important;
 
-        padding: 0 18px;
+        height:
+            42px;
 
-        font-size: 0.85rem;
+        font-size:
+            0.82rem !important;
+
     }
 
 
     /* ========================================
-       Input
+       共用 Form
     ======================================== */
 
     input,
     select,
     textarea {
 
-        min-height: 40px;
+        font-size:
+            0.8rem;
 
-        padding: 8px 11px;
-
-        font-size: 14px;
-
-        border-radius: 8px;
     }
 
 
@@ -329,77 +474,289 @@
        首頁
     ======================================== */
 
-    .hero {
-
-        padding-top: 32px;
-        padding-bottom: 32px;
-    }
-
-
-    .hero h1 {
-
-        font-size: 2rem;
-    }
-
-
-    .hero p {
-
-        font-size: 0.85rem;
-
-        line-height: 1.65;
-    }
-
-
-    /* ========================================
-       Lucky Players
-    ======================================== */
-
     .lucky-section {
 
-        padding-top: 18px;
-        padding-bottom: 18px;
+        overflow:
+            hidden;
+
     }
 
 
-    .lucky-showcase {
+    .lucky-intro {
 
-        transform: scale(.94);
+        width:
+            104px;
 
-        transform-origin: center center;
+        min-width:
+            104px;
+
+        min-height:
+            132px;
+
+        padding:
+            10px;
+
+        gap:
+            10px;
+
+    }
+
+
+    .lucky-intro-title {
+
+        gap:
+            6px;
+
+        font-size:
+            0.64rem;
+
+    }
+
+
+    .lucky-arrow {
+
+        width:
+            44px;
+
+        height:
+            30px;
+
+        font-size:
+            0.95rem;
+
+        border-radius:
+            8px;
+
+    }
+
+
+    .lucky-track {
+
+        min-height:
+            132px;
+
+        gap:
+            8px;
+
+    }
+
+
+    .lucky-group {
+
+        gap:
+            8px;
+
+        margin-right:
+            8px;
+
+    }
+
+
+    .lucky-item {
+
+        width:
+            116px;
+
+        min-width:
+            116px;
+
+        height:
+            112px;
+
+        padding:
+            6px;
+
+        border-radius:
+            10px;
+
+    }
+
+
+    .lucky-image {
+
+        width:
+            94px;
+
+        height:
+            54px;
+
+    }
+
+
+    .item-rarity {
+
+        font-size:
+            0.59rem;
+
+    }
+
+
+    .lucky-player {
+
+        font-size:
+            0.64rem;
+
+    }
+
+
+    .lucky-value {
+
+        font-size:
+            0.56rem;
+
+    }
+
+
+    .cases-section {
+
+        padding:
+            42px 0 28px !important;
+
+    }
+
+
+    .items-section {
+
+        padding:
+            28px 0 42px !important;
+
+    }
+
+
+    .case-grid,
+    .item-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            10px !important;
+
+    }
+
+
+    .case-info {
+
+        padding:
+            11px !important;
+
+    }
+
+
+    .case-info h3 {
+
+        margin-bottom:
+            8px !important;
+
+        font-size:
+            0.74rem !important;
+
+    }
+
+
+    .case-price,
+    .case-action,
+    .item-price {
+
+        font-size:
+            0.64rem !important;
+
+    }
+
+
+    .item-placeholder {
+
+        height:
+            100px !important;
+
+    }
+
+
+    .item-card-info {
+
+        padding:
+            11px !important;
+
+    }
+
+
+    .item-card-info h3 {
+
+        font-size:
+            0.74rem !important;
+
     }
 
 
     /* ========================================
-       箱子列表
+       Cases Page
     ======================================== */
 
-    .cases-grid {
+    .cases-page {
 
-        gap: 10px;
+        padding-top:
+            30px !important;
+
+    }
+
+
+    .cases-header {
+
+        margin-bottom:
+            20px !important;
+
+    }
+
+
+    .cases-header h1 {
+
+        margin-bottom:
+            6px;
+
+        font-size:
+            1.7rem !important;
+
+    }
+
+
+    .case-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            10px !important;
+
     }
 
 
     .case-card {
 
-        border-radius: 12px;
+        border-radius:
+            13px !important;
+
     }
 
 
-    .case-card-content {
+    .case-info {
 
-        padding: 9px;
+        padding:
+            10px !important;
+
     }
 
 
-    .case-card-title {
+    .case-info h3 {
 
-        font-size: 0.88rem;
-    }
+        font-size:
+            0.74rem !important;
 
-
-    .case-card-price {
-
-        font-size: 0.75rem;
     }
 
 
@@ -407,147 +764,114 @@
        Case Detail
     ======================================== */
 
-    .case-hero,
-    .case-contents {
+    .case-back {
 
-        border-radius: 13px;
+        font-size:
+            0.72rem;
+
     }
 
 
-    .case-detail-title {
+    .case-hero {
 
-        font-size: 1.8rem;
+        border-radius:
+            14px !important;
+
     }
 
 
-    .case-detail-description {
+    .case-hero-top {
 
-        font-size: 0.82rem;
+        gap:
+            12px;
+
     }
 
 
-    /* ========================================
-       Case Items
-    ======================================== */
+    .case-hero-image {
 
-    .case-items-grid,
-    .items-grid {
+        width:
+            128px !important;
 
-        gap: 8px;
+        height:
+            88px !important;
+
     }
 
 
-    .case-item-card {
+    .case-hero-info h1 {
 
-        padding: 8px;
+        font-size:
+            1.45rem !important;
 
-        border-radius: 10px;
+        line-height:
+            1.2;
+
     }
 
 
-    .case-item-name {
+    .case-detail-game,
+    .case-detail-price {
 
-        font-size: 0.72rem;
+        font-size:
+            0.68rem !important;
+
     }
 
 
-    .case-item-value {
+    .case-preview {
 
-        font-size: 0.72rem;
+        border-radius:
+            12px;
+
+    }
+
+
+    .case-items-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            8px !important;
+
     }
 
 
     /* ========================================
        開箱動畫
+       
+       不單獨亂調 box / key，
+       而是整個 scene 等比例縮小。
+       這樣鑰匙與鎖孔的相對位置
+       會跟桌面版保持一致。
     ======================================== */
+
+    .case-opening-scene {
+
+        width:
+            360px;
+
+        height:
+            280px;
+
+        transform:
+            scale(.72);
+
+        transform-origin:
+            center center;
+
+    }
+
 
     .case-opening-animation {
 
-        width: 100%;
+        overflow:
+            hidden;
 
-        max-width: 340px;
-
-        height: 270px;
-
-        margin-left: auto;
-        margin-right: auto;
-
-        position: relative;
-
-        overflow: visible;
-    }
-
-
-    /*
-     * 箱子
-     */
-
-    .case-opening-box {
-
-        width: 300px;
-
-        max-width: 82%;
-
-        height: auto;
-
-        left: 50%;
-
-        top: 50%;
-
-        transform:
-            translate(-50%, -42%);
-
-        object-fit: contain;
-    }
-
-
-    /*
-     * 鑰匙
-     */
-
-    .case-opening-key {
-
-        width: 105px;
-
-        height: auto;
-
-        left: 50%;
-
-        top: 50%;
-
-        transform:
-            translate(-94px, -22px)
-            rotate(-5deg);
-
-        transform-origin: center center;
-
-        z-index: 5;
-    }
-
-
-    /*
-     * 鑰匙飛行
-     */
-
-    .case-opening-animation.key-fly
-    .case-opening-key {
-
-        transform:
-            translate(-94px, -22px)
-            rotate(-5deg);
-    }
-
-
-    /*
-     * 鑰匙對準鎖孔
-     */
-
-    .case-opening-animation.key-lock
-    .case-opening-key {
-
-        transform:
-            translate(-19px, -64px)
-            rotate(-3deg);
     }
 
 
@@ -555,137 +879,169 @@
        Inventory
     ======================================== */
 
-    .inventory-grid,
-    .inventory-items {
+    .inventory-page {
 
-        gap: 8px;
+        padding-top:
+            30px !important;
+
+    }
+
+
+    .inventory-toolbar {
+
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+        gap:
+            10px;
+
+        margin-bottom:
+            16px;
+
+    }
+
+
+    .inventory-search {
+
+        min-width:
+            0;
+
+        width:
+            100%;
+
+        height:
+            38px;
+
+        border-radius:
+            9px;
+
+    }
+
+
+    .inventory-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            9px !important;
+
     }
 
 
     .inventory-card {
 
-        padding: 8px;
+        border-radius:
+            11px;
 
-        border-radius: 10px;
+    }
+
+
+    .inventory-info {
+
+        padding:
+            9px !important;
+
+    }
+
+
+    .inventory-name {
+
+        font-size:
+            0.72rem !important;
+
+    }
+
+
+    .inventory-rarity,
+    .inventory-price,
+    .inventory-quantity {
+
+        font-size:
+            0.58rem !important;
+
+    }
+
+
+    .inventory-action {
+
+        min-width:
+            58px;
+
+        height:
+            28px;
+
+        padding:
+            0 8px;
+
+        font-size:
+            0.62rem;
+
     }
 
 
     /* ========================================
-       Challenge Entry
-       
-       保留紫色
-       但整體縮小
+       Profile
     ======================================== */
 
-    .challenge-entry {
+    .profile-page {
 
-        width: calc(100% - 20px);
+        padding-top:
+            24px !important;
 
-        max-width: var(--content-width);
-
-        margin-left: auto;
-        margin-right: auto;
     }
 
 
-    .challenge-entry h1 {
+    .profile-header {
 
-        font-size: 2rem;
+        padding:
+            20px 16px !important;
+
+        border-radius:
+            14px !important;
+
     }
 
 
-    .challenge-entry .challenge-card {
+    .profile-avatar {
 
-        padding: 16px;
+        width:
+            62px !important;
 
-        border-radius: 14px;
+        height:
+            62px !important;
+
+        flex-basis:
+            62px !important;
+
     }
 
 
-    .challenge-entry .challenge-card h2 {
+    .profile-user-info h1 {
 
-        font-size: 1.4rem;
+        font-size:
+            1.2rem !important;
+
     }
 
 
-    .challenge-entry .challenge-card p {
+    .profile-nav {
 
-        font-size: 0.82rem;
-    }
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
 
+        gap:
+            8px !important;
 
-    /*
-     * 建立挑戰 / 加入挑戰
-     * 手機上下排列
-     */
-
-    .challenge-entry .challenge-grid,
-    .challenge-entry .challenge-cards,
-    .challenge-entry .entry-grid {
-
-        grid-template-columns: 1fr;
-
-        gap: 12px;
-    }
-
-
-    /* ========================================
-       Challenge Room
-    ======================================== */
-
-    .challenge-room-page {
-
-        width: calc(100% - 20px);
-    }
-
-
-    .challenge-room-title {
-
-        font-size: 1.6rem;
-    }
-
-
-    .challenge-player-card {
-
-        padding: 11px;
-
-        border-radius: 12px;
-    }
-
-
-    .challenge-player-name {
-
-        font-size: 0.82rem;
-    }
-
-
-    .challenge-player-value {
-
-        font-size: 1rem;
-    }
-
-
-    /* ========================================
-       Challenge Result
-    ======================================== */
-
-    .challenge-result-page {
-
-        width: calc(100% - 20px);
-    }
-
-
-    .challenge-result-title {
-
-        font-size: 1.8rem;
-    }
-
-
-    .challenge-result-card {
-
-        padding: 13px;
-
-        border-radius: 13px;
     }
 
 
@@ -693,99 +1049,696 @@
        Login / Register
     ======================================== */
 
-    .auth-container,
-    .login-container,
-    .register-container {
+    .login-page,
+    .register-page {
 
-        width: calc(100% - 24px);
+        min-height:
+            calc(
+                100vh - 58px
+            );
 
-        max-width: 430px;
+        padding:
+            24px 12px;
 
-        margin-left: auto;
-        margin-right: auto;
     }
 
 
-    .auth-card,
     .login-card,
     .register-card {
 
-        padding: 18px;
+        width:
+            min(
+                100%,
+                420px
+            );
 
-        border-radius: 14px;
+        padding:
+            22px !important;
+
+        border-radius:
+            14px !important;
+
     }
 
 
-    .auth-title,
-    .login-title,
-    .register-title {
+    .login-header,
+    .register-header {
 
-        font-size: 1.7rem;
+        margin-bottom:
+            22px !important;
+
+    }
+
+
+    .login-header h1,
+    .register-header h1 {
+
+        font-size:
+            1.75rem !important;
+
+    }
+
+
+    .form-group,
+    .register-card .form-group {
+
+        gap:
+            6px;
+
+        margin-bottom:
+            16px;
+
+    }
+
+
+    .form-group input,
+    .register-card input {
+
+        height:
+            42px !important;
+
+        padding:
+            0 12px !important;
+
+    }
+
+
+    .google-profile-info {
+
+        gap:
+            12px;
+
+        padding:
+            12px;
+
+        margin-bottom:
+            20px;
+
+    }
+
+
+    .google-avatar {
+
+        width:
+            52px;
+
+        height:
+            52px;
+
     }
 
 
     /* ========================================
-       Admin
+       Challenge Entry
+       保留紫色
     ======================================== */
 
-    .admin-container {
+    .challenge-entry .section-header {
 
-        width: calc(100% - 20px);
+        margin-bottom:
+            22px !important;
+
     }
 
 
-    .admin-case-card {
+    .challenge-entry .section-label {
 
-        border-radius: 12px;
+        background:
+            transparent !important;
+
+        color:
+            #7c5cff !important;
+
+        border-color:
+            rgba(
+                124,
+                92,
+                255,
+                .35
+            ) !important;
+
+    }
+
+
+    .challenge-entry .challenge-actions {
+
+        grid-template-columns:
+            1fr !important;
+
+        gap:
+            12px !important;
+
+        margin-bottom:
+            18px !important;
+
+    }
+
+
+    .challenge-entry .challenge-card {
+
+        padding:
+            20px !important;
+
+        border-radius:
+            14px !important;
+
+    }
+
+
+    .challenge-entry .challenge-card h2 {
+
+        margin-bottom:
+            7px;
+
+        font-size:
+            1.32rem;
+
+    }
+
+
+    .challenge-entry .challenge-card p {
+
+        margin-bottom:
+            16px;
+
+        font-size:
+            .78rem;
+
+    }
+
+
+    .challenge-entry .challenge-card input {
+
+        height:
+            40px;
+
+        margin-bottom:
+            12px;
+
+    }
+
+
+    /* ========================================
+       Challenge Room / Result Navbar
+    ======================================== */
+
+    .challenge-navbar-container {
+
+        width:
+            calc(
+                100% - 16px
+            ) !important;
+
+        min-height:
+            auto !important;
+
+        padding:
+            10px 0 !important;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch !important;
+
+        gap:
+            8px !important;
+
+    }
+
+
+    .challenge-brand {
+
+        justify-content:
+            center;
+
+        font-size:
+            .96rem;
+
+    }
+
+
+    .challenge-brand strong,
+    .challenge-brand-text {
+
+        font-size:
+            .7rem;
+
+    }
+
+
+    .challenge-navbar-status {
+
+        width:
+            100%;
+
+        display:
+            grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap:
+            6px;
+
+    }
+
+
+    .challenge-user-box {
+
+        min-width:
+            0;
+
+        min-height:
+            48px;
+
+        padding:
+            7px 8px;
+
+        border-radius:
+            8px;
+
+    }
+
+
+    .challenge-box-title {
+
+        font-size:
+            .54rem;
+
+    }
+
+
+    .challenge-box-value {
+
+        margin-top:
+            3px;
+
+        font-size:
+            .72rem;
+
+    }
+
+
+    /* ========================================
+       Challenge Room
+    ======================================== */
+
+    .challenge-room-page,
+    .challenge-result-page {
+
+        padding-top:
+            22px !important;
+
+    }
+
+
+    .room-card,
+    .result-card {
+
+        padding:
+            18px !important;
+
+        border-radius:
+            14px !important;
+
+    }
+
+
+    .room-player,
+    .result-player {
+
+        padding:
+            18px 14px !important;
+
+        border-radius:
+            12px !important;
+
+    }
+
+
+    .room-player h2,
+    .result-player h2 {
+
+        margin-bottom:
+            14px;
+
+        font-size:
+            1.1rem;
+
+    }
+
+
+    .ec-box {
+
+        padding:
+            14px;
+
+        border-radius:
+            10px;
+
+    }
+
+
+    .ec-box strong {
+
+        font-size:
+            1.45rem;
+
+    }
+
+
+    .challenge-items {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            8px !important;
+
+    }
+
+
+    .challenge-item {
+
+        min-height:
+            105px !important;
+
+        border-radius:
+            10px !important;
+
+    }
+
+
+    .challenge-code-box {
+
+        min-height:
+            56px;
+
+        padding:
+            10px 12px;
+
+        gap:
+            8px;
+
+        border-radius:
+            10px;
+
+    }
+
+
+    #challenge-code {
+
+        font-size:
+            .95rem;
+
+    }
+
+
+    #copy-code-button {
+
+        min-width:
+            66px;
+
+        height:
+            34px;
+
+    }
+
+
+    .result-value {
+
+        padding:
+            14px !important;
+
+    }
+
+
+    .result-value strong {
+
+        font-size:
+            1.7rem !important;
+
+    }
+
+
+    /* ========================================
+       Admin Cases
+    ======================================== */
+
+    .admin-header {
+
+        align-items:
+            stretch !important;
+
+        flex-direction:
+            column;
+
+        gap:
+            12px;
+
+        margin-bottom:
+            22px !important;
+
+    }
+
+
+    .admin-header h1 {
+
+        font-size:
+            1.8rem !important;
+
+    }
+
+
+    #create-case-button {
+
+        width:
+            100%;
+
+    }
+
+
+    .cases-container {
+
+        grid-template-columns:
+            1fr !important;
+
+        gap:
+            12px !important;
+
     }
 
 
     .admin-case-content {
 
-        padding: 12px;
+        padding:
+            14px !important;
+
     }
 
 
     .admin-case-top h2 {
 
-        font-size: 1rem;
-    }
+        font-size:
+            .96rem !important;
 
-
-    .admin-case-description {
-
-        font-size: 0.78rem;
     }
 
 
     .admin-case-actions {
 
-        gap: 6px;
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            7px !important;
+
     }
 
 
     .admin-case-actions .button {
 
-        min-height: 36px;
+        width:
+            100%;
 
-        padding: 0 10px;
+        min-height:
+            36px !important;
 
-        font-size: 0.75rem;
+        padding:
+            0 9px !important;
+
+        font-size:
+            .7rem !important;
+
+    }
+
+
+    /* ---------- 物品編輯器 ---------- */
+
+    .case-editor-item {
+
+        grid-template-columns:
+            1fr !important;
+
+        border-radius:
+            14px !important;
+
+    }
+
+
+    .case-editor-item-image {
+
+        width:
+            100% !important;
+
+        height:
+            132px !important;
+
+        border-radius:
+            9px !important;
+
+    }
+
+
+    .case-editor-grid {
+
+        grid-template-columns:
+            1fr !important;
+
+    }
+
+
+    .case-editor-field-wide {
+
+        grid-column:
+            auto !important;
+
     }
 
 
     /* ========================================
-       Modal
+       Admin AI
     ======================================== */
 
-    .modal-content,
-    .modal-box {
+    .ai-page {
 
-        width: calc(100% - 20px);
+        padding-top:
+            28px !important;
 
-        max-height: calc(100vh - 20px);
+    }
 
-        border-radius: 14px;
+
+    .ai-layout {
+
+        grid-template-columns:
+            1fr !important;
+
+        gap:
+            12px !important;
+
+    }
+
+
+    .ai-panel,
+    .ai-result {
+
+        padding:
+            16px !important;
+
+        border-radius:
+            14px !important;
+
+    }
+
+
+    .ai-prompt {
+
+        min-height:
+            130px !important;
+
+        font-size:
+            .76rem !important;
+
+    }
+
+
+    .ai-items {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            ) !important;
+
+        gap:
+            8px !important;
+
+    }
+
+
+    .ai-item {
+
+        padding:
+            10px !important;
+
+        border-radius:
+            10px !important;
+
+    }
+
+
+    .ai-item-image {
+
+        height:
+            112px !important;
+
+        margin-bottom:
+            9px !important;
+
+    }
+
+
+    .ai-input,
+    .ai-select {
+
+        min-height:
+            36px !important;
+
+        padding:
+            7px 8px !important;
+
+        font-size:
+            .66rem !important;
+
+    }
+
+
+    .ai-field-label {
+
+        margin-bottom:
+            4px !important;
+
+        font-size:
+            .56rem !important;
+
+    }
+
+
+    .ai-field-row {
+
+        gap:
+            6px !important;
+
     }
 
 
@@ -793,9 +1746,25 @@
        Footer
     ======================================== */
 
-    footer {
+    .footer-container {
 
-        font-size: 0.75rem;
+        min-height:
+            74px;
+
+        gap:
+            8px;
+
+        font-size:
+            .68rem;
+
+    }
+
+
+    .footer-container span {
+
+        display:
+            none;
+
     }
 
 }
@@ -807,127 +1776,156 @@
 
 @media (max-width: 390px) {
 
+    html {
+        font-size: 13.5px;
+    }
+
+
     .navbar-container {
 
-        width: calc(100% - 14px);
+        width:
+            calc(
+                100% - 10px
+            ) !important;
 
-        gap: 5px;
+        gap:
+            4px !important;
+
     }
 
 
     .brand {
 
-        font-size: 1rem;
-    }
+        font-size:
+            .98rem;
 
-
-    .nav-links {
-
-        gap: 0;
     }
 
 
     .nav-link {
 
-        padding-left: 4px;
-        padding-right: 4px;
+        padding-left:
+            4px !important;
 
-        font-size: 0.67rem;
+        padding-right:
+            4px !important;
+
+        font-size:
+            .62rem !important;
+
+    }
+
+
+    .balance {
+
+        max-width:
+            66px;
+
+        padding:
+            0 5px !important;
+
+    }
+
+
+    .balance-value {
+
+        font-size:
+            .61rem !important;
+
     }
 
 
     .player-menu-button {
 
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left:
+            5px !important;
 
-        gap: 3px;
+        padding-right:
+            5px !important;
 
-        font-size: 0.67rem;
     }
 
 
     .player-menu-name {
 
-        max-width: 48px;
+        max-width:
+            42px;
+
     }
 
 
-    .player-avatar {
+    .section-container,
+    .footer-container {
 
-        width: 20px;
-        height: 20px;
+        width:
+            calc(
+                100% - 18px
+            ) !important;
+
+    }
+
+
+    .case-grid,
+    .item-grid,
+    .inventory-grid,
+    .case-items-grid,
+    .challenge-items {
+
+        gap:
+            7px !important;
+
+    }
+
+
+    .case-info,
+    .item-card-info,
+    .inventory-info {
+
+        padding:
+            8px !important;
+
+    }
+
+
+    .case-info h3,
+    .item-card-info h3,
+    .inventory-name {
+
+        font-size:
+            .68rem !important;
+
+    }
+
+
+    .ai-items {
+
+        grid-template-columns:
+            1fr !important;
+
+    }
+
+
+    .ai-item-image {
+
+        height:
+            150px !important;
+
     }
 
 
     /*
-     * 頁面再縮一點
+     * 開箱動畫再縮一點。
+     *
+     * 整個 scene 等比例縮，
+     * 不單獨改 key，
+     * 保留桌面版 key -> lock 的相對位置。
      */
 
-    .cases-page,
-    .case-page,
-    .inventory-page,
-    .profile-page,
-    .admin-page,
-    .ai-page,
-    .challenge-page,
-    .challenge-room-page,
-    .challenge-result-page {
-
-        width: calc(100% - 16px);
-
-        padding-top: 22px;
-        padding-bottom: 38px;
-    }
-
-
-    h1 {
-
-        font-size: 1.8rem;
-    }
-
-
-    h2 {
-
-        font-size: 1.3rem;
-    }
-
-
-    .case-opening-animation {
-
-        max-width: 320px;
-
-        height: 250px;
-    }
-
-
-    .case-opening-box {
-
-        width: 280px;
-    }
-
-
-    .case-opening-key {
-
-        width: 98px;
-    }
-
-
-    .case-opening-animation.key-fly
-    .case-opening-key {
+    .case-opening-scene {
 
         transform:
-            translate(-87px, -20px)
-            rotate(-5deg);
-    }
+            scale(.66);
 
-
-    .case-opening-animation.key-lock
-    .case-opening-key {
-
-        transform:
-            translate(-18px, -59px)
-            rotate(-3deg);
     }
 
 }
@@ -941,28 +1939,58 @@
 
     .brand {
 
-        font-size: .94rem;
+        font-size:
+            .92rem;
+
     }
 
 
     .nav-link {
 
-        padding-left: 3px;
-        padding-right: 3px;
+        padding-left:
+            3px !important;
 
-        font-size: .62rem;
+        padding-right:
+            3px !important;
+
+        font-size:
+            .58rem !important;
+
     }
 
 
     .player-menu-name {
 
-        max-width: 42px;
+        max-width:
+            36px;
+
     }
 
 
-    .navbar-container {
+    .balance {
 
-        width: calc(100% - 10px);
+        max-width:
+            58px;
+
+    }
+
+
+    .balance-value {
+
+        font-size:
+            .57rem !important;
+
+    }
+
+
+    .section-container,
+    .footer-container {
+
+        width:
+            calc(
+                100% - 14px
+            ) !important;
+
     }
 
 }
