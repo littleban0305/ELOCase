@@ -90,32 +90,12 @@ class="nav-link">
 </a>
 
 
-
 <a href="cases.html"
 class="nav-link">
 
 開箱
 
 </a>
-
-
-
-<a href="inventory.html"
-class="nav-link">
-
-我的物品
-
-</a>
-
-
-
-<a href="profile.html"
-class="nav-link">
-
-個人資料
-
-</a>
-
 
 
 </nav>
