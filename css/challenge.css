@@ -555,3 +555,42 @@
 
 
 }
+
+
+/* ========================================
+   Challenge Design System Override
+======================================== */
+
+.challenge-page {
+    width: min(calc(100% - 40px), var(--content-width));
+    margin: 0 auto;
+    padding: var(--admin-page-top) 0 var(--admin-page-bottom);
+}
+
+.challenge-actions {
+    gap: var(--admin-gap);
+}
+
+.challenge-card {
+    padding: 24px;
+    border-radius: var(--admin-card-radius);
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.challenge-card input {
+    height: var(--admin-control-height);
+    border-radius: var(--admin-small-radius);
+}
+
+.challenge-card button,
+.challenge-actions .button {
+    min-height: var(--admin-control-height);
+    border-radius: var(--admin-small-radius);
+}
+
+.challenge-code-box,
+.challenge-player-box {
+    border-radius: var(--admin-small-radius);
+}
