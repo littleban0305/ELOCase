@@ -81,22 +81,19 @@ ELOCase
 
 <nav class="nav-links">
 
+    <a
+        href="index.html"
+        class="nav-link active"
+    >
+        首頁
+    </a>
 
-<a href="index.html"
-class="nav-link">
-
-首頁
-
-</a>
-
-
-<a href="cases.html"
-class="nav-link">
-
-開箱
-
-</a>
-
+    <a
+        href="challenge.html"
+        class="nav-link"
+    >
+        挑戰
+    </a>
 
 </nav>
 
