@@ -1173,16 +1173,13 @@ async function saveCase(event) {
          */
 
         const result =
-             await sendApiPostRequest(
-                 action,
-                 {
-                     sessionToken:
-                         sessionToken,
-         
-                     caseData:
-                         caseData
-                 }
-             );
+            isEditing
+                ? await updateCase(
+                    caseData
+                )
+                : await createCase(
+                    caseData
+                );
 
 
         /*
@@ -1332,17 +1329,8 @@ async function deleteCaseConfirm(caseId) {
          * ⭐ deleteCase 必須使用 POST
          */
 
-        await sendApiPostRequest(
-            "deleteCase",
-            {
-
-                sessionToken:
-                    sessionToken,
-
-                caseId:
-                    caseId
-
-            }
+        await deleteCase(
+            caseId
         );
 
 
@@ -1435,24 +1423,15 @@ async function restoreCase(caseId) {
          * 所以必須使用 POST
          */
 
-        await sendApiPostRequest(
-             "updateCase",
-             {
-                 sessionToken:
-                     sessionToken,
-         
-                 caseData: {
-         
-                     caseId:
-                         caseId,
-         
-                     status:
-                         "active"
-         
-                 }
-         
-             }
-         );
+        await updateCase({
+
+            caseId:
+                caseId,
+
+            status:
+                "active"
+
+        });
 
 
         showMessage(
