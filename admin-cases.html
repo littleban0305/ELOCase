@@ -295,22 +295,35 @@
 
 
 
-            <!-- 描述 -->
+            <!-- 箱子物品 -->
 
-            <div class="form-group">
+            <div class="case-items-editor-section">
 
-                <label for="case-description">
-                    箱子描述
-                </label>
+                <div class="case-items-editor-header">
 
-                <textarea
-                    id="case-description"
-                    rows="4"
-                    placeholder="輸入箱子介紹..."
-                ></textarea>
+                    <div>
+                        <label>箱子內容物</label>
+                        <small>新增這個箱子可以掉落的物品，最多 12 個。</small>
+                    </div>
+
+                    <span id="case-items-count" class="case-items-count">0 / 12</span>
+
+                </div>
+
+                <div
+                    id="case-items-editor"
+                    class="case-items-editor"
+                ></div>
+
+                <button
+                    id="add-case-item-button"
+                    type="button"
+                    class="button button-secondary case-add-item-button"
+                >
+                    ＋ 新增物品
+                </button>
 
             </div>
-
 
 
             <!-- 狀態 -->
