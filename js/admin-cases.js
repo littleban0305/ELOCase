@@ -102,6 +102,12 @@ const caseGameInput =
     );
 
 
+const caseCategoryInput =
+    document.querySelector(
+        "#case-category"
+    );
+
+
 const casePriceInput =
     document.querySelector(
         "#case-price"
@@ -456,6 +462,102 @@ function renderCases() {
 
 
 /* ========================================
+   箱子分類
+======================================== */
+
+const CASE_CATEGORIES = {
+
+    CS2: [
+        "創作者箱子",
+        "特定武器箱子",
+        "系列收集箱",
+        "主題箱子",
+        "活動箱子"
+    ],
+
+    Roblox: [
+        "創作者箱子",
+        "主題箱子",
+        "系列收集箱",
+        "活動箱子",
+        "特殊箱子"
+    ]
+
+};
+
+
+const DEFAULT_CASE_CATEGORIES = [
+    "創作者箱子",
+    "主題箱子",
+    "系列收集箱",
+    "活動箱子",
+    "特殊箱子"
+];
+
+
+function getCaseCategories(game) {
+
+    const key =
+        String(game || "").trim();
+
+
+    return CASE_CATEGORIES[key] ||
+        DEFAULT_CASE_CATEGORIES;
+
+}
+
+
+function populateCaseCategories(
+    game,
+    selectedCategory = ""
+) {
+
+    if (!caseCategoryInput) {
+        return;
+    }
+
+
+    const categories =
+        getCaseCategories(game);
+
+
+    caseCategoryInput.innerHTML = `
+
+        <option value="">
+            請選擇箱子分類
+        </option>
+
+        ${categories.map(
+            category => `
+                <option
+                    value="${escapeAttribute(category)}"
+                    ${category === selectedCategory ? "selected" : ""}
+                >
+                    ${escapeHtml(category)}
+                </option>
+            `
+        ).join("")}
+
+    `;
+
+
+    if (selectedCategory && !categories.includes(selectedCategory)) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = selectedCategory;
+        option.textContent = selectedCategory;
+        option.selected = true;
+
+        caseCategoryInput.appendChild(option);
+
+    }
+
+}
+
+
+/* ========================================
    箱子卡片
 ======================================== */
 
@@ -596,6 +698,22 @@ function renderCaseCard(caseData) {
                     <div>
 
                         <span>
+                            分類
+                        </span>
+
+                        <strong>
+                            ${escapeHtml(
+                                caseData.category ||
+                                "-"
+                            )}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
                             價格
                         </span>
 
@@ -687,6 +805,10 @@ function openCreateModal() {
 
     caseIdInput.value = "";
     caseStatusInput.value = "active";
+    populateCaseCategories(
+        caseGameInput.value,
+        ""
+    );
 
     modalLabel.textContent = "新增箱子";
     modalTitle.textContent = "建立箱子";
@@ -724,6 +846,10 @@ async function openEditModal(caseId) {
     caseIdInput.value = caseData.caseId || "";
     caseNameInput.value = caseData.name || "";
     caseGameInput.value = caseData.game || "";
+    populateCaseCategories(
+        caseData.game || "",
+        caseData.category || ""
+    );
     casePriceInput.value = caseData.price ?? "";
     caseImageUrlInput.value = caseData.imageUrl || "";
     caseStatusInput.value = caseData.status || "active";
@@ -1122,6 +1248,11 @@ async function saveCase(event) {
     const game =
         caseGameInput.value.trim();
 
+    const category =
+        caseCategoryInput
+            ? caseCategoryInput.value.trim()
+            : "";
+
     const price =
         Number(
             casePriceInput.value
@@ -1148,11 +1279,12 @@ async function saveCase(event) {
 
     if (
         !name ||
-        !game
+        !game ||
+        !category
     ) {
 
         alert(
-            "請填寫箱子名稱與遊戲"
+            "請填寫箱子名稱、遊戲與分類"
         );
 
         return;
@@ -1217,6 +1349,9 @@ async function saveCase(event) {
 
         game:
             game,
+
+        category:
+            category,
 
         price:
             price,
@@ -1764,6 +1899,45 @@ if (caseForm) {
     caseForm.addEventListener(
         "submit",
         saveCase
+    );
+
+}
+
+
+if (caseGameInput) {
+
+    caseGameInput.addEventListener(
+        "change",
+        () => {
+
+            const current =
+                caseCategoryInput
+                    ? caseCategoryInput.value
+                    : "";
+
+            populateCaseCategories(
+                caseGameInput.value,
+                current
+            );
+
+        }
+    );
+
+    caseGameInput.addEventListener(
+        "input",
+        () => {
+
+            const current =
+                caseCategoryInput
+                    ? caseCategoryInput.value
+                    : "";
+
+            populateCaseCategories(
+                caseGameInput.value,
+                current
+            );
+
+        }
     );
 
 }
