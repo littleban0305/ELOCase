@@ -2757,3 +2757,493 @@ async function sendApiPostRequest(
     }
 
 }
+
+
+/* ========================================
+   ELOCase Admin Cases API
+======================================== */
+
+/*
+ * 建立箱子
+ *
+ * Admin API 使用 POST，
+ * 與 admin-ai.html 的 saveAIItems
+ * 採用相同模式。
+ */
+async function createCase(
+    caseData
+){
+
+    const sessionToken =
+        getAdminSessionToken();
+
+
+    if(!sessionToken){
+
+        throw new Error(
+            "登入狀態已失效，請重新登入"
+        );
+
+    }
+
+
+    if(
+        !caseData ||
+        typeof caseData !== "object"
+    ){
+
+        throw new Error(
+            "缺少箱子資料"
+        );
+
+    }
+
+
+    const requestData = {
+
+        action:
+            "createCase",
+
+        sessionToken:
+            sessionToken,
+
+        caseData:
+            caseData
+
+    };
+
+
+    try{
+
+        console.log(
+            "📦 [Admin] 建立箱子：",
+            requestData
+        );
+
+
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
+
+                    redirect:
+                        "follow",
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                `API 請求失敗（${response.status}）`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "📦 [Admin] 建立箱子回應：",
+            result
+        );
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.error ||
+                "建立箱子失敗"
+            );
+
+        }
+
+
+        /*
+         * 建立成功後同步清除箱子相關 Cache。
+         */
+        removeApiCache("cases");
+
+
+        return result.data;
+
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ [Admin] 建立箱子失敗：",
+            error
+        );
+
+        throw error;
+
+    }
+
+}
+
+
+/*
+ * 更新箱子
+ */
+async function updateCase(
+    caseData
+){
+
+    const sessionToken =
+        getAdminSessionToken();
+
+
+    if(!sessionToken){
+
+        throw new Error(
+            "登入狀態已失效，請重新登入"
+        );
+
+    }
+
+
+    if(
+        !caseData ||
+        typeof caseData !== "object"
+    ){
+
+        throw new Error(
+            "缺少箱子資料"
+        );
+
+    }
+
+
+    if(
+        !caseData.caseId
+    ){
+
+        throw new Error(
+            "缺少 caseId"
+        );
+
+    }
+
+
+    const requestData = {
+
+        action:
+            "updateCase",
+
+        sessionToken:
+            sessionToken,
+
+        caseData:
+            caseData
+
+    };
+
+
+    try{
+
+        console.log(
+            "📦 [Admin] 更新箱子：",
+            requestData
+        );
+
+
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
+
+                    redirect:
+                        "follow",
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                `API 請求失敗（${response.status}）`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "📦 [Admin] 更新箱子回應：",
+            result
+        );
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.error ||
+                "更新箱子失敗"
+            );
+
+        }
+
+
+        /*
+         * 清除箱子列表與單箱 Cache。
+         */
+        removeApiCache("cases");
+
+
+        if(caseData.caseId){
+
+            removeApiCache(
+                `case_${caseData.caseId}`
+            );
+
+        }
+
+
+        return result.data;
+
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ [Admin] 更新箱子失敗：",
+            error
+        );
+
+        throw error;
+
+    }
+
+}
+
+
+/*
+ * 停用箱子
+ */
+async function deleteCase(
+    caseId
+){
+
+    const sessionToken =
+        getAdminSessionToken();
+
+
+    if(!sessionToken){
+
+        throw new Error(
+            "登入狀態已失效，請重新登入"
+        );
+
+    }
+
+
+    if(!caseId){
+
+        throw new Error(
+            "缺少 caseId"
+        );
+
+    }
+
+
+    const requestData = {
+
+        action:
+            "deleteCase",
+
+        sessionToken:
+            sessionToken,
+
+        caseId:
+            caseId
+
+    };
+
+
+    try{
+
+        console.log(
+            "📦 [Admin] 停用箱子：",
+            requestData
+        );
+
+
+        const response =
+            await fetch(
+                CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            requestData
+                        ),
+
+                    redirect:
+                        "follow",
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                `API 請求失敗（${response.status}）`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "📦 [Admin] 停用箱子回應：",
+            result
+        );
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.error ||
+                "停用箱子失敗"
+            );
+
+        }
+
+
+        removeApiCache("cases");
+
+
+        removeApiCache(
+            `case_${caseId}`
+        );
+
+
+        return result.data;
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ [Admin] 停用箱子失敗：",
+            error
+        );
+
+        throw error;
+
+    }
+
+}
+
+
+/*
+ * 管理員資訊
+ *
+ * 保持既有 sendApiRequest GET 行為。
+ */
+async function getAdminInfo(
+    sessionToken
+){
+
+    if(!sessionToken){
+
+        throw new Error(
+            "缺少 Session Token"
+        );
+
+    }
+
+
+    return await sendApiRequest(
+        "getAdminInfo",
+        {
+            sessionToken:
+                sessionToken
+        }
+    );
+
+}
+
+
+/*
+ * 管理員箱子列表
+ *
+ * 管理列表必須取得最新資料，
+ * 因此不使用一般玩家的 24 小時 Cache。
+ */
+async function getAdminCases(
+    sessionToken
+){
+
+    if(!sessionToken){
+
+        throw new Error(
+            "缺少 Session Token"
+        );
+
+    }
+
+
+    return await sendApiRequest(
+        "getAdminCases",
+        {
+            sessionToken:
+                sessionToken
+        }
+    );
+
+}
